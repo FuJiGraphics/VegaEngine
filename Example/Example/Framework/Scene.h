@@ -1,3 +1,4 @@
+#include "Scene.h"
 #pragma once
 
 #include "Defines.h"

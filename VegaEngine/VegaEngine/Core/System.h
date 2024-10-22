@@ -3,15 +3,6 @@
 
 namespace fz {
 
-	class Window;
-
-	struct WindowInfo
-	{
-		int Width;
-		int Height;
-		std::string Title;
-	};
-
 	class System
 	{	
 	//// Delete, Enum, Using
@@ -34,8 +25,7 @@ namespace fz {
 	//// Member Variables
 	private:
 		Window* m_Window;
-		WindowInfo m_Info;
-		sf::RenderTexture m_RenderTarget;
+		bool m_IsPause;
 		float m_TimeScale;
 	};
 

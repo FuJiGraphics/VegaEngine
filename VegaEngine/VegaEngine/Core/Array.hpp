@@ -62,6 +62,22 @@ namespace fz {
 
 	template<typename T>
 	template<typename Fn>
+	inline typename Array<T>::Iter Array<T>::remove(Iter first, Iter last, Fn pred)
+	{
+		Iter result = first;
+		for (result; result != last; ++result)
+		{
+			if (pred(*result))
+			{
+				m_Array.erase(result)
+				break;
+			}
+		}
+		return result;
+	}
+
+	template<typename T>
+	template<typename Fn>
 	inline typename Array<T>::Iter Array<T>::find(Iter first, Iter last, Fn pred)
 	{
 		Iter result = first;

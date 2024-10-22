@@ -3,12 +3,15 @@
 
 namespace fz{
 
-	class HitData
+	class HitData final
 	{
 	//// Delete, Enum, Using
 	protected:
 		// friend
 		friend ColliderList;
+		
+		// Using
+		using Super = HitData;
 
 	//// Member Functions
 	public:

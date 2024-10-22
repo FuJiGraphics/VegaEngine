@@ -16,3 +16,4 @@
 // imgui
 #include "imgui.h"
 #include "imgui-sfml/imgui-SFML.h"
+#include "Platform/ImGui/ImGuiManager.h"

@@ -18,7 +18,7 @@ namespace fz {
 		// Empty
 	}
 
-	void Collider::Set(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale)
+	void Collider::SetPosition(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale)
 	{
 		sf::FloatRect tRec;
 		tRec.left = rect.left + origin.x;
@@ -34,6 +34,16 @@ namespace fz {
 		m_rect.y = globalPos.top;
 		m_rect.w = m_rect.x + globalPos.width;
 		m_rect.h = m_rect.y + globalPos.height;
+		m_isActivate = true;
+	}
+
+	void Collider::SetPosition(const Layer* layer)
+	{
+		auto& origin = layer->GetOrigin();
+		auto& pos = layer->GetPosition();
+		auto& scale = layer->GetScale();
+		auto& size = layer->GetSize();
+		this->SetPosition(origin, { pos.x, pos.y, size.x, size.y }, scale);
 	}
 
 	bool Collider::IsCollided(Collider& other)

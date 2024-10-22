@@ -4,8 +4,13 @@
 
 namespace fz {
 
-    class Event
+    class Event final
     {
+    //// Delete, Enum, Using
+    protected:
+        // Using
+        using Super = Event;
+
     //// Member Functions
     public:
         // Constructor, Destructor

@@ -4,6 +4,11 @@
 namespace fz {
 
     Layer::Layer()
+        : m_IsActivate(true)
+        , m_Origin(0.0f, 0.0f)
+        , m_Pos(0.0f, 0.0f)
+        , m_Scale(0.0f, 0.0f)
+        , m_Size(0, 0)
     {
         // Empty
     }

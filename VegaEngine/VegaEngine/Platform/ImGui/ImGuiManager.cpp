@@ -14,7 +14,7 @@ namespace fz {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-		return (ImGui::SFML::Init(window.GetHandle()));
+		return (ImGui::SFML::Init(window.GetRenderWindow()));
 	}
 
 	void ImGuiManager::Shutdown()
@@ -24,6 +24,11 @@ namespace fz {
 		//	ImPlot::DestroyContext();
 	}
 
+	void ImGuiManager::PollEvent(const sf::Event& ev)
+	{
+		ImGui::SFML::ProcessEvent(s_currWindow->GetRenderWindow(), ev);
+	}
+
 	void ImGuiManager::SetWindow(const fz::Window& window)
 	{
 		s_currWindow = &window;
@@ -31,7 +36,7 @@ namespace fz {
 
 	void ImGuiManager::Begin(const sf::Time& dt)
 	{
-		auto& renderTarget = s_currWindow->GetHandle();
+		auto& renderTarget = s_currWindow->GetRenderWindow();
 		ImGui::SFML::Update(renderTarget, dt);
 		ImGui::SFML::SetCurrentWindow(renderTarget);
 		if (s_enableOverviewDockspace)
@@ -42,7 +47,7 @@ namespace fz {
 
 	void ImGuiManager::End()
 	{
-		ImGui::SFML::Render(s_currWindow->GetHandle());
+		ImGui::SFML::Render(s_currWindow->GetRenderWindow());
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{

@@ -76,7 +76,7 @@ namespace fz {
 
     bool Event::empty() const
     {
-        return m_isEmpty;
+        return (m_isEmpty || m_used);
     }
 
 } // namespace fz

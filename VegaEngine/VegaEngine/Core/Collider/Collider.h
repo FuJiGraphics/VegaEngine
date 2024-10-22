@@ -10,10 +10,13 @@ namespace fz {
 		int w, h;
 	};
 
-	class Collider
+	class Collider final
 	{
 	//// Delete, Enum, Using
 	protected:
+		// Using
+		using Super = Collider;
+
 		// Delete
 		Collider(const Collider&) = delete;
 		void operator=(const Collider&) = delete;
@@ -34,7 +37,8 @@ namespace fz {
 		inline const sf::RectangleShape& GetBox() const		{ return m_Box; }
 
 		// Impl
-		void Set(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale);
+		void SetPosition(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale);
+		void SetPosition(const Layer* layer);
 		bool IsCollided(Collider& other);
 
 	//// Member Variables

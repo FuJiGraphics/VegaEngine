@@ -1,6 +1,5 @@
 #include "Core/stdafx.h"
 #include "Window.h"
-#include <SFML/Window.hpp>
 
 namespace fz {
 
@@ -27,7 +26,7 @@ namespace fz {
 		m_FrameBuffer.create(width, height);
 		m_NativeWindow = new sf::RenderWindow(mode, title);
 
-		if (ImGui::SFML::Init(*m_NativeWindow))
+		if (ImGuiManager::Init(*this))
 		{
 			// std::cout << "¼º°ø!" << std::endl;
 		}
@@ -38,7 +37,7 @@ namespace fz {
 	{
 		if (m_NativeWindow != nullptr)
 		{
-			ImGui::SFML::Shutdown();
+			ImGuiManager::Shutdown();
 			delete m_NativeWindow;
 			m_FrameBuffer.clear();
 			m_NativeWindow = nullptr;
@@ -47,7 +46,7 @@ namespace fz {
 		}
 	}
 
-	void Window::Event(EventManager& manager)
+	void Window::Event(EventList& events)
 	{
 		if (!m_IsOpen)
 			return;
@@ -55,7 +54,7 @@ namespace fz {
 		sf::Event ev;
 		while (m_NativeWindow->pollEvent(ev))
 		{
-			ImGui::SFML::ProcessEvent(*m_NativeWindow, ev);
+			ImGuiManager::PollEvent(ev);
 			switch (ev.type)
 			{
 				case sf::Event::GainedFocus:
@@ -63,7 +62,7 @@ namespace fz {
 					m_IsOpen = false;
 					break;
 				default:
-					manager.pollEvent(ev);
+					events.push_back(ev);
 			}
 		}
 	}

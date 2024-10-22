@@ -5,7 +5,7 @@
 
 namespace fz {
 
-    class EventList : public Array<Event>
+    class EventList final : public Array<Event>
     {
     //// Delete, Enum, Using
     protected:

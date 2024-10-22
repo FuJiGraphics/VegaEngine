@@ -7,7 +7,7 @@
 
 namespace fz {
 	
-	class ColliderList : Array<HitData>
+	class ColliderList final : Array<HitData>
 	{
 	//// Delete, Enum, Using
 	protected:
@@ -22,9 +22,11 @@ namespace fz {
 		virtual ~ColliderList();
 
 		// impl
-		bool insert_safety(Layer* layer, Collider* collider);
-		void insert(Layer* layer, Collider* collider);
-		Iter remove(Layer* layer, Collider* collider);
+		bool insert_safety(Layer* layer);
+		void insert(Layer* layer);
+		Iter remove(Layer* layer);
+
+		void Release();
 	};
 
 } // namespace fz

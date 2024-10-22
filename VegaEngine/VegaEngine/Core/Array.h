@@ -32,6 +32,10 @@ namespace fz {
 		inline Const_iter end() const	{ return m_Array.end(); }
 		inline bool empty() const		{ return m_Array.empty(); }
 		inline int size() const			{ return m_Array.size(); }
+		inline void clear()				{ m_Array.clear(); }
+
+		template <typename Fn>
+		Iter remove(Iter first, Iter last, Fn pred);
 
 	protected:
 		// Constructor, Destructor
@@ -44,7 +48,7 @@ namespace fz {
 		Iter find(const T& target);
 
 		template <typename Fn>
-		Array<T>::Iter find(Iter first, Iter last, Fn pred);
+		Iter find(Iter first, Iter last, Fn pred);
 
 	private:
 		void InsertLeft(const T& data);

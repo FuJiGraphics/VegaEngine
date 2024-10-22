@@ -5,7 +5,7 @@
 
 namespace fz {
 
-	class LayerList : public Array<Layer*>
+	class LayerList final : public Array<Layer*>
 	{
 	//// Delete, Enum, Using
 	protected:

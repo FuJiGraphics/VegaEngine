@@ -1,4 +1,4 @@
-version = "2.3.0"
+version = "3.1.1"
 
 workspace "Solution"
 	startproject "Workspace"

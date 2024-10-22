@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Framework/ResourceManager.h"
 #include "Platform/ImGui/ImGuiManager.h"
+#include "Event/EventList.h"
 
 namespace fz {
 
@@ -10,9 +11,7 @@ namespace fz {
 	{
 		this->Release();
 		m_Window = new Window();
-			m_RenderTarget.create(m_width, m_height);
-
-		ImGuiManager::Init(*m_window);
+		m_Window->Create(width, height, title);
 	}
 
 	void System::Create(const WindowInfo& info)
@@ -32,16 +31,14 @@ namespace fz {
 	void System::Run()
 	{
 		sf::Clock clock;
-		while (m_isPlaying && m_window->IsOpen())
+		while (m_Window->IsOpen())
 		{
 			sf::Time dt = clock.restart();
-			s_timeScale = (m_isPause) ? 0.0f : 1.0f;
+			m_TimeScale = (m_IsPause) ? 0.0f : 1.0f;
 
+			EventList eventQueue;
 			// 이벤트 루프
-			m_window->Event(&eventQueue);
-
-			// Layer 이벤트 전송
-			eventQueue.DispatchTo(*m_layerArray);
+			m_Window->Event(eventQueue);
 
 			// Layer 업데이트
 			for (auto layer : (*m_layerArray))
@@ -56,10 +53,6 @@ namespace fz {
 			for (auto layer : (*m_layerArray))
 			{
 				layer->OnDraw(m_RenderTarget);
-			}
-			for (auto layer : (*m_layerArray))
-			{
-				layer->OnUI(m_RenderTarget);
 			}
 			for (auto collider : colManager)
 			{
@@ -110,20 +103,15 @@ namespace fz {
 	}
 
 	System::System()
-		: m_window(nullptr)
-		, m_width(0)
-		, m_height(0)
-		, m_layerArray(nullptr)
-		, m_isPlaying(true)
-		, m_isPause(false)
-		, m_isReset(false)
+		: m_Window(nullptr)
+		, m_IsPause(false)
+		, m_TimeScale(1.0f)
 	{
-		this->CreateLayerArray();
+		// Empty
 	}
 
 	System::~System()
 	{
-		ImGuiManager::Shutdown();
 		ReleaseWindow();
 		ReleaseLayerArray();
 	}
