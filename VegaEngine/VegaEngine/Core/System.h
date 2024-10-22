@@ -8,7 +8,7 @@ namespace fz {
 		class App;
 	}
 	class Window;
-	class LayerArray;
+	class LayerList;
 
 	struct WindowInfo
 	{
@@ -54,7 +54,7 @@ namespace fz {
 		Window*				m_window;
 		int					m_width;
 		int					m_height;
-		LayerArray*			m_layerArray;
+		LayerList*			m_layerArray;
 		bool				m_isPause;
 		bool				m_isPlaying;
 		bool				m_isReset;

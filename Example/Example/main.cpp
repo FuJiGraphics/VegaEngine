@@ -7,7 +7,7 @@ using namespace sf;
 
 int main(void)
 {
-	FRAMEWORK.Init(1024, 768, "SFML Framework");
+	FRAMEWORK.Init(1920, 1080, "SFML Framework");
 	FRAMEWORK.Do();
 	FRAMEWORK.Release();
 

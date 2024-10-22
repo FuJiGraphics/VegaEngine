@@ -14,6 +14,8 @@
 // Entry Point
 #include "Core/EntryPoint.h"
 
+#define	DSetClassName(className)	inline std::string GetName() const override { return(#className); }
+
 enum class Direction
 {
 	Default,

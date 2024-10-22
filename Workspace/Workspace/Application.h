@@ -6,9 +6,10 @@
 class Application : public fz::Layer
 {
 public:
+	DSetClassName(Application);
+	
 	void			OnAttach() override;
 	void			OnEvent(fz::Event& event) override;
-	std::string		GetName() const override;
 
 public:
 	bool	IsFirstStart() const;

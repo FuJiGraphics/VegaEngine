@@ -4,6 +4,7 @@
 #include "LayerArray.h"
 #include "ColliderManager.h"
 #include "Framework/ResourceManager.h"
+#include "Platform/ImGui/ImGuiManager.h"
 
 namespace fz {
 
@@ -244,7 +245,7 @@ namespace fz {
 		if (m_layerArray != nullptr)
 			return;
 		
-		m_layerArray = new LayerArray();
+		m_layerArray = new LayerList();
 	}
 
 	void System::ReleaseLayerArray()

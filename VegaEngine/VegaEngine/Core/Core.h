@@ -12,12 +12,6 @@
 // graphics
 #include <SFML/Graphics.hpp>
 
-// imgui
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_win32.h"
-
 namespace fz {
 
 	template <typename T>

@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "Framework.h"
 #include "InputMgr.h"
+
 #include "SpriteGo.h"
+#include "Scene.h"
 
 void Framework::Init(int width, int height, const std::string& name)
 {
 	window.create(sf::VideoMode(width, height), name);
+
+	SceneMgr::Instance().Init();
 }
 
 void Framework::Do()
 {
-	SpriteGo go("res/graphics/background.png");
-	go.Init();
-	go.Release();
-
 	while (window.isOpen())
 	{
 		sf::Time dt = clock.restart();
@@ -29,19 +29,17 @@ void Framework::Do()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			InputMgr::UpdateEvent(event);
+			InputMgr::UpdateEvent(event); 
 		}
 
 		// 업데이트
-
+		SceneMgr::Instance().Updata(dt.asSeconds());
 
 		// 그리기
 		window.clear();
-		go.Draw(window);
+		SceneMgr::Instance().Draw(window);
 		window.display();
 	}
-
-	go.Release();
 }
 
 void Framework::Release()

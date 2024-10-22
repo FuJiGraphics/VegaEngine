@@ -254,7 +254,7 @@ public:
 
 
 #endif // SFML_EVENT_HPP
-#include <SFML/Window/Event.inl>
+// #include <SFML/Window/Event.inl>
 
 
 ////////////////////////////////////////////////////////////

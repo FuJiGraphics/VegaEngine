@@ -66,11 +66,6 @@ void Application::OnEvent(fz::Event& event)
 	}
 }
 
-std::string Application::GetName() const
-{
-	return ("Application");
-}
-
 bool Application::IsFirstStart() const
 {
 	return (m_IsFirstStart);

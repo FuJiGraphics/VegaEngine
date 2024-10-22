@@ -26,5 +26,4 @@ namespace fz {
 
 } // namespace fz;
 
-
 #include "ResourceManager.hpp"
