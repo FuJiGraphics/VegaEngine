@@ -6,10 +6,7 @@ namespace fz {
 	template<typename T>
 	inline Array<T>::Array()
 		: m_Array()
-		, m_LeftEnd(m_Array.end())
 		, m_LeftSize(0)
-		, m_RightBegin(m_Array.end())
-		, m_RightSize(0)
 	{
 		// Empty
 	}
@@ -21,7 +18,7 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline void Array<T>::Insert(T data, Section place)
+	inline void Array<T>::insert(const T& data, Section place)
 	{
 		switch (place)
 		{
@@ -34,7 +31,7 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline Array<T>::Iter Array<T>::Remove(T data, Section place)
+	inline typename Array<T>::Iter Array<T>::remove(T& data, Section place)
 	{
 		Iter result;
 		switch (place)
@@ -49,25 +46,39 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline Array<T>::Iter Array<T>::Find(const T& target)
+	inline typename Array<T>::Iter Array<T>::find(const T& target)
 	{
-		Array<T>::Iter iter = m_Array.end();
+		Array<T>::Iter iter = m_Array.begin();
 		for (auto layer : m_Array)
 		{
 			if (layer == target)
 			{
-				iter = layer;
 				break;
 			}
+			iter++;
 		}
 		return iter;
 	}
 
 	template<typename T>
+	template<typename Fn>
+	inline typename Array<T>::Iter Array<T>::find(Iter first, Iter last, Fn pred)
+	{
+		Iter result = first;
+		for (result; result != last; ++result)
+		{
+			if (pred(*result)) 
+			{
+				break;
+			}
+		}
+		return result;
+	}
+
+	template<typename T>
 	inline void Array<T>::InsertLeft(const T& data)
 	{
-		m_Array.insert(m_LeftEnd, data);
-		m_LeftEnd++;
+		m_Array.insert(m_Array.begin() + m_LeftSize, data);
 		m_LeftSize++;
 	}
 
@@ -75,32 +86,29 @@ namespace fz {
 	inline void Array<T>::InsertRight(const T& data)
 	{
 		m_Array.emplace_back(data);
-		if (m_RightSize == 0)
-			m_RightBegin = m_Array.begin();
-		m_RightSize++;
 	}
 
 	template<typename T>
-	inline Array<T>::Iter Array<T>::RemoveLeft(const T& data)
+	inline typename Array<T>::Iter Array<T>::RemoveLeft(const T& data)
 	{
-		auto find = this->Find(m_Array.begin(), m_LeftEnd,
-			[&data](Iter& target)
+		auto find = this->find(m_Array.begin(), m_Array.Begin() + m_LeftSize,
+			[&data](const T& target)
 			{
 				return (data == target);
 			});
-		if (find != m_LeftEnd)
+		if (find != m_ArrayBegin() + m_LeftSize)
 		{
 			find = m_Array.erase(find);
 		}
-		return (find == m_RightBegin) ?
+		return (find == m_ArrayBegin() + m_LeftSize) ?
 			m_Array.end() : find;
 	}
 
 	template<typename T>
-	inline Array<T>::Iter Array<T>::RemoveRight(const T& data)
+	inline typename Array<T>::Iter Array<T>::RemoveRight(const T& data)
 	{
-		auto find = this->Find(m_RightBegin, m_Array.end(),
-			[&data](Iter& target)
+		auto find = this->find(m_Array.Begin() + m_LeftSize, m_Array.end(),
+			[&data](const T& target)
 			{
 				return (data == target);
 			});
@@ -109,20 +117,6 @@ namespace fz {
 			find = m_Array.erase(find);
 		}
 		return (find);
-	}
-
-	template<typename T>
-	template<typename Fn>
-	inline Array<T>::Iter Array<T>::Find(Iter first, Iter last, Fn pred)
-	{
-		Iter result = first;
-		for (result; result != last; ++result)
-		{
-			if (pred(*result)) {
-				break;
-			}
-		}
-		return result;
 	}
 
 } // namespace fz

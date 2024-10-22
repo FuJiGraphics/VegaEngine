@@ -1,28 +1,36 @@
 #pragma once
 #include "Core.h"
-#include "EventQueue.h"
 
 namespace fz {
+
+	class EventManager;
+
+	struct WindowInfo
+	{
+		int Width;
+		int Height;
+		std::string Title;
+	};
 
 	class Window
 	{
 	public:
-		Window(int width, int height, const char* name);
+		Window();
 		virtual ~Window();
 
-		void				Create();
-		void				Release();
-		bool				IsOpen();
-		void				Event(EventQueue* dst);
-		sf::RenderWindow&	GetHandle();
-		sf::RenderWindow&	GetHandle() const;
+		void Create(int width, int height, const std::string& title);
+		void Release();
+		void Event(EventManager& manager);
+
+		bool IsOpen() const							{ return m_IsOpen; }
+		sf::RenderWindow& GetRenderWindow()			{ return (*m_NativeWindow); }
+		sf::RenderWindow& GetRenderWindow() const	{ return (*m_NativeWindow); }
 
 	private:
-		int					m_width;	// 윈도우의 너비
-		int					m_height;	// 윈도우의 높이
-		std::string			m_name;		// 윈도우의 이름
-		sf::RenderWindow*	m_hwnd;		// 핸들
-		bool				m_isOpen;	// 윈도우 활성화 여부
+		WindowInfo m_Info;
+		sf::RenderTexture m_FrameBuffer;
+		sf::RenderWindow* m_NativeWindow;
+		bool m_IsOpen;
 	};
 
 } // namespace fz

@@ -1,41 +1,37 @@
 #pragma once
 
-#include "Core.h"
-#include "Event.h"
+#include "Core/Core.h"
+#include "Core/Event/Event.h"
+#include "Core/Collider/Collider.h"
+#include "Core/Collider/HitData.h"
 
 namespace fz {
 
-	class Collider;
-
 	class Layer
 	{
+	//// Delete, Enum, Using
+	protected:
+		// Delete
+		Layer(const Layer&) = delete;
+		void operator=(const Layer&) = delete;
+
+	//// Member Functions
 	public:
-		explicit Layer();
+		// Constructor, Destructor
+		Layer();
 		virtual ~Layer();
 
-		// 인터페이스
-		virtual void			OnAttach();
-		virtual void			OnDetach();
-		virtual void			OnEvent(fz::Event& event);
-		virtual void			OnUpdate(float dt);
-		virtual void			OnDraw(sf::RenderTexture& device);
-		virtual void			OnUI(sf::RenderTexture& device);
-		virtual void			OnImGui();
-		virtual void			OnCollide(Layer* pLayer, const std::string& className);
-		virtual std::string		GetName() const = 0;
+		// Virtuals 
+		virtual void OnAttach();
+		virtual void OnDetach();
+		virtual void OnEvent(fz::Event& event);
+		virtual void OnUpdate(float dt);
+		virtual void OnDraw(sf::RenderTexture& device);
+		virtual void OnGui();
+		virtual void OnCollide(const HitData& hit);
 
-		// 충돌 시스템
-		bool					IsActivatedCollider() const;
-		void					ActivateCollider(bool flags, const std::string& className);
-		void					SetCollider(const sf::Vector2f& origin, const sf::FloatRect& rect, const sf::Vector2f& scale = {1.0f, 1.0f});
-		void					SetColliderDisplayMode(bool enabled);
-
-		// 기타
-		static unsigned int		GetCount();
-
-	private:
-		static unsigned int		s_numOfLayers;
-		Collider*				m_body;
+		// ** Set ClassName **
+		virtual std::string GetClassName() const = 0;
 	};
 
 } // namespace fz

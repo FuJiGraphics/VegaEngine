@@ -3,9 +3,18 @@
 
 namespace fz {
 
-    Event::Event(const sf::Event& event)
-        : m_event(event)
+    Event::Event()
+        : m_event(sf::Event())
         , m_used(false)
+        , m_isEmpty(true)
+    {
+        // Empty
+    }
+
+    Event::Event(const sf::Event& other)
+        : m_event(other)
+        , m_used(false)
+        , m_isEmpty(false)
     {
         // Empty
     }
@@ -13,13 +22,46 @@ namespace fz {
     Event::Event(const Event& other)
         : m_event(other.m_event)
         , m_used(other.m_used)
+        , m_isEmpty(false)
     {
         // Empty
     }
 
+
+    Event::Event(Event&& other) noexcept
+        : m_event(other.m_event)
+        , m_used(other.m_used)
+        , m_isEmpty(false)
+    {
+        other.m_event = sf::Event();
+        other.m_used = false;
+        other.m_isEmpty = true;
+    }
+
     Event::~Event()
     {
-        // Empty
+        m_event = sf::Event();
+        m_used = false;
+        m_isEmpty = true;
+    }
+
+    Event& Event::operator=(const Event& other)
+    {
+        m_event = other.m_event;
+        m_used = other.m_used;
+        m_isEmpty = false;
+        return (*this);
+    }
+
+    Event& Event::operator=(Event&& other) noexcept
+    {
+        m_event = other.m_event;
+        m_used = other.m_used;
+        m_isEmpty = false;
+        other.m_event = sf::Event();
+        other.m_used = false;
+        other.m_isEmpty = true;
+        return (*this);
     }
 
     sf::Event& Event::get()
@@ -34,7 +76,7 @@ namespace fz {
 
     bool Event::empty() const
     {
-        return (m_used);
+        return m_isEmpty;
     }
 
 } // namespace fz

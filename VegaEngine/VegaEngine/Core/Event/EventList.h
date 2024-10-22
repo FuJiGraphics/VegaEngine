@@ -1,28 +1,27 @@
 #pragma once
 #include "Core/Core.h"
+#include "Core/Array.h"
 #include "Event.h"
-#include "LayerList.h"
 
 namespace fz {
 
-    class EventList
+    class EventList : public Array<Event>
     {
-        using iter = std::vector<Event>::iterator;
-        using const_iter = std::vector<Event>::const_iterator;
+    //// Delete, Enum, Using
+    protected:
+        // Delete
+        EventList(const EventList&) = delete;
+        void operator=(const EventList&) = delete;
 
+    //// Member Functions
     public:
-        explicit EventList();
+        // Constructor, Destructor
+        EventList();
         virtual ~EventList();
-        
-        void        DispatchTo(const LayerArray& layers);
-        void        push(const sf::Event& event);
-        bool        empty() const;
-        int         size() const;
-        iter        begin();
-        iter        end();
 
-    private:
-        std::vector<Event>  m_eventQueue;
+        // Impl
+        void push_back(const Event& event);
+        Event pop_front();
     };
 
 } // namespace fz

@@ -4,12 +4,11 @@
 
 namespace fz {
 
-	Window::Window(int width, int height, const char* name)
-		: m_width(width)
-		, m_height(height)
-		, m_name(name)
-		, m_hwnd(nullptr)
-		, m_isOpen(false)
+	Window::Window()
+		: m_Info({ 0, 0, "" })
+		, m_FrameBuffer()
+		, m_NativeWindow(nullptr)
+		, m_IsOpen(false)
 	{
 		// Empty
 	}
@@ -19,67 +18,54 @@ namespace fz {
 		this->Release();
 	}
 
-	void Window::Create()
+	void Window::Create(int width, int height, const std::string& title)
 	{
-		if (m_hwnd != nullptr)
-			return;
+		this->Release();
+		m_Info = { width, height, title };
 
-		sf::VideoMode mode(m_width, m_height);
-		m_hwnd = new sf::RenderWindow(mode, m_name);
+		sf::VideoMode mode(width, height);
+		m_FrameBuffer.create(width, height);
+		m_NativeWindow = new sf::RenderWindow(mode, title);
 
-		m_isOpen = true;
-
-		if (ImGui::SFML::Init(*m_hwnd))
+		if (ImGui::SFML::Init(*m_NativeWindow))
 		{
 			// std::cout << "¼º°ø!" << std::endl;
 		}
+		m_IsOpen = true;
 	}
 
 	void Window::Release()
 	{
-		if (m_hwnd != nullptr)
+		if (m_NativeWindow != nullptr)
 		{
 			ImGui::SFML::Shutdown();
-			delete m_hwnd;
-			m_hwnd = nullptr;
-			m_isOpen = false;
+			delete m_NativeWindow;
+			m_FrameBuffer.clear();
+			m_NativeWindow = nullptr;
+			m_Info = { 0, 0, "" };
+			m_IsOpen = false;
 		}
 	}
 
-	bool Window::IsOpen()
+	void Window::Event(EventManager& manager)
 	{
-		return m_isOpen;
-	}
+		if (!m_IsOpen)
+			return;
 
-	void Window::Event(EventQueue* dst)
-	{
 		sf::Event ev;
-		while (m_hwnd->pollEvent(ev))
+		while (m_NativeWindow->pollEvent(ev))
 		{
-			ImGui::SFML::ProcessEvent(*m_hwnd, ev);
+			ImGui::SFML::ProcessEvent(*m_NativeWindow, ev);
 			switch (ev.type)
 			{
-				case sf::Event::Closed:
-					m_isOpen = false;
-					break;
 				case sf::Event::GainedFocus:
+				case sf::Event::Closed:
+					m_IsOpen = false;
 					break;
 				default:
-					if (dst) {
-						dst->push(ev);
-					} break;
+					manager.pollEvent(ev);
 			}
 		}
-	}
-
-	sf::RenderWindow& Window::GetHandle()
-	{
-		return (*m_hwnd);
-	}
-
-	sf::RenderWindow& Window::GetHandle() const
-	{
-		return (*m_hwnd);
 	}
 
 } // namespace fz

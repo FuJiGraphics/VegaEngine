@@ -1,77 +1,45 @@
 #include "Core/stdafx.h"
-#include "ColliderArray.h"
+#include "ColliderList.h"
 
 namespace fz {
 
-	void ColliderArray::Attach(Collider** collider)
-	{
-		if (this->Find(collider) == m_ColArray.end())
-		{
-			(*collider) = new Collider;
-			m_ColArray.push_back(collider);
-		}
-	}
-
-	void ColliderArray::Detach(Collider** collider)
-	{
-		auto target = this->Find(collider);
-		if (target != m_ColArray.end())
-		{
-			m_ColArray.erase(target);
-			delete (*collider);
-			(*collider) = nullptr;
-		}
-	}
-
-	ColliderArray::iter ColliderArray::Find(Collider** target)
-	{
-		return std::find_if(m_ColArray.begin(), m_ColArray.end(),
-			[target](Collider** pTarget)
-			{
-				return (target == pTarget);
-			});
-	}
-
-	ColliderArray::iter ColliderArray::begin()
-	{
-		return (m_ColArray.begin());
-	}
-
-	ColliderArray::iter ColliderArray::end()
-	{
-		return (m_ColArray.end());
-	}
-
-	ColliderArray::const_iter ColliderArray::begin() const
-	{
-		return (m_ColArray.begin());
-	}
-
-	ColliderArray::const_iter ColliderArray::end() const
-	{
-		return (m_ColArray.end());
-	}
-
-	ColliderArray::ColliderArray()
-		: m_ColArray()
+	ColliderList::ColliderList()
 	{
 		// Empty
 	}
 
-	ColliderArray::~ColliderArray()
+	ColliderList::~ColliderList()
 	{
-		for (auto collder : m_ColArray)
+		// Empty
+	}
+
+	bool ColliderList::insert_safety(Layer* layer, Collider* collider)
+	{
+		bool result = false;
+		HitData findData = { layer, collider };
+		Iter find = Super::find(Super::begin(), Super::end(),
+			[&findData](HitData& target)
+			{
+				if (findData == target)
+					return true;
+			}
+		);
+		if (find != Super::end())
 		{
-
+			Super::insert({ layer, collider });
+			result = true;
 		}
+		return result;
 	}
 
-	void ColliderArray::Init()
+	void ColliderList::insert(Layer* layer, Collider* collider)
 	{
+		Super::insert({ layer, collider });
 	}
 
-	void ColliderArray::Release()
+	ColliderList::Iter ColliderList::remove(Layer* layer, Collider* collider)
 	{
+		return Super::remove({ layer, collider });
 	}
 
 } // namespace fz

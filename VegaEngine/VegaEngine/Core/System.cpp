@@ -1,110 +1,32 @@
 #include "Core/stdafx.h"
 #include "System.h"
 #include "Window.h"
-#include "LayerArray.h"
-#include "ColliderManager.h"
 #include "Framework/ResourceManager.h"
 #include "Platform/ImGui/ImGuiManager.h"
 
 namespace fz {
 
-	float	System::s_timeScale = 1.0f;
-
-	System& System::GetInstance()
+	void System::Create(int width, int height, const std::string& title)
 	{
-		static	System	s_system;
-		return (s_system);
-	}
-
-	void System::AttachLayer(Layer* pLayer)
-	{
-		System& system = System::GetInstance();
-		system.m_layerArray->InsertLayer(pLayer);
-		pLayer->OnAttach();
-	}
-
-	void System::AttachOverlay(Layer* pOverlay)
-	{
-		System& system = System::GetInstance();
-		system.m_layerArray->InsertOverlay(pOverlay);
-		pOverlay->OnAttach();
-	}
-
-	void System::DetachLayer(Layer* pLayer)
-	{
-		System& system = System::GetInstance();
-		system.m_layerArray->RemoveLayer(pLayer);
-		pLayer->OnDetach();
-	}
-
-	void System::DetachOverlay(Layer* ppOverlay)
-	{
-		System& system = System::GetInstance();
-		system.m_layerArray->RemoveOverlay(ppOverlay);
-		ppOverlay->OnDetach();
-	}
-
-	Layer* System::FindLayer(const std::string& className)
-	{
-		System& system = System::GetInstance();
-		Layer* target = nullptr;
-		for (auto layer : *system.m_layerArray)
-		{
-			if (className == layer->GetName())
-			{
-				target = layer;
-				break;
-			}
-		}
-		return (target);
-	}
-
-	void System::ExitProgram()
-	{
-		System& system = System::GetInstance();
-		system.m_isPlaying = false;
-		system.m_isReset = false;
-	}
-
-	void System::SetPause(bool enabled)
-	{
-		System& system = System::GetInstance();
-		system.m_isPause = enabled;
-		s_timeScale = (enabled) ? 0.0f : 1.0f;
-	}
-
-	void System::SetReset(bool enabled)
-	{
-		System& system = System::GetInstance();
-		system.m_isPlaying = (enabled) ? false : true;
-		system.m_isReset = enabled;
-	}
-
-	bool System::IsReset()
-	{
-		System& system = System::GetInstance();
-		return (system.m_isReset);
-	}
-
-	bool System::IsPaused()
-	{
-		System& system = System::GetInstance();
-		return (system.m_isPause);
-	}
-
-	void System::Init(const WindowInfo& info)
-	{
-		if (m_window != nullptr)
-			return;
-
-		m_window = new Window(info.Width, info.Height, info.Title.c_str());
-		m_window->Create();
-		m_width = info.Width;
-		m_height = info.Height;
-
-		m_RenderTarget.create(m_width, m_height);
+		this->Release();
+		m_Window = new Window();
+			m_RenderTarget.create(m_width, m_height);
 
 		ImGuiManager::Init(*m_window);
+	}
+
+	void System::Create(const WindowInfo& info)
+	{
+	}
+
+	void System::Release()
+	{
+		if (m_Window != nullptr)
+		{
+			m_Window->Release();
+			delete m_Window;
+			m_Window = nullptr;
+		}
 	}
 
 	void System::Run()
@@ -112,12 +34,8 @@ namespace fz {
 		sf::Clock clock;
 		while (m_isPlaying && m_window->IsOpen())
 		{
-			EventQueue eventQueue;
 			sf::Time dt = clock.restart();
 			s_timeScale = (m_isPause) ? 0.0f : 1.0f;
-
-			// 레이어 추가 요청 처리
-			m_layerArray->WorkingInsertLayers();
 
 			// 이벤트 루프
 			m_window->Event(&eventQueue);
@@ -132,17 +50,6 @@ namespace fz {
 			}
 
 			// 충돌 체크
-			auto& colManager = ColliderManager::GetInstance();
-			for (auto collider1 : colManager)
-			{
-				for (auto collider2 : colManager)
-				{
-					(*collider1)->IsCollided(**collider2);
-				}
-			}
-
-			// 삭제 요청된 레이어 정리
-			m_layerArray->WorkingGarbage();
 
 			// 모든 오브젝트 그리기
 			m_RenderTarget.clear(sf::Color::Red);
@@ -188,15 +95,6 @@ namespace fz {
 
 	void System::Reset()
 	{
-		if (!m_isReset)
-			return;
-
-		s_timeScale = 1.0f;
-		m_isPlaying = true;
-		m_isPause = false;
-		m_isReset = false;
-		this->ReleaseLayerArray();
-		this->CreateLayerArray();
 		fz::Texture::UnloadAll();
 		fz::Font::UnloadAll();
 	}

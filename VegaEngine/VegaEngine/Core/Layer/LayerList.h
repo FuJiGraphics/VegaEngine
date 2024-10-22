@@ -1,41 +1,33 @@
 #pragma once
-
-#include "Core.h"
+#include "Core/Core.h"
+#include "Core/Array.h"
 #include "Layer.h"
 
 namespace fz {
 
-	class LayerList
+	class LayerList : public Array<Layer*>
 	{
-		using iter = std::vector<Layer*>::iterator;
-		using const_iter = std::vector<Layer*>::const_iterator;
+	//// Delete, Enum, Using
+	protected:
+		// Delete
+		LayerList(const LayerList&) = delete;
+		void operator=(const LayerList&) = delete;
 
+	//// Member Functions
 	public:
-		explicit	LayerList();
-		virtual		~LayerList();
+		// Constructor, Destructor
+		LayerList();
+		virtual ~LayerList();
 
-		bool		InsertLayer(Layer* pLevel);
-		bool		InsertOverlay(Layer* pOverlay);
-		bool		RemoveLayer(Layer* pLevel);
-		bool		RemoveOverlay(Layer* pOverlay);
-		void		WorkingInsertLayers();
-		void		WorkingGarbage();
-		
-		bool		empty() const;
-		iter		find(Layer* target);
-		iter		begin();
-		iter		end();		
-		const_iter	begin() const;
-		const_iter	end() const;
+		// Impl 
+		void AttachLayer(Layer* layer);
+		void AttachOverlay(Layer* overlay);
+		void DetachLayer(Layer* layer);
+		void DetachOverlay(Layer* overlay);
 
-	private:
-		// TODO: 20241017) 구조 리팩토링
-		std::vector<Layer*>		m_LayerArray;
-		std::vector<Layer*>		m_AddLayerBuffer;
-		std::vector<Layer*>		m_AddOverlayBuffer;
-		std::vector<Layer*>		m_DeleteLayerBuffer;
-		std::vector<Layer*>		m_DeleteOverlayBuffer;
-		int						m_InsertIndex;
+	protected:
+		// new, delete
+		void Delete(Layer** pp);
 	};
 
 } // namespace fz
