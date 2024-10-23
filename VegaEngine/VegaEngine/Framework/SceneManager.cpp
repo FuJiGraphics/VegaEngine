@@ -4,7 +4,7 @@
 
 namespace fz {
 
-	static SceneList s_SceneList;
+	SceneList SceneManager::s_SceneList;
 
 	void SceneManager::Release()
 	{

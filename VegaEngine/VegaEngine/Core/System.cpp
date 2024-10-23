@@ -31,6 +31,8 @@ namespace fz {
 
 	void System::Release()
 	{
+		Texture::UnloadAll();
+		Font::UnloadAll();
 		if (m_Window != nullptr)
 		{
 			SceneManager::Release();
@@ -64,8 +66,8 @@ namespace fz {
 
 			// ImGui
 			ImGuiManager::Begin(dt);
-			ImGuiManager::ShowDemo();
 			m_Window->Render();
+			ImGuiManager::ShowDemo();
 			ImGuiManager::End();
 			m_Window->End();
 		}

@@ -86,8 +86,8 @@ namespace fz {
 
 	void Window::Render()
 	{
-		sf::Sprite sprite(m_Camera.getTexture());
-		m_NativeWindow->draw(sprite);
+		m_Sprite.setTexture(m_Camera.getTexture());
+		m_NativeWindow->draw(m_Sprite);
 		m_Camera.display();
 		m_NativeWindow->clear();
 		ImGui::Begin("Scene");

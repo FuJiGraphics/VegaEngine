@@ -3,6 +3,7 @@
 namespace fz {
 	
 	class Scene;
+	class SceneList;
 
 	class SceneManager
 	{
@@ -22,6 +23,9 @@ namespace fz {
 
 		// new, delete
 		static void Release();
+		
+	private:
+		static SceneList s_SceneList;
 	};
 
 } // namespace fz

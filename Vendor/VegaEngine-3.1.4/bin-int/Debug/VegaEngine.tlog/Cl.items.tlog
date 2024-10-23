@@ -1,0 +1,17 @@
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Camera\Camera.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Camera.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider\Collider.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Collider.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider\ColliderList.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\ColliderList.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Collider\HitData.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\HitData.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Event\Event.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Event.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Event\EventList.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\EventList.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Layer\Layer.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Layer.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Layer\LayerList.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\LayerList.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Scene\Scene.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Scene.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Scene\SceneList.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\SceneList.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\System.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\System.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\Window.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Window.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Core\stdafx.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\stdafx.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Framework\SceneManager.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\SceneManager.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Object\GameObject.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\GameObject.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Platform\ImGui\ImGuiManager.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\ImGuiManager.obj
+D:\VegaEngine\VegaEngine\VegaEngine\Utility\Math.cpp;D:\VegaEngine\Vendor\VegaEngine-3.1.4\bin-int\Debug\Math.obj

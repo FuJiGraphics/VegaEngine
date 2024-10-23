@@ -14,8 +14,8 @@ fz::Camera::~Camera()
 
 void fz::Camera::draw(const sf::Drawable& drawable, const sf::RenderStates& states)
 {
-	RenderTarget::setView(m_View);
-	RenderTarget::draw(drawable, states);
+	RenderTexture::setView(m_View);
+	RenderTexture::draw(drawable);
 }
 
 void fz::Camera::SetCenter(const sf::Vector2f& pos)

@@ -50,6 +50,7 @@ namespace fz {
 		Camera m_Camera;
 		sf::RenderWindow* m_NativeWindow;
 		bool m_IsOpen;
+		sf::Sprite m_Sprite;
 	};
 
 } // namespace fz
