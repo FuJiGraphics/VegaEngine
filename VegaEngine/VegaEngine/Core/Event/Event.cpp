@@ -40,9 +40,7 @@ namespace fz {
 
     Event::~Event()
     {
-        m_event = sf::Event();
-        m_used = false;
-        m_isEmpty = true;
+        // Empty
     }
 
     Event& Event::operator=(const Event& other)

@@ -25,7 +25,6 @@ namespace fz {
 
 		// Inlines
 		inline bool IsClosed() const			{ return m_IsClosed; }
-		inline SceneList* GetSceneList() const	{ return m_SceneList; }
 
 	//// Member Variables
 	private:
@@ -33,7 +32,6 @@ namespace fz {
 		bool m_IsPause;
 		bool m_IsClosed;
 		float m_TimeScale;
-		SceneList* m_SceneList;
 	};
 
 } // namespace fz

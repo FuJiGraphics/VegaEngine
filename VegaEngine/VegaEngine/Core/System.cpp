@@ -4,6 +4,7 @@
 #include "Framework/ResourceManager.h"
 #include "Platform/ImGui/ImGuiManager.h"
 #include "Event/EventList.h"
+#include "Framework/SceneManager.h"
 
 namespace fz {
 
@@ -26,14 +27,13 @@ namespace fz {
 		this->Release();
 		m_Window = new Window();
 		m_Window->Create(width, height, title);
-		m_SceneList = new SceneList();
-		m_SceneList->InsertScene("1");
 	}
 
 	void System::Release()
 	{
 		if (m_Window != nullptr)
 		{
+			SceneManager::Release();
 			m_Window->Release();
 			delete m_Window;
 			m_Window = nullptr;
@@ -51,16 +51,16 @@ namespace fz {
 			EventList eventQueue;
 			// 이벤트 루프
 			m_Window->Event(eventQueue);
-			m_SceneList->Event(eventQueue);
+			SceneManager::Event(eventQueue);
 
 			// Layer 업데이트
-			m_SceneList->Update(dt.asSeconds());
+			SceneManager::Update(dt.asSeconds());
 
 			// 충돌 체크
 
 			// 모든 오브젝트 그리기
 			m_Window->Begin();
-			m_SceneList->Draw(*m_Window);
+			SceneManager::Draw(*m_Window);
 
 			// ImGui
 			ImGuiManager::Begin(dt);

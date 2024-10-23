@@ -8,6 +8,7 @@
 
 // Frameworks
 #include "Framework/ResourceManager.h"
+#include "Framework/SceneManager.h"
 
 // Utility
 #include "Utility/Math.h"

@@ -11,7 +11,7 @@ namespace fz {
 
 	Scene::~Scene()
 	{
-		this->Release();
+		// Empty
 	}
 
 	void Scene::Init(const std::string& sceneID)
@@ -21,6 +21,11 @@ namespace fz {
 	
 	void Scene::Release()
 	{
+		if (m_LayerList.empty())
+			return;
+
+		for (auto& layer : m_LayerList)
+			layer->OnDetach();
 		m_LayerList.clear();
 		m_SceneID = "";
 	}

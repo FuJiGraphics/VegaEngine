@@ -11,18 +11,26 @@ namespace fz {
 
 	SceneList::~SceneList()
 	{
-		this->Release();
+		// Empty
 	}
 
 	void SceneList::Release()
 	{
-		for (Scene* scene : *this)
+		if (Super::empty())
+			return;
+
+		std::vector<Scene*> deleteArray;
+		for (auto scene : *this)
 		{
-			if (scene != nullptr)
+			scene->Release();
+			deleteArray.push_back(scene);
+		}
+		for (auto del : deleteArray)
+		{
+			if (del)
 			{
-				scene->Release();
-				delete scene;
-				scene = nullptr;
+				delete del;
+				del = nullptr;
 			}
 		}
 	}

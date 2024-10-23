@@ -4,14 +4,14 @@
 
 WindowInfo CreateApplication()
 {
-	return { 1920, 1080, "Game" };
+	return { 1920, 1080, "Pokemon" };
 }
 
 void Runtime(System& system)
 {
-	auto sceneList = system.GetSceneList();
-	auto scene = sceneList->GetCurrentScene();
-	(*scene)->InsertOverlay<Application>(new Application);
+	fz::SceneManager::InsertScene("1");
+	auto scene = fz::SceneManager::GetCurrentScene();
+	scene->InsertOverlay<Application>(new Application);
 }
 
 int main(void)
