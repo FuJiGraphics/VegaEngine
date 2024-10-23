@@ -1,5 +1,7 @@
 #include "Core/stdafx.h"
 #include "HitData.h"
+#include "Core/Layer/Layer.h"
+#include "Core/Collider/Collider.h"
 
 namespace fz {
     namespace _internal {
@@ -92,6 +94,7 @@ namespace fz {
     {
         m_Class = other.m_Class;
         m_Collider = other.m_Collider;
+        return *this;
     }
 
     HitData& HitData::operator=(HitData&& other)
@@ -99,6 +102,7 @@ namespace fz {
         m_Class = other.m_Class;
         m_Collider = other.m_Collider;
         other.reset();
+        return *this;
     }
 
     bool HitData::operator==(const HitData& other)

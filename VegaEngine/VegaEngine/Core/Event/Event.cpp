@@ -64,6 +64,16 @@ namespace fz {
         return (*this);
     }
 
+    bool Event::operator==(const Event& other)
+    {
+        return m_event.type == other.m_event.type;
+    }
+
+    bool Event::operator==(const Event&& other)
+    {
+        return m_event.type == other.m_event.type;
+    }
+
     sf::Event& Event::get()
     {
         return (m_event);

@@ -23,7 +23,7 @@ files
 includedirs
 {
 	"%{prj.name}",
-	"%{IncludeDir.VEGAENGINE}/include/",
+	"%{IncludeDir.VEGAENGINE}/include/VegaEngine/",
 	"%{IncludeDir.IMGUI}/",
 	"%{wks.location}/Vendor/SFML-2.6.1/include/",
 }

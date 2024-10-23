@@ -1,4 +1,5 @@
 #include "Core/stdafx.h"
+#include "Event/Event.h"
 #include "Window.h"
 
 namespace fz {
@@ -62,9 +63,36 @@ namespace fz {
 					m_IsOpen = false;
 					break;
 				default:
-					events.push_back(ev);
+					events.push_back(fz::Event(ev));
 			}
 		}
+	}
+
+	void Window::Display()
+	{
+		m_FrameBuffer.clear();
+		m_NativeWindow->clear();
+	}
+
+	void Window::Begin()
+	{
+	}
+
+	void Window::End()
+	{
+		m_NativeWindow->display();
+	}
+
+	void Window::Render()
+	{
+		sf::Sprite sprite(m_FrameBuffer.getTexture());
+		m_NativeWindow->draw(sprite);
+		m_FrameBuffer.display();
+		m_NativeWindow->clear();
+		ImGui::Begin("Scene");
+		ImVec2 windowSize = ImGui::GetContentRegionAvail();
+		ImGui::Image(m_FrameBuffer.getTexture().getNativeHandle(), windowSize, {0.0f, 1.0f}, {1.0f, 0.0f});
+		ImGui::End();
 	}
 
 } // namespace fz

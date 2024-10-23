@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "Scene.h"
 
 namespace fz {
@@ -28,12 +29,12 @@ namespace fz {
 	{
 		for (auto event : events)
 		{
-			if (event.empty())
+			if (event->empty())
 				continue;
 			for (auto layer : m_LayerList)
 			{
 				// 이벤트는 활성화 여부와 상관없이 동작하도록 함
-				layer->OnEvent(event);
+				layer->OnEvent(*event);
 			}
 		}
 	}
@@ -67,13 +68,7 @@ namespace fz {
 
 	void Scene::Collision()
 	{
-		for (auto layer : m_LayerList)
-		{
-			if (layer->IsActivated())
-			{
-				layer->OnGui();
-			}
-		}
+		
 	}
 
 } // namespace fz

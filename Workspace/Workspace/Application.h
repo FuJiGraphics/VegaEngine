@@ -1,20 +1,19 @@
 #pragma once
 
 // Headers
-#include "VegaEngine/Engine.h"
+#include "Engine.h"
 
 class Application : public fz::Layer
 {
 public:
-	DSetClassName(Application);
+	std::string GetClassName() const override { return "Application"; }
 	
-	void			OnAttach() override;
-	void			OnEvent(fz::Event& event) override;
-
-public:
-	bool	IsFirstStart() const;
+	void	OnAttach() override;
+	void	OnEvent(fz::Event& event) override;
+	void	OnUpdate(float dt) override;
+	void	OnDraw(sf::RenderTexture& device) override;
 
 private:
-	bool	m_IsFirstStart;
+	sf::Sprite sprite;
 };
 

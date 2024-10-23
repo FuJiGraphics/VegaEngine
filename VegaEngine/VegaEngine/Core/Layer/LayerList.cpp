@@ -1,3 +1,4 @@
+#include "Core/stdafx.h"
 #include "LayerList.h"
 
 namespace fz {
@@ -13,11 +14,13 @@ namespace fz {
 
 	void LayerList::AttachLayer(Layer* layer)
 	{
+		layer->OnAttach();
 		Super::insert(layer, Section::Right);
 	}
 
 	void LayerList::AttachOverlay(Layer* overlay)
 	{
+		overlay->OnAttach();
 		Super::insert(overlay, Section::Left);
 	}
 

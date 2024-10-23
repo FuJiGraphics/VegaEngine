@@ -1,5 +1,6 @@
 #include "Core/stdafx.h"
 #include "EventList.h"
+#include "Event.h"
 
 namespace fz {
 
@@ -13,16 +14,14 @@ namespace fz {
 		// Empty
 	}
 
-	void EventList::push_back(const Event& event)
+	void EventList::push_back(fz::Event& event)
 	{
-		Super::insert(event, Section::Right);
+		Super::insert(&event, Section::Right);
 	}
 
-	Event EventList::pop_front()
+	void EventList::pop_front()
 	{
-		Event ev = (*Super::begin());
-		Super::remove(ev, Section::Right);
-		return ev;
+		Super::pop_front();
 	}
 
 } // namespace fz

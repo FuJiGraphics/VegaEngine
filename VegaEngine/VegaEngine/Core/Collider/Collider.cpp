@@ -1,5 +1,6 @@
 #include "Core/stdafx.h"
 #include "Collider.h"
+#include "Core/Layer/Layer.h"
 
 namespace fz {
 
@@ -30,10 +31,10 @@ namespace fz {
 		m_Box.setSize({ tRec.width, tRec.height });
 		m_Box.setScale(scale);
 		auto& globalPos = m_Box.getGlobalBounds();
-		m_rect.x = globalPos.left;
-		m_rect.y = globalPos.top;
-		m_rect.w = m_rect.x + globalPos.width;
-		m_rect.h = m_rect.y + globalPos.height;
+		m_rect.x = static_cast<int>(globalPos.left);
+		m_rect.y = static_cast<int>(globalPos.top);
+		m_rect.w = m_rect.x + static_cast<int>(globalPos.width);
+		m_rect.h = m_rect.y + static_cast<int>(globalPos.height);
 		m_isActivate = true;
 	}
 
@@ -43,7 +44,7 @@ namespace fz {
 		auto& pos = layer->GetPosition();
 		auto& scale = layer->GetScale();
 		auto& size = layer->GetSize();
-		this->SetPosition(origin, { pos.x, pos.y, size.x, size.y }, scale);
+		this->SetPosition(origin, { pos.x, pos.y, (float)size.x, (float)size.y }, scale);
 	}
 
 	bool Collider::IsCollided(Collider& other)

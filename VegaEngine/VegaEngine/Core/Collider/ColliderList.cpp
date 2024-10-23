@@ -1,5 +1,6 @@
 #include "Core/stdafx.h"
 #include "ColliderList.h"
+#include "Core/Layer/Layer.h"
 
 namespace fz {
 
@@ -24,6 +25,7 @@ namespace fz {
 			{
 				if (findData.ClassName() == target.ClassName())
 					return true;
+				return false;
 			}
 		);
 		if (find != Super::end())
@@ -51,11 +53,11 @@ namespace fz {
 			});
 		if (iter != Super::end())
 		{
-			iter->m_Class = nullptr;
-			if (iter->m_Collider)
+			iter->SetLayer(nullptr);
+			if (iter->GetCollider())
 			{
-				delete iter->m_Collider;
-				iter->m_Collider = nullptr;
+				delete iter->GetCollider();
+				iter->SetCollider(nullptr);
 			}
 		}
 		return iter;
@@ -65,11 +67,11 @@ namespace fz {
 	{
 		for (auto& iter : *this)
 		{
-			iter.m_Class = nullptr;
-			if (iter.m_Collider)
+			iter.SetLayer(nullptr);
+			if (iter.GetCollider())
 			{
-				delete iter.m_Collider;
-				iter.m_Collider = nullptr;
+				delete iter.GetCollider();
+				iter.SetCollider(nullptr);
 			}
 		}
 	}

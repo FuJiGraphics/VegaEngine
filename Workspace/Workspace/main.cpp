@@ -1,19 +1,21 @@
 #include "stdafx.h"
-#include "VegaEngine/Engine.h"
+#include "Engine.h"
 #include "Application.h"
 
-WindowInfo fz::CreateApplication()
+WindowInfo CreateApplication()
 {
 	return { 1920, 1080, "Game" };
 }
 
-void fz::Runtime()
+void Runtime(System& system)
 {
-	System::AttachLayer(new Application);
+	auto sceneList = system.GetSceneList();
+	auto scene = sceneList->GetCurrentScene();
+	(*scene)->InsertOverlay<Application>(new Application);
 }
 
 int main(void)
 {
 	BeginProcess();
-
+	return (0);
 }
