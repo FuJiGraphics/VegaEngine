@@ -11,9 +11,11 @@ public:
 	void	OnAttach() override;
 	void	OnEvent(fz::Event& event) override;
 	void	OnUpdate(float dt) override;
-	void	OnDraw(sf::RenderTexture& device) override;
+	void	OnDraw(Camera& camera) override;
 
 private:
 	sf::Sprite sprite;
+	float speed;
+	Camera* m_Camera;
 };
 

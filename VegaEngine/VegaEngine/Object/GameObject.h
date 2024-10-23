@@ -22,12 +22,12 @@ namespace fz {
 		void OnDetach() override {};
 		void OnEvent(fz::Event& event) override {};
 		void OnUpdate(float dt) override {};
-		void OnDraw(sf::RenderTexture& device) override {};
+		void OnDraw(Camera& camera) override {};
 		void OnGui() override {};
 		void OnCollide(const HitData& hit) override {};
 
 	private:
-		sf::Sprite m_Object;
+		sf::Sprite	m_Object;
 	};
 
 

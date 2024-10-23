@@ -3,7 +3,8 @@
 #include "Core/Core.h"
 #include "Core/Event/Event.h"
 #include "Core/Collider/Collider.h"
-#include "../Collider/HitData.h"
+#include "Core/Collider/HitData.h"
+#include "Core/Camera/Camera.h"
 
 namespace fz {
 
@@ -32,7 +33,7 @@ namespace fz {
 		virtual void OnDetach();
 		virtual void OnEvent(fz::Event& event);
 		virtual void OnUpdate(float dt);
-		virtual void OnDraw(sf::RenderTexture& device);
+		virtual void OnDraw(Camera& camera);
 		virtual void OnGui();
 		virtual void OnCollide(const HitData& hit);
 

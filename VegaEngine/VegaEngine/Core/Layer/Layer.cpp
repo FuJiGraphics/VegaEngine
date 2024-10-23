@@ -38,7 +38,7 @@ namespace fz {
         // Empty
     }
 
-    void Layer::OnDraw(sf::RenderTexture& device)
+    void Layer::OnDraw(Camera& camera)
     {
         // Empty
     }

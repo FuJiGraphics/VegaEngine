@@ -6,7 +6,7 @@ namespace fz {
 
 	Window::Window()
 		: m_Info({ 0, 0, "" })
-		, m_FrameBuffer()
+		, m_Camera()
 		, m_NativeWindow(nullptr)
 		, m_IsOpen(false)
 	{
@@ -24,7 +24,7 @@ namespace fz {
 		m_Info = { width, height, title };
 
 		sf::VideoMode mode(width, height);
-		m_FrameBuffer.create(width, height);
+		m_Camera.create(width, height);
 		m_NativeWindow = new sf::RenderWindow(mode, title);
 
 		if (ImGuiManager::Init(*this))
@@ -40,7 +40,7 @@ namespace fz {
 		{
 			ImGuiManager::Shutdown();
 			delete m_NativeWindow;
-			m_FrameBuffer.clear();
+			m_Camera.clear();
 			m_NativeWindow = nullptr;
 			m_Info = { 0, 0, "" };
 			m_IsOpen = false;
@@ -58,9 +58,10 @@ namespace fz {
 			ImGuiManager::PollEvent(ev);
 			switch (ev.type)
 			{
-				case sf::Event::GainedFocus:
 				case sf::Event::Closed:
 					m_IsOpen = false;
+					break;
+				case sf::Event::GainedFocus:
 					break;
 				default:
 					events.push_back(fz::Event(ev));
@@ -70,7 +71,7 @@ namespace fz {
 
 	void Window::Display()
 	{
-		m_FrameBuffer.clear();
+		m_Camera.clear();
 		m_NativeWindow->clear();
 	}
 
@@ -85,13 +86,13 @@ namespace fz {
 
 	void Window::Render()
 	{
-		sf::Sprite sprite(m_FrameBuffer.getTexture());
+		sf::Sprite sprite(m_Camera.getTexture());
 		m_NativeWindow->draw(sprite);
-		m_FrameBuffer.display();
+		m_Camera.display();
 		m_NativeWindow->clear();
 		ImGui::Begin("Scene");
 		ImVec2 windowSize = ImGui::GetContentRegionAvail();
-		ImGui::Image(m_FrameBuffer.getTexture().getNativeHandle(), windowSize, {0.0f, 1.0f}, {1.0f, 0.0f});
+		ImGui::Image(m_Camera.getTexture().getNativeHandle(), windowSize, {0.0f, 1.0f}, {1.0f, 0.0f});
 		ImGui::End();
 	}
 

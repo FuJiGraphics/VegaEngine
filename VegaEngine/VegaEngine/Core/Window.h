@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "Core/Event/EventList.h"
+#include "Core/Camera/Camera.h"
 
 namespace fz {
 
@@ -38,13 +39,15 @@ namespace fz {
 		inline bool IsOpen() const								{ return m_IsOpen; }
 		inline sf::RenderWindow& GetRenderWindow()				{ return (*m_NativeWindow); }
 		inline sf::RenderWindow& GetRenderWindow() const		{ return (*m_NativeWindow); }
-		inline sf::RenderTexture& GetFrameBuffer()				{ return m_FrameBuffer; }
-		inline const sf::RenderTexture& GetFrameBuffer() const	{ return m_FrameBuffer; }
+		inline sf::RenderTexture& GetFrameBuffer()				{ return m_Camera; }
+		inline const sf::RenderTexture& GetFrameBuffer() const	{ return m_Camera; }
+		inline Camera& GetCamera()								{ return m_Camera; }
+		inline const Camera& GetCamera() const					{ return m_Camera; }
 
 	//// Member Variables
 	private:
 		WindowInfo m_Info;
-		sf::RenderTexture m_FrameBuffer;
+		Camera m_Camera;
 		sf::RenderWindow* m_NativeWindow;
 		bool m_IsOpen;
 	};

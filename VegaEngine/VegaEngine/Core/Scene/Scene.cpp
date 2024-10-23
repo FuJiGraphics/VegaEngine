@@ -53,7 +53,7 @@ namespace fz {
 		for (auto layer : m_LayerList)
 		{
 			if (layer->IsActivated())
-				layer->OnDraw(window.GetFrameBuffer());
+				layer->OnDraw(window.GetCamera());
 		}
 	}
 

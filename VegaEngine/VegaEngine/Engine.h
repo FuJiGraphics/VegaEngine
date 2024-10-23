@@ -4,6 +4,7 @@
 #include "Core/System.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Collider/Collider.h"
+#include "Core/Camera/Camera.h"
 
 // Frameworks
 #include "Framework/ResourceManager.h"
