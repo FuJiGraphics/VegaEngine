@@ -1,10 +1,10 @@
 #pragma once
 #include "Engine.h"
 
-class World : public Layer
+class Player : public fz::GameObject
 {
 public:
-	std::string GetClassName() const override { return "World"; }
+	std::string GetClassName() const override { return "Player"; }
 
 	void OnAttach() override;
 	void OnEvent(fz::Event& event) override;
@@ -12,7 +12,6 @@ public:
 	void OnDraw(Camera& camera) override;
 
 private:
-	sf::Texture Texture;
-	Camera* camera;
+	sf::Texture Tex;
+	float Speed;
 };
-

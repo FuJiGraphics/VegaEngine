@@ -13,6 +13,9 @@
 // Utility
 #include "Utility/Math.h"
 
+// Objects
+#include "Object/GameObject.h"
+
 // Entry Point
 #include "Core/EntryPoint.h"
 

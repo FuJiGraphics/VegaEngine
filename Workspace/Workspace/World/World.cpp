@@ -3,39 +3,17 @@
 
 void World::OnAttach()
 {
+	float aspect = 1280.f / 768.f;
 	Texture::Load("res/Map.png");
-	Body = Texture::Get("res/Map.png");
+	Texture = Texture::Get("res/Map.png");
+	Object.Position = { 0.0f, 0.0f };
+	Object.Scale = { 3.68f * aspect, 5.36f * aspect };
+	Object.Sprite.setTexture(Texture);
 	camera = nullptr;
 }
 
 void World::OnEvent(fz::Event& event)
 {
-	if (camera == nullptr)
-		return;
-
-	switch (event.get().type)
-	{
-	case sf::Event::KeyPressed:
-	{
-		switch (event.get().key.code)
-		{
-		case sf::Keyboard::Left:
-			camera->Move({ -10.0f, 0.0f });
-			break;
-		case sf::Keyboard::Right:
-			camera->Move({ 10.0f, 0.0f });
-			break;
-		case sf::Keyboard::Up:
-			camera->Move({ 0.0f, +10.0f });
-			break;
-		case sf::Keyboard::Down:
-			camera->Move({ 0.0f, 10.0f });
-			break;
-		}
-	}
-
-		break;
-	}
 }
 
 void World::OnUpdate(float dt)
@@ -44,8 +22,6 @@ void World::OnUpdate(float dt)
 
 void World::OnDraw(Camera& camera)
 {
-	sf::Sprite a(Body);
-	a.setScale(5.0f, 10.0f);
-	camera.draw(a);
-	this->camera = &camera;
+	camera.SetBlockArea(0.0f, 0.0f, 1280.f * 1.37f, 4000.f);
+	camera.draw(this);
 }

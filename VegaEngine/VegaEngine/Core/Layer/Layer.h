@@ -7,6 +7,16 @@
 #include "Core/Camera/Camera.h"
 
 namespace fz {
+	class Camera;
+
+	struct Object 
+	{
+		sf::Vector2f Origin = { 0.0f, 0.0f };
+		sf::Vector2f Position = { 0.0f, 0.0f };
+		sf::Vector2f Scale = { 1.0f, 1.0f };
+		sf::Vector2u Size = { 0, 0 };
+		sf::Sprite Sprite;
+	};
 
 	class Layer
 	{
@@ -33,29 +43,30 @@ namespace fz {
 		virtual void OnDetach();
 		virtual void OnEvent(fz::Event& event);
 		virtual void OnUpdate(float dt);
-		virtual void OnDraw(Camera& camera);
+		virtual void OnDraw(fz::Camera& camera);
 		virtual void OnGui();
 		virtual void OnCollide(const HitData& hit);
 
 		// Inlines
-		inline bool IsActivated() const						{ return m_IsActivate; }
-		inline sf::Vector2f GetOrigin() const				{ return m_Origin; }
-		inline sf::Vector2f GetPosition() const				{ return m_Pos; }
-		inline sf::Vector2f GetScale() const				{ return m_Scale; }
-		inline sf::Vector2u GetSize() const					{ return m_Size; }
-		inline void SetActivate(bool enabled)				{ m_IsActivate = enabled; }
-		inline void SetOrigin(const sf::Vector2f& origin)	{ m_Origin = origin; }
-		inline void SetPosition(const sf::Vector2f& pos) 	{ m_Pos = pos; }
-		inline void SetScale(const sf::Vector2f& scale)		{ m_Scale = scale; }
-		inline void SetSize(const sf::Vector2u& size) 		{ m_Size = size; }
+		inline Object& GetObject()							{ return Object; }
+		inline const Object& GetObject() const				{ return Object; }
+		inline bool IsActivated() const						{ return IsActivate; }
+		inline sf::Vector2f GetOrigin() const				{ return Object.Origin; }
+		inline sf::Vector2f GetPosition() const				{ return Object.Position; }
+		inline sf::Vector2f GetScale() const				{ return Object.Scale; }
+		inline sf::Vector2u GetSize() const					{ return Object.Size; }
+		inline void SetObject(const Object& obj)			{ Object = obj; }
+		inline void SetActivate(bool enabled)				{ IsActivate = enabled; }
+		inline void SetOrigin(const sf::Vector2f& origin)	{ Object.Origin = origin; }
+		inline void SetPosition(const sf::Vector2f& pos) 	{ Object.Position = pos; }
+		inline void SetScale(const sf::Vector2f& scale)		{ Object.Scale = scale; }
+		inline void SetSize(const sf::Vector2u& size) 		{ Object.Size = size; }
+
 
 	//// Member Variables
 	protected:
-		sf::Vector2f m_Origin;
-		sf::Vector2f m_Pos;
-		sf::Vector2f m_Scale;
- 		sf::Vector2u m_Size;
-		bool m_IsActivate;
+		bool IsActivate;
+		Object Object;
 	};
 
 } // namespace fz

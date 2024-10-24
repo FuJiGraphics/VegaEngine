@@ -87,13 +87,13 @@ namespace fz {
 	void Window::Render()
 	{
 		m_Sprite.setTexture(m_Camera.getTexture());
-		m_NativeWindow->draw(m_Sprite);
 		m_Camera.display();
-		m_NativeWindow->clear();
 		ImGui::Begin("Scene");
 		ImVec2 windowSize = ImGui::GetContentRegionAvail();
 		ImGui::Image(m_Camera.getTexture().getNativeHandle(), windowSize, {0.0f, 1.0f}, {1.0f, 0.0f});
 		ImGui::End();
+		m_NativeWindow->draw(m_Sprite);
+		m_NativeWindow->clear();
 	}
 
 } // namespace fz

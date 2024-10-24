@@ -1,7 +1,11 @@
 
+bin-int/
 Build/
+.github/
 .vs/
 
+*.obj
+*.tlog
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user

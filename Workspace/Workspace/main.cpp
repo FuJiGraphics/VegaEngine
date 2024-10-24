@@ -4,7 +4,7 @@
 
 WindowInfo CreateApplication()
 {
-	return { 1920, 1080, "Pokemon" };
+	return { 1280, 768, "Pokemon" };
 }
 
 void Runtime(System& system)

@@ -25,13 +25,15 @@ namespace fz {
 				if (success)
 				{
 					m_resources.insert({ path, resource });
+					return (true);
 				}
 				else
 				{
 					delete resource;
 					resource = nullptr;
+					return (false);
 				}
-				return (true);
+				return (false);
 			}
 
 			inline bool Unload(const std::string& path)

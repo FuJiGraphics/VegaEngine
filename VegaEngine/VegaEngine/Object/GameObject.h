@@ -25,9 +25,6 @@ namespace fz {
 		void OnDraw(Camera& camera) override {};
 		void OnGui() override {};
 		void OnCollide(const HitData& hit) override {};
-
-	private:
-		sf::Sprite	m_Object;
 	};
 
 

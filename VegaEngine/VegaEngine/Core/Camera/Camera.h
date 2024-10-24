@@ -1,5 +1,7 @@
 #pragma once
 #include "Core/Core.h"
+#include "Core/Layer/Layer.h"
+#include "Core/Layer/Layer.h"
 
 namespace fz {
 
@@ -18,20 +20,26 @@ namespace fz {
 		virtual ~Camera();
 
 		// Impl
-		void draw(const sf::Drawable& drawable, const sf::RenderStates& states = sf::RenderStates::Default);
+		void draw(Layer* object, const sf::RenderStates& states = sf::RenderStates::Default);
 		void SetCenter(const sf::Vector2f& pos);
 		void SetRotate(float rotate);
 		void SetZoom(float factor);
 		void Move(const sf::Vector2f& preset);
+		void SetBlockArea(float x, float y, float width, float height);
 
 		// Inlines
-		inline void SetName(const std::string& name) { m_Name = name; }
-		inline std::string GetName() const { return m_Name; }
+		inline void SetName(const std::string& name)	{ m_Name = name; }
+		inline std::string GetName() const				{ return m_Name; }
+		// TODO: 임시
+		void SetTarget(Layer* layer)					{ m_Target = layer; }
 
 	//// Member Variables
 	private:
+		sf::FloatRect m_BlockArea;
 		sf::View m_View;
 		std::string m_Name;
+		// TODO: 임시
+		Layer* m_Target;
 	};
 
 } // namespace fz
