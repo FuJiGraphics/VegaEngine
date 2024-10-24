@@ -15,6 +15,11 @@ void Player::OnAttach()
 	Object.Scale = { 2.1f, 3.0f };
 	Object.Sprite.setTexture(Tex);
 	Object.Sprite.setTextureRect({ 0, 0, 60, 60 });
+	Object.Size = { 60, 60 };
+	auto currScene = SceneManager::GetCurrentScene();
+	currScene->InsertCollideSystem(this);
+	CollideBox.Position = { 0.0f, +30.0f };
+	IsDisplayCollider = true;
 }
 
 void Player::OnEvent(fz::Event& event)
@@ -47,4 +52,9 @@ void Player::OnDraw(Camera& camera)
 {
 	camera.SetTarget(this);
 	camera.draw(this);
+}
+
+void Player::OnCollide(const HitData& hit)
+{
+	std::cout << "플레이어 충돌!" << std::endl;
 }

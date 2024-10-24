@@ -10,6 +10,7 @@ public:
 	void OnEvent(fz::Event& event) override;
 	void OnUpdate(float dt) override;
 	void OnDraw(Camera& camera) override;
+	void OnCollide(const HitData& hit) override;
 
 private:
 	sf::Texture Tex;
