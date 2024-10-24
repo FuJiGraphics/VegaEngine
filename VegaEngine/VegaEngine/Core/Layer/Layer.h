@@ -9,6 +9,12 @@
 namespace fz {
 	class Camera;
 
+	struct CollideInfo
+	{
+		sf::Vector2f Position = { 0.0f, 0.0f };
+		sf::Vector2u Size = { 0, 0 };
+	};
+
 	struct Object 
 	{
 		sf::Vector2f Origin = { 0.0f, 0.0f };
@@ -48,6 +54,7 @@ namespace fz {
 		virtual void OnCollide(const HitData& hit);
 
 		// Inlines
+		inline bool ActivatedDisplayCollider() const		{ return IsDisplayCollider; }
 		inline Object& GetObject()							{ return Object; }
 		inline const Object& GetObject() const				{ return Object; }
 		inline bool IsActivated() const						{ return IsActivate; }
@@ -55,6 +62,8 @@ namespace fz {
 		inline sf::Vector2f GetPosition() const				{ return Object.Position; }
 		inline sf::Vector2f GetScale() const				{ return Object.Scale; }
 		inline sf::Vector2u GetSize() const					{ return Object.Size; }
+		inline sf::Vector2f GetCollidePos() const			{ return CollideBox.Position; }
+		inline sf::Vector2u GetCollideSize() const			{ return CollideBox.Size; }
 		inline void SetObject(const Object& obj)			{ Object = obj; }
 		inline void SetActivate(bool enabled)				{ IsActivate = enabled; }
 		inline void SetOrigin(const sf::Vector2f& origin)	{ Object.Origin = origin; }
@@ -65,8 +74,10 @@ namespace fz {
 
 	//// Member Variables
 	protected:
+		bool IsDisplayCollider;
 		bool IsActivate;
 		Object Object;
+		CollideInfo CollideBox;
 	};
 
 } // namespace fz

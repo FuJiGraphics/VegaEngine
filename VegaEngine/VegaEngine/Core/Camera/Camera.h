@@ -20,6 +20,7 @@ namespace fz {
 		virtual ~Camera();
 
 		// Impl
+		void draw(const sf::Drawable& obj, const sf::RenderStates& states = sf::RenderStates::Default);
 		void draw(Layer* object, const sf::RenderStates& states = sf::RenderStates::Default);
 		void SetCenter(const sf::Vector2f& pos);
 		void SetRotate(float rotate);

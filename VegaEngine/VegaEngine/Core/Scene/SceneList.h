@@ -27,8 +27,10 @@ namespace fz {
 
 		void Event(EventList& events);
 		void Update(float dt);
+		void UpdateCollider();
 		void Draw(fz::Window& window);
 		void DrawGui();
+		void DrawCollisionSystem(fz::Window& window);
 		void Collision();
 
 		// Inlines

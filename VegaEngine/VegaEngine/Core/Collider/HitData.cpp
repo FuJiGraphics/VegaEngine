@@ -31,7 +31,7 @@ namespace fz {
 
    	std::string HitData::ClassName() const
 	{
-		return _internal::demangle(typeid(m_Class).name());
+		return m_Class->GetClassName();
 	}
 
     void HitData::SetLayer(Layer* layer)

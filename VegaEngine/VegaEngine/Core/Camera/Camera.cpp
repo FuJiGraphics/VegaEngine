@@ -16,6 +16,11 @@ namespace fz {
 		// Empty
 	}
 
+	void Camera::draw(const sf::Drawable& obj, const sf::RenderStates& states)
+	{
+		RenderTexture::draw(obj, states);
+	}
+
 	void Camera::draw(Layer* object, const sf::RenderStates& states)
 	{
 		auto& obj = object->GetObject();

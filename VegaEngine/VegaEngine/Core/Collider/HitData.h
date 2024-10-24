@@ -37,7 +37,9 @@ namespace fz{
 		bool operator==(const HitData& other);
 
 		// inlines
-		Collider* GetCollider() const { return m_Collider; }
+		inline Collider* GetCollider() const	{ return m_Collider; }
+		inline Layer* GetLayer()				{ return m_Class; }
+		inline Layer* GetLayer() const			{ return m_Class; }
 
 	//// Member Variables
 	private:

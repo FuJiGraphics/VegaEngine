@@ -45,6 +45,14 @@ namespace fz {
 		Super::insert({ layer, collider });
 	}
 
+	void ColliderList::insert(fz::Layer* layer, const sf::FloatRect& rect)
+	{
+		// Origin은 고려하지 않고 insert
+		Collider* collider = new Collider;
+		collider->SetPosition(rect);
+		Super::insert({ layer, collider });
+	}
+
 	ColliderList::Iter ColliderList::remove(Layer* layer)
 	{
 		Iter iter = Super::remove(Super::begin(), Super::end(),
@@ -61,6 +69,19 @@ namespace fz {
 			}
 		}
 		return iter;
+	}
+
+	void ColliderList::Display(fz::Window& window)
+	{
+		for (auto data : *this)
+		{
+			auto collider = data.GetCollider();
+			if (data.GetLayer()->ActivatedDisplayCollider())
+			{
+				auto box = collider->GetBox();
+				window.GetCamera().draw(box);
+			}
+		}
 	}
 
 	void ColliderList::Release()

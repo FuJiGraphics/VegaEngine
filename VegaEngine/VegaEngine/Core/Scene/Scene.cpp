@@ -4,6 +4,7 @@
 namespace fz {
 	Scene::Scene()
 		: m_LayerList()
+		, m_ColliderList()
 		, m_SceneID("")
 	{
 		// Empty
@@ -49,7 +50,37 @@ namespace fz {
 		for (auto layer : m_LayerList)
 		{
 			if (layer->IsActivated())
+			{
 				layer->OnUpdate(dt);
+			}
+		}
+	}
+
+	void Scene::UpdateCollider()
+	{
+		for (HitData& d : m_ColliderList)
+		{
+			// TODO: 최적화
+			// colRect 불필요
+			auto c = d.GetCollider();
+			auto p = d.GetLayer();
+			auto& colBox = c->GetBox();
+			auto& colRect = c->GetRect();
+			auto& colOrigin = colBox.getOrigin();
+			auto newPos = p->GetPosition();
+			auto playerSize = p->GetSize();
+			auto colPos = p->GetCollidePos();
+			auto colSize = p->GetCollideSize();
+			float newSizeX = (colSize.x) ? (float)colSize.x : (float)playerSize.x;
+			float newSizeY = (colSize.y) ? (float)colSize.y : (float)playerSize.y;
+			float newX = newPos.x + colOrigin.x + colPos.x;
+			float newY = newPos.y + colOrigin.y + colPos.y;
+			colBox.setPosition(newX, newY);
+			colBox.setScale(p->GetScale());
+			colBox.setOrigin(p->GetOrigin());
+			colBox.setSize({ newSizeX, newSizeY });
+			auto newRect = colBox.getGlobalBounds();
+			colRect = { (int)newRect.left, (int)newRect.top, (int)newRect.width, (int)newRect.height };
 		}
 	}
 
@@ -71,9 +102,44 @@ namespace fz {
 		}
 	}
 
+	void Scene::DrawCollisionSystem(fz::Window& window)
+	{
+		m_ColliderList.Display(window);
+	}
+
 	void Scene::Collision()
 	{
-		
+		// TODO: 정렬 구조 개선 필요 현재 시간복잡도: n^2
+		for (HitData& d1 : m_ColliderList)
+		{
+			for (HitData& d2 : m_ColliderList)
+			{
+				if (d1.ClassName() != d2.ClassName())
+				{
+					Layer* p1 = d1.GetLayer();
+					Layer* p2 = d2.GetLayer();
+					Collider* c1 = d1.GetCollider();
+					Collider* c2 = d2.GetCollider();
+					if (c1->IsCollided(*c2) || c2->IsCollided(*c1))
+					{
+						p1->OnCollide(d2);
+						p2->OnCollide(d1);
+						c1->SetOutlineColor(sf::Color::Red);
+						c2->SetOutlineColor(sf::Color::Red);
+					}
+					else
+					{
+						c1->SetOutlineColor(sf::Color::White);
+						c2->SetOutlineColor(sf::Color::White);
+					}
+				}
+			}
+		}
+	}
+
+	void Scene::InsertCollideSystem(Layer* layer)
+	{
+		m_ColliderList.insert(layer);
 	}
 
 } // namespace fz

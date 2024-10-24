@@ -57,12 +57,16 @@ namespace fz {
 
 			// Layer 업데이트
 			SceneManager::Update(dt.asSeconds());
+			// 충돌 박스 업데이트
+			SceneManager::UpdateCollider();
 
 			// 충돌 체크
+			SceneManager::Collision();
 
 			// 모든 오브젝트 그리기
 			m_Window->Begin();
 			SceneManager::Draw(*m_Window);
+			SceneManager::DisplayCollider(*m_Window);
 
 			// ImGui
 			ImGuiManager::Begin(dt);

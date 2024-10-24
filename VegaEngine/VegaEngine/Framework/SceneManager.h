@@ -20,6 +20,8 @@ namespace fz {
 		static void Draw(fz::Window& window);
 		static void DrawGui();
 		static void Collision();
+		static void DisplayCollider(fz::Window& window);
+		static void UpdateCollider();
 
 		// new, delete
 		static void Release();

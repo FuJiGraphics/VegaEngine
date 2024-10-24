@@ -6,6 +6,7 @@ namespace fz {
     Layer::Layer()
         : IsActivate(true)
         , Object()
+        , IsDisplayCollider(false)
     {
         // Empty
     }

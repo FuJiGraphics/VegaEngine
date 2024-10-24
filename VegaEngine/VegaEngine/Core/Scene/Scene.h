@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Layer/LayerList.h"
 #include "Core/Event/EventList.h"
+#include "Core/Collider/ColliderList.h"
 #include "Core/Window.h"
 
 namespace fz {
@@ -28,9 +29,12 @@ namespace fz {
 
 		void Event(EventList& events);
 		void Update(float dt);
+		void UpdateCollider();
 		void Draw(fz::Window& window);
 		void DrawGui();
+		void DrawCollisionSystem(fz::Window& window);
 		void Collision();
+		void InsertCollideSystem(Layer* layer);
 
 		template<typename T>
 		T* InsertObject(T* obj);
@@ -43,10 +47,12 @@ namespace fz {
 
 		// Inlines
 		inline std::string GetSceneID() const { return m_SceneID; }
+		inline ColliderList& GetColliderList() { return m_ColliderList; }
 
 	//// Member Variables
 	private:
 		LayerList m_LayerList;
+		ColliderList m_ColliderList;
 		std::string m_SceneID;
 	};
 

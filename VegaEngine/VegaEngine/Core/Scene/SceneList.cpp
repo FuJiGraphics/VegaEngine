@@ -86,6 +86,12 @@ namespace fz {
 		(*scene)->Update(dt);
 	}
 
+	void SceneList::UpdateCollider()
+	{
+		Iter scene = (Super::begin() + m_CurrScene);
+		(*scene)->UpdateCollider();
+	}
+
 	void SceneList::Draw(Window& window)
 	{
 		Iter scene = (Super::begin() + m_CurrScene);
@@ -98,9 +104,16 @@ namespace fz {
 		(*scene)->DrawGui();
 	}
 
+	void SceneList::DrawCollisionSystem(fz::Window& window)
+	{
+		Iter scene = (Super::begin() + m_CurrScene);
+		(*scene)->DrawCollisionSystem(window);
+	}
+
 	void SceneList::Collision()
 	{
-		
+		Iter scene = (Super::begin() + m_CurrScene);
+		(*scene)->Collision();
 	}
 
 } // namespace fz

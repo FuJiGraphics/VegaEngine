@@ -84,4 +84,20 @@ namespace fz {
 		s_SceneList.Collision();
 	}
 
+	void SceneManager::DisplayCollider(fz::Window& window)
+	{
+		if (s_SceneList.empty())
+			return;
+
+		s_SceneList.DrawCollisionSystem(window);
+	}
+
+	void SceneManager::UpdateCollider()
+	{
+		if (s_SceneList.empty())
+			return;
+
+		s_SceneList.UpdateCollider();
+	}
+
 } // namespace fz

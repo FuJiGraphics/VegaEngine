@@ -6,6 +6,7 @@
 
 namespace fz {
 	
+	class Window;
 	class Layer;
 
 	class ColliderList final : public Array<HitData>
@@ -25,8 +26,10 @@ namespace fz {
 		// impl
 		bool insert_safety(fz::Layer* layer);
 		void insert(fz::Layer* layer);
+		void insert(fz::Layer* layer, const sf::FloatRect& rect);
 		Iter remove(fz::Layer* layer);
 
+		void Display(fz::Window& window);
 		void Release();
 	};
 
