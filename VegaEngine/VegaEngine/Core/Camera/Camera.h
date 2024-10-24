@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Layer/Layer.h"
+#include "Core/Animation/AnimList.h"
 
 namespace fz {
 
@@ -20,6 +21,7 @@ namespace fz {
 		virtual ~Camera();
 
 		// Impl
+		void draw(AnimList& animation);
 		void draw(const sf::Drawable& obj, const sf::RenderStates& states = sf::RenderStates::Default);
 		void draw(Layer* object, const sf::RenderStates& states = sf::RenderStates::Default);
 		void SetCenter(const sf::Vector2f& pos);

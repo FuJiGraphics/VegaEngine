@@ -19,6 +19,10 @@
 // Entry Point
 #include "Core/EntryPoint.h"
 
+// Animation
+#include "Core/Animation/Anim.h"
+#include "Core/Animation/AnimList.h"
+
 #define	DSetClassName(className)	inline std::string GetName() const override { return(#className); }
 
 enum class Direction

@@ -10,7 +10,7 @@ void Application::OnAttach()
 {
 	Scene* scene = SceneManager::GetCurrentScene();
 	scene->InsertOverlay<World>(new World);
-	scene->InsertOverlay<Player>(new Player);
+	scene->InsertObject<Player>(new Player());
 
 	// Àå¾Ö¹°
 	scene->InsertOverlay(new Block1);
@@ -23,8 +23,8 @@ void Application::OnEvent(fz::Event& event)
 	{
 		case sf::Event::KeyPressed:
 		{
-		}
 
+		}
 	}
 }
 

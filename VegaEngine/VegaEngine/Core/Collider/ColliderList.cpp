@@ -80,6 +80,7 @@ namespace fz {
 			{
 				auto box = collider->GetBox();
 				window.GetCamera().draw(box);
+				collider->SetOutlineColor(sf::Color::White);
 			}
 		}
 	}

@@ -4,6 +4,8 @@
 class Player : public fz::GameObject
 {
 public:
+	Player();
+
 	std::string GetClassName() const override { return "Player"; }
 
 	void OnAttach() override;
@@ -13,6 +15,7 @@ public:
 	void OnCollide(const HitData& hit) override;
 
 private:
+	AnimList animation;
 	sf::Texture Tex;
 	float Speed;
 };

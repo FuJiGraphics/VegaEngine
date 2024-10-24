@@ -16,6 +16,11 @@ namespace fz {
 		// Empty
 	}
 
+	void Camera::draw(AnimList& animation)
+	{
+		animation.Draw(*this);
+	}
+
 	void Camera::draw(const sf::Drawable& obj, const sf::RenderStates& states)
 	{
 		RenderTexture::draw(obj, states);

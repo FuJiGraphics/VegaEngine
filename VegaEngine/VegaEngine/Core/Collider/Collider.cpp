@@ -61,6 +61,7 @@ namespace fz {
 			return (false);
 		if (m_rect.y + m_rect.h < srcRec.y || m_rect.y > srcRec.y + srcRec.h)
 			return (false);
+		m_Box.setOutlineColor(sf::Color::Red);
 		return (true);
 	}
 

@@ -124,13 +124,6 @@ namespace fz {
 					{
 						p1->OnCollide(d2);
 						p2->OnCollide(d1);
-						c1->SetOutlineColor(sf::Color::Red);
-						c2->SetOutlineColor(sf::Color::Red);
-					}
-					else
-					{
-						c1->SetOutlineColor(sf::Color::White);
-						c2->SetOutlineColor(sf::Color::White);
 					}
 				}
 			}
