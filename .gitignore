@@ -6,4 +6,6 @@ Build/
 *.vcxproj.filters
 *.vcxproj.user
 
+Vendor/VegaEngine-*
+
 *.sln
