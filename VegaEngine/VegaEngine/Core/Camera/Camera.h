@@ -25,6 +25,7 @@ namespace fz {
 		void SetRotate(float rotate);
 		void SetZoom(float factor);
 		void Move(const sf::Vector2f& preset);
+		// 카메라 뷰포트의 이동 가능 범위를 설정한다.
 		void SetBlockArea(float x, float y, float width, float height);
 
 		// Inlines
