@@ -13,9 +13,22 @@ public:
 	void OnUpdate(float dt) override;
 	void OnDraw(Camera& camera) override;
 	void OnCollide(const HitData& hit) override;
+	void UpdateCansle();
+	
+// World
+public:
+	void SceneWorldInit();
+	void SceneWorld(float dt);
+
+// Battle
+public:
+	void SceneBattleInit();
+	void SceneBattle(float dt);
+	
 
 private:
 	AnimList animation;
 	sf::Texture Tex;
 	float Speed;
+	sf::Vector2f PrevPos;
 };

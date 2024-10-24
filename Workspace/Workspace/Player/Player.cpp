@@ -9,22 +9,61 @@ Player::Player()
 
 void Player::OnAttach()
 {
-	if (Texture::Load("res/player.png") == false)
-	{
-		std::cout << "failed to load image! >> " << std::endl;
-		IsActivate = false;
-		return;
-	}
+	auto currScene = SceneManager::GetCurrentScene();
+	const std::string& id = currScene->GetSceneID();
+	if (id == "World")
+		this->SceneWorldInit();
+	else if (id == "Battle")
+		this->SceneBattleInit();
+}
+
+void Player::OnEvent(fz::Event& event)
+{
+	
+}
+
+void Player::OnUpdate(float dt)
+{
+	animation.Update(dt);
+
+	auto currentScene = SceneManager::GetCurrentScene();
+	const std::string& id = currentScene->GetSceneID();
+	if (id == "World")
+		this->SceneWorld(dt);
+	else if (id == "Battle")
+		this->SceneBattle(dt);
+}
+
+void Player::OnDraw(Camera& camera)
+{
+	camera.draw(animation);
+	camera.draw(this);
+	camera.SetTarget(this);
+}
+
+void Player::OnCollide(const HitData& hit)
+{
+}
+
+void Player::UpdateCansle()
+{
+	Object.Position = PrevPos;
+}
+
+void Player::SceneWorldInit()
+{
+	Texture::Load("res/player.png");
 	Speed = 350.0f;
 	Tex = Texture::Get("res/player.png");
+	auto currScene = SceneManager::GetCurrentScene();
+	currScene->InsertCollideSystem(this);
 	Object.Position = { 500.0f, 500.0f };
 	Object.Scale = { 2.1f, 3.0f };
 	Object.Sprite.setTexture(Tex);
 	Object.Sprite.setTextureRect({ 0, 0, 60, 60 });
 	Object.Size = { 60, 60 };
-	auto currScene = SceneManager::GetCurrentScene();
-	currScene->InsertCollideSystem(this);
-	CollideBox.Position = { 0.0f, +30.0f };
+	CollideBox.Position = { 34.0f, 40.0f };
+	CollideBox.Size = { 30, 48 };
 	IsDisplayCollider = true;
 
 	animation.Insert("WalkDown", Object.Sprite);
@@ -49,14 +88,9 @@ void Player::OnAttach()
 	animation["WalkUp"].AddFrame({ sf::IntRect(193, 189, 60, 60), 0.3 });
 }
 
-void Player::OnEvent(fz::Event& event)
+void Player::SceneWorld(float dt)
 {
-	
-}
-
-void Player::OnUpdate(float dt)
-{
-	animation.Update(dt);
+	PrevPos = Object.Position;
 	static float stride = 1920 / 1028.0f;
 	std::string moveType;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -92,14 +126,21 @@ void Player::OnUpdate(float dt)
 		animation.SetActivatedAll(false);
 }
 
-void Player::OnDraw(Camera& camera)
+void Player::SceneBattleInit()
 {
-	camera.draw(animation);
-	camera.draw(this);
-	camera.SetTarget(this);
+	Texture::Load("res/PlayerBack_.png");
+	Object.Sprite.setTexture(Texture::Get("res/PlayerBack_.png"));
+	animation.Insert("Throwing", Object.Sprite);
+	animation["Throwing"].AddFrame({ sf::IntRect(400, 0, 300, 300), 0.3 });
+	animation.SetActivatedAll(false);
+	animation["Throwing"].Activated = true;
+
+	Object.Position = { -250.0f, 650.0f };
 }
 
-void Player::OnCollide(const HitData& hit)
+void Player::SceneBattle(float dt)
 {
-	std::cout << "플레이어 충돌!" << std::endl;
+	if (Object.Position.x < 130.f)
+		Object.Position.x += Speed * dt;
 }
+

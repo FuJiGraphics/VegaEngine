@@ -4,16 +4,15 @@
 
 namespace fz {
 
+	enum class Section {
+		Left, Right
+	};
+
 	template <typename T>
 	class Array
 	{
 	//// Delete, Enum, Using
 	protected:
-		// EnumClass
-		enum class Section {
-			Left, Right
-		};
-
 		// Using
 		using Super = Array<T>;
 		using Iter = typename std::deque<T>::iterator;
@@ -44,7 +43,7 @@ namespace fz {
 
 		// Impl 
 		void insert(const T& data, Section place = Section::Right);
-		Iter remove(const T& data, Section place = Section::Right);
+		Iter remove(T& data, Section place = Section::Right);
 		Iter find(const T& target);
 
 		template <typename Fn>
@@ -54,8 +53,8 @@ namespace fz {
 	private:
 		void InsertLeft(const T& data);
 		void InsertRight(const T& data);
-		Iter RemoveLeft(const T& data);
-		Iter RemoveRight(const T& data);
+		Iter RemoveLeft(T& data);
+		Iter RemoveRight(T& data);
 		
 	//// Member Variables
 	private: 

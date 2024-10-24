@@ -1,3 +1,11 @@
 #pragma once
 
-int GetRandom(int start, int end);
+namespace fz {
+
+	class Utils
+	{
+	public:
+		static int GetRandom(int start, int end);
+	};
+
+}

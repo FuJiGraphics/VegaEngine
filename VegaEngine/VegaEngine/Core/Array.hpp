@@ -31,7 +31,7 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline typename Array<T>::Iter Array<T>::remove(const T& data, Section place)
+	inline typename Array<T>::Iter Array<T>::remove(T& data, Section place)
 	{
 		Iter result;
 		switch (place)
@@ -111,7 +111,7 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline typename Array<T>::Iter Array<T>::RemoveLeft(const T& data)
+	inline typename Array<T>::Iter Array<T>::RemoveLeft(T& data)
 	{
 		auto find = this->find(m_Array.begin(), m_Array.begin() + m_LeftSize,
 			[&data](T target)
@@ -127,7 +127,7 @@ namespace fz {
 	}
 
 	template<typename T>
-	inline typename Array<T>::Iter Array<T>::RemoveRight(const T& data)
+	inline typename Array<T>::Iter Array<T>::RemoveRight(T& data)
 	{
 		auto find = this->find(m_Array.begin() + m_LeftSize, m_Array.end(),
 			[&data](T target)

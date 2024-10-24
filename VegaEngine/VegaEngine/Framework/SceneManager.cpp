@@ -23,6 +23,18 @@ namespace fz {
 		return (*scene);
 	}
 
+	Scene* SceneManager::GetScene(const std::string& sceneID)
+	{
+		for (auto& scene : s_SceneList)
+		{
+			if (scene->GetSceneID() == sceneID)
+			{
+				return scene;
+			}
+		}
+		return nullptr;
+	}
+
 	void SceneManager::InsertScene(const std::string& sceneID)
 	{
 		s_SceneList.InsertScene(sceneID);

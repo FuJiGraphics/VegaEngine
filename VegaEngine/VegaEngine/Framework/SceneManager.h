@@ -11,6 +11,7 @@ namespace fz {
 	public:
 		// Impl
 		static Scene* GetCurrentScene();
+		static Scene* GetScene(const std::string& sceneID);
 		static void InsertScene(const std::string& sceneID);
 		static void RemoveScene(const std::string& sceneID);
 		static void ChangeScene(const std::string& sceneID);

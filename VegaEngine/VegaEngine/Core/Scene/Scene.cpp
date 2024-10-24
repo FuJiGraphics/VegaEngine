@@ -120,7 +120,7 @@ namespace fz {
 					Layer* p2 = d2.GetLayer();
 					Collider* c1 = d1.GetCollider();
 					Collider* c2 = d2.GetCollider();
-					if (c1->IsCollided(*c2) || c2->IsCollided(*c1))
+					if (c1->IsCollided(*c2))
 					{
 						p1->OnCollide(d2);
 						p2->OnCollide(d1);

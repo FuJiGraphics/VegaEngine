@@ -9,8 +9,9 @@ WindowInfo CreateApplication()
 
 void Runtime(System& system)
 {
-	fz::SceneManager::InsertScene("1");
-	auto scene = fz::SceneManager::GetCurrentScene();
+	SceneManager::InsertScene("World");
+	SceneManager::InsertScene("Battle");
+	auto scene = SceneManager::GetCurrentScene();
 	scene->InsertOverlay<Application>(new Application);
 }
 

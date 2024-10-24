@@ -21,3 +21,12 @@ void Block1::OnUpdate(float dt)
 void Block1::OnDraw(Camera& camera)
 {
 }
+
+void Block1::OnCollide(const HitData& data)
+{
+	if (data.ClassName() == "Player")
+	{
+		Player* p = dynamic_cast<Player*>(data.GetLayer());
+		p->UpdateCansle();
+	}
+}
