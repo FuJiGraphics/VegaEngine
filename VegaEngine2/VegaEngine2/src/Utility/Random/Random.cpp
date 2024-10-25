@@ -25,14 +25,19 @@ namespace fz {
     {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<float> dis(min, max);
+        std::uniform_real_distribution<float> dis(min, max);
         return (dis(gen));
+    }
+
+    fz::Vec2f Random_internal::InUnitCircle() const
+    {
+        float angle = Random(0.f, 2.f * s_PI);
+        return { std::cosf(angle), std::sinf(angle) };
     }
 
     fz::Vec2f Random_internal::InUnitCircle()
     {
-        float angle = Random(0.f, 2.f * s_PI);
-        return { std::cosf(angle), std::sinf(angle) };
+        return this->InUnitCircle();
     }
 
 } // namespace fz

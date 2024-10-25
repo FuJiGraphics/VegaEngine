@@ -4,6 +4,7 @@ Build/
 .vs/
 .tlog
 
+*.pdb
 *.obj
 *.tlog
 *.vcxproj

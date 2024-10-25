@@ -7,7 +7,7 @@ project "VegaEngine2"
 	systemversion "latest"
 
 pchheader "pch.h"
-pchsource "%{IncludeDir.VegaEngine2}/Source/pch.cpp"
+pchsource "%{IncludeDir.VegaEngine2}/src/pch.cpp"
 
 targetdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/lib/%{cfg.buildcfg}/")
 objdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/bin-int/%{cfg.buildcfg}/")
@@ -21,7 +21,7 @@ files
 
 includedirs
 {
-	"%{IncludeDir.VegaEngine2}/Source/",
+	"%{IncludeDir.VegaEngine2}/src/",
 }
 
 libdirs

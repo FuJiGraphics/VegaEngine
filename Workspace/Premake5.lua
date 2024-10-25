@@ -22,7 +22,7 @@ files
 includedirs
 {
 	"%{IncludeDir.Workspace}/",
-	"%{IncludeDir.VegaEngine2}/Source/",
+	"%{IncludeDir.VegaEngine2}/src/",
 }
 
 libdirs

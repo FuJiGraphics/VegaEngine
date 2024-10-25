@@ -20,16 +20,20 @@ namespace fz {
 		* @param[in] int end: 범위 끝 값
 		* @return int: 범위안의 값을 균일 분포로 랜덤 값을 리턴합니다.
 		*/
-		static int operator()(int min, int max);
-
+		int operator()(int min, int max);
 		/*
 		* @brief 랜덤 값을 리턴합니다.
 		* @param[in] float start: 범위 시작 값
 		* @param[in] float end: 범위 끝 값
 		* @return float: 범위안의 값을 균일 분포로 랜덤 값을 리턴합니다.
 		*/
-		static float operator()(float min, float max);
+		float operator()(float min, float max);
 
+		/*
+		* @brief 360도 범위안의 랜덤한 위치(0.0f ~ 1.0f)를 반환합니다.
+		* @return fz::Vec2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
+		*/
+		fz::Vec2f InUnitCircle() const;
 		/*
 		* @brief 360도 범위안의 랜덤한 위치(0.0f ~ 1.0f)를 반환합니다.
 		* @return fz::Vec2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
