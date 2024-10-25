@@ -2,7 +2,7 @@ project "Workspace"
 	location "Workspace"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "off"
 	systemversion "latest"
 
@@ -23,6 +23,7 @@ includedirs
 {
 	"%{IncludeDir.Workspace}/",
 	"%{IncludeDir.VegaEngine2}/src/",
+	"%{IncludeDir.Spdlog}/",
 }
 
 libdirs

@@ -12,5 +12,5 @@
 // Export VegaEngine
 #include "Core/System.h"
 
-// Entry Point
+/* Entry Point */
 #include "EntryPoint.h"

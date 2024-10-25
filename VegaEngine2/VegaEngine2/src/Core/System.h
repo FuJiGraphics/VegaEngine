@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core.h"
+
 namespace fz {
 
 	class System
@@ -7,10 +9,8 @@ namespace fz {
 	protected:
 		// Using
 		using Super = fz::System;
-
 		// Delete
-		System(const System&) = delete;
-		System& operator=(const System&) = delete;
+		FZ_DELETE_COPY(System)
 
 	public:
 		System();

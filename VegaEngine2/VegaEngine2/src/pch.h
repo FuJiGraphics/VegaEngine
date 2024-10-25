@@ -1,3 +1,15 @@
 #pragma once
 
-#include "Core/Core.h"
+// Standards
+#include <iostream>
+#include <memory>
+
+// Defines
+#include "Core/Defines.h"
+
+// Data Types
+#include "DataType/DataType.h"
+
+// Utility
+#include "Utility/Utility.h"
+

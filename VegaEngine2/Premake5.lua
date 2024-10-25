@@ -2,7 +2,7 @@ project "VegaEngine2"
 	location "VegaEngine2"
 	kind "StaticLib"
 	language "C++"
-	cppdialect "C++17"
+	cppdialect "C++20"
 	staticruntime "off"
 	systemversion "latest"
 
@@ -22,6 +22,7 @@ files
 includedirs
 {
 	"%{IncludeDir.VegaEngine2}/src/",
+	"%{IncludeDir.Spdlog}/",
 }
 
 libdirs
