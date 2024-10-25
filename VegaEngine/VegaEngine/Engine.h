@@ -23,6 +23,10 @@
 #include "Core/Animation/Anim.h"
 #include "Core/Animation/AnimList.h"
 
+// SFML
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 #define	DSetClassName(className)	inline std::string GetName() const override { return(#className); }
 
 enum class Direction

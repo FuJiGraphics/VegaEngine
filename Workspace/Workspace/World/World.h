@@ -11,8 +11,12 @@ public:
 	void OnUpdate(float dt) override;
 	void OnDraw(Camera& camera) override;
 
+public:
+	void PlayWorldSound();
+
 private:
 	sf::Texture Texture;
+	sf::Sound	WorldSound;
 	Camera* camera;
 };
 

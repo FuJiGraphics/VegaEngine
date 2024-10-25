@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "ResourceManager_internal.h"
 
 namespace fz {
@@ -23,6 +24,7 @@ namespace fz {
 
 	using Texture = ResourceManager<sf::Texture>;
 	using Font = ResourceManager<sf::Font>;
+	using Sound = ResourceManager<sf::Sound>;
 
 } // namespace fz;
 
