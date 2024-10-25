@@ -24,7 +24,7 @@ namespace fz {
 
 	using Texture = ResourceManager<sf::Texture>;
 	using Font = ResourceManager<sf::Font>;
-	using Sound = ResourceManager<sf::Sound>;
+	using Sound = ResourceManager<sf::SoundBuffer>;
 
 } // namespace fz;
 

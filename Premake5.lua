@@ -1,4 +1,4 @@
-version = "3.5.2"
+version = "3.5.3"
 
 workspace "Solution"
 	startproject "Workspace"
@@ -26,7 +26,6 @@ workspace "Solution"
 	group "Dependencies"
 		include "Vendor/premake5"
 		include "Vendor/ImGui"
-		include "Example"
 	group ""
 
 include "VegaEngine"
