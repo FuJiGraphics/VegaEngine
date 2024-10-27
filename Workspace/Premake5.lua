@@ -12,6 +12,8 @@ project "Workspace"
 targetdir(binDir)
 objdir(binIntDir)
 
+debugdir "%{WorkingDir.SFML}/"
+
 files
 {
 	"%{prj.name}/**.cpp",
@@ -28,17 +30,18 @@ includedirs
 
 libdirs
 {
-	
+	"%{LibraryDir.VegaEngine2}/%{cfg.buildcfg}/",
 }
 
 links
 {
 	"VegaEngine2",
+	"VegaEngine2.lib",
 }
 
 prebuildcommands 
 { 
-
+	
 }
 
 filter "system:Windows"

@@ -11,6 +11,7 @@ pchsource "%{IncludeDir.VegaEngine2}/src/pch.cpp"
 
 targetdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/lib/%{cfg.buildcfg}/")
 objdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/bin-int/%{cfg.buildcfg}/")
+debugdir("%{WorkingDir.SFML}")
 
 files
 {
@@ -22,12 +23,14 @@ files
 includedirs
 {
 	"%{IncludeDir.VegaEngine2}/src/",
+	"%{IncludeDir.SFML}/",
 	"%{IncludeDir.Spdlog}/",
+	
 }
 
 libdirs
 {
-
+	"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
 }
 
 prebuildcommands 
@@ -39,7 +42,12 @@ prebuildcommands
 
 links
 {
-
+	"sfml-audio.lib",
+	"sfml-graphics.lib",
+	"sfml-main.lib",
+	"sfml-network.lib",
+	"sfml-system.lib",
+	"sfml-window.lib",
 }
 
 filter "system:Windows"

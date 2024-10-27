@@ -6,7 +6,7 @@ namespace fz {
 		template<typename ...Args>
 		inline void Log_internal::Trace(fmt::format_string<Args...> fmt, Args && ...args)
 		{
-			SPDLOG_TRACE(fmt, std::forward<Args>(args)...);
+			spdlog::logger::trace(fmt, std::forward<Args>(args)...);
 		}
 
 		template<typename ...Args>

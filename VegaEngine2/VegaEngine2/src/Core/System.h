@@ -4,6 +4,8 @@
 
 namespace fz {
 
+	class Window;
+
 	class System
 	{
 	protected:
@@ -13,7 +15,7 @@ namespace fz {
 		FZ_DELETE_COPY(System)
 
 	public:
-		System();
+		System(int width, int height, const std::string& title);
 		virtual ~System();
 
 		bool Init();
@@ -21,11 +23,19 @@ namespace fz {
 		bool Reset();
 
 		void Run();
+		void OnEvent(fz::Event& e);
 
 		inline bool IsOpened() const	{ return this->IsOpen; }
+		bool OnWindowClose(WindowCloseEvent e);
 
 	protected:
-		bool	IsOpen;
+		bool		IsOpen;
+		int			Width;
+		int			Height;
+		std::string	Title;
+
+	private:
+		Shared<Window> m_Window;
 	};
 
 	/*

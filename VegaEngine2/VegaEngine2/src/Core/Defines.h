@@ -10,3 +10,4 @@
     ClassName(const ClassName&) = delete;               \
     ClassName& operator=(const ClassName&) = delete;
 
+#define BIND_EVENT_FUNC(x) std::bind(&x, this, std::placeholders::_1)
