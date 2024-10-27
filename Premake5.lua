@@ -1,4 +1,4 @@
-version = "1.2.1"
+version = "1.3.0"
 
 workspace "Solution"
 	startproject "Workspace"
@@ -25,17 +25,20 @@ workspace "Solution"
 	IncludeDir["Spdlog"]		= "%{wks.location}/Vendor/spdlog/include/" 
 	IncludeDir["VegaEngine2"]	= "%{wks.location}/VegaEngine2/VegaEngine2"
 	IncludeDir["Workspace"]		= "%{wks.location}/Workspace/Workspace"
+	IncludeDir["ImGui"]			= "%{wks.location}/Vendor/ImGui/"
 
 	-- Library Path
 	LibraryDir = {}
 	LibraryDir["VegaEngine2"]	= "%{wks.location}/Vendor/VegaEngine2-"..version.."/lib"
 	LibraryDir["SFML"]			= "%{wks.location}/Vendor/SFML-2.6.1/lib"
+	LibraryDir["ImGui"]			= "%{wks.location}/Vendor/ImGui/lib"
 
 	-- DLL Working Directories
 	WorkingDir = {}
 	WorkingDir["SFML"]			= "%{wks.location}/Vendor/SFML-2.6.1/bin"
 
 	group "Dependencies"
+		include "Vendor/ImGui"
 		include "Vendor/premake5"
 	group ""
 

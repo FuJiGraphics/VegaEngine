@@ -20,7 +20,7 @@ namespace fz {
 
 	void WindowSFML::Init(bool isActiveOpenGL)
 	{
-		m_Window = std::make_unique<sf::Window>();
+		m_Window = std::make_unique<sf::RenderWindow>();
 		sf::VideoMode mode;
 		mode.width = m_Mode.Width;
 		mode.height = m_Mode.Height;
@@ -44,6 +44,7 @@ namespace fz {
 		sf::Event input;
 		while (m_Window->pollEvent(input))
 		{
+			ImGuiManager::PollEvent(input);
 			switch (input.type)
 			{
 				case sf::Event::Closed: {
@@ -140,6 +141,11 @@ namespace fz {
 	std::string WindowSFML::GetTitle() const
 	{
 		return m_Mode.Title;
+	}
+
+	void* WindowSFML::GetNativeWindow() const
+	{
+		return m_Window.get();
 	}
 
 	bool WindowSFML::IsFocus() const

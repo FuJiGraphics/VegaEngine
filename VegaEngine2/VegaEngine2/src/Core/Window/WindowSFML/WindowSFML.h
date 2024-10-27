@@ -27,6 +27,7 @@ namespace fz {
 		int GetWidth() const override;
 		int GetHeight() const override;
 		std::string GetTitle() const override;
+		void* GetNativeWindow() const override;
 		bool IsFocus() const override;
 		bool IsVSync() const override;
 		bool IsOpen() const override;
@@ -35,10 +36,10 @@ namespace fz {
 		void SetEventCallback(const EventCallbackFn& callback) override;
 
 	protected:
-		std::unique_ptr<sf::Window>	m_Window;
-		fz::WindowMode				m_Mode;
-		bool						m_IsVSync;
-		EventCallbackFn				m_CallbackFn;
+		std::unique_ptr<sf::RenderWindow>	m_Window;
+		fz::WindowMode						m_Mode;
+		bool								m_IsVSync;
+		EventCallbackFn						m_CallbackFn;
 	};
 
 } // namespace fz

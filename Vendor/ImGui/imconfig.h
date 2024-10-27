@@ -147,7 +147,7 @@ namespace ImGui
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Joystick.hpp>
 
-#include "imgui-sfml/imgui-SFML_export.h"
+#include "ImguiSFML/imgui-SFML_export.h"
 
 #if __cplusplus >= 201703L // C++17 and above
 #define IMGUI_SFML_NODISCARD [[nodiscard]]

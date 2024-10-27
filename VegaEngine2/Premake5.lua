@@ -25,12 +25,13 @@ includedirs
 	"%{IncludeDir.VegaEngine2}/src/",
 	"%{IncludeDir.SFML}/",
 	"%{IncludeDir.Spdlog}/",
-	
+	"%{IncludeDir.ImGui}/",
 }
 
 libdirs
 {
 	"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
+	"%{LibraryDir.ImGui}/%{cfg.buildcfg}/",
 }
 
 prebuildcommands 
@@ -48,6 +49,7 @@ links
 	"sfml-network.lib",
 	"sfml-system.lib",
 	"sfml-window.lib",
+	"ImGui.lib",
 }
 
 filter "system:Windows"

@@ -11,49 +11,39 @@ project "ImGui"
         "imgui_widgets.cpp",
         "imgui_draw.cpp",
         "imgui_tables.cpp",
-        "imgui-sfml/imgui-SFML.cpp",
+        "ImguiSFML/imgui-SFML.cpp",
 	}
 
     includedirs
     {
         "%{IncludeDir.IMGUI}/",
-        "%{IncludeDir.SFML}/include/",
-        "%{IncludeDir.IMGUI}/include/",
+		"%{IncludeDir.SFML}/",
     }
 
 	libdirs 
 	{
-        "%{IncludeDir.SFML}/lib/%{cfg.buildcfg}/",
-	    "%{IncludeDir.SFML}/lib/",
+		"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
 	}
 
 	links
 	{
-        "flac.lib",
-	    "freetype.lib",
-	    "ogg.lib",
-	    "vorbis.lib",
-	    "vorbisenc.lib",
-	    "vorbisfile.lib",
-	    "openal32.lib",
-	    "sfml-audio.lib",
-	    "sfml-graphics.lib",
-	    "sfml-main.lib",
-	    "sfml-network.lib",
-	    "sfml-system.lib",
-	    "sfml-window.lib",
-        "opengl32.lib",
+		"sfml-audio.lib",
+		"sfml-graphics.lib",
+		"sfml-main.lib",
+		"sfml-network.lib",
+		"sfml-system.lib",
+		"sfml-window.lib",
 	}
 
 	filter "system:windows"
 		systemversion "latest"
-		cppdialect "C++17"
+		cppdialect "C++20"
 		staticruntime "off"
 
 	filter "system:linux"
 		pic "On"
 		systemversion "latest"
-		cppdialect "C++17"
+		cppdialect "C++20"
 		staticruntime "off"
 
 	filter "configurations:Debug"

@@ -33,7 +33,7 @@ namespace fz {
 			result = this->GenerateWindow();
 			if (result)
 				result = this->GenerateObjectStack();
-
+			ImGuiManager::Init(*m_Window);
 		}
 		if (result)
 			Log.Trace("System 초기화 완료");
@@ -51,6 +51,10 @@ namespace fz {
 			Log.Trace("Window 해제 중");
 			m_Window->Release();
 			Log.Trace("Window 해제 완료");
+		}
+		// ImGui
+		{
+			ImGuiManager::Release();
 		}
 		if (result)
 			Log.Trace("System 해제 완료");
@@ -74,12 +78,18 @@ namespace fz {
 	void System::Run()
 	{
 		Log.Trace("System Run...");
+		sf::Clock clock;
 		while (m_Window->IsOpen())
 		{
+			sf::Time t = clock.restart();
 			m_Window->OnEvent();
 
-
-
+			// ImGui
+			ImGuiManager::Begin(t);
+			{
+				ImGuiManager::ShowDemo();
+			}
+			ImGuiManager::End();
 			m_Window->OnUpdate();
 		}
 		Log.Trace("System Run Off");

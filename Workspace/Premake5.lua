@@ -25,18 +25,30 @@ includedirs
 {
 	"%{IncludeDir.Workspace}/",
 	"%{IncludeDir.VegaEngine2}/src/",
+	"%{IncludeDir.SFML}/",
 	"%{IncludeDir.Spdlog}/",
+	"%{IncludeDir.ImGui}/",
 }
 
 libdirs
 {
 	"%{LibraryDir.VegaEngine2}/%{cfg.buildcfg}/",
+	"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
+	"%{LibraryDir.ImGui}/%{cfg.buildcfg}/",
 }
 
 links
 {
 	"VegaEngine2",
 	"VegaEngine2.lib",
+	"sfml-audio.lib",
+	"sfml-graphics.lib",
+	"sfml-main.lib",
+	"sfml-network.lib",
+	"sfml-system.lib",
+	"sfml-window.lib",
+	"ImGui.lib",
+	"opengl32",
 }
 
 prebuildcommands 
