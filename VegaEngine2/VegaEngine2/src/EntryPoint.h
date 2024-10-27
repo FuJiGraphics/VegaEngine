@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 	app->Init();
 	do {
 		app->Run();
-		app->Reset();
+		// app->Reset();
 	} while (app->IsOpened());
 	app->Release();
 

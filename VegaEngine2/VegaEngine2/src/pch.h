@@ -24,3 +24,7 @@
 
 // Windows
 #include "Core/Window/Window.h"
+
+// Objects
+#include "Core/Object/Object.h"
+#include "Core/Object/ObjectStack.h"

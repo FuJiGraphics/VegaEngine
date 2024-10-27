@@ -10,4 +10,7 @@
     ClassName(const ClassName&) = delete;               \
     ClassName& operator=(const ClassName&) = delete;
 
+/*
+* @brief 이벤트 콜백 멤버 함수를 등록합니다.
+*/
 #define BIND_EVENT_FUNC(x) std::bind(&x, this, std::placeholders::_1)

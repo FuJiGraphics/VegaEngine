@@ -5,6 +5,7 @@
 namespace fz {
 
 	class Window;
+	class ObjectStack;
 
 	class System
 	{
@@ -28,6 +29,11 @@ namespace fz {
 		inline bool IsOpened() const	{ return this->IsOpen; }
 		bool OnWindowClose(WindowCloseEvent e);
 
+	private:
+		bool GenerateWindow();
+		bool GenerateObjectStack();
+		bool ReleaseObjectStack();
+
 	protected:
 		bool		IsOpen;
 		int			Width;
@@ -36,6 +42,7 @@ namespace fz {
 
 	private:
 		Shared<Window> m_Window;
+		Shared<ObjectStack> m_ObjectStack;
 	};
 
 	/*
