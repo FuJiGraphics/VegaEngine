@@ -4,23 +4,27 @@
 namespace fz { 
 
 	System::System(int width, int height, const std::string& title)
-		: IsOpen(true)
+		: IsInit(false)
+		, IsOpen(true)
 		, Width(width)
 		, Height(height)
 		, Title(title)
 		, m_Window(nullptr)
 		, m_ObjectStack(nullptr)
 	{
-		// Empty
+		this->Init();
 	}
 
 	System::~System()
 	{
-		// Empty
+		this->Release();
 	}
 
 	bool System::Init()
 	{
+		if (IsInit)
+			return false;
+
 		bool result = true;
 		Log.Trace("System 초기화");
 		if (Width <= 0 || Height <= 0)
@@ -39,13 +43,21 @@ namespace fz {
 			Log.Trace("System 초기화 완료");
 		else
 			Log.Error("System 초기화 실패");
+		IsInit = result;
 		return result;
 	}
 
 	bool System::Release()
 	{
+		if (!IsInit)
+			return false;
+
 		bool result = true;
 		Log.Trace("System 해제");
+		// Release ObjectStack
+		{
+			this->ReleaseObjectStack();
+		}
 		// Window
 		{ 
 			Log.Trace("Window 해제 중");
@@ -60,6 +72,7 @@ namespace fz {
 			Log.Trace("System 해제 완료");
 		else
 			Log.Error("System 해제 실패");
+		IsInit = !result;
 		return result;
 	}
 
@@ -67,6 +80,7 @@ namespace fz {
 	{
 		bool result = true;
 		Log.Trace("System 리셋");
+		this->ReleaseObjectStack();
 
 		if (result)
 			Log.Trace("System 해제 완료");
@@ -82,7 +96,18 @@ namespace fz {
 		while (m_Window->IsOpen())
 		{
 			sf::Time t = clock.restart();
+			float dt = t.asSeconds();
+			// Event
 			m_Window->OnEvent();
+
+			// Update
+			for (Object* obj : *m_ObjectStack)
+			{
+				if (obj != nullptr)
+				{
+					obj->OnUpdate(dt);
+				}
+			}
 
 			// ImGui
 			ImGuiManager::Begin(t);
@@ -99,6 +124,23 @@ namespace fz {
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(System::OnWindowClose));
+		for (Object* obj : *m_ObjectStack)
+		{
+			if (obj != nullptr)
+			{
+				obj->OnEvent(e);
+			}
+		}
+	}
+
+	void System::PushObject(Object* object)
+	{
+		m_ObjectStack->PushObject(object);
+	}
+
+	void System::PushOverlay(Object* overlay)
+	{
+		m_ObjectStack->PushObject(overlay);
 	}
 
 	bool System::OnWindowClose(WindowCloseEvent e)

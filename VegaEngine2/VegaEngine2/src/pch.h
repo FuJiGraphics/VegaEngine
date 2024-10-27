@@ -16,14 +16,11 @@
 // Utility
 #include "Utility/Utility.h"
 
-// Events
-#include "Events/Event.h"
-#include "Events/AppEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/MouseEvent.h"
-
 // Windows
 #include "Core/Window/Window.h"
+
+// Events
+#include "Events/Events.h"
 
 // Objects
 #include "Core/Object/Object.h"
@@ -31,6 +28,9 @@
 
 // imgui
 #include "ImGui/ImGuiManager.h"
+
+// System
+#include "Core/System.h"
 
 // SFML
 #include <SFML/Graphics/RenderTarget.hpp>

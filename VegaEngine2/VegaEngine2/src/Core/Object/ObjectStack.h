@@ -2,6 +2,10 @@
 
 #include "Core/Core.h"
 
+namespace sf {
+	class Event;
+}
+
 namespace fz {
 
 	// Forwards

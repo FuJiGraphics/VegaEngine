@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core/Core.h"
-
 namespace fz {
+
+	class Event;
 
 	class Object
 	{
@@ -18,7 +18,7 @@ namespace fz {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(float dt) {}
 		virtual void OnEvent(fz::Event& ev) {}
 
 		inline const std::string& GetName() const { return m_DebugName; }

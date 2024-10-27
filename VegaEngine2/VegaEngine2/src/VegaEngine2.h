@@ -14,10 +14,10 @@
 #include "Utility/Utility.h"
 
 // Events
-#include "Events/Event.h"
-#include "Events/AppEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/MouseEvent.h"
+#include "Events/Events.h"
+
+// Input
+#include "Input/InputManager.h"
 
 // Export VegaEngine
 #include "Core/System.h"

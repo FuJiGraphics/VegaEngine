@@ -1,13 +1,11 @@
 #pragma once
 #include "Core/Core.h"
 
-// Events
-#include "Events/Event.h"
-#include "Events/AppEvent.h"
-#include "Events/KeyEvent.h"
-#include "Events/MouseEvent.h"
-
 namespace fz {
+
+	// Forwards
+	class Event;
+	class ObjectStack;
 
 	enum class WindowAPI
 	{

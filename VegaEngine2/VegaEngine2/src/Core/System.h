@@ -25,8 +25,12 @@ namespace fz {
 
 		void Run();
 		void OnEvent(fz::Event& e);
+		
+		void PushObject(Object* object);
+		void PushOverlay(Object* overlay);
 
 		inline bool IsOpened() const	{ return this->IsOpen; }
+
 		bool OnWindowClose(WindowCloseEvent e);
 
 	private:
@@ -35,6 +39,7 @@ namespace fz {
 		bool ReleaseObjectStack();
 
 	protected:
+		bool		IsInit;
 		bool		IsOpen;
 		int			Width;
 		int			Height;

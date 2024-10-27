@@ -34,17 +34,20 @@ namespace fz {
 				obj = nullptr;
 			}
 		}
+		m_Objects.clear();
 	}
 
 	void ObjectStack::PushObject(Object* object)
 	{
 		m_Objects.emplace(m_Objects.begin() + m_InsertIndex, object);
 		m_InsertIndex++;
+		object->OnAttach();
 	}
 
 	void ObjectStack::PushOverlay(Object* overlay)
 	{
 		m_Objects.emplace_back(overlay);
+		overlay->OnAttach();
 	}
 
 	void ObjectStack::PopObject(Object* object)
