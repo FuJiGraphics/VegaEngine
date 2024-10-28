@@ -1,3 +1,4 @@
+#pragma warning(disable : 4006)
 #pragma once
 
 // Standards
@@ -31,6 +32,9 @@
 
 // System
 #include "Core/System.h"
+
+// Renderer
+#include "Renderer/RenderContext.h"
 
 // SFML
 #include <SFML/Graphics/RenderTarget.hpp>

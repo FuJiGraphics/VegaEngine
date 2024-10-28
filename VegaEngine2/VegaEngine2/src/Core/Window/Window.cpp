@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Window.h"
-#include "Core/Window/WindowSFML/WindowSFML.h"
+#include "Platform/SFML/Window/WindowSFML.h"
 
 namespace fz {
 

@@ -20,14 +20,20 @@ namespace fz {
 		* @param[in] int end: 범위 끝 값
 		* @return int: 범위안의 값을 균일 분포로 랜덤 값을 리턴합니다.
 		*/
-		int operator()(int min, int max);
+		int operator()(int min, int max) const;
 		/*
 		* @brief 랜덤 값을 리턴합니다.
 		* @param[in] float start: 범위 시작 값
 		* @param[in] float end: 범위 끝 값
 		* @return float: 범위안의 값을 균일 분포로 랜덤 값을 리턴합니다.
 		*/
-		float operator()(float min, float max);
+		float operator()(float min, float max) const;
+
+		/*
+		* @brief 랜덤 값(boolean)을 리턴합니다.
+		* @return bool: true 또는 false를 리턴합니다.
+		*/
+		bool Boolean() const;
 
 		/*
 		* @brief 360도 범위안의 랜덤한 위치(0.0f ~ 1.0f)를 반환합니다.

@@ -13,7 +13,7 @@ namespace fz {
         return s_Ran;
     }
 
-    int Random_internal::operator()(int min, int max)
+    int Random_internal::operator()(int min, int max) const
     {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -21,12 +21,18 @@ namespace fz {
         return (dis(gen));
     }
 
-    float Random_internal::operator()(float min, float max)
+    float Random_internal::operator()(float min, float max) const
     {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<float> dis(min, max);
         return (dis(gen));
+    }
+
+    bool Random_internal::Boolean() const
+    {
+        int result = (*this)(0, 1);
+        return (result) ? true : false;
     }
 
     fz::Vec2f Random_internal::InUnitCircle() const
@@ -37,7 +43,8 @@ namespace fz {
 
     fz::Vec2f Random_internal::InUnitCircle()
     {
-        return this->InUnitCircle();
+        float angle = Random(0.f, 2.f * s_PI);
+        return { std::cosf(angle), std::sinf(angle) };
     }
 
 } // namespace fz

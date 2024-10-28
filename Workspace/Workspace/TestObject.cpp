@@ -21,7 +21,7 @@ void TestObject::OnDetach()
 
 void TestObject::OnUpdate(float dt)
 {
-
+	sf::Sprite v;
 }
 
 void TestObject::OnEvent(fz::Event& ev)

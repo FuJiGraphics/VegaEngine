@@ -6,6 +6,7 @@ namespace fz {
 	// Forwards
 	class Event;
 	class ObjectStack;
+	class RenderContext;
 
 	enum class WindowAPI
 	{
@@ -33,7 +34,7 @@ namespace fz {
 	public:
 		static std::shared_ptr<Window> Create(const WindowMode& mode);
 
-		virtual void Init(bool isActiveOpenGL = true) = 0;
+		virtual void Init() = 0;
 		virtual void Release() = 0;
 
 		virtual void OnEvent() = 0;
@@ -47,6 +48,7 @@ namespace fz {
 		virtual bool IsVSync() const = 0;
 		virtual bool IsOpen() const = 0;
 
+		virtual void SetContext(unsigned int depthBits, unsigned int stencilBits, unsigned int antialiaslevel) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 

@@ -57,6 +57,8 @@ prebuildcommands
 }
 
 filter "system:Windows"
+linkoptions { "/IGNORE:4006" }
+
 defines
 {
 	"VG_PLATFORM_WINDOWS",

@@ -29,9 +29,9 @@ namespace fz {
 		void PushObject(Object* object);
 		void PushOverlay(Object* overlay);
 
-		inline bool IsOpened() const	{ return this->IsOpen; }
-
 		bool OnWindowClose(WindowCloseEvent e);
+
+		inline bool IsOpened() const	{ return this->IsOpen; }
 
 	private:
 		bool GenerateWindow();
