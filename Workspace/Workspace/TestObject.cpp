@@ -7,6 +7,7 @@ TestObject::TestObject()
 
 TestObject::~TestObject()
 {
+	fz::Log.Warn("TestObject::~TestObject()");
 }
 
 void TestObject::OnAttach()

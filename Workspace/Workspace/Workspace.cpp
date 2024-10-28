@@ -6,7 +6,7 @@ Workspace::Workspace()
 {
 	Super::IsOpen = false;
 
-	Super::PushObject(new TestObject);
+	Super::PushObject(ObjectGenerator->Take<TestObject>());
 }
 
 Workspace::~Workspace()

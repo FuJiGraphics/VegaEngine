@@ -11,6 +11,7 @@ namespace fz {
 		, Title(title)
 		, m_Window(nullptr)
 		, m_ObjectStack(nullptr)
+		, ObjectGenerator(nullptr)
 	{
 		this->Init();
 	}
@@ -200,8 +201,10 @@ namespace fz {
 		}
 		else 
 		{
+			Log.Trace("Object Pool 积己");
+			ObjectGenerator = CreateShared<ObjectPool>();
 			Log.Trace("Object 胶琶 积己");
-			m_ObjectStack = CreateShared<ObjectStack>();
+			m_ObjectStack = CreateShared<ObjectStack>(ObjectGenerator);
 			if (m_ObjectStack == nullptr)
 				result = false;
 		}

@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include <functional>
+#include <list>
 
 // Defines
 #include "Core/Defines.h"
@@ -26,6 +27,7 @@
 // Objects
 #include "Core/Object/Object.h"
 #include "Core/Object/ObjectStack.h"
+#include "Core/Object/ObjectPool.h"
 
 // imgui
 #include "ImGui/ImGuiManager.h"

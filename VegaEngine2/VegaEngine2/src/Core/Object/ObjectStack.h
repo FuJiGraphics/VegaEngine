@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Core.h"
+#include "ObjectPool.h"
 
 namespace sf {
 	class Event;
@@ -10,6 +11,7 @@ namespace fz {
 
 	// Forwards
 	class Object;
+	class ObjectPool;
 
 	class ObjectStack
 	{
@@ -24,7 +26,7 @@ namespace fz {
 		FZ_DELETE_COPY(ObjectStack)
 
 	public:
-		ObjectStack();
+		ObjectStack(Shared<ObjectPool>& linkPool);
 		virtual ~ObjectStack();
 
 		void Release();
@@ -49,6 +51,7 @@ namespace fz {
 
 	private:
 		std::vector<Object*>	m_Objects;
+		Shared<ObjectPool>&		m_Pool;
 		unsigned int			m_InsertIndex;
 	};
 } // namespace fz

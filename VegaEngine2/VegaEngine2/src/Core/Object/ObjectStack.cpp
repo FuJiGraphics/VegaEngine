@@ -3,21 +3,17 @@
 
 namespace fz {
 
-	ObjectStack::ObjectStack()
+	ObjectStack::ObjectStack(Shared<ObjectPool>& linkPool)
 		: m_Objects()
 		, m_InsertIndex(0)
+		, m_Pool(linkPool)
 	{
 		// Empty
 	}
 
 	ObjectStack::~ObjectStack()
 	{
-		for (Object* obj : m_Objects)
-		{
-			obj->OnDetach();
-			delete obj;
-			obj = nullptr;
-		}
+		this->Release();
 	}
 
 	void ObjectStack::Release()
@@ -30,8 +26,7 @@ namespace fz {
 			if (obj != nullptr)
 			{
 				obj->OnDetach();
-				delete obj;
-				obj = nullptr;
+				m_Pool->Return(obj);
 			}
 		}
 		m_Objects.clear();
@@ -58,6 +53,7 @@ namespace fz {
 			object->OnDetach();
 			m_Objects.erase(it);
 			m_InsertIndex--;
+			m_Pool->Return(object);
 		}
 	}
 
@@ -68,6 +64,7 @@ namespace fz {
 		{
 			overlay->OnDetach();
 			m_Objects.erase(it);
+			m_Pool->Return(overlay);
 		}
 	}
 

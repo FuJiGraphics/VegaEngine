@@ -6,6 +6,7 @@ namespace fz {
 
 	class Window;
 	class ObjectStack;
+	class ObjectPool;
 
 	class System
 	{
@@ -39,11 +40,12 @@ namespace fz {
 		bool ReleaseObjectStack();
 
 	protected:
-		bool		IsInit;
-		bool		IsOpen;
-		int			Width;
-		int			Height;
-		std::string	Title;
+		bool				IsInit;
+		bool				IsOpen;
+		int					Width;
+		int					Height;
+		std::string			Title;
+		Shared<ObjectPool>	ObjectGenerator;
 
 	private:
 		Shared<Window> m_Window;
