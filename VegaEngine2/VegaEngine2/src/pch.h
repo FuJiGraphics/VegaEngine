@@ -39,14 +39,4 @@
 #include "Renderer/RenderContext.h"
 
 // SFML
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderTexture.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/OpenGL.hpp>
-#include <SFML/Window/Clipboard.hpp>
-#include <SFML/Window/Cursor.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/Touch.hpp>
-#include <SFML/Window/Window.hpp>
+#include "Platform/SFML/VegaSFML.h"

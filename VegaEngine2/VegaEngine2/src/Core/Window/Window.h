@@ -48,7 +48,6 @@ namespace fz {
 		virtual bool IsVSync() const = 0;
 		virtual bool IsOpen() const = 0;
 
-		virtual void SetContext(unsigned int depthBits, unsigned int stencilBits, unsigned int antialiaslevel) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 

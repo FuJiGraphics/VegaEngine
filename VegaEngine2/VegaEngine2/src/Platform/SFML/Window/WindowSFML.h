@@ -4,6 +4,7 @@
 // forwards
 namespace sf {
 	class Window;
+	class RenderWindow;
 	struct ContextSettings;
 }
 
@@ -33,14 +34,12 @@ namespace fz {
 		bool IsVSync() const override;
 		bool IsOpen() const override;
 
-		void SetContext(unsigned int depthBits, unsigned int stencilBits, unsigned int antialiaslevel) override;
 		void SetVSync(bool enabled) override; 
 		void SetEventCallback(const EventCallbackFn& callback) override;
 
 	protected:
 		Unique<sf::RenderWindow>		m_Window;
 		Shared<RenderContext>			m_Context;
-		sf::ContextSettings				m_ContextSetting;
 		fz::WindowMode					m_Mode;
 		EventCallbackFn					m_CallbackFn;
 		bool							m_IsVSync;

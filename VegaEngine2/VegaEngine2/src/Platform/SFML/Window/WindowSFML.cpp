@@ -1,13 +1,11 @@
 #include "pch.h"
 #include "WindowSFML.h"
-#include "SFML/Window.hpp"
 
 namespace fz {
 
 	WindowSFML::WindowSFML(const fz::WindowMode& mode)
 		: m_Window(nullptr)
 		, m_Context(nullptr)
-		, m_ContextSetting()
 		, m_Mode(mode)
 		, m_CallbackFn(nullptr)
 		, m_IsVSync(false)
@@ -28,7 +26,7 @@ namespace fz {
 		mode.height = m_Mode.Height;
 		m_Context = RenderContext::Create();
 		m_Context->Init(this);
-		m_Window->create(mode, m_Mode.Title, sf::Style::Default, m_ContextSetting);
+		m_Window->create(mode, m_Mode.Title, sf::Style::Default);
 	}
 
 	void WindowSFML::Release()
@@ -163,14 +161,6 @@ namespace fz {
 	bool WindowSFML::IsOpen() const
 	{
 		return m_Window->isOpen();
-	}
-
-	void WindowSFML::SetContext(unsigned int depthBits, unsigned int stencilBits, unsigned int antialiaslevel)
-	{
-		m_Window->setActive();
-		m_ContextSetting.depthBits = depthBits;
-		m_ContextSetting.stencilBits = stencilBits;
-		m_ContextSetting.antialiasingLevel = antialiaslevel;
 	}
 
 	void WindowSFML::SetVSync(bool enabled)
