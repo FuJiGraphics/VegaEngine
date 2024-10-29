@@ -5,7 +5,6 @@
 namespace sf {
 	class Window;
 	class RenderWindow;
-	struct ContextSettings;
 }
 
 namespace fz {
@@ -20,7 +19,7 @@ namespace fz {
 		WindowSFML(const fz::WindowMode& mode);
 		virtual ~WindowSFML();
 
-		void Init() override;
+		void Init(const Shared<RenderContext>& context) override;
 		void Release() override;
 
 		void OnEvent() override;
@@ -39,7 +38,6 @@ namespace fz {
 
 	protected:
 		Unique<sf::RenderWindow>		m_Window;
-		Shared<RenderContext>			m_Context;
 		fz::WindowMode					m_Mode;
 		EventCallbackFn					m_CallbackFn;
 		bool							m_IsVSync;

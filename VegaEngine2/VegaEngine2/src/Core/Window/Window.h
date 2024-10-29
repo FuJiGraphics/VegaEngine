@@ -19,6 +19,7 @@ namespace fz {
 		std::string		Title;
 		unsigned int	Width;
 		unsigned int	Height;
+		bool			VSync;
 		WindowAPI		Api;
 	};
 
@@ -34,7 +35,7 @@ namespace fz {
 	public:
 		static std::shared_ptr<Window> Create(const WindowMode& mode);
 
-		virtual void Init() = 0;
+		virtual void Init(const Shared<RenderContext>& context) = 0;
 		virtual void Release() = 0;
 
 		virtual void OnEvent() = 0;

@@ -50,6 +50,7 @@ namespace fz {
 	private:
 		Shared<Window> m_Window;
 		Shared<ObjectStack> m_ObjectStack;
+		Shared<RenderContext>	m_RenderContext;
 	};
 
 	/*

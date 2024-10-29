@@ -9,9 +9,10 @@ namespace fz {
 		, Width(width)
 		, Height(height)
 		, Title(title)
+		, ObjectGenerator(nullptr)
 		, m_Window(nullptr)
 		, m_ObjectStack(nullptr)
-		, ObjectGenerator(nullptr)
+		, m_RenderContext(nullptr)
 	{
 		this->Init();
 	}
@@ -61,9 +62,7 @@ namespace fz {
 		}
 		// Window
 		{ 
-			Log.Trace("Window 해제 중");
 			m_Window->Release();
-			Log.Trace("Window 해제 완료");
 		}
 		// ImGui
 		{
@@ -110,6 +109,8 @@ namespace fz {
 				}
 			}
 
+
+
 			// ImGui
 			ImGuiManager::Begin(t);
 			{
@@ -152,32 +153,20 @@ namespace fz {
 
 	bool System::GenerateWindow()
 	{
-		Log.Trace("Window 생성");
 		bool result = true;
 		WindowMode winMode;
 		winMode.Width = Width;
 		winMode.Height = Height;
 		winMode.Title = Title;
 		winMode.Api = WindowAPI::SFML;
-		std::string api = {};
-		if (winMode.Api == WindowAPI::SFML)
-			api = "SFML";
-		else if (winMode.Api == WindowAPI::GLFW)
-			api = "GLFW";
-		Log.Trace("Window 생성 옵션 width = {0}, height = {1}, title = {2}, API = {3}",
-			Width, Height, Title, api
-		);
-
-		Log.Trace("Window 객체 생성 중");
+		winMode.VSync = true;
 		m_Window = Window::Create(winMode);
+		// Render Context
+		m_RenderContext = RenderContext::Create();
 		if (m_Window != nullptr)
 		{
-			Log.Trace("Window 콜백 함수 등록 중");
 			m_Window->SetEventCallback(BIND_EVENT_FUNC(System::OnEvent));
-
-			Log.Trace("Window 초기화 중");
-			m_Window->Init();
-			Log.Trace("Window 초기화 완료");
+			m_Window->Init(m_RenderContext);
 		}
 		else
 		{

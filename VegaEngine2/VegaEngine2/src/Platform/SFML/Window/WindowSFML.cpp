@@ -5,35 +5,55 @@ namespace fz {
 
 	WindowSFML::WindowSFML(const fz::WindowMode& mode)
 		: m_Window(nullptr)
-		, m_Context(nullptr)
 		, m_Mode(mode)
 		, m_CallbackFn(nullptr)
-		, m_IsVSync(false)
+		, m_IsVSync(mode.VSync)
 	{
-		// Empty
+		Log.Trace("WindowSFML 객체 생성 중..");
 	}
 
 	WindowSFML::~WindowSFML()
 	{
-		// Empty
+		Log.Trace("WindowSFML 객체 해제 중..");
 	}
 
-	void WindowSFML::Init()
+	void WindowSFML::Init(const Shared<RenderContext>& context)
 	{
+		Log.Trace("Window 초기화 중..");
 		m_Window = std::make_unique<sf::RenderWindow>();
 		sf::VideoMode mode;
 		mode.width = m_Mode.Width;
 		mode.height = m_Mode.Height;
-		m_Context = RenderContext::Create();
-		m_Context->Init(this);
-		m_Window->create(mode, m_Mode.Title, sf::Style::Default);
+		Log.Trace("-------------- # Window SFML 생성 정보 # -------------");
+		Log.Trace("- Title: {0}", m_Mode.Title);
+		Log.Trace("- Width: {0}, Height: {1}", m_Mode.Width, m_Mode.Height);
+		Log.Trace("------------------------------------------------------");
+		Log.Trace("Render Context 생성 중..");
+		sf::ContextSettings conset;
+		auto tarset = context->GetContextData();
+		conset.depthBits = tarset.DepthBits;
+		conset.stencilBits = tarset.StencilBits;
+		conset.antialiasingLevel = tarset.AntialiasingLevel;
+		conset.majorVersion = tarset.MajorVersion;
+		conset.minorVersion = tarset.MinorVersion;
+		m_Window->create(mode, m_Mode.Title, sf::Style::Default, conset);
+		m_Window->setVerticalSyncEnabled(m_IsVSync);
+		Log.Trace("---------------- # Render Context 정보 # ----------------");
+		Log.Trace("- DepthBits: {0}, Stencil Bits: {1}", conset.depthBits, conset.stencilBits);
+		Log.Trace("- 안티앨리어싱 레벨: {0}", conset.antialiasingLevel);
+		Log.Trace("- majorVersion: {0}, minorVersion: {1}", conset.majorVersion, conset.minorVersion);
+		Log.Trace("- VSync 활성화 여부: {0}", m_IsVSync);
+		Log.Trace("---------------------------------------------------------");
+		Log.Trace("Window 초기화 완료");
 	}
 
 	void WindowSFML::Release()
 	{
+		Log.Trace("WindowSFML 리소스 해제 중..");
 		if (m_Window != nullptr)
 		{
 			m_Window->close();
+			Log.Trace("WindowSFML 리소스 해제 완료");
 		}
 	}
 
@@ -171,6 +191,7 @@ namespace fz {
 
 	void WindowSFML::SetEventCallback(const EventCallbackFn& callback)
 	{
+		Log.Trace("Window Callback Function 설정 중..");
 		m_CallbackFn = callback;
 	}
 

@@ -11,11 +11,13 @@ namespace fz {
 	class ContextSFML : public RenderContext
 	{
 	public:
-		void Init(Window* window) override;
+		void Init(const ContextData& data = ContextData()) override;
 		void SwapBuffers() override;
 
-	private:
+		ContextData GetContextData() const override;
 
+	private:
+		ContextData m_Context;
 	};
 
 } // namespace fz
