@@ -31,6 +31,7 @@ namespace fz {
 		void PushOverlay(Object* overlay);
 
 		bool OnWindowClose(WindowCloseEvent e);
+		bool OnWindowResize(WindowResizeEvent e);
 
 		inline bool IsOpened() const	{ return this->IsOpen; }
 

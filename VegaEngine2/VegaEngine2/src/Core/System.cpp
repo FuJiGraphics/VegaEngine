@@ -93,12 +93,86 @@ namespace fz {
 	{
 		Log.Trace("System Run...");
 		sf::Clock clock;
+
+		m_Window->ActivateOpenGL(true);
+		glViewport(0, 0, static_cast<GLsizei>(m_Window->GetWidth()), static_cast<GLsizei>(m_Window->GetHeight()));
+		const sf::Texture texture;
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		const GLfloat ratio = static_cast<float>(Width) / static_cast<float>(Height);
+		glFrustum(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
+
+		// Bind the texture
+		glEnable(GL_TEXTURE_2D);
+		sf::Texture::bind(&texture);
+
+		// Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
+		// clang-format off
+		static constexpr std::array<GLfloat, 180> cube =
+		{
+			// positions    // texture coordinates
+			-20, -20, -20,  0, 0,
+			-20,  20, -20,  1, 0,
+			-20, -20,  20,  0, 1,
+			-20, -20,  20,  0, 1,
+			-20,  20, -20,  1, 0,
+			-20,  20,  20,  1, 1,
+
+			 20, -20, -20,  0, 0,
+			 20,  20, -20,  1, 0,
+			 20, -20,  20,  0, 1,
+			 20, -20,  20,  0, 1,
+			 20,  20, -20,  1, 0,
+			 20,  20,  20,  1, 1,
+
+			-20, -20, -20,  0, 0,
+			 20, -20, -20,  1, 0,
+			-20, -20,  20,  0, 1,
+			-20, -20,  20,  0, 1,
+			 20, -20, -20,  1, 0,
+			 20, -20,  20,  1, 1,
+
+			-20,  20, -20,  0, 0,
+			 20,  20, -20,  1, 0,
+			-20,  20,  20,  0, 1,
+			-20,  20,  20,  0, 1,
+			 20,  20, -20,  1, 0,
+			 20,  20,  20,  1, 1,
+
+			-20, -20, -20,  0, 0,
+			 20, -20, -20,  1, 0,
+			-20,  20, -20,  0, 1,
+			-20,  20, -20,  0, 1,
+			 20, -20, -20,  1, 0,
+			 20,  20, -20,  1, 1,
+
+			-20, -20,  20,  0, 0,
+			 20, -20,  20,  1, 0,
+			-20,  20,  20,  0, 1,
+			-20,  20,  20,  0, 1,
+			 20, -20,  20,  1, 0,
+			 20,  20,  20,  1, 1
+		};
+		// clang-format on
+
+		// Enable position and texture coordinates vertex components
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 5 * sizeof(GLfloat), cube.data());
+		glTexCoordPointer(2, GL_FLOAT, 5 * sizeof(GLfloat), cube.data() + 3);
+
+		// Disable normal and color vertex components
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		m_Window->ActivateOpenGL(false);
 		while (m_Window->IsOpen())
 		{
 			sf::Time t = clock.restart();
 			float dt = t.asSeconds();
 			// Event
 			m_Window->OnEvent();
+			if (!m_Window->IsOpen())
+				continue;
 
 			// Update
 			for (Object* obj : *m_ObjectStack)
@@ -109,7 +183,28 @@ namespace fz {
 				}
 			}
 
+			// clear the buffers
+			m_Window->ActivateOpenGL(true);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+			// We get the position of the mouse cursor (or touch), so that we can move the box accordingly
+			sf::Vector2i pos;
+			pos = sf::Mouse::getPosition();
+
+			const float x = static_cast<float>(pos.x) * 200.f / static_cast<float>(Width) - 100.f;
+			const float y = -static_cast<float>(pos.y) * 200.f / static_cast<float>(Height) + 100.f;
+			// Apply some transformations
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glTranslatef(x, y, -100.f);
+			glRotatef(clock.getElapsedTime().asSeconds() * 50.f, 1.f, 0.f, 0.f);
+			glRotatef(clock.getElapsedTime().asSeconds() * 30.f, 0.f, 1.f, 0.f);
+			glRotatef(clock.getElapsedTime().asSeconds() * 90.f, 0.f, 0.f, 1.f);
+			// Draw the cube
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			m_Window->ActivateOpenGL(false);
+
+			// sf Draw
 
 			// ImGui
 			ImGuiManager::Begin(t);
@@ -117,6 +212,8 @@ namespace fz {
 				ImGuiManager::ShowDemo();
 			}
 			ImGuiManager::End();
+
+			// OpenGLdraw...
 			m_Window->OnUpdate();
 		}
 		Log.Trace("System Run Off");
@@ -126,6 +223,7 @@ namespace fz {
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(System::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FUNC(System::OnWindowResize));
 		for (Object* obj : *m_ObjectStack)
 		{
 			if (obj != nullptr)
@@ -148,6 +246,18 @@ namespace fz {
 	bool System::OnWindowClose(WindowCloseEvent e)
 	{
 		m_Window->Release();
+		return true;
+	}
+
+	bool System::OnWindowResize(WindowResizeEvent e)
+	{ 
+		m_Window->ActivateOpenGL(true);
+		m_RenderContext->SetViewport(
+			0, 0,
+			m_Window->GetWidth(),
+			m_Window->GetHeight()
+		);
+		m_Window->ActivateOpenGL(false);
 		return true;
 	}
 

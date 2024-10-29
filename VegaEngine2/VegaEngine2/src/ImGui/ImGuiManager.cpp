@@ -16,8 +16,8 @@ namespace fz {
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+		// io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+		// io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 		if (result)
 			Log.Trace("ImGui 초기화 완료");
 		else
@@ -51,7 +51,7 @@ namespace fz {
 		ImGui::SFML::SetCurrentWindow(renderTarget);
 		if (s_enableOverviewDockspace)
 		{
-			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport()->ID);
+			//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport()->ID);
 		}
 	}
 
@@ -61,8 +61,8 @@ namespace fz {
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
+			// ImGui::UpdatePlatformWindows();
+			// ImGui::RenderPlatformWindowsDefault();
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 #include "Core/Core.h"
 #include "Core/Window/Window.h"
+#include "imgui.h"
 
 namespace sf {
 	class Event;

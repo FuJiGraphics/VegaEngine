@@ -18,7 +18,8 @@ namespace fz {
 	public:
 		virtual void Init(const ContextData& data = ContextData()) = 0;
 		virtual void SwapBuffers() = 0;
-
+		virtual void SetViewport(int x, int y, int w, int h) = 0;
+		 
 		virtual ContextData GetContextData() const = 0;
 
 		static Shared<RenderContext> Create();

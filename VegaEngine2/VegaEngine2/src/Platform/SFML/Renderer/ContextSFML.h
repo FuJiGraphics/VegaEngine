@@ -13,6 +13,7 @@ namespace fz {
 	public:
 		void Init(const ContextData& data = ContextData()) override;
 		void SwapBuffers() override;
+		void SetViewport(int x, int y, int w, int h) override;
 
 		ContextData GetContextData() const override;
 

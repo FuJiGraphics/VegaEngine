@@ -1,6 +1,9 @@
 #pragma once
 
 // SFML
+#include <SFML/OpenGL.hpp>
+#include "Platform/SFML/Window/KHR/khrplatform.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
 #include <SFML/Audio.hpp>

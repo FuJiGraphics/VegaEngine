@@ -33,6 +33,7 @@ namespace fz {
 		bool IsVSync() const override;
 		bool IsOpen() const override;
 
+		void ActivateOpenGL(bool enabled) override;
 		void SetVSync(bool enabled) override; 
 		void SetEventCallback(const EventCallbackFn& callback) override;
 

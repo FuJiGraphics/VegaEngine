@@ -45,6 +45,11 @@ namespace fz {
 		Log.Trace("- VSync 활성화 여부: {0}", m_IsVSync);
 		Log.Trace("---------------------------------------------------------");
 		Log.Trace("Window 초기화 완료");
+		this->ActivateOpenGL(true);
+		context->SetViewport(0, 0, m_Mode.Width, m_Mode.Height);
+		// Setup a perspective projection
+
+		this->ActivateOpenGL(false);
 	}
 
 	void WindowSFML::Release()
@@ -181,6 +186,18 @@ namespace fz {
 	bool WindowSFML::IsOpen() const
 	{
 		return m_Window->isOpen();
+	}
+
+	void WindowSFML::ActivateOpenGL(bool enabled)
+	{
+		if (enabled)
+			m_Window->popGLStates();
+		else
+			m_Window->pushGLStates();
+		if (!m_Window->setActive(enabled))
+		{
+			Log.Error("OpenGL 활성화중 알 수 없는 오류가 발생했습니다.");
+		}
 	}
 
 	void WindowSFML::SetVSync(bool enabled)

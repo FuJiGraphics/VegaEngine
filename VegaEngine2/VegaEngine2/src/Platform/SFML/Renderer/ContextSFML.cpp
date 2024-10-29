@@ -17,6 +17,11 @@ namespace fz {
 
 	}
 
+	void ContextSFML::SetViewport(int x, int y, int w, int h)
+	{
+		glViewport(x, y, static_cast<GLsizei>(w), static_cast<GLsizei>(h));
+	}
+
 	ContextData ContextSFML::GetContextData() const
 	{
 		return m_Context;
