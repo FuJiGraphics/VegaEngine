@@ -14,6 +14,3 @@
 
 // Windows
 #include "Window/Window.h"
-
-// Renderer
-#include "Renderer/RenderContext.h"

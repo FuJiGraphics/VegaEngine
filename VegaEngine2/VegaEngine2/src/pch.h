@@ -35,8 +35,5 @@
 // System
 #include "Core/System.h"
 
-// Renderer
-#include "Renderer/RenderContext.h"
-
 // SFML
 #include "Platform/SFML/VegaSFML.h"

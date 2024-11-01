@@ -16,5 +16,3 @@
 // Windows
 #include "Platform/SFML/VegaSFML.h"
 
-// Renderer
-#include "Platform/SFML/Renderer/ContextSFML.h"

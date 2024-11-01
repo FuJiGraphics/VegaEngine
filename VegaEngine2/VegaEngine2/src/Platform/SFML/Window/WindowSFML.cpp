@@ -27,29 +27,11 @@ namespace fz {
 		Log.Trace("-------------- # Window SFML 생성 정보 # -------------");
 		Log.Trace("- Title: {0}", m_Mode.Title);
 		Log.Trace("- Width: {0}, Height: {1}", m_Mode.Width, m_Mode.Height);
-		Log.Trace("------------------------------------------------------");
-		Log.Trace("Render Context 생성 중..");
-		sf::ContextSettings conset;
-		auto tarset = context->GetContextData();
-		conset.depthBits = tarset.DepthBits;
-		conset.stencilBits = tarset.StencilBits;
-		conset.antialiasingLevel = tarset.AntialiasingLevel;
-		conset.majorVersion = tarset.MajorVersion;
-		conset.minorVersion = tarset.MinorVersion;
-		m_Window->create(mode, m_Mode.Title, sf::Style::Default, conset);
-		m_Window->setVerticalSyncEnabled(m_IsVSync);
-		Log.Trace("---------------- # Render Context 정보 # ----------------");
-		Log.Trace("- DepthBits: {0}, Stencil Bits: {1}", conset.depthBits, conset.stencilBits);
-		Log.Trace("- 안티앨리어싱 레벨: {0}", conset.antialiasingLevel);
-		Log.Trace("- majorVersion: {0}, minorVersion: {1}", conset.majorVersion, conset.minorVersion);
 		Log.Trace("- VSync 활성화 여부: {0}", m_IsVSync);
-		Log.Trace("---------------------------------------------------------");
+		Log.Trace("------------------------------------------------------");
+		m_Window->create(mode, m_Mode.Title, sf::Style::Default);
+		m_Window->setVerticalSyncEnabled(m_IsVSync);
 		Log.Trace("Window 초기화 완료");
-		this->ActivateOpenGL(true);
-		context->SetViewport(0, 0, m_Mode.Width, m_Mode.Height);
-		// Setup a perspective projection
-
-		this->ActivateOpenGL(false);
 	}
 
 	void WindowSFML::Release()
@@ -151,6 +133,7 @@ namespace fz {
 	void WindowSFML::OnUpdate()
 	{
 		m_Window->display();
+		m_Window->clear();
 	}
 
 	int WindowSFML::GetWidth() const
