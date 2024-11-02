@@ -5,7 +5,6 @@
 
 namespace fz {
 
-	bool ImGuiManager::s_enableOverviewDockspace = true;
 	const fz::Window* ImGuiManager::s_currWindow = nullptr;
 
 	bool ImGuiManager::Init(const fz::Window& window)
@@ -16,8 +15,8 @@ namespace fz {
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;   // Enable Keyboard Controls
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 		if (result)
 			Log.Trace("ImGui 초기화 완료");
 		else
@@ -44,12 +43,28 @@ namespace fz {
 		s_currWindow = &window;
 	}
 
+	void ImGuiManager::SetDocking(bool enabled)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		if (enabled)
+		{
+			io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+			io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+		}
+		else 
+		{
+			io.ConfigFlags &= ~ImGuiConfigFlags_DockingEnable;         // Enable Docking
+			io.ConfigFlags &= ~ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+		}
+	}
+
 	void ImGuiManager::Begin(const sf::Time& dt)
 	{
 		auto& renderTarget = *(sf::RenderWindow*)s_currWindow->GetNativeWindow();
 		ImGui::SFML::Update(renderTarget, dt);
 		ImGui::SFML::SetCurrentWindow(renderTarget);
-		if (s_enableOverviewDockspace)
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+ 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport()->ID);
 		}
@@ -59,7 +74,7 @@ namespace fz {
 	{
 		ImGui::SFML::Render(*(sf::RenderWindow*)s_currWindow->GetNativeWindow());
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGui::UpdatePlatformWindows();
 			ImGui::RenderPlatformWindowsDefault();

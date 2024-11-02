@@ -1,12 +1,27 @@
-#include "Workspace.h"
+#include <VegaEngine2.h>
+#include "Editor2D.h"
 
-Workspace::Workspace()
-	: System(1024, 768, "VegaEngine2")
+using namespace std;
+
+class Workspace : public fz::System
 {
-	Super::IsOpen = false;
-}
+public:
+	Workspace()
+		: System(1024, 768, "VegaEngine2")
+	{
+		Super::IsOpen = false;
+		this->PushLayer(LayerGenerator->Take<Editor2D>("Editor2D"));
+	}
+	virtual ~Workspace()
+	{
+		// Empty
+	}
 
-Workspace::~Workspace()
+private:
+
+};
+
+fz::System* fz::CreateSystem()
 {
-
+	return new Workspace();
 }

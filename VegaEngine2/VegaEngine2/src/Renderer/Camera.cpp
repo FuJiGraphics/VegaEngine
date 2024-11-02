@@ -109,4 +109,14 @@ namespace fz {
 		return m_View.getInverseTransform();
 	}
 
+	const sf::View& OrthoCamera::GetView() const
+	{
+		return m_View;
+	}
+
+	sf::View& OrthoCamera::GetView()
+	{
+		return m_View;
+	}
+
 } // namespace fz

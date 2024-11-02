@@ -98,13 +98,13 @@ namespace fz {
 				} break;
 				case sf::Event::MouseButtonPressed: {
 					if (m_CallbackFn) {
-						MouseButtonPressedEvent event((int)input.mouseButton.button);
+						MouseButtonPressedEvent event(Converter::SfmlToFzType(input.mouseButton.button));
 						m_CallbackFn(event);
 					}
 				} break;
 				case sf::Event::MouseButtonReleased: {
 					if (m_CallbackFn) {
-						MouseButtonReleasedEvent event((int)input.mouseButton.button);
+						MouseButtonReleasedEvent event(Converter::SfmlToFzType(input.mouseButton.button));
 						m_CallbackFn(event);
 					}
 				} break;

@@ -120,7 +120,7 @@ namespace fz {
 		Quote = Apostrophe //!< \deprecated Use Apostrophe instead
 	};
 
-	enum class Button
+	enum class MouseButtonType
 	{
 		Left,       //!< The left mouse button
 		Right,      //!< The right mouse button

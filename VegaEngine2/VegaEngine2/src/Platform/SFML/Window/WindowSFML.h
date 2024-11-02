@@ -36,7 +36,7 @@ namespace fz {
 		void ActivateOpenGL(bool enabled) override;
 		void SetVSync(bool enabled) override; 
 		void SetEventCallback(const EventCallbackFn& callback) override;
-
+	
 	protected:
 		Unique<sf::RenderWindow>		m_Window;
 		fz::WindowMode					m_Mode;

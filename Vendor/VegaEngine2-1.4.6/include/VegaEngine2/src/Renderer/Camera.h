@@ -36,6 +36,9 @@ namespace fz {
         const sf::Transform& GetTransform() const;
         const sf::Transform& GetInverseTransform() const;
 
+        const sf::View& GetView() const;
+        sf::View& GetView();
+
 	private:
         std::string m_Name;
 		sf::View	m_View;

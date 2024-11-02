@@ -2,6 +2,7 @@
 
 namespace fz {
 	
+	class CameraController;
 	class OrthoCamera;
 	class Window;
 
@@ -12,13 +13,14 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
-		static void BeginScene(const OrthoCamera& camera);
+		static void BeginScene(CameraController* camera);
 		static void EndScene();
 
 		static void Draw(const sf::Drawable& target);
 		
 	private:
 		static sf::RenderWindow* s_RenderWindow;
+		static fz::CameraController* s_RenderCamera;
 	};
 
 } // namespace fz

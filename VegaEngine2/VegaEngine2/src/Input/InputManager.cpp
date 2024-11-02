@@ -10,7 +10,7 @@ namespace fz {
 		return sf::Keyboard::isKeyPressed((sf::Keyboard::Key)keycode);
 	}
 
-	bool InputManager::IsMouseButtonPressedImpl(Button button)
+	bool InputManager::IsMouseButtonPressedImpl(MouseButtonType button)
 	{
 		return sf::Mouse::isButtonPressed((sf::Mouse::Button)button);
 	}

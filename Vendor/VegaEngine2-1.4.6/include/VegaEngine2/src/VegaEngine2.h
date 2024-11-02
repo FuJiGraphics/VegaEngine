@@ -22,5 +22,8 @@
 // Export VegaEngine
 #include "Core/System.h"
 
+// Renderer
+#include "Renderer/CameraController.h"
+
 /* Entry Point */
 #include "EntryPoint.h"

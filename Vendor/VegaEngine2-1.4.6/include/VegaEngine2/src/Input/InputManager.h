@@ -14,7 +14,7 @@ namespace fz {
 		inline static bool IsKeyPressed(KeyType keycode) {
 			return InputManager::IsKeyPressedImpl(keycode); 
 		}
-		inline static bool IsMouseButtonPressed(Button button) {
+		inline static bool IsMouseButtonPressed(MouseButtonType button) {
 			return InputManager::IsMouseButtonPressedImpl(button);
 		}
 		inline static sf::Vector2f GetMousePosition() {
@@ -26,7 +26,7 @@ namespace fz {
 
 	protected:
 		static bool IsKeyPressedImpl(KeyType keycode);
-		static bool IsMouseButtonPressedImpl(Button button);
+		static bool IsMouseButtonPressedImpl(MouseButtonType button);
 		static sf::Vector2f GetMousePositionImpl();
 
 	private:
