@@ -117,7 +117,13 @@ namespace fz {
 			// ImGui
 			ImGuiManager::Begin(t);
 			{
-				ImGuiManager::ShowDemo();
+				for (Layer* obj : *m_LayerStack)
+				{
+					if (obj != nullptr)
+					{
+						obj->OnUI();
+					}
+				}
 			}
 			ImGuiManager::End();
 

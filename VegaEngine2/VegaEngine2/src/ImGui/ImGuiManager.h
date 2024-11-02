@@ -20,6 +20,10 @@ namespace fz {
 		static void	SetWindow(const fz::Window& window);
 		static void SetDocking(bool enabled);
 		static void	Begin(const sf::Time& dt);
+		static bool IsFocusedWindow();
+		static void ActivateInputAll(bool enabled);
+		static void ActivateInputKeyboard(bool enabled);
+		static void ActivateInputMouse(bool enabled);
 		static void	End();
 		static void	ShowDemo();
 

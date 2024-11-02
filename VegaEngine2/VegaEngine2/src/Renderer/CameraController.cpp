@@ -17,6 +17,11 @@ namespace fz {
 		m_Camera = CreateShared<fz::OrthoCamera>(name, pos, size);
 	}
 
+	void CameraController::SetSize(float width, float height)
+	{
+		m_Camera->SetSize(width, height);
+	}
+
 	void CameraController::SetViewport(float x, float y, float width, float height)
 	{
 		if ((x >= width) || (y >= height))
@@ -28,12 +33,15 @@ namespace fz {
 		rect.left = x / width;
 		rect.top = y / height;
 		rect.width = (x + width) / width;
-		rect.height = (y / height) / height;
+		rect.height = (y + height) / height;
 		m_Camera->SetViewport(rect);
 	}
 
 	void CameraController::OnUpdate(float dt)
 	{
+		if (!m_ActivatedController)
+			return;
+
 		if (InputManager::IsKeyPressed(KeyType::A))
 			m_Camera->Move(m_CameraMoveSpeed * -1.0f * dt, 0.0f);
 		else if (InputManager::IsKeyPressed(KeyType::D))
@@ -68,8 +76,16 @@ namespace fz {
 		return *m_Camera;
 	}
 
+	void CameraController::SetActivated(bool enabled)
+	{
+		m_ActivatedController = enabled;
+	}
+
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		if (!m_ActivatedController)
+			return false;
+
 		float offset = e.GetYOffset();
 		if (offset < 0)
 			m_Camera->Zoom(1.0f + m_CameraZoomFactor);
@@ -108,7 +124,7 @@ namespace fz {
 		m_MousePrevPos = m_MousePos;
 		m_MousePos.x = e.GetX();
 		m_MousePos.y = e.GetY();
-		if (m_IsMouseButtonPressed)
+		if (m_IsMouseButtonPressed && m_ActivatedController)
 		{
 			float dx = (m_MousePos.x - m_MousePrevPos.x) * -1.0f;
 			float dy = (m_MousePos.y - m_MousePrevPos.y) * -1.0f;

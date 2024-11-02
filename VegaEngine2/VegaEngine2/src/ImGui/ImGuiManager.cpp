@@ -70,6 +70,44 @@ namespace fz {
 		}
 	}
 
+	bool ImGuiManager::IsFocusedWindow()
+	{
+		return ImGui::IsWindowFocused();
+	}
+
+	void ImGuiManager::ActivateInputAll(bool enabled)
+	{
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		if (enabled)
+		{
+			io.WantCaptureKeyboard = true;
+			io.WantCaptureMouse = true;
+		}
+		else
+		{
+			io.WantCaptureKeyboard = false; // 키보드 입력을 ImGui가 받지 않도록
+			io.WantCaptureMouse = false;    // 마우스 입력을 ImGui가 받지 않도록
+		}
+	}
+
+	void ImGuiManager::ActivateInputKeyboard(bool enabled)
+	{
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		if (enabled)
+			io.WantCaptureKeyboard = true;
+		else
+			io.WantCaptureKeyboard = false; // 키보드 입력을 ImGui가 받지 않도록
+	}
+
+	void ImGuiManager::ActivateInputMouse(bool enabled)
+	{
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		if (enabled)
+			io.WantCaptureMouse = true;
+		else
+			io.WantCaptureMouse = false;    // 마우스 입력을 ImGui가 받지 않도록
+	}
+
 	void ImGuiManager::End()
 	{
 		ImGui::SFML::Render(*(sf::RenderWindow*)s_currWindow->GetNativeWindow());
@@ -91,8 +129,10 @@ namespace fz {
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		// 특정 조건에 따라 입력 차단
+		bool blockInput = true; // 입력을 차단할 조건 설정 (여기서는 항상 true로 설정)
 
+		ImGui::Begin("Hello, world!");
 		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
 		ImGui::Checkbox("Another Window", &show_another_window);
