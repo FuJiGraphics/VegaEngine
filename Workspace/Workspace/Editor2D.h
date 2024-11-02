@@ -13,4 +13,5 @@ public:
 
 private:
 	fz::CameraController camera;
+	fz::Shared<fz::Framebuffer>	frameBuffer;
 };

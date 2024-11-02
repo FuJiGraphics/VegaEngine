@@ -13,14 +13,16 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
-		static void BeginScene(CameraController* camera);
+		static void BeginScene(CameraController* camera, Framebuffer* framebuffer = nullptr);
 		static void EndScene();
 
 		static void Draw(const sf::Drawable& target);
 		
 	private:
+		static sf::Sprite s_Spirte;
 		static sf::RenderWindow* s_RenderWindow;
 		static fz::CameraController* s_RenderCamera;
+		static fz::Framebuffer* s_RenderBuffer;
 	};
 
 } // namespace fz

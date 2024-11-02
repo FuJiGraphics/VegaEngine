@@ -10,6 +10,11 @@ Editor2D::Editor2D(const std::string& name)
 
 void Editor2D::OnAttach()
 {
+	FramebufferSpec frameSpec;
+	frameSpec.Width = 1024;
+	frameSpec.Height = 768;
+	frameSpec.MultisampleLevel = 1;
+	frameBuffer = Framebuffer::Create(frameSpec);
 }
 
 void Editor2D::OnDetach()
@@ -30,10 +35,9 @@ void Editor2D::OnUpdate(float dt)
 	static sf::RectangleShape shape;
 	shape.setSize({ 100.f, 100.f });
 	shape.setPosition({ 1024.f * 0.5f, 768.f * 0.5f });
-	Renderer2D::BeginScene(&camera);
+	Renderer2D::BeginScene(&camera, frameBuffer.get());
 	Renderer2D::Draw(shape);
 	Renderer2D::EndScene();
-
 }
 
 void Editor2D::OnEvent(fz::Event& ev)
