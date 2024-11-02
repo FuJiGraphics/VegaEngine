@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 namespace fz {
 
 	/*
@@ -37,14 +39,14 @@ namespace fz {
 
 		/*
 		* @brief 360도 범위안의 랜덤한 위치(0.0f ~ 1.0f)를 반환합니다.
-		* @return fz::Vec2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
+		* @return sf::Vector2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
 		*/
-		fz::Vec2f InUnitCircle() const;
+		sf::Vector2f InUnitCircle() const;
 		/*
 		* @brief 360도 범위안의 랜덤한 위치(0.0f ~ 1.0f)를 반환합니다.
-		* @return fz::Vec2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
+		* @return sf::Vector2f: 360도 범위 안의 랜덤 위치(0.0f ~ 1.0f)
 		*/
-		fz::Vec2f InUnitCircle();
+		sf::Vector2f InUnitCircle();
 
 	private:
 		static const float s_PI;	/*< 파이값 */

@@ -35,13 +35,13 @@ namespace fz {
         return (result) ? true : false;
     }
 
-    fz::Vec2f Random_internal::InUnitCircle() const
+    sf::Vector2f Random_internal::InUnitCircle() const
     {
         float angle = Random(0.f, 2.f * s_PI);
         return { std::cosf(angle), std::sinf(angle) };
     }
 
-    fz::Vec2f Random_internal::InUnitCircle()
+    sf::Vector2f Random_internal::InUnitCircle()
     {
         float angle = Random(0.f, 2.f * s_PI);
         return { std::cosf(angle), std::sinf(angle) };

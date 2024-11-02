@@ -2,6 +2,10 @@
 
 #include "Core/Core.h"
 
+namespace sf {
+	class WindowBase;
+}
+
 namespace fz {
 
 	class InputManager
@@ -13,14 +17,20 @@ namespace fz {
 		inline static bool IsMouseButtonPressed(Button button) {
 			return InputManager::IsMouseButtonPressedImpl(button);
 		}
-		inline static fz::Vec2f GetMousePosition() {
+		inline static sf::Vector2f GetMousePosition() {
 			return InputManager::GetMousePositionImpl();
+		}
+		inline static void SetTargetTrackingWindow(sf::WindowBase* window) {
+			s_TargetWindow = window;
 		}
 
 	protected:
 		static bool IsKeyPressedImpl(KeyType keycode);
 		static bool IsMouseButtonPressedImpl(Button button);
-		static fz::Vec2f GetMousePositionImpl();
+		static sf::Vector2f GetMousePositionImpl();
+
+	private:
+		static sf::WindowBase* s_TargetWindow;
 	};
 
 } // namespace fz

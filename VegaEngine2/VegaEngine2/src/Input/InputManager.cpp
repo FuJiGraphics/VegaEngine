@@ -3,6 +3,8 @@
 
 namespace fz {
 
+	sf::WindowBase* InputManager::s_TargetWindow = nullptr;
+
 	bool InputManager::IsKeyPressedImpl(KeyType keycode)
 	{
 		return sf::Keyboard::isKeyPressed((sf::Keyboard::Key)keycode);
@@ -13,12 +15,18 @@ namespace fz {
 		return sf::Mouse::isButtonPressed((sf::Mouse::Button)button);
 	}
 
-	fz::Vec2f InputManager::GetMousePositionImpl()
+	sf::Vector2f InputManager::GetMousePositionImpl()
 	{
-		const auto& mousePos = sf::Mouse::getPosition();
+		sf::Vector2i mousePos;
+		// case 1 Target Window Mouse Position
+		if (s_TargetWindow)
+			mousePos = sf::Mouse::getPosition(*s_TargetWindow);
+		// case 2 Global position in the desktop
+		else
+			mousePos = sf::Mouse::getPosition();
 		float x = static_cast<float>(mousePos.x);
 		float y = static_cast<float>(mousePos.y);
-		return fz::Vec2f({ x, y });
+		return sf::Vector2f({ x, y });
 	}
 
 } // namespace fz

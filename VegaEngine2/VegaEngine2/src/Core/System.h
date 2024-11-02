@@ -5,8 +5,8 @@
 namespace fz {
 
 	class Window;
-	class ObjectStack;
-	class ObjectPool;
+	class LayerStack;
+	class LayerPool;
 
 	class System
 	{
@@ -27,8 +27,8 @@ namespace fz {
 		void Run();
 		void OnEvent(fz::Event& e);
 		
-		void PushObject(Object* object);
-		void PushOverlay(Object* overlay);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
 
 		bool OnWindowClose(WindowCloseEvent e);
 		bool OnWindowResize(WindowResizeEvent e);
@@ -37,8 +37,8 @@ namespace fz {
 
 	private:
 		bool GenerateWindow();
-		bool GenerateObjectStack();
-		bool ReleaseObjectStack();
+		bool GenerateLayerStack();
+		bool ReleaseLayerStack();
 
 	protected:
 		bool				IsInit;
@@ -46,11 +46,11 @@ namespace fz {
 		int					Width;
 		int					Height;
 		std::string			Title;
-		Shared<ObjectPool>	ObjectGenerator;
+		Shared<LayerPool>	LayerGenerator;
 
 	private:
-		Shared<Window> m_Window;
-		Shared<ObjectStack> m_ObjectStack;
+		Shared<Window>			m_Window;
+		Shared<LayerStack>		m_LayerStack;
 		Shared<RenderContext>	m_RenderContext;
 	};
 

@@ -5,7 +5,7 @@ namespace fz {
 
 	// Forwards
 	class Event;
-	class ObjectStack;
+	class LayerStack;
 	class RenderContext;
 
 	enum class WindowAPI

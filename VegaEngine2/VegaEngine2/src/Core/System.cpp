@@ -9,9 +9,9 @@ namespace fz {
 		, Width(width)
 		, Height(height)
 		, Title(title)
-		, ObjectGenerator(nullptr)
+		, LayerGenerator(nullptr)
+		, m_LayerStack(nullptr)
 		, m_Window(nullptr)
-		, m_ObjectStack(nullptr)
 		, m_RenderContext(nullptr)
 	{
 		this->Init();
@@ -38,8 +38,10 @@ namespace fz {
 		{
 			result = this->GenerateWindow();
 			if (result)
-				result = this->GenerateObjectStack();
+				result = this->GenerateLayerStack();
 			ImGuiManager::Init(*m_Window);
+			InputManager::SetTargetTrackingWindow((sf::RenderWindow*)m_Window->GetNativeWindow());
+			Renderer2D::Init((sf::RenderWindow*)m_Window->GetNativeWindow());
 		}
 		if (result)
 			Log.Trace("System 초기화 완료");
@@ -56,9 +58,9 @@ namespace fz {
 
 		bool result = true;
 		Log.Trace("System 해제");
-		// Release ObjectStack
+		// Release LayerStack
 		{
-			this->ReleaseObjectStack();
+			this->ReleaseLayerStack();
 		}
 		// Window
 		{ 
@@ -80,7 +82,7 @@ namespace fz {
 	{
 		bool result = true;
 		Log.Trace("System 리셋");
-		this->ReleaseObjectStack();
+		this->ReleaseLayerStack();
 
 		if (result)
 			Log.Trace("System 해제 완료");
@@ -104,7 +106,7 @@ namespace fz {
 				continue;
 
 			// Update
-			for (Object* obj : *m_ObjectStack)
+			for (Layer* obj : *m_LayerStack)
 			{
 				if (obj != nullptr)
 				{
@@ -129,7 +131,7 @@ namespace fz {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(System::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FUNC(System::OnWindowResize));
-		for (Object* obj : *m_ObjectStack)
+		for (Layer* obj : *m_LayerStack)
 		{
 			if (obj != nullptr)
 			{
@@ -138,14 +140,14 @@ namespace fz {
 		}
 	}
 
-	void System::PushObject(Object* object)
+	void System::PushLayer(Layer* layer)
 	{
-		m_ObjectStack->PushObject(object);
+		m_LayerStack->PushLayer(layer);
 	}
 
-	void System::PushOverlay(Object* overlay)
+	void System::PushOverlay(Layer* overlay)
 	{
-		m_ObjectStack->PushObject(overlay);
+		m_LayerStack->PushLayer(overlay);
 	}
 
 	bool System::OnWindowClose(WindowCloseEvent e)
@@ -186,40 +188,40 @@ namespace fz {
 		return result;
 	}
 
-	bool System::GenerateObjectStack()
+	bool System::GenerateLayerStack()
 	{
 		bool result = true;
-		if (m_ObjectStack && m_ObjectStack->size() > 0)
+		if (m_LayerStack && m_LayerStack->size() > 0)
 		{
-			Log.Warn("Object 스택이 이미 생성 되어 있습니다.");
+			Log.Warn("Layer 스택이 이미 생성 되어 있습니다.");
 			result = false;
 		}
 		else 
 		{
-			Log.Trace("Object Pool 생성");
-			ObjectGenerator = CreateShared<ObjectPool>();
-			Log.Trace("Object 스택 생성");
-			m_ObjectStack = CreateShared<ObjectStack>(ObjectGenerator);
-			if (m_ObjectStack == nullptr)
+			Log.Trace("Layer Pool 생성");
+			LayerGenerator = CreateShared<LayerPool>();
+			Log.Trace("Layer 스택 생성");
+			m_LayerStack = CreateShared<LayerStack>(LayerGenerator);
+			if (m_LayerStack == nullptr)
 				result = false;
 		}
 		if (result)
-			Log.Trace("Object 스택 생성 완료");
+			Log.Trace("Layer 스택 생성 완료");
 		else
-			Log.Error("Object 스택 생성 실패");
+			Log.Error("Layer 스택 생성 실패");
 		return result;
 	}
 
-	bool System::ReleaseObjectStack()
+	bool System::ReleaseLayerStack()
 	{
 		bool result = true;
-		Log.Trace("Object 스택 해제");
-		m_ObjectStack->Release();
+		Log.Trace("Layer 스택 해제");
+		m_LayerStack->Release();
 
 		if (result)
-			Log.Trace("Object 스택 해제 완료");
+			Log.Trace("Layer 스택 해제 완료");
 		else
-			Log.Error("Object 스택 해제 실패");
+			Log.Error("Layer 스택 해제 실패");
 		return result;
 	}
 

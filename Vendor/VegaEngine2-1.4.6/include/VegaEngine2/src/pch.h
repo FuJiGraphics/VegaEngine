@@ -25,15 +25,20 @@
 #include "Events/Events.h"
 
 // Objects
-#include "Core/Object/Object.h"
-#include "Core/Object/ObjectStack.h"
-#include "Core/Object/ObjectPool.h"
+#include "Core/Layer/Layer.h"
+#include "Core/Layer/LayerStack.h"
+#include "Core/Layer/LayerPool.h"
 
-// imgui
+// Manager
 #include "ImGui/ImGuiManager.h"
+#include "Input/InputManager.h"
 
 // System
 #include "Core/System.h"
 
 // SFML
 #include "Platform/SFML/VegaSFML.h"
+
+// Renderer
+#include "Renderer/Camera.h"
+#include "Renderer/Renderer2D.h"
