@@ -38,8 +38,10 @@
 
 // SFML
 #include "Platform/SFML/VegaSFML.h"
+#include "entt/entt.hpp"
 
 // Renderer
 #include "Renderer/Camera.h"
 #include "Renderer/Renderer2D.h"
 #include "Renderer/CameraController.h"
+

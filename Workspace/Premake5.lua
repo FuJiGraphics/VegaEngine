@@ -28,6 +28,7 @@ includedirs
 	"%{IncludeDir.SFML}/",
 	"%{IncludeDir.Spdlog}/",
 	"%{IncludeDir.ImGui}/",
+	"%{IncludeDir.Entt}/",
 }
 
 libdirs

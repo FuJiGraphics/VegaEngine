@@ -1,4 +1,4 @@
-version = "1.5.0"
+version = "1.6.0"
 
 workspace "Solution"
 	startproject "Vega-Editor"
@@ -27,6 +27,7 @@ workspace "Solution"
 	IncludeDir["Vega-Editor"]	= "%{wks.location}/Vega-Editor/Vega-Editor"
 	IncludeDir["Workspace"]		= "%{wks.location}/Workspace/Workspace"
 	IncludeDir["ImGui"]			= "%{wks.location}/Vendor/ImGui/"
+	IncludeDir["Entt"]			= "%{wks.location}/Vendor/Entt/include/"
 
 	-- Library Path
 	LibraryDir = {}

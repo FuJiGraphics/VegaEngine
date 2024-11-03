@@ -26,5 +26,8 @@
 #include "Renderer/CameraController.h"
 #include "Renderer/FrameBuffer.h"
 
+// Scene
+#include "Core/Scene/Scene.h"
+
 /* Entry Point */
 #include "EntryPoint.h"
