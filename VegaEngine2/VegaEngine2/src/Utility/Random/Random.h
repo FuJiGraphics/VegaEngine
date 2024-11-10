@@ -48,8 +48,14 @@ namespace fz {
 		*/
 		sf::Vector2f InUnitCircle();
 
-	private:
-		static const float s_PI;	/*< 파이값 */
+		/*
+		* @brief min 이상 max 이하의 base 벡터 기준의 랜덤한 방향 벡터를 반환합니다.
+		* @param[in] float min: 범위 시작 값
+		* @param[in] float max: 범위 끝 값
+		* @param[base] sf::Vector2f base: 기준이 되는 방향 벡터 (기본 값 x축)
+		* @return min 이상 max 이하의 base 벡터 기준의 랜덤한 방향 벡터
+		*/
+		sf::Vector2f Direction(float min, float max, const sf::Vector2f& base = sf::Vector2f(1.0f, 0.0f));
 	};
 
 	/*< Random_internal 접근 인스턴스 */

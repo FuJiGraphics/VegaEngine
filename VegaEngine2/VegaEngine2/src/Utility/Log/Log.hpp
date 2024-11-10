@@ -39,5 +39,35 @@ namespace fz {
 			spdlog::logger::critical(fmt, std::forward<Args>(args)...);
 		}
 
+		inline void Log_internal::Trace(const std::string& str)
+		{
+			spdlog::logger::trace(str);
+		}
+
+		inline void Log_internal::Debug(const std::string& str)
+		{
+			spdlog::logger::debug(str);
+		}
+
+		inline void Log_internal::Info(const std::string& str)
+		{
+			spdlog::logger::info(str);
+		}
+
+		inline void Log_internal::Warn(const std::string& str)
+		{
+			spdlog::logger::warn(str);
+		}
+
+		inline void Log_internal::Error(const std::string& str)
+		{
+			spdlog::logger::error(str);
+		}
+
+		inline void Log_internal::Critical(const std::string& str)
+		{
+			spdlog::logger::critical(str);
+		}
+
 	} // namespace _internal
 } // namespace fz

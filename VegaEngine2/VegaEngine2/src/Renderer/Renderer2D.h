@@ -2,6 +2,7 @@
 
 namespace fz {
 	
+	class Framebuffer;
 	class CameraController;
 	class OrthoCamera;
 	class Window;

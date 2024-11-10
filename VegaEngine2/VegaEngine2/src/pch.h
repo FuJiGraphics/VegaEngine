@@ -8,6 +8,7 @@
 #include <memory>
 #include <functional>
 #include <list>
+#include <cassert>
 
 // Defines
 #include "Core/Defines.h"

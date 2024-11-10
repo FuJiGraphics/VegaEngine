@@ -6,6 +6,7 @@ Editor2D::Editor2D(const std::string& name)
 	: Layer(name)
 	, camera("camera", { 1024, 768 })
 	, texId(0)
+	, square()
 {
 
 }
@@ -18,6 +19,15 @@ void Editor2D::OnAttach()
 	frameSpec.MultisampleLevel = 1;
 	frameBuffer = Framebuffer::Create(frameSpec);
 	texId = frameBuffer->GetBuffer().getTexture().getNativeHandle();
+
+	activeScene = CreateShared<Scene>();
+
+	// Entity
+	square = activeScene->CreateEntity("Square");
+	auto& rect = square.AddComponent<RectangleComponent>();
+	rect.Rectangle.setPosition(1024.f * 0.5f, 768.f * 0.5f);
+	rect.Rectangle.setSize({ 50.f, 50.f });
+	Utils::SetOrigin(rect, Origins::MC);
 }
 
 void Editor2D::OnDetach()
@@ -36,11 +46,8 @@ void Editor2D::OnUpdate(float dt)
 		ImGuiManager::SetDocking(dockEnabled);
 	}
 
-	static sf::RectangleShape shape;
-	shape.setSize({ 100.f, 100.f });
-	shape.setPosition({ 1024.f * 0.5f, 768.f * 0.5f });
 	Renderer2D::BeginScene(&camera, frameBuffer.get());
-	Renderer2D::Draw(shape);
+	Renderer2D::Draw(square.GetComponent<RectangleComponent>());
 	Renderer2D::EndScene();
 }
 

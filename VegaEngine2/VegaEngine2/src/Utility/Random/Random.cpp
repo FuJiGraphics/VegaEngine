@@ -5,8 +5,6 @@
 
 namespace fz {
 
-    const float Random_internal::s_PI = 3.1415926f;
-
     Random_internal& Random_internal::GetInstance()
     {
         static Random_internal s_Ran;
@@ -37,14 +35,19 @@ namespace fz {
 
     sf::Vector2f Random_internal::InUnitCircle() const
     {
-        float angle = Random(0.f, 2.f * s_PI);
+        float angle = Random(0.f, 2.f * Utils::GetPi());
         return { std::cosf(angle), std::sinf(angle) };
     }
 
     sf::Vector2f Random_internal::InUnitCircle()
     {
-        float angle = Random(0.f, 2.f * s_PI);
+        float angle = Random(0.f, 2.f * Utils::GetPi());
         return { std::cosf(angle), std::sinf(angle) };
+    }
+
+    sf::Vector2f Random_internal::Direction(float min, float max, const sf::Vector2f& base)
+    {
+        return Utils::GetRotateVector(Random(min, max), base);
     }
 
 } // namespace fz

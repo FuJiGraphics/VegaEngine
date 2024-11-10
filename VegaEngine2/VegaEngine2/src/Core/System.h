@@ -7,6 +7,7 @@ namespace fz {
 	class Window;
 	class LayerStack;
 	class LayerPool;
+	class Layer;
 
 	class System
 	{
@@ -20,7 +21,7 @@ namespace fz {
 		System(int width, int height, const std::string& title);
 		virtual ~System();
 
-		bool Init();
+		void Init();
 		bool Release();
 		bool Reset();
 

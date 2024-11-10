@@ -22,33 +22,22 @@ namespace fz {
 		this->Release();
 	}
 
-	bool System::Init()
+	void System::Init()
 	{
 		if (IsInit)
-			return false;
-
-		bool result = true;
-		Log.Trace("System 초기화");
-		if (Width <= 0 || Height <= 0)
 		{
-			Log.Error("윈도우 생성 인자 오류 width = {0}, height = {1}", Width, Height);
-			result = false;
+			Log.Warn("초기화를 할 수 없습니다. 이미 초기화된 System입니다.");
+			return;
 		}
-		else 
-		{
-			result = this->GenerateWindow();
-			if (result)
-				result = this->GenerateLayerStack();
-			ImGuiManager::Init(*m_Window);
-			InputManager::SetTargetTrackingWindow((sf::RenderWindow*)m_Window->GetNativeWindow());
-			Renderer2D::Init((sf::RenderWindow*)m_Window->GetNativeWindow());
-		}
-		if (result)
-			Log.Trace("System 초기화 완료");
-		else
-			Log.Error("System 초기화 실패");
-		IsInit = result;
-		return result;
+		Log.Info("System 초기화 중");
+		FZ_ASSERT((Width > 0 && Height > 0), "윈도우 생성 사이즈가 잘못되었습니다. 생성 인자: width = {0}, height = {1}", Width, Height);
+		FZ_ASSERT(this->GenerateWindow(), "윈도우 생성에 실패하였습니다.");
+		FZ_ASSERT(this->GenerateLayerStack(), "레이어 스택 생성에 실패하였습니다.");
+		FZ_ASSERT(ImGuiManager::Init(*m_Window), "ImGui 초기화에 실패하였습니다.");
+		InputManager::SetTargetTrackingWindow((sf::RenderWindow*)m_Window->GetNativeWindow());
+		Renderer2D::Init((sf::RenderWindow*)m_Window->GetNativeWindow());
+		IsInit = true;
+		Log.Info("System 초기화 성공");
 	}
 
 	bool System::Release()

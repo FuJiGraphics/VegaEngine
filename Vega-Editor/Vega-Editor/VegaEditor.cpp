@@ -10,7 +10,7 @@ public:
 		: System(1024, 768, "VegaEngine2")
 	{
 		Super::IsOpen = false;
-		this->PushLayer(LayerGenerator->Take<Editor2D>("Editor2D"));
+		this->PushLayer(LayerGenerator->Take<fz::Editor2D>("Editor2D"));
 	}
 	virtual ~VegaEditor()
 	{

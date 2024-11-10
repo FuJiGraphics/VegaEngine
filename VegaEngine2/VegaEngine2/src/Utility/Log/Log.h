@@ -29,6 +29,13 @@ namespace fz {
 			template<typename... Args>
 			void Critical(fmt::format_string<Args...> fmt, Args &&...args);
 
+			inline void Trace(const std::string& str);
+			inline void Debug(const std::string& str);
+			inline void Info(const std::string& str);
+			inline void Warn(const std::string& str);
+			inline void Error(const std::string& str);
+			inline void Critical(const std::string& str);
+
 		protected:
 			Log_internal();
 			virtual ~Log_internal();

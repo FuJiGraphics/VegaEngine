@@ -10,11 +10,7 @@ namespace fz {
 
 	void Renderer2D::Init(sf::RenderWindow* renderWindow)
 	{
-		if (renderWindow == nullptr)
-		{
-			Log.Error("Renderer2D를 초기화할 수 없습니다. RenderWindow가 nullptr입니다.");
-			return;
-		}
+		FZ_ASSERT(renderWindow, "Renderer2D를 초기화할 수 없습니다.RenderWindow가 nullptr입니다.");
 		s_RenderWindow = renderWindow;
 	}
 

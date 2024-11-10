@@ -1,19 +1,25 @@
 #pragma once
 #include <VegaEngine2.h>
 
-class Editor2D : public fz::Layer
-{
-public:
-	Editor2D(const std::string& name);
+namespace fz {
 
-	void OnAttach() override;
-	void OnDetach() override;
-	void OnUpdate(float dt) override;
-	void OnEvent(fz::Event& ev) override;
-	void OnUI() override;
+	class Editor2D : public fz::Layer
+	{
+	public:
+		Editor2D(const std::string& name);
 
-private:
-	fz::CameraController camera;
-	fz::Shared<fz::Framebuffer>	frameBuffer;
-	unsigned int texId;
-};
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnUpdate(float dt) override;
+		void OnEvent(fz::Event& ev) override;
+		void OnUI() override;
+
+	private:
+		CameraController camera;
+		Shared<Framebuffer>	frameBuffer;
+		Shared<Scene> activeScene;
+		Entity square;
+		unsigned int texId;
+	};
+
+} // namespace fz
