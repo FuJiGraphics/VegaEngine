@@ -17,16 +17,18 @@ namespace fz {
 
 	struct TransformComponent
 	{
-		sf::Transform Transform = sf::Transform::Identity;
+		fz::Transform Transform;
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const sf::Transform& other)
+		TransformComponent(const fz::Transform& other)
 			: Transform(other)
 		{/*Empty*/}
 
-		operator sf::Transform& () { return Transform; }
-		operator const sf::Transform& () const { return Transform; }
+		operator fz::Transform& () { return Transform; }
+		operator const fz::Transform& () const { return Transform; }
+		fz::Transform* operator&() { return &Transform; }
+		const fz::Transform* operator&() const { return &Transform; }
 	};
 
 	struct SpriteComponent
@@ -41,6 +43,8 @@ namespace fz {
 
 		operator sf::Sprite& () { return Sprite; }
 		operator const sf::Sprite& () const { return Sprite; }
+		sf::Sprite* operator&() { return &Sprite; }
+		const sf::Sprite* operator&() const { return &Sprite; }
 	};
 
 	struct RectangleComponent
@@ -55,20 +59,28 @@ namespace fz {
 
 		operator sf::RectangleShape& () { return Rectangle; }
 		operator const sf::RectangleShape& () const { return Rectangle; }
+		sf::RectangleShape* operator&() { return &Rectangle; }
+		const sf::RectangleShape* operator&() const { return &Rectangle; }
 	};
 
 	struct CameraComponent
 	{
 		OrthoCamera Camera;
+		bool Primary = true;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const sf::View& other)
-			: Camera(other)
+		CameraComponent(const OrthoCamera& camera)
+			: Camera(camera)
+		{/*Empty*/}
+		CameraComponent(const sf::Vector2f& center, const sf::Vector2f& size)
+			: Camera(center, size)
 		{/*Empty*/}
 
-		operator sf::View& () { return Camera.GetView(); }
-		operator const sf::View& () const { return Camera.GetView(); }
+		operator OrthoCamera& () { return Camera; }
+		operator const OrthoCamera& () const { return Camera; }
+		OrthoCamera* operator&() { return &Camera; }
+		const OrthoCamera* operator&() const { return &Camera; }
 	};
 
 } // namespace fz

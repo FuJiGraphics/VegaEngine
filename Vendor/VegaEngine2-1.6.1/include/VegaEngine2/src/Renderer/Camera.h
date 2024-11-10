@@ -9,11 +9,11 @@ namespace fz {
 	protected:
 		// Using
 		using Super = fz::OrthoCamera;
-		// Delete
-		FZ_DELETE_COPY(OrthoCamera)
 
 	public:
         OrthoCamera();
+        OrthoCamera(const OrthoCamera& other);
+        OrthoCamera(OrthoCamera&& other);
         OrthoCamera(const sf::FloatRect& viewport);
         OrthoCamera(const sf::Vector2f& center, const sf::Vector2f& size);
         OrthoCamera(const sf::View& view);
@@ -39,6 +39,9 @@ namespace fz {
 
         const sf::View& GetView() const;
         sf::View& GetView();
+
+        operator sf::View& () { return m_View; }
+        operator const sf::View& () const { return m_View; }
 
 	private:
 		sf::View	m_View;

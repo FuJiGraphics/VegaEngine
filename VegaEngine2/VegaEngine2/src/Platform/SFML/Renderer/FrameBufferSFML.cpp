@@ -24,7 +24,17 @@ namespace fz {
 
 	void FrameBufferSFML::Clear()
 	{
-		m_Buffer.clear();
+		m_Buffer.clear({ 100, 100, 100 });
+	}
+
+	FrameBufferSFML::operator sf::RenderTexture& ()
+	{
+		return m_Buffer;
+	}
+
+	FrameBufferSFML::operator const sf::RenderTexture& () const
+	{
+		return m_Buffer;
 	}
 
 } // namespace fz

@@ -9,6 +9,18 @@ namespace fz {
 		// Empty
 	}
 
+	OrthoCamera::OrthoCamera(const OrthoCamera& other)
+		: m_View(other.m_View)
+	{
+		// Empty
+	}
+
+	OrthoCamera::OrthoCamera(OrthoCamera&& other)
+		: m_View(other.m_View)
+	{
+		other.m_View = sf::View();
+	}
+
 	OrthoCamera::OrthoCamera(const sf::FloatRect& viewport)
 		: m_View(viewport)
 	{

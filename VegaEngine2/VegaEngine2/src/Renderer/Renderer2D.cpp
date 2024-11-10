@@ -4,9 +4,11 @@
 namespace fz {
 
 	sf::Sprite Renderer2D::s_Spirte;
-	sf::RenderWindow* Renderer2D::s_RenderWindow = nullptr;
-	fz::CameraController* Renderer2D::s_RenderCamera = nullptr;
-	fz::Framebuffer* Renderer2D::s_RenderBuffer = nullptr;
+	sf::RenderWindow* Renderer2D::s_RenderWindow = nullptr; 
+	Weak<Framebuffer> Renderer2D::s_FrameBuffer = nullptr;
+	CameraController* Renderer2D::s_CameraController = nullptr;
+	OrthoCamera* Renderer2D::s_OrthoCamera = nullptr;
+	sf::Vector2f Renderer2D::s_PrevCameraPos = { 0.0f, 0.0f };
 
 	void Renderer2D::Init(sf::RenderWindow* renderWindow)
 	{
@@ -24,65 +26,71 @@ namespace fz {
 		s_RenderWindow = nullptr;
 	}
 
-	void Renderer2D::BeginScene(CameraController* camera, Framebuffer* framebuffer)
+	void Renderer2D::BeginScene(CameraController& controller, Shared<Framebuffer>& framebuffer)
 	{
-		if (s_RenderWindow == nullptr || camera == nullptr || s_RenderCamera != nullptr)
+		FZ_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
+		FZ_ASSERT(framebuffer, "Renderer2D를 사용할 수 없습니다. 프레임 버퍼를 찾을 수 없습니다.");
+		FZ_ASSERT(!s_CameraController, "Renderer2D를 사용할 수 없습니다. 이미 호출된 BeginScene입니다.");
+
+		s_FrameBuffer = framebuffer;
+		s_CameraController = &controller;
+		s_FrameBuffer->GetBuffer().setView(s_CameraController->GetOrthoCamera());
+		if (s_FrameBuffer)
+			s_FrameBuffer->Clear();
+	}
+
+	void Renderer2D::BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer)
+	{
+		FZ_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
+		FZ_ASSERT(framebuffer, "Renderer2D를 사용할 수 없습니다. 프레임 버퍼를 찾을 수 없습니다.");
+		FZ_ASSERT(!s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. 이미 호출된 BeginScene입니다.");
+
+		s_FrameBuffer = framebuffer;
+		s_OrthoCamera = &camera;
+		s_PrevCameraPos = s_OrthoCamera->GetCenter();
+		// 일단 카메라가 오브젝트의 포지션만 따라가게 하도록 설정
+		s_OrthoCamera->SetCenter(transform * s_OrthoCamera->GetCenter());
+		if (s_FrameBuffer)
 		{
-			if (camera == nullptr)
-				Log.Error("Renderer2D를 사용할 수 없습니다. 카메라를 찾을 수 없습니다.");
-			else if (s_RenderWindow == nullptr)
-				Log.Error("Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
-			else if (s_RenderCamera != nullptr)
-				Log.Error("Renderer2D를 사용할 수 없습니다. 이미 BeginScene이 호출되었습니다.");
-			return;
+			s_FrameBuffer->Clear();
+			s_FrameBuffer->GetBuffer().setView(*s_OrthoCamera);
 		}
-		s_RenderBuffer = (framebuffer) ? framebuffer : nullptr;
-		s_RenderCamera = camera;
-		if (s_RenderBuffer)
-			s_RenderBuffer->Clear();
 	}
 
 	void Renderer2D::EndScene()
 	{
-		if (s_RenderWindow == nullptr || s_RenderCamera == nullptr)
-		{
-			if (s_RenderWindow)
-				Log.Error("Renderer2D를 사용할 수 없습니다. 카메라를 찾을 수 없습니다.");
-			else
-				Log.Error("Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
-			return;
-		}
+		FZ_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
+		FZ_ASSERT(s_OrthoCamera || s_CameraController, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
-		if (s_RenderBuffer)
+		if (s_FrameBuffer)
 		{
-			auto& renderBuffer = s_RenderBuffer->GetBuffer();
+			auto& renderBuffer = s_FrameBuffer->GetBuffer();
 			renderBuffer.display();
-			renderBuffer.setView(s_RenderCamera->GetOrthoCamera().GetView());
-			s_Spirte.setTexture(renderBuffer.getTexture());
-			s_RenderWindow->draw(s_Spirte);
+			s_RenderWindow->clear();
+			sf::Sprite sprite;
+			sprite.setTexture(renderBuffer.getTexture());
+			s_RenderWindow->draw(sprite);
 		}
-		s_RenderBuffer = nullptr;
-		s_RenderCamera = nullptr;
-	}
+		// 트랜스폼 반복 적용을 위해서 카메라를 이전 위치로 복구
+		if (s_OrthoCamera)
+		{
+			s_OrthoCamera->SetCenter(s_PrevCameraPos);
+		}
+		s_FrameBuffer = nullptr;
+		s_OrthoCamera = nullptr;
+		s_CameraController = nullptr;
+	} 
 
-	void Renderer2D::Draw(const sf::Drawable& target)
+	void Renderer2D::Draw(sf::Sprite& obj, fz::Transform& transform)
 	{
-		if (s_RenderWindow == nullptr || s_RenderCamera == nullptr)
-		{
-			if (s_RenderWindow)
-				Log.Error("Renderer2D를 사용할 수 없습니다. Begin Scene이 호출되지 않았습니다.");
-			else
-				Log.Error("Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
-			return;
-		}
+		FZ_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
+		FZ_ASSERT(s_OrthoCamera || s_CameraController, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
-		if (s_RenderBuffer)
-			s_RenderBuffer->GetBuffer().draw(target);
-		else
-		{
-			s_RenderWindow->setView(s_RenderCamera->GetOrthoCamera().GetView());
-			s_RenderWindow->draw(target);
-		}
+		sf::RenderStates state;
+		state.transform = transform;
+		state.texture = obj.getTexture();
+		if (s_FrameBuffer)
+			s_FrameBuffer->GetBuffer().draw(obj, state);
 	}
 } // namespace fz
 

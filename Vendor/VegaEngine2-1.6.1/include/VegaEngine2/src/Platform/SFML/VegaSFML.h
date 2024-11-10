@@ -11,7 +11,7 @@
 #include <SFML/Main.hpp>
 
 // Windows
-#include "Platform/SFML/VegaSFML.h"
+#include "Platform/SFML/Window/WindowSFML.h"
 
 // Renderer
 #include "Platform/SFML/Renderer/FrameBufferSFML.h"

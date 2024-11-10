@@ -10,36 +10,30 @@
 #include <list>
 #include <cassert>
 
-// Defines
-#include "Core/Defines.h"
-
 // Data Types
 #include "DataType/DataType.h"
+
+// SFML
+#include "entt/entt.hpp"
+#include "Platform/SFML/VegaSFML.h"
 
 // Utility
 #include "Utility/Utility.h"
 
-// Windows
-#include "Core/Window/Window.h"
+// Manager
+#include "Managers/Managers.h"
 
 // Events
 #include "Events/Events.h"
 
-// Objects
+// Cores
+#include "Core/Defines.h"
+#include "Core/Assert.h"
+#include "Core/Window/Window.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Layer/LayerStack.h"
 #include "Core/Layer/LayerPool.h"
-
-// Manager
-#include "ImGui/ImGuiManager.h"
-#include "Input/InputManager.h"
-
-// System
 #include "Core/System.h"
-
-// SFML
-#include "Platform/SFML/VegaSFML.h"
-#include "entt/entt.hpp"
 
 // Renderer
 #include "Renderer/Camera.h"

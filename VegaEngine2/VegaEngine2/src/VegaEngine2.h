@@ -20,8 +20,7 @@
 #include "Events/Events.h"
 
 // Input
-#include "Input/InputManager.h"
-#include "ImGui/ImGuiManager.h"
+#include "Managers/Managers.h"
 
 // Export VegaEngine
 #include "Core/Defines.h"

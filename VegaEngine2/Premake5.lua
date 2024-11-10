@@ -11,7 +11,8 @@ pchsource "%{IncludeDir.VegaEngine2}/src/pch.cpp"
 
 targetdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/lib/%{cfg.buildcfg}/")
 objdir("%{wks.location}/Vendor/%{prj.name}-"..version.."/bin-int/%{cfg.buildcfg}/")
-debugdir("%{WorkingDir.SFML}")
+
+debugdir("%{WorkingDir.Root}/Resource")
 
 files
 {

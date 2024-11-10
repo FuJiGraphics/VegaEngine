@@ -12,7 +12,7 @@ project "Workspace"
 targetdir(binDir)
 objdir(binIntDir)
 
-debugdir "%{WorkingDir.SFML}/"
+debugdir("%{WorkingDir.Root}/Resource")
 
 files
 {

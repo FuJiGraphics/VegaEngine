@@ -37,6 +37,7 @@ workspace "Solution"
 
 	-- DLL Working Directories
 	WorkingDir = {}
+	WorkingDir["Root"]			= "%{wks.location}"
 	WorkingDir["SFML"]			= "%{wks.location}/Vendor/SFML-2.6.1/bin"
 
 	group "Dependencies"

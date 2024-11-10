@@ -15,8 +15,7 @@ namespace fz {
 		void OnUI() override;
 
 	private:
-		CameraController camera;
-		Shared<Framebuffer>	frameBuffer;
+		CameraController m_CameraController;
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;

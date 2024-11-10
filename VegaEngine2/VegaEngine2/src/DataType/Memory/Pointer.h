@@ -24,6 +24,7 @@ namespace fz {
 	{
 	public:
 		Weak() = default;
+		Weak(const std::nullptr_t);
 		Weak(const Weak<T>& _weak);
 		Weak(const Shared<T>& _ptr);
 
@@ -37,21 +38,31 @@ namespace fz {
 
 		bool operator==(const Shared<T>& _ptr) const;
 		bool operator==(std::nullptr_t null) const;
+		operator bool() const;
 
 	private:
 		std::weak_ptr<T> m_Ptr;
 	};
 
 	template<typename T>
-	inline Weak<T>::Weak(const Weak<T>& _weak)
+	inline Weak<T>::Weak(const std::nullptr_t null)
+		: m_Ptr()
 	{
-		m_Ptr = _weak.m_Ptr;
+		// Empty
+	}
+
+	template<typename T>
+	inline Weak<T>::Weak(const Weak<T>& _weak)
+		: m_Ptr(_weak.m_Ptr)
+	{
+		// Empty
 	}
 
 	template<typename T>
 	inline Weak<T>::Weak(const Shared<T>& _ptr) 
+		: m_Ptr(_ptr)
 	{
-		m_Ptr = _ptr;
+		// Empty
 	}
 
 	template<typename T>
@@ -112,6 +123,12 @@ namespace fz {
 	inline bool Weak<T>::operator==(std::nullptr_t null) const
 	{
 		return this->IsEmpty();
+	}
+
+	template<typename T>
+	inline Weak<T>::operator bool() const
+	{
+		return !this->IsEmpty();
 	}
 
 } // namesapce fz

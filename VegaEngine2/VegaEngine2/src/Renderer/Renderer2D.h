@@ -14,16 +14,19 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
-		static void BeginScene(CameraController* camera, Framebuffer* framebuffer = nullptr);
+		static void BeginScene(CameraController& controller, Shared<Framebuffer>& framebuffer);
+		static void BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 
-		static void Draw(const sf::Drawable& target);
+		static void Draw(sf::Sprite& target, fz::Transform& transform);
 		
 	private:
 		static sf::Sprite s_Spirte;
 		static sf::RenderWindow* s_RenderWindow;
-		static fz::CameraController* s_RenderCamera;
-		static fz::Framebuffer* s_RenderBuffer;
+		static Weak<Framebuffer> s_FrameBuffer;
+		static CameraController* s_CameraController;
+		static OrthoCamera* s_OrthoCamera;
+		static sf::Vector2f s_PrevCameraPos;
 	};
 
 } // namespace fz

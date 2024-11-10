@@ -18,6 +18,9 @@ namespace fz {
 		virtual FramebufferSpec GetInfo() const = 0;
 		virtual sf::RenderTexture& GetBuffer() = 0;
 		virtual void Clear() = 0;
+
+		virtual operator sf::RenderTexture& () = 0;
+		virtual operator const sf::RenderTexture& () const = 0;
 	};
 
 } // namespace fz
