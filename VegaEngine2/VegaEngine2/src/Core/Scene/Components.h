@@ -67,6 +67,8 @@ namespace fz {
 			: Camera(other)
 		{/*Empty*/}
 
+		operator sf::View& () { return Camera.GetView(); }
+		operator const sf::View& () const { return Camera.GetView(); }
 	};
 
 } // namespace fz

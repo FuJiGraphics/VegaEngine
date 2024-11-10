@@ -3,7 +3,7 @@
 
 namespace fz {
 
-	CameraController::CameraController(const std::string& name, const sf::Vector2f& size, bool rotation)
+	CameraController::CameraController(const sf::Vector2f& size, bool rotation)
 		: m_CameraMoveSpeed(100.f)
 		, m_CameraRotateSpeed(100.f)
 		, m_CameraZoomFactor(0.1f)
@@ -14,7 +14,7 @@ namespace fz {
 		, m_Camera(nullptr)
 	{
 		sf::Vector2f pos{ size.x * 0.5f, size.y * 0.5f };
-		m_Camera = CreateShared<fz::OrthoCamera>(name, pos, size);
+		m_Camera = CreateShared<fz::OrthoCamera>(pos, size);
 	}
 
 	void CameraController::SetSize(float width, float height)

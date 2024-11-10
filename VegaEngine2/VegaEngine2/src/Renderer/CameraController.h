@@ -7,7 +7,7 @@ namespace fz {
 	class CameraController
 	{
 	public:
-		CameraController(const std::string& name, const sf::Vector2f& size, bool rotation = false);
+		CameraController(const sf::Vector2f& size, bool rotation = false);
 
 		void SetSize(float width, float height);
 		void SetViewport(float x, float y, float width, float height);

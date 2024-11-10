@@ -17,8 +17,9 @@ namespace fz {
 	private:
 		CameraController camera;
 		Shared<Framebuffer>	frameBuffer;
-		Shared<Scene> activeScene;
-		Entity square;
+		Shared<Scene> m_ActiveScene;
+		Entity m_SquareEntity;
+		Entity m_CameraEntity;
 		unsigned int texId;
 	};
 
