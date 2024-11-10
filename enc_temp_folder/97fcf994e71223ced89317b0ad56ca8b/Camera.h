@@ -13,10 +13,9 @@ namespace fz {
 		FZ_DELETE_COPY(OrthoCamera)
 
 	public:
-        OrthoCamera();
-        OrthoCamera(const sf::FloatRect& viewport);
-        OrthoCamera(const sf::Vector2f& center, const sf::Vector2f& size);
-        OrthoCamera(const sf::View& view);
+        OrthoCamera(const std::string& name);
+        OrthoCamera(const std::string& name, const sf::FloatRect& rectangle);
+        OrthoCamera(const std::string& name, const sf::Vector2f& center, const sf::Vector2f& size);
 		virtual ~OrthoCamera() = default;
 
         void SetCenter(float x, float y);
@@ -41,6 +40,7 @@ namespace fz {
         sf::View& GetView();
 
 	private:
+        std::string m_Name;
 		sf::View	m_View;
 	};
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Renderer/Camera.h>
 
 namespace fz {
 
@@ -56,17 +55,4 @@ namespace fz {
 		operator sf::RectangleShape& () { return Rectangle; }
 		operator const sf::RectangleShape& () const { return Rectangle; }
 	};
-
-	struct CameraComponent
-	{
-		OrthoCamera Camera;
-
-		CameraComponent() = default;
-		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const sf::View& other)
-			: Camera(other)
-		{/*Empty*/}
-
-	};
-
-} // namespace fz
+}

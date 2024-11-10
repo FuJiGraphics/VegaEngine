@@ -3,7 +3,7 @@
 
 namespace fz {
 	Entity::Entity()
-		: m_Handle{ entt::null }
+		: m_Handle{ 0 }
 		, m_Scene(nullptr)
 	{
 		// Empty
@@ -27,7 +27,7 @@ namespace fz {
 		: m_Handle(other.m_Handle)
 		, m_Scene(other.m_Scene)
 	{
-		other.m_Handle = entt::null;
+		other.m_Handle = entt::entity{ 0 };
 		other.m_Scene = nullptr;
 	}
 
@@ -42,7 +42,7 @@ namespace fz {
 	{
 		this->m_Handle = other.m_Handle;
 		this->m_Scene = other.m_Scene;
-		other.m_Handle = entt::null;
+		other.m_Handle = entt::entity{ 0 };
 		other.m_Scene = nullptr;
 		return *this;
 	}

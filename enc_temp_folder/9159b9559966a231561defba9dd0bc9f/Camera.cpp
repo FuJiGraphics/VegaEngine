@@ -3,26 +3,23 @@
 
 namespace fz {
 
-	OrthoCamera::OrthoCamera()
-		: m_View()
+	OrthoCamera::OrthoCamera(const std::string& name)
+		: m_Name(name)
+		, m_View()
 	{
 		// Empty
 	}
 
-	OrthoCamera::OrthoCamera(const sf::FloatRect& viewport)
-		: m_View(viewport)
+	OrthoCamera::OrthoCamera(const std::string& name, const sf::FloatRect& rectangle)
+		: m_Name(name)
+		, m_View(rectangle)
 	{
 		// Empty
 	}
 
-	OrthoCamera::OrthoCamera(const sf::Vector2f& center, const sf::Vector2f& size)
-		: m_View(center, size)
-	{
-		// Empty
-	}
-
-	OrthoCamera::OrthoCamera(const sf::View& view)
-		: m_View(view)
+	OrthoCamera::OrthoCamera(const std::string& name, const sf::Vector2f& center, const sf::Vector2f& size)
+		: m_Name(name)
+		, m_View(center, size)
 	{
 		// Empty
 	}
