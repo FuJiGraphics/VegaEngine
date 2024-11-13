@@ -20,9 +20,11 @@ namespace fz {
 		Entity CreateEntity(const std::string& tagName = std::string());
 		
 		void OnUpdate(float dt);
+		void OnViewportResize(unsigned int width, unsigned int height);
 
-		Shared<Framebuffer>& GetFrameBuffer();
-		const Shared<Framebuffer>& GetFrameBuffer() const;
+		inline sf::Vector2u GetViewportSize() const { return { m_FrameBuffer->GetWidth(), m_FrameBuffer->GetHeight() }; }
+		inline Shared<Framebuffer>& GetFrameBuffer() { return m_FrameBuffer; }
+		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
 
 	private:
 		entt::registry		m_Registry;

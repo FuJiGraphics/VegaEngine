@@ -63,14 +63,22 @@ namespace fz {
 		}
 	}
 
-	Shared<Framebuffer>& Scene::GetFrameBuffer()
+	void Scene::OnViewportResize(unsigned int width, unsigned int height)
 	{
-		return m_FrameBuffer;
-	}
+		if (width < 0 || height < 0)
+			return;
 
-	const Shared<Framebuffer>& Scene::GetFrameBuffer() const
-	{
-		return m_FrameBuffer;
+		m_FrameBuffer->Resize(width, height);
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto& entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+			if (!cameraComponent.FixedAspectRatio)
+			{
+ 				cameraComponent.Camera.SetSize(width, height);
+			}
+		}
+
 	}
 
 } // namespace fz

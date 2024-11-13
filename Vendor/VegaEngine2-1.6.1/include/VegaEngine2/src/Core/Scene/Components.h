@@ -67,6 +67,7 @@ namespace fz {
 	{
 		OrthoCamera Camera;
 		bool Primary = true;
+		bool FixedAspectRatio = true; //∞Ì¡§ ¡æ»æ∫Ò(Fixed Aspect Ratio)
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
@@ -77,10 +78,10 @@ namespace fz {
 			: Camera(center, size)
 		{/*Empty*/}
 
-		operator OrthoCamera& () { return Camera; }
-		operator const OrthoCamera& () const { return Camera; }
-		OrthoCamera* operator&() { return &Camera; }
-		const OrthoCamera* operator&() const { return &Camera; }
+		inline operator OrthoCamera& ()				{ return Camera; }
+		inline operator const OrthoCamera& () const	{ return Camera; }
+		inline OrthoCamera* operator&()				{ return &Camera; }
+		inline const OrthoCamera* operator&() const	{ return &Camera; }
 	};
 
 } // namespace fz

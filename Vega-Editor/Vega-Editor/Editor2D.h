@@ -13,9 +13,10 @@ namespace fz {
 		void OnUpdate(float dt) override;
 		void OnEvent(fz::Event& ev) override;
 		void OnUI() override;
+		
+		bool OnWindowResizeEvent(WindowResizeEvent& event);
 
 	private:
-		CameraController m_CameraController;
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
