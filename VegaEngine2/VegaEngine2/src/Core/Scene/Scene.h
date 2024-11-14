@@ -1,4 +1,5 @@
 #pragma once
+#include "Renderer/FrameBuffer.h"
 
 namespace fz {
 	

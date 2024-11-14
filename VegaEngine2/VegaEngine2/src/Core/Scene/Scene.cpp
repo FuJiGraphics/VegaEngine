@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Entity.h"
+#include "ScriptableEntity.h"
 
 namespace fz {
 	Scene::Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel)
@@ -14,7 +15,12 @@ namespace fz {
 
 	Scene::~Scene()
 	{
-		// Empty
+		auto nativeView = m_Registry.view<NativeScriptComponent>();
+		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
+						{
+							if (nsc.Instance)
+								nsc.OnDestroyFunction(nsc.Instance);
+						});
 	}
 
 	Entity Scene::CreateEntity(const std::string& tagName)
@@ -30,7 +36,21 @@ namespace fz {
 
 	void Scene::OnUpdate(float dt)
 	{
-		// 스프라이트 렌더링
+		// 스크립트 업데이트
+		auto nativeView = m_Registry.view<NativeScriptComponent>();
+		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
+						{
+							if (nsc.Instance == nullptr)
+							{
+								nsc.Instance = nsc.CreateInstanceFunc();
+								if(!nsc.Instance->m_Entity) 
+									nsc.Instance->m_Entity = {entity, shared_from_this()};
+								nsc.OnCreateFunction(nsc.Instance);
+							}
+							nsc.OnUpdateFunction(nsc.Instance, dt);
+						});
+
+		// 카메라 업데이트
 		OrthoCamera* mainCamera = nullptr;
 		fz::Transform* cameraTransform = nullptr;
 		{
@@ -48,6 +68,7 @@ namespace fz {
 			}
 		}
 
+		// 스프라이트 렌더링
 		if (mainCamera)
 		{
 			Renderer2D::BeginScene(*mainCamera, *cameraTransform, m_FrameBuffer);

@@ -20,21 +20,21 @@ namespace fz {
 		template <typename T, typename ...Args>
 		T& AddComponent(Args&&... args)
 		{
-			FZ_ASSERT(!HasComponent<T>(), "엔티티에 동일한 컴포넌트가 이미 존재합니다.");
+			(!HasComponent<T>(), "엔티티에 동일한 컴포넌트가 이미 존재합니다.");
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
 		}
 
 		template <typename T>
 		void RemoveComponent()
 		{
-			FZ_ASSERT(HasComponent<T>(), "엔티티에서 제거하려는 컴포넌트를 찾을 수 없습니다.");
+			FZLOG_ASSERT(HasComponent<T>(), "엔티티에서 제거하려는 컴포넌트를 찾을 수 없습니다.");
 			m_Scene->m_Registry.remove<T>(m_Handle);
 		}
 
 		template <typename T>
 		T& GetComponent()
 		{
-			FZ_ASSERT(HasComponent<T>(), "컴포넌트를 찾을 수 없습니다.");
+			FZLOG_ASSERT(HasComponent<T>(), "컴포넌트를 찾을 수 없습니다.");
 			return m_Scene->m_Registry.get<T>(m_Handle);
 		}
 
@@ -44,7 +44,7 @@ namespace fz {
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 
-		operator bool() const { return m_Handle != entt::entity{ 0 }; }
+		operator bool() const { return m_Handle != entt::null; }
 
 	private:
 		entt::entity	m_Handle;

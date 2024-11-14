@@ -2,7 +2,6 @@
 
 // Cores
 #include "Core/Defines.h"
-#include "Core/Assert.h"
 #include "Scene/Components.h"
 
 // Data Types

@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 		// app->Reset();
 	} while (app->IsOpened());
 	app->Release();
-
+	
 	delete app;
 	return 0;
 }

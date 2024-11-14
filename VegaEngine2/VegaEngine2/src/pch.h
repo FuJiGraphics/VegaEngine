@@ -28,7 +28,6 @@
 
 // Cores
 #include "Core/Defines.h"
-#include "Core/Assert.h"
 #include "Core/Window/Window.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Layer/LayerStack.h"

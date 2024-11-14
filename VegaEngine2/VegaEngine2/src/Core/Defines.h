@@ -12,15 +12,3 @@
 */
 #define BIND_EVENT_FUNC(x) std::bind(&x, this, std::placeholders::_1)
 
-/*
-* @brief 원점 기준
-*/
-enum class Origins
-{
-	// T M B
-	// L C R
-	TL, TC, TR,
-	ML, MC, MR,
-	BL, BC, BR,
-	Custom,
-};

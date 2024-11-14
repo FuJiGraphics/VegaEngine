@@ -11,7 +11,7 @@ namespace fz {
 
 	void Editor2D::OnAttach()
 	{
-		Log.Info("Editor2D 시작");
+		FZLOG_INFO("Editor2D 시작");
 		TEXTURE_MGR.Load("graphics/player.png");
 
 		m_ActiveScene = CreateShared<Scene>(1024, 768);
@@ -23,12 +23,60 @@ namespace fz {
 		sprite.setPosition(0.0f, 0.0f);
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-		m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
-	}
+		auto& camera = m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
+		camera.Primary = true;
+
+
+		class CameraController : public ScriptableEntity
+		{
+		public:
+			void OnCreate()
+			{
+				auto& transform = GetComponent<TransformComponent>();
+				transform.Transform.SetTranslate(0.0f, 0.0f);
+			}
+
+			void OnDestroy()
+			{
+
+			}
+
+			void OnUpdate(float dt)
+			{
+				auto& transformComponent = GetComponent<TransformComponent>();
+				auto& transform = transformComponent.Transform;
+				auto prevPos = transform.GetTranslate();
+				if (InputManager::IsKeyPressed(KeyType::W))
+				{
+					prevPos.y -= m_Speed * dt;
+					transform.SetTranslate(prevPos);
+				}
+				if (InputManager::IsKeyPressed(KeyType::S))
+				{
+					prevPos.y += m_Speed * dt;
+					transform.SetTranslate(prevPos);
+				}
+				if (InputManager::IsKeyPressed(KeyType::A))
+				{
+					prevPos.x -= m_Speed * dt;
+					transform.SetTranslate(prevPos);
+				}
+				if (InputManager::IsKeyPressed(KeyType::D))
+				{
+					prevPos.x += m_Speed * dt;
+					transform.SetTranslate(prevPos);
+				}
+			};
+		private:
+			float m_Speed = 100.f;
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+	} /// OnAttach
 
 	void Editor2D::OnDetach()
 	{
-		Log.Info("Editor2D 종료");
+		FZLOG_INFO("Editor2D 종료");
 		TEXTURE_MGR.Unload("Graphics/player.png");
 		texId = 0;
 	}
@@ -66,7 +114,7 @@ namespace fz {
 
 			ImGui::Begin("Position");
 			sf::Sprite& sprite = m_SquareEntity.GetComponent<SpriteComponent>();
-			auto spritePos = sprite.getPosition();
+			sf::Vector2f spritePos = sprite.getPosition();
 			ImGui::DragFloat("x", &spritePos.x);
 			ImGui::DragFloat("y", &spritePos.y);
 			sprite.setPosition(spritePos);

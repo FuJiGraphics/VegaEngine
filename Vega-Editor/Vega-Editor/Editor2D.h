@@ -14,8 +14,6 @@ namespace fz {
 		void OnEvent(fz::Event& ev) override;
 		void OnUI() override;
 		
-		bool OnWindowResizeEvent(WindowResizeEvent& event);
-
 	private:
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;

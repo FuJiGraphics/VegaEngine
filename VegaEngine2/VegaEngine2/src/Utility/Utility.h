@@ -3,7 +3,7 @@
 // Random
 #include "Utility/Random/Random.h"
 // Log
-#include "Utility/Log/Log.h"
+#include "Utility/Log/FZLog.hpp"
 // Converter
 #include "Utility/Converter/Converter.h"
 // Utils

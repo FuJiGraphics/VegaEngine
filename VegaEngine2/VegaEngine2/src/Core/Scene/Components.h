@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Renderer/Camera.h>
+#include "ScriptableEntity.h"
+#include <functional>
 
 namespace fz {
 
@@ -47,22 +49,6 @@ namespace fz {
 		const sf::Sprite* operator&() const { return &Sprite; }
 	};
 
-	struct RectangleComponent
-	{
-		sf::RectangleShape Rectangle;
-
-		RectangleComponent() = default;
-		RectangleComponent(const RectangleComponent&) = default;
-		RectangleComponent(const sf::RectangleShape& other)
-			: Rectangle(other)
-		{/*Empty*/}
-
-		operator sf::RectangleShape& () { return Rectangle; }
-		operator const sf::RectangleShape& () const { return Rectangle; }
-		sf::RectangleShape* operator&() { return &Rectangle; }
-		const sf::RectangleShape* operator&() const { return &Rectangle; }
-	};
-
 	struct CameraComponent
 	{
 		OrthoCamera Camera;
@@ -82,6 +68,31 @@ namespace fz {
 		inline operator const OrthoCamera& () const	{ return Camera; }
 		inline OrthoCamera* operator&()				{ return &Camera; }
 		inline const OrthoCamera* operator&() const	{ return &Camera; }
+	};
+
+	struct NativeScriptComponent
+	{
+	public:
+
+		ScriptableEntity* Instance = nullptr;
+
+		ScriptableEntity* (*CreateInstanceFunc)();
+		void (*DeleteInstanceFunc)(ScriptableEntity* instance);
+
+		void(*OnCreateFunction)(ScriptableEntity*);
+		void(*OnDestroyFunction)(ScriptableEntity*);
+		void(*OnUpdateFunction)(ScriptableEntity*, float);
+
+		template <typename T>
+		void Bind()
+		{
+			CreateInstanceFunc = []() { return static_cast<ScriptableEntity*>(new T()); };
+			DeleteInstanceFunc = [](ScriptableEntity* instance) { delete (T*)instance; instance = nullptr; };
+
+			OnCreateFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnCreate(); };
+			OnDestroyFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnDestroy(); };
+			OnUpdateFunction = [](ScriptableEntity* instance, float dt) { ((T*)instance)->OnUpdate(dt); };
+		}
 	};
 
 } // namespace fz

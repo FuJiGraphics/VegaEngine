@@ -26,7 +26,7 @@ namespace fz {
 	{
 		if ((x >= width) || (y >= height))
 		{
-			Log.Error("카메라 컨트롤러의 뷰포트를 설정할 수 없습니다. 잘못된 뷰포트 설정 값 입니다.");
+			FZLOG_WARN("카메라 컨트롤러의 뷰포트를 설정할 수 없습니다. 잘못된 뷰포트 설정 값 입니다.");
 			return;
 		}
 		sf::FloatRect rect;

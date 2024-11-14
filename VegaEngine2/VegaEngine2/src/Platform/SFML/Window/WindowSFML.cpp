@@ -9,38 +9,38 @@ namespace fz {
 		, m_CallbackFn(nullptr)
 		, m_IsVSync(mode.VSync)
 	{
-		Log.Trace("WindowSFML 객체 생성 중..");
+		FZLOG_INFO("WindowSFML 객체 생성 중..");
 	}
 
 	WindowSFML::~WindowSFML()
 	{
-		Log.Trace("WindowSFML 객체 해제 중..");
+		FZLOG_INFO("WindowSFML 객체 해제 중..");
 	}
 
 	void WindowSFML::Init(const Shared<RenderContext>& context)
 	{
-		Log.Trace("Window 초기화 중..");
+		FZLOG_INFO("Window 초기화 중..");
 		m_Window = std::make_unique<sf::RenderWindow>();
 		sf::VideoMode mode;
 		mode.width = m_Mode.Width;
 		mode.height = m_Mode.Height;
-		Log.Trace("-------------- # Window SFML 생성 정보 # -------------");
-		Log.Trace("- Title: {0}", m_Mode.Title);
-		Log.Trace("- Width: {0}, Height: {1}", m_Mode.Width, m_Mode.Height);
-		Log.Trace("- VSync 활성화 여부: {0}", m_IsVSync);
-		Log.Trace("------------------------------------------------------");
+		FZLOG_INFO("-------------- # Window SFML 생성 정보 # -------------");
+		FZLOG_INFO("- Title: {0}", m_Mode.Title);
+		FZLOG_INFO("- Width: {0}, Height: {1}", m_Mode.Width, m_Mode.Height);
+		FZLOG_INFO("- VSync 활성화 여부: {0}", m_IsVSync);
+		FZLOG_INFO("------------------------------------------------------");
 		m_Window->create(mode, m_Mode.Title, sf::Style::Default);
 		m_Window->setVerticalSyncEnabled(m_IsVSync);
-		Log.Trace("Window 초기화 완료");
+		FZLOG_INFO("Window 초기화 완료");
 	}
 
 	void WindowSFML::Release()
 	{
-		Log.Trace("WindowSFML 리소스 해제 중..");
+		FZLOG_INFO("WindowSFML 리소스 해제 중..");
 		if (m_Window != nullptr)
 		{
 			m_Window->close();
-			Log.Trace("WindowSFML 리소스 해제 완료");
+			FZLOG_INFO("WindowSFML 리소스 해제 완료");
 		}
 	}
 
@@ -177,10 +177,8 @@ namespace fz {
 			m_Window->popGLStates();
 		else
 			m_Window->pushGLStates();
-		if (!m_Window->setActive(enabled))
-		{
-			Log.Error("OpenGL 활성화중 알 수 없는 오류가 발생했습니다.");
-		}
+
+		FZLOG_ASSERT(m_Window->setActive(enabled), "OpenGL 활성화중 알 수 없는 오류가 발생했습니다.");
 	}
 
 	void WindowSFML::SetVSync(bool enabled)
@@ -191,7 +189,7 @@ namespace fz {
 
 	void WindowSFML::SetEventCallback(const EventCallbackFn& callback)
 	{
-		Log.Trace("Window Callback Function 설정 중..");
+		FZLOG_INFO("Window Callback Function 설정 중..");
 		m_CallbackFn = callback;
 	}
 

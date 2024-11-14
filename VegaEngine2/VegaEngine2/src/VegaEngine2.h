@@ -24,7 +24,6 @@
 
 // Export VegaEngine
 #include "Core/Defines.h"
-#include "Core/Assert.h"
 #include "Core/System.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Layer/LayerPool.h"
@@ -36,6 +35,7 @@
 
 // Scene
 #include "Core/Scene/Entity.h"
+#include "Core/Scene/ScriptableEntity.h"
 #include "Core/Scene/Scene.h"
 
 /* Entry Point */

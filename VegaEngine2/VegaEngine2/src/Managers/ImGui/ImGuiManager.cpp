@@ -9,7 +9,7 @@ namespace fz {
 
 	bool ImGuiManager::Init(const fz::Window& window)
 	{
-		Log.Trace("ImGui 초기화");
+		FZLOG_INFO("ImGui 초기화");
 		s_currWindow = &window;
 		bool result = ImGui::SFML::Init(*(sf::RenderWindow*)window.GetNativeWindow());
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -18,19 +18,19 @@ namespace fz {
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 		if (result)
-			Log.Trace("ImGui 초기화 완료");
+			FZLOG_INFO("ImGui 초기화 완료");
 		else
-			Log.Error("ImGui 초기화 실패");
+			FZLOG_WARN("ImGui 초기화 실패");
 		return (result);
 	}
 
 	void ImGuiManager::Release()
 	{
-		Log.Trace("ImGui 해제");
+		FZLOG_INFO("ImGui 해제");
 		ImGui::SFML::Shutdown();
 		//if (s_bEnabledImplot)
 		//	ImPlot::DestroyContext();
-		Log.Trace("ImGui 완료");
+		FZLOG_INFO("ImGui 완료");
 	}
 
 	void ImGuiManager::PollEvent(const sf::Event& ev)

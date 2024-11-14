@@ -17,7 +17,7 @@ namespace fz {
             case sf::Mouse::XButton2:
                 return MouseButtonType::XButton2;
             default:
-                Log.Warn("타입 변환을 할 수 없습니다. 알 수 없는 타입입니다.");
+                FZLOG_ASSERT(false, "타입 변환을 할 수 없습니다. 알 수 없는 타입입니다.");
                 break;
         }
 
