@@ -6,6 +6,7 @@ namespace fz {
 	// Forwards
 	class Entity;
 	class Framebuffer;
+	class HierarchyPanel;
 
 	class Scene : public std::enable_shared_from_this<Scene>
 	{
@@ -13,6 +14,7 @@ namespace fz {
 		using Super = fz::Scene;
 		FZ_DELETE_COPY(Scene)
 		friend fz::Entity;
+		friend fz::HierarchyPanel;
 
 	public:
 		Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel = 1);

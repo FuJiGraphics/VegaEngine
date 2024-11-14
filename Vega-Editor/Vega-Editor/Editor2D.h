@@ -1,5 +1,6 @@
 #pragma once
 #include <VegaEngine2.h>
+#include "Panels/HierarchyPanel.h"
 
 namespace fz {
 
@@ -18,6 +19,7 @@ namespace fz {
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
+		HierarchyPanel m_HierarchyPanel;
 		unsigned int texId;
 	};
 

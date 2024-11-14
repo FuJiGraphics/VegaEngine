@@ -6,7 +6,9 @@ namespace fz {
 		, texId(0)
 		, m_SquareEntity()
 		, m_CameraEntity()
+		, m_HierarchyPanel(m_ActiveScene)
 	{
+
 	}
 
 	void Editor2D::OnAttach()
@@ -15,9 +17,9 @@ namespace fz {
 		TEXTURE_MGR.Load("graphics/player.png");
 
 		m_ActiveScene = CreateShared<Scene>(1024, 768);
-
+		m_HierarchyPanel.SetContext(m_ActiveScene);
 		// Entity
-		m_SquareEntity = m_ActiveScene->CreateEntity("Square");
+		m_SquareEntity = m_ActiveScene->CreateEntity("Player");
 		sf::Sprite& sprite = m_SquareEntity.AddComponent<SpriteComponent>();
 		sprite.setTexture(TEXTURE_MGR.Get("graphics/player.png"));
 		sprite.setPosition(0.0f, 0.0f);
@@ -109,9 +111,7 @@ namespace fz {
 			{
 				m_ActiveScene->OnViewportResize((unsigned int)vpSize.x, (unsigned int)vpSize.y);
 			}
-
-			ImGuiManager::ShowDemo();
-
+ 
 			ImGui::Begin("Position");
 			sf::Sprite& sprite = m_SquareEntity.GetComponent<SpriteComponent>();
 			sf::Vector2f spritePos = sprite.getPosition();
@@ -132,6 +132,8 @@ namespace fz {
 		// Viewport End
 		ImGui::End();
 		ImGui::PopStyleVar();
+
+		m_HierarchyPanel.OnImGuiRender();
 	}
 
 } // namespace fz

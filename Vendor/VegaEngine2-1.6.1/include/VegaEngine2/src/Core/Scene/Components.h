@@ -67,7 +67,7 @@ namespace fz {
 	{
 		OrthoCamera Camera;
 		bool Primary = true;
-		bool FixedAspectRatio = true; //∞Ì¡§ ¡æ»æ∫Ò(Fixed Aspect Ratio)
+		bool FixedAspectRatio = false; //∞Ì¡§ ¡æ»æ∫Ò(Fixed Aspect Ratio)
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;

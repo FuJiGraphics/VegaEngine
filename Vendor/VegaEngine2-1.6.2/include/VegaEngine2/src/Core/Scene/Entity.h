@@ -44,7 +44,10 @@ namespace fz {
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 
-		operator bool() const { return m_Handle != entt::null; }
+		inline bool operator ==(const fz::Entity& other) const	{ return m_Handle == other.m_Handle && m_Scene == other.m_Scene; }
+		inline bool operator !=(const fz::Entity& other) const	{ return !((*this) == other); }
+		inline operator bool() const							{ return m_Handle != entt::null; }
+		inline operator std::uint32_t() const					{ return (std::uint32_t)m_Handle; }
 
 	private:
 		entt::entity	m_Handle;
