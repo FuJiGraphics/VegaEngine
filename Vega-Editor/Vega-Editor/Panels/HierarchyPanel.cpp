@@ -18,7 +18,7 @@ namespace fz {
 
 	void HierarchyPanel::OnImGuiRender()
 	{
-		if (ImGui::Begin("Scene Hierarchy"))
+		if (ImGui::Begin("Hierarchy"))
 		{
 			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered(0))
 			{
@@ -76,23 +76,30 @@ namespace fz {
 			sf::Vector2f scale = transform.GetScale();
 			sf::Vector2f origin = transform.GetOrigin();
 
-			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Translate"))
+			if (ImGui::TreeNodeEx("TransformComponent1", ImGuiTreeNodeFlags_DefaultOpen, "Translate"))
 			{
-				if (VegaUI::DragFloat2(translate, "Translate", true))
+				if (VegaUI::DrawControl("Translate", translate))
 					transform.SetTranslate(translate);
 				ImGui::TreePop();
 			}
-			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Rotation"))
+			if (ImGui::TreeNodeEx("TransformComponent2", ImGuiTreeNodeFlags_DefaultOpen, "Scale"))
 			{
-				if (VegaUI::DragFloat(rotation, "Rotation", true))
+				if (VegaUI::DrawControl("Scale", scale))
+					transform.SetScale(scale);
+				ImGui::TreePop();
+			}
+			if (ImGui::TreeNodeEx("TransformComponent3", ImGuiTreeNodeFlags_DefaultOpen, "Rotation"))
+			{
+				if (VegaUI::DragFloat(rotation, "Rotation"))
 					transform.SetRotation(rotation);
 				ImGui::TreePop();
+
 			}
 		}
 
 		if (entity.HasComponent<CameraComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			if (ImGui::TreeNodeEx("CameraComponent", ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
 			{
 				auto& cameraComp = entity.GetComponent<CameraComponent>();
 				ImGui::Checkbox("Main", &cameraComp.Primary);
@@ -109,7 +116,7 @@ namespace fz {
 
 		if (entity.HasComponent<SpriteComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(SpriteComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+			if (ImGui::TreeNodeEx("SpriteComponent", ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
 			{
 				SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
 				sf::Sprite& sprite = spriteComp.Sprite;
