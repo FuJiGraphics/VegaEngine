@@ -8,3 +8,5 @@
 #include "Utility/Converter/Converter.h"
 // Utils
 #include "Utility/Utils/Utils.h"
+// UI
+#include "Utility/UI/VegaUI.hpp"

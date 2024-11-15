@@ -14,6 +14,7 @@ namespace fz {
 
 	protected:
 		void DrawTreeNode(const fz::Entity& entity, const char* tag);
+		void DrawSceneComponents(fz::Entity& entity);
 
 	private:
 		Shared<Scene> m_Context;
