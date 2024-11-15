@@ -34,6 +34,12 @@ namespace fz {
 		return entity;
 	}
 
+	void Scene::DeleteEntity(fz::Entity& entity)
+	{
+		m_Registry.destroy(entity.m_Handle);
+		entity.m_Handle = entt::null;
+	}
+
 	void Scene::OnUpdate(float dt)
 	{
 		// 스크립트 업데이트
@@ -99,7 +105,6 @@ namespace fz {
  				cameraComponent.Camera.SetSize(width, height);
 			}
 		}
-
 	}
 
 } // namespace fz

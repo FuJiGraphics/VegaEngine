@@ -21,6 +21,7 @@ namespace fz {
 		~Scene();
 
 		Entity CreateEntity(const std::string& tagName = std::string());
+		void DeleteEntity(fz::Entity& entity);
 		
 		void OnUpdate(float dt);
 		void OnViewportResize(unsigned int width, unsigned int height);

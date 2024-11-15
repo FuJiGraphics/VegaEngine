@@ -7,6 +7,7 @@ namespace fz {
 
 	HierarchyPanel::HierarchyPanel(const Shared<Scene>& scene)
 		: m_Context(nullptr)
+		, m_OnEntityRemove(false)
 	{
 		SetContext(scene);
 	}
@@ -24,6 +25,14 @@ namespace fz {
 			{
 				m_SelectionContext = {};
 			}
+			
+			if (ImGui::BeginPopupContextWindow(0, 1))
+			{
+				if (ImGui::MenuItem("New Entity..."))
+					m_Context->CreateEntity("NewEntity");
+
+				ImGui::EndPopup();
+			}
 
 			if (m_Context)
 			{
@@ -32,15 +41,31 @@ namespace fz {
 						  {
 							  Entity entity = { entityID, m_Context };
 							  this->DrawTreeNode(entity, tagComp.Tag.c_str());
+							  if (ImGui::BeginPopupContextItem(0, ImGuiPopupFlags_MouseButtonRight))
+							  {
+								  if (ImGui::MenuItem("Remove"))
+								  {
+									  m_OnEntityRemove = true;
+									  m_SelectionContext = entity;
+								  }
+								  ImGui::EndPopup();
+							  }
 						  });
 			}
-		}
-		ImGui::End();
 
-		if (ImGui::Begin("Properties"))
-		{
-			if (m_SelectionContext)
-				this->DrawSceneComponents(m_SelectionContext);
+			if (ImGui::Begin("Properties"))
+			{
+				if (m_SelectionContext)
+					this->DrawSceneComponents(m_SelectionContext);
+			}
+			ImGui::End();
+
+			if (m_OnEntityRemove)
+			{
+				m_OnEntityRemove = false;
+				m_Context->DeleteEntity(m_SelectionContext);
+				m_SelectionContext = {};
+			}
 		}
 		ImGui::End();
 	}
@@ -53,7 +78,7 @@ namespace fz {
 		{
 			m_SelectionContext = entity;
 		}
-
+ 
 		if (opened)
 		{
 			ImGui::TreePop();

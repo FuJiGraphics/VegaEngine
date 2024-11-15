@@ -8,6 +8,9 @@ namespace fz {
 
 	class Entity 
 	{
+	protected:
+		friend fz::Scene;
+
 	public:
 		Entity();
 		Entity(entt::entity handle, const Shared<Scene>& scene);
@@ -20,7 +23,8 @@ namespace fz {
 		template <typename T, typename ...Args>
 		T& AddComponent(Args&&... args)
 		{
-			(!HasComponent<T>(), "엔티티에 동일한 컴포넌트가 이미 존재합니다.");
+			bool result = !HasComponent<T>();
+			FZLOG_ASSERT(result, "엔티티에 동일한 컴포넌트가 이미 존재합니다.");
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
 		}
 

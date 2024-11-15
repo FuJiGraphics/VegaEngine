@@ -2,7 +2,6 @@
 
 // Cores
 #include "Core/Defines.h"
-#include "Scene/Components.h"
 
 // Data Types
 #include "DataType/DataType.h"
@@ -15,3 +14,6 @@
 
 // Windows
 #include "Window/Window.h"
+
+// Components
+#include "Scene/Components.h"

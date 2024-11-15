@@ -106,23 +106,6 @@ namespace fz {
 			{
 				m_ActiveScene->OnViewportResize((unsigned int)vpSize.x, (unsigned int)vpSize.y);
 			}
- 
-			ImGui::Begin("Position");
-			sf::Sprite& sprite = m_SquareEntity.GetComponent<SpriteComponent>();
-			sf::Vector2f spritePos = sprite.getPosition();
-			ImGui::DragFloat("x", &spritePos.x);
-			ImGui::DragFloat("y", &spritePos.y);
-			sprite.setPosition(spritePos);
-			ImGui::End();
-
-			ImGui::Begin("Camera A");
-			fz::Transform& transform = m_CameraEntity.GetComponent<TransformComponent>();
-			sf::Vector2f translate = transform.GetTranslate();
-			ImGui::DragFloat("x", &translate.x);
-			ImGui::DragFloat("y", &translate.y);
-			transform.SetTranslate(translate);
-			ImGui::End();
-
 		}
 		// Viewport End
 		ImGui::End();
