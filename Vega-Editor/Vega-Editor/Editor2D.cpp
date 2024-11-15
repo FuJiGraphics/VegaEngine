@@ -99,11 +99,6 @@ namespace fz {
 		if (ImGui::Begin("Viewport"))
 		{
 			ImVec2 vpSize = ImGui::GetContentRegionAvail();
-
-			static float f[2] = { vpSize.x, vpSize.y };
-			ImGui::DragFloat2("Viewport Resize", f);
-			vpSize.x = f[0];
-			vpSize.y = f[1];
 			auto& frameBuffer = m_ActiveScene->GetFrameBuffer();
 			ImGui::Image(*frameBuffer);
 			if (vpSize.x > 0.0f && vpSize.y > 0.0f &&

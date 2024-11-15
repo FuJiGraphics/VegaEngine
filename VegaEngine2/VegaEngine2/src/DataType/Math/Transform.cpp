@@ -42,7 +42,7 @@ namespace fz {
 
 	void Transform::SetOrigin(const sf::Vector2f& origin)
 	{
-		m_Origin = origin * -1.0f;
+		m_Origin = origin;
 		ResetTransform();
 	}
 
@@ -104,7 +104,7 @@ namespace fz {
 		m_World.translate(m_Translate);
 		m_World.rotate(m_Rotation);
 		m_World.scale(m_Scale);
-		m_World.translate(m_Origin);
+		m_World.translate(m_Origin * -1.0f);
 	}
 
 } // namespace fz

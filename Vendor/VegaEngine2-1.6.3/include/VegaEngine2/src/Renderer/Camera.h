@@ -44,7 +44,8 @@ namespace fz {
         operator const sf::View& () const { return m_View; }
 
 	private:
-		sf::View	m_View;
+		sf::View	    m_View;
+        sf::Vector2f    m_OldSize;
 	};
 
 

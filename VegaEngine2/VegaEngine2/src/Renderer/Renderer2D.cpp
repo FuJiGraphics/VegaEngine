@@ -50,6 +50,7 @@ namespace fz {
 		s_PrevCameraPos = s_OrthoCamera->GetCenter();
 		// 일단 카메라가 오브젝트의 포지션만 따라가게 하도록 설정
 		s_OrthoCamera->SetCenter(transform * s_OrthoCamera->GetCenter());
+		s_OrthoCamera->SetRotation(transform.GetRotation());
 		if (s_FrameBuffer)
 		{
 			s_FrameBuffer->Clear();

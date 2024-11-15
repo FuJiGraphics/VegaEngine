@@ -20,6 +20,11 @@ namespace fz {
 	{
 		if (ImGui::Begin("Scene Hierarchy"))
 		{
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered(0))
+			{
+				m_SelectionContext = {};
+			}
+
 			if (m_Context)
 			{
 				auto view = m_Context->m_Registry.view<TagComponent>();
@@ -28,12 +33,11 @@ namespace fz {
 							  Entity entity = { entityID, m_Context };
 							  this->DrawTreeNode(entity, tagComp.Tag.c_str());
 						  });
-
 			}
 		}
 		ImGui::End();
 
-		if (ImGui::Begin("Draw Components"))
+		if (ImGui::Begin("Properties"))
 		{
 			if (m_SelectionContext)
 				this->DrawSceneComponents(m_SelectionContext);
@@ -61,18 +65,61 @@ namespace fz {
 		if (entity.HasComponent<TagComponent>())
 		{
 			auto& tag = entity.GetComponent<TagComponent>().Tag;
-			VegaUI::InputText("Tag", tag);
+			VegaUI::InputText(tag, "Tag");
 		}
 
 		if (entity.HasComponent<TransformComponent>())
 		{
-			const auto& transform = entity.GetComponent<TransformComponent>().Transform;
-			const auto& translate = transform.GetTranslate();
-			const auto& rotation = transform.GetRotation();
-			const auto& scale = transform.GetScale();
-			const auto& origin = transform.GetOrigin();
-			ImGui::Text("Translate: %s ", ((to_string(translate.x) + ", ") + to_string(translate.y)).c_str());
+			auto& transform = entity.GetComponent<TransformComponent>().Transform;
+			sf::Vector2f translate = transform.GetTranslate();
+			float rotation = transform.GetRotation();
+			sf::Vector2f scale = transform.GetScale();
+			sf::Vector2f origin = transform.GetOrigin();
 
+			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Translate"))
+			{
+				if (VegaUI::DragFloat2(translate, "Translate", true))
+					transform.SetTranslate(translate);
+				ImGui::TreePop();
+			}
+			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Rotation"))
+			{
+				if (VegaUI::DragFloat(rotation, "Rotation", true))
+					transform.SetRotation(rotation);
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<CameraComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			{
+				auto& cameraComp = entity.GetComponent<CameraComponent>();
+				ImGui::Checkbox("Main", &cameraComp.Primary);
+				ImGui::Checkbox("Fixed Aspect Ratio", &cameraComp.FixedAspectRatio);
+				sf::FloatRect viewport = cameraComp.Camera.GetViewport();
+				if (VegaUI::DragFloat4(viewport, "Viewport", true, 0.01))
+				{
+					if (viewport.width > viewport.left && viewport.height > viewport.top)
+						cameraComp.Camera.SetViewport(viewport);
+				}
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<SpriteComponent>())
+		{
+			if (ImGui::TreeNodeEx((void*)(std::uint64_t)typeid(SpriteComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+			{
+				SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
+				sf::Sprite& sprite = spriteComp.Sprite;
+				sf::Color color = sprite.getColor();
+				if (VegaUI::ColorEdit4(color, "Color", true))
+				{
+					sprite.setColor(color);
+				}
+				ImGui::TreePop();
+			}
 		}
 	}
 
