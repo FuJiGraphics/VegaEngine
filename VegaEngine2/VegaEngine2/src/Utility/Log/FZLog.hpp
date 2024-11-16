@@ -6,6 +6,7 @@
 #include <ctime>
 #include <sstream>
 #include <vector>
+#include <fstream>
 #include <Windows.h>
 #define WIN32_LEAN_AND_MEAN
 
@@ -257,9 +258,24 @@ namespace fz {
             s_Logger.critical(std::forward<Args>(args)...);
         }
 
+        template <typename ...Args>
+        static bool FileDoesNotExist(const std::string& filePath, Args&& ...args)
+        {
+            bool result = false;
+            std::ifstream file(filePath);
+            if (!file.is_open())
+            {
+                result = true;
+                s_Logger.error(std::forward<Args>(args)...);
+            }
+            file.close();
+            return (false);
+        }
+
         static void SetName(const std::string& name) {
             s_Logger.setName(name);
         }
+
 
     private:
         inline static _internal::Realog::Logger s_Logger;
@@ -282,13 +298,14 @@ namespace fz {
  * - FZLOG_DEBUG_MODE_ENABLED는 현재 포함하는 FZLog.hpp의 상단에 위치해야 합니다. 
  */
 #if defined(_DEBUG) || defined(FZLOG_DEBUG_MODE_ENABLED)
-    #define FZLOG_TRACE(...)                fz::Logger::Trace(__VA_ARGS__)
-    #define FZLOG_DEBUG(...)                fz::Logger::Debug(__VA_ARGS__)
-    #define FZLOG_INFO(...)                 fz::Logger::Info(__VA_ARGS__)
-    #define FZLOG_WARN(...)                 fz::Logger::Warn(__VA_ARGS__)
-    #define FZLOG_ERROR(...)                fz::Logger::Error(__VA_ARGS__)
-    #define FZLOG_CRITICAL(...)             fz::Logger::Critical(__VA_ARGS__)
-    #define FZLOG_ASSERT(flag, ...)         { if(!(flag)) { fz::Logger::Error(__VA_ARGS__); DebugBreak();} }
+    #define FZLOG_TRACE(...)                    fz::Logger::Trace(__VA_ARGS__)
+    #define FZLOG_DEBUG(...)                    fz::Logger::Debug(__VA_ARGS__)
+    #define FZLOG_INFO(...)                     fz::Logger::Info(__VA_ARGS__)
+    #define FZLOG_WARN(...)                     fz::Logger::Warn(__VA_ARGS__)
+    #define FZLOG_ERROR(...)                    fz::Logger::Error(__VA_ARGS__)
+    #define FZLOG_CRITICAL(...)                 fz::Logger::Critical(__VA_ARGS__)
+    #define FZLOG_ASSERT(flag, ...)             { if(!(flag)) { fz::Logger::Error(__VA_ARGS__); DebugBreak();} }
+    #define FZLOG_ASSERT_FILE(filePath, ...)    { if(fz::Logger::FileDoesNotExist(filePath, __VA_ARGS__)) { DebugBreak(); } }
 #else
     #define FZLOG_TRACE(...)       
     #define FZLOG_DEBUG(...)       
@@ -297,6 +314,7 @@ namespace fz {
     #define FZLOG_ERROR(...)       
     #define FZLOG_CRITICAL(...)    
     #define FZLOG_ASSERT(flag, ...)
+    #define FZLOG_ASSERT_FILE(filePath, ...)
 #endif
 
 #endif /* defined(__FZ_VEGA_HEADER_H_) */
