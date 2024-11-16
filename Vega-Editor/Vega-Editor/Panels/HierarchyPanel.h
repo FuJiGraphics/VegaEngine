@@ -16,9 +16,15 @@ namespace fz {
 		void DrawTreeNode(const fz::Entity& entity, const char* tag);
 		void DrawSceneComponents(fz::Entity& entity);
 
+
+		template<typename T>
+		void DisplayAddComponentEntry(const std::string& entryName);
+
 	private:
 		Shared<Scene> m_Context;
 		Entity m_SelectionContext;
 		bool m_OnEntityRemove;
 	};
 }
+
+#include "HierarchyPanel.hpp"

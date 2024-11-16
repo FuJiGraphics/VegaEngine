@@ -14,7 +14,7 @@ namespace fz {
 		void OnUpdate(float dt) override;
 		void OnEvent(fz::Event& ev) override;
 		void OnUI() override;
-		
+
 	private:
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;

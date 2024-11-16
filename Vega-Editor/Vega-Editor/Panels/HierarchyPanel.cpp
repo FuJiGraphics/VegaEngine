@@ -87,11 +87,29 @@ namespace fz {
 
 	void HierarchyPanel::DrawSceneComponents(fz::Entity& entity)
 	{
+		ImGuiTreeNodeFlags treeFlag = ImGuiTreeNodeFlags_DefaultOpen |
+			ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_Framed;
 		if (entity.HasComponent<TagComponent>())
 		{
 			auto& tag = entity.GetComponent<TagComponent>().Tag;
 			VegaUI::InputText(tag, "Tag");
 		}
+
+		{
+			ImGui::SameLine();
+			ImGui::PushItemWidth(-1);
+			if (ImGui::Button("Add"))
+			{
+				ImGui::OpenPopup("AddComponent");
+			}
+			if (ImGui::BeginPopup("AddComponent"))
+			{
+				DisplayAddComponentEntry<CameraComponent>("Camera");
+				DisplayAddComponentEntry<SpriteComponent>("Sprite");
+				ImGui::EndPopup();
+			} 
+		}
+
 
 		if (entity.HasComponent<TransformComponent>())
 		{
@@ -101,21 +119,13 @@ namespace fz {
 			sf::Vector2f scale = transform.GetScale();
 			sf::Vector2f origin = transform.GetOrigin();
 
-			if (ImGui::TreeNodeEx("TransformComponent1", ImGuiTreeNodeFlags_DefaultOpen, "Translate"))
+			if (ImGui::TreeNodeEx("TransformComponent1", treeFlag, "Translate"))
 			{
-				if (VegaUI::DrawControl("Translate", translate))
+				if (VegaUI::DrawControl2("Translate", translate, 1.0f, 1.0f))
 					transform.SetTranslate(translate);
-				ImGui::TreePop();
-			}
-			if (ImGui::TreeNodeEx("TransformComponent2", ImGuiTreeNodeFlags_DefaultOpen, "Scale"))
-			{
-				if (VegaUI::DrawControl("Scale", scale))
+				if (VegaUI::DrawControl2("Scale", scale, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f))
 					transform.SetScale(scale);
-				ImGui::TreePop();
-			}
-			if (ImGui::TreeNodeEx("TransformComponent3", ImGuiTreeNodeFlags_DefaultOpen, "Rotation"))
-			{
-				if (VegaUI::DragFloat(rotation, "Rotation"))
+				if (VegaUI::DrawControl1("Rotation", "Z", rotation, 1.0f, 0.0f, 360.f, 0.0f))
 					transform.SetRotation(rotation);
 				ImGui::TreePop();
 
@@ -124,7 +134,7 @@ namespace fz {
 
 		if (entity.HasComponent<CameraComponent>())
 		{
-			if (ImGui::TreeNodeEx("CameraComponent", ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			if (ImGui::TreeNodeEx("CameraComponent", treeFlag, "Camera"))
 			{
 				auto& cameraComp = entity.GetComponent<CameraComponent>();
 				ImGui::Checkbox("Main", &cameraComp.Primary);
@@ -141,12 +151,12 @@ namespace fz {
 
 		if (entity.HasComponent<SpriteComponent>())
 		{
-			if (ImGui::TreeNodeEx("SpriteComponent", ImGuiTreeNodeFlags_DefaultOpen, "Sprite"))
+			if (ImGui::TreeNodeEx("SpriteComponent", treeFlag, "Sprite"))
 			{
 				SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
 				sf::Sprite& sprite = spriteComp.Sprite;
 				sf::Color color = sprite.getColor();
-				if (VegaUI::ColorEdit4(color, "Color", true))
+				if (VegaUI::ColorEdit4(color, "Color"))
 				{
 					sprite.setColor(color);
 				}

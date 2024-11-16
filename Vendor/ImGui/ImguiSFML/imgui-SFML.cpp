@@ -420,7 +420,7 @@ void Update(const sf::Vector2i& mousePos, const sf::Vector2f& displaySize, sf::T
 
     ImGuiIO& io = ImGui::GetIO();
     io.DisplaySize = ImVec2(displaySize.x, displaySize.y);
-    io.DeltaTime = dt.asSeconds();
+	io.DeltaTime = dt.asSeconds();
 
     if (s_currWindowCtx->windowHasFocus) {
         if (io.WantSetMousePos) {

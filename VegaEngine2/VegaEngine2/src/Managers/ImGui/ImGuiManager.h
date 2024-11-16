@@ -27,6 +27,8 @@ namespace fz {
 		static void	End();
 		static void	ShowDemo();
 
+		static void SetDarkTheme();
+
 	private:
 		static const fz::Window* s_currWindow;
 	};
