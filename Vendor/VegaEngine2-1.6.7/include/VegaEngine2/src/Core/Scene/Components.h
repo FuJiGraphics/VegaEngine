@@ -29,24 +29,20 @@ namespace fz {
 
 		operator fz::Transform& () { return Transform; }
 		operator const fz::Transform& () const { return Transform; }
-		fz::Transform* operator&() { return &Transform; }
-		const fz::Transform* operator&() const { return &Transform; }
 	};
 
 	struct SpriteComponent
 	{
-		sf::Sprite Sprite;
+		fz::Sprite Sprite;
 
 		SpriteComponent() = default;
 		SpriteComponent(const SpriteComponent&) = default;
-		SpriteComponent(const sf::Sprite& other)
+		SpriteComponent(const fz::Sprite& other)
 			: Sprite(other)
 		{/*Empty*/}
 
 		operator sf::Sprite& () { return Sprite; }
 		operator const sf::Sprite& () const { return Sprite; }
-		sf::Sprite* operator&() { return &Sprite; }
-		const sf::Sprite* operator&() const { return &Sprite; }
 	};
 
 	struct CameraComponent
@@ -66,8 +62,6 @@ namespace fz {
 
 		inline operator OrthoCamera& ()				{ return Camera; }
 		inline operator const OrthoCamera& () const	{ return Camera; }
-		inline OrthoCamera* operator&()				{ return &Camera; }
-		inline const OrthoCamera* operator&() const	{ return &Camera; }
 	};
 
 	struct NativeScriptComponent

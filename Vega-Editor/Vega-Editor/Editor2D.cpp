@@ -16,18 +16,17 @@ namespace fz {
 		FZLOG_INFO("Editor2D 시작");
 		TEXTURE_MGR.Load("graphics/player.png");
 
-		m_ActiveScene = CreateShared<Scene>(1024, 768);
+		m_ActiveScene = LoadScene("json/scenes.json");
 		m_HierarchyPanel.SetContext(m_ActiveScene);
-		// Entity
-		m_SquareEntity = m_ActiveScene->CreateEntity("Player");
-		sf::Sprite& sprite = m_SquareEntity.AddComponent<SpriteComponent>();
-		sprite.setTexture(TEXTURE_MGR.Get("graphics/player.png"));
-		sprite.setPosition(0.0f, 0.0f);
+		//m_ActiveScene = CreateShared<Scene>(1024, 768);
+		//// Entity
+		//m_SquareEntity = m_ActiveScene->CreateEntity("Player");
+		//auto& spriteComp = m_SquareEntity.AddComponent<SpriteComponent>();
+		//spriteComp.Sprite.SetTexture("graphics/player.png");
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-		auto& camera = m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
-		camera.Primary = true;
-
+		//m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
+		//auto& camera = m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
+		//camera.Primary = true;
 
 		class CameraController : public ScriptableEntity
 		{
@@ -73,6 +72,7 @@ namespace fz {
 			float m_Speed = 100.f;
 		};
 
+		m_CameraEntity = m_ActiveScene->GetEntityFromTag("Camera");
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	} /// OnAttach
 
@@ -111,7 +111,27 @@ namespace fz {
 		ImGui::End();
 		ImGui::PopStyleVar();
 
+		// TODO: 테스트
+		if (ImGui::Button("SaveScene"))
+		{
+			this->SaveScene(m_ActiveScene);
+		}
+
 		m_HierarchyPanel.OnImGuiRender();
+	}
+
+	void Editor2D::SaveScene(const Shared<Scene>& scene)
+	{
+		// TODO: 테스트
+		SceneSerializer serializer(scene);
+		serializer.Serialize("json/scenes.json");
+	}
+
+	Shared<Scene> Editor2D::LoadScene(const std::string& path)
+	{
+		// TODO: 테스트
+		SceneSerializer serializer(nullptr);
+		return serializer.Deserialize(path);
 	}
 
 } // namespace fz

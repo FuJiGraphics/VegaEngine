@@ -5,4 +5,5 @@
 // Key type
 #include "DataType/KeyType/KeyType.h"
 // Math
-#include "DataType/Math/Transform.h"
+#include "DataType/Custom/Transform.h"
+#include "DataType/Custom/Sprite.h"

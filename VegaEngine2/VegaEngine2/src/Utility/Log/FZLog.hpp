@@ -10,43 +10,8 @@
 #include <Windows.h>
 #define WIN32_LEAN_AND_MEAN
 
-namespace _internal {
+namespace fzlog_internal {
     namespace Realog {
-
-        static void convert_unicode_to_ansi_string(
-            std::string& ansi,
-            const wchar_t* unicode,
-            const size_t unicode_size
-        ) {
-            do {
-
-                if ((nullptr == unicode) || (0 == unicode_size)) {
-                    break;
-                }
-                ansi.clear();
-                int required_cch = ::WideCharToMultiByte(
-                    CP_ACP,
-                    0,
-                    unicode, static_cast<int>(unicode_size),
-                    nullptr, 0,
-                    nullptr, nullptr
-                );
-                if (0 == required_cch) {
-                    break;
-                }
-                ansi.resize(required_cch);
-                if (0 == ::WideCharToMultiByte(
-                    CP_ACP,
-                    0,
-                    unicode, static_cast<int>(unicode_size),
-                    const_cast<char*>(ansi.c_str()), static_cast<int>(ansi.size()),
-                    nullptr, nullptr
-                )) {
-                    break;
-                }
-            } while (false);
-            return;
-        }
         
         struct NoArg {};
 
@@ -278,7 +243,7 @@ namespace fz {
 
 
     private:
-        inline static _internal::Realog::Logger s_Logger;
+        inline static fzlog_internal::Realog::Logger s_Logger;
     };
 }
 

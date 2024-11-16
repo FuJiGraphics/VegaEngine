@@ -26688,7 +26688,7 @@ template <class Key, class T, class IgnoredLess = std::less<Key>,
 
 namespace fz {
 #include <Windows.h>
-    namespace _internal {
+    namespace fzDatabase_internal {
         static void convert_unicode_to_utf8_string(std::string& utf8, const wchar_t* unicode, const size_t unicode_size) 
         {
             do {
@@ -26718,7 +26718,7 @@ namespace fz {
             } while (false);
         }
 
-        void convert_utf8_to_unicode_string(std::wstring& unicode, const char* utf8, const size_t utf8_size) 
+        static void convert_utf8_to_unicode_string(std::wstring& unicode, const char* utf8, const size_t utf8_size) 
         {
             do {
                 if ((nullptr == utf8) || (0 == utf8_size)) 
@@ -26885,14 +26885,14 @@ namespace fz {
         operator const char* () override
         {
             static std::string str;
-            _internal::convert_unicode_to_utf8_string(str, this->Data.c_str(), this->Data.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(str, this->Data.c_str(), this->Data.size());
             return str.c_str();
         }
 
         operator std::string& () override
         {
             static std::string str;
-            _internal::convert_unicode_to_utf8_string(str, this->Data.c_str(), this->Data.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(str, this->Data.c_str(), this->Data.size());
             return str;
         }
 
@@ -26904,7 +26904,7 @@ namespace fz {
         friend std::ostream& operator<<(std::ostream& os, const Cell& cell)
         {
             static std::string str;
-            _internal::convert_unicode_to_utf8_string(str, cell.Data.c_str(), cell.Data.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(str, cell.Data.c_str(), cell.Data.size());
             return os << str;
         }
 	};
@@ -26927,7 +26927,7 @@ namespace fz {
         Cell& GetCell(const std::wstring& attrib)
         {
             std::string utf8;
-            _internal::convert_unicode_to_utf8_string(utf8, attrib.c_str(), attrib.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(utf8, attrib.c_str(), attrib.size());
             if (!this->hasAttrib(utf8))
             {
                 throw std::out_of_range("Did not found element.");
@@ -26979,7 +26979,7 @@ namespace fz {
             std::shared_ptr<Cell> newCell = nullptr;
             newCell = std::make_shared<Cell>();
             std::wstring wstr;
-            _internal::convert_utf8_to_unicode_string(wstr, value.c_str(), value.size());
+            fzDatabase_internal::convert_utf8_to_unicode_string(wstr, value.c_str(), value.size());
             newCell->Data = wstr;
             newCell->Attribute = attrib;
             m_Cells.insert({ attrib, newCell });
@@ -27124,7 +27124,7 @@ namespace fz {
         CellArray& GetRow(const std::wstring& key)
         {
             std::string utf8;
-            _internal::convert_unicode_to_utf8_string(utf8, key.c_str(), key.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(utf8, key.c_str(), key.size());
             if (!this->hasKey(utf8))
             {
                 throw std::out_of_range("Did not found value");
@@ -27170,7 +27170,7 @@ namespace fz {
         {
             bool result = true;
             std::string str;
-            _internal::convert_unicode_to_utf8_string(str, key.c_str(), key.size());
+            fzDatabase_internal::convert_unicode_to_utf8_string(str, key.c_str(), key.size());
             const auto& iter = m_CellArray.find(str);
             if (iter == m_CellArray.end())
                 result = false;
@@ -27220,21 +27220,21 @@ namespace fz {
             return true;
         }
 
-        static bool LoadFromJson(const std::string& jsonPath)
+        static void LoadFromJson(const std::string& jsonPath)
         {
-            if (!CanOpenFile(jsonPath))
-                return false;
-
             const auto& it = s_JsonPool.find(jsonPath);
             if (it == s_JsonPool.end())
-            {
-                std::ifstream file(jsonPath);
-                std::shared_ptr<nlohmann::json> newJson = nullptr;
-                newJson = std::make_shared<nlohmann::json>();
-                *newJson = nlohmann::json::parse(file);
+			{
+				std::shared_ptr<nlohmann::json> newJson = nullptr;
+				newJson = std::make_shared<nlohmann::json>();
+                if (CanOpenFile(jsonPath))
+                {
+					std::ifstream file(jsonPath);
+					*newJson = nlohmann::json::parse(file);
+					file.close();
+                }
                 s_JsonPool.insert({ jsonPath, newJson });
             }
-            return true;
         }
 
         static CsvTable& GetCsvTable(const std::string& csvPath)
@@ -27270,7 +27270,10 @@ namespace fz {
             const auto& jsonit = s_JsonPool.find(path);
             if (jsonit != s_JsonPool.end())
             {
-                s_JsonPool[path].reset();
+				std::ofstream out(path);
+                out << std::setw(4) << *s_JsonPool[path] << std::endl;
+                out.close();
+                s_JsonPool.erase(jsonit);
             }
         }
 
@@ -27304,7 +27307,6 @@ namespace fz {
             file.open(path);
             if (!file.is_open())
             {
-                std::cerr << "Did not found file. path = " << path << std::endl;
                 result = false;
             }
             file.close();

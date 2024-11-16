@@ -15,6 +15,10 @@ namespace fz {
 		void OnEvent(fz::Event& ev) override;
 		void OnUI() override;
 
+	protected:
+		void SaveScene(const Shared<Scene>& scene);
+		Shared<Scene> LoadScene(const std::string& path);
+
 	private:
 		Shared<Scene> m_ActiveScene;
 		Entity m_SquareEntity;

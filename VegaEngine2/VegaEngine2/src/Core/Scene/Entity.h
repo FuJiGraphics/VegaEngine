@@ -6,14 +6,18 @@
 
 namespace fz {
 
+	class EntitySerializer;
+
 	class Entity 
 	{
 	protected:
 		friend fz::Scene;
+		friend fz::EntitySerializer;
 
 	public:
 		Entity();
 		Entity(entt::entity handle, const Shared<Scene>& scene);
+		Entity(const std::string& uuid, entt::entity handle, const Shared<Scene>& scene);
 		Entity(const Entity& other);
 		Entity(Entity&& other) noexcept;
 
@@ -56,6 +60,7 @@ namespace fz {
 	private:
 		entt::entity	m_Handle;
 		Weak<Scene>		m_Scene;
+		std::string		m_UUID;
 	};
 
 } // namespace fz

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Random.h"
+#include "UUID.h"
 #include <random>
 #include <cmath>
 
@@ -48,6 +49,16 @@ namespace fz {
     sf::Vector2f Random_internal::Direction(float min, float max, const sf::Vector2f& base)
     {
         return Utils::GetRotateVector(Random(min, max), base);
+    }
+
+    std::string Random_internal::GetUUID() const
+    {
+		// Use default random engine
+		std::random_device rd;
+		std::mt19937 rng(rd());
+        uuids::uuid_random_generator generator(rng);
+        uuids::uuid const id = generator();
+        return uuids::to_string(id);
     }
 
 } // namespace fz

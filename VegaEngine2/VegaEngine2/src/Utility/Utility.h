@@ -2,6 +2,8 @@
 
 // Random
 #include "Utility/Random/Random.h"
+// Database
+#include "Utility/Database/Database.hpp"
 // Log
 #include "Utility/Log/FZLog.hpp"
 // Converter
