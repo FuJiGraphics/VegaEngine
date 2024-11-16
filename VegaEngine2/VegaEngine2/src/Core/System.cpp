@@ -5,7 +5,6 @@ namespace fz {
 
 	System::System(int width, int height, const std::string& title)
 		: IsInit(false)
-		, IsOpen(true)
 		, Width(width)
 		, Height(height)
 		, Title(title)
@@ -15,6 +14,7 @@ namespace fz {
 		, m_RenderContext(nullptr)
 	{
 		this->Init();
+		s_System = this;
 	}
 
 	System::~System()
@@ -53,7 +53,8 @@ namespace fz {
 		}
 		// Window
 		{ 
-			m_Window->Release();
+			if (m_Window->IsOpen())
+				m_Window->Release();
 		}
 		// ImGui
 		{
@@ -85,7 +86,7 @@ namespace fz {
 		FZLOG_INFO("System Run...");
 		sf::Clock clock;
 
-		while (m_Window->IsOpen())
+		while (m_IsRunning && m_Window->IsOpen())
 		{
 			sf::Time t = clock.restart();
 			float dt = t.asSeconds();

@@ -26,6 +26,7 @@ namespace fz {
 			return;
 		Database::LoadFromJson(path);
 		auto& json = Database::GetJsonObject(path);
+		json.clear();
 		std::string sceneUUID = m_Scene->m_UUID;
 		for (auto& it : m_Scene->m_EntityPool)
 		{

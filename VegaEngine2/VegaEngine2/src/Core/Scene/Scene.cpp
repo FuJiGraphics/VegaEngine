@@ -92,7 +92,6 @@ namespace fz {
 
 				if (camera.Primary)
 				{
-					
 					mainCamera = &camera.Camera;
 					cameraTransform = &transform.Transform;
 					break;
@@ -113,6 +112,10 @@ namespace fz {
 			}
 
 			Renderer2D::EndScene();
+		}
+		else
+		{
+			m_FrameBuffer->Clear();
 		}
 	}
 

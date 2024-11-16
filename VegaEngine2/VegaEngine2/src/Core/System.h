@@ -34,7 +34,13 @@ namespace fz {
 		bool OnWindowClose(WindowCloseEvent e);
 		bool OnWindowResize(WindowResizeEvent e);
 
-		inline bool IsOpened() const	{ return this->IsOpen; }
+		inline void ExitSystem() { this->OnWindowClose({}); }
+		inline bool IsRunning() const { return m_Window->IsOpen(); }
+		inline Window& GetWindow() const { return *m_Window; }
+		inline int GetWidth() const { return Width; }
+		inline int GetHeight() const { return Height; }
+
+		static System& GetSystem() { return *s_System; }
 
 	private:
 		bool GenerateWindow();
@@ -43,17 +49,20 @@ namespace fz {
 
 	protected:
 		bool				IsInit;
-		bool				IsOpen;
 		int					Width;
 		int					Height;
 		std::string			Title;
 		Shared<LayerPool>	LayerGenerator;
 
 	private:
+		bool					m_IsRunning;
 		Shared<Window>			m_Window;
 		Shared<LayerStack>		m_LayerStack;
 		Shared<RenderContext>	m_RenderContext;
+		inline static System*	s_System = nullptr;
 	};
+
+#define FRAMEWORK System::GetSystem()
 
 	/*
 	* @brief 클라이언트에서 재정의하여 시스템을 생성합니다.

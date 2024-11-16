@@ -9,7 +9,6 @@ public:
 	VegaEditor()
 		: System(1024, 768, "VegaEngine2")
 	{
-		Super::IsOpen = false;
 		this->PushLayer(LayerGenerator->Take<fz::Editor2D>("Editor2D"));
 	}
 	virtual ~VegaEditor()

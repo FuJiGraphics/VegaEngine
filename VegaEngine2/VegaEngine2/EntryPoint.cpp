@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	do {
 		app->Run();
 		// app->Reset();
-	} while (app->IsOpened());
+	} while (app->IsRunning());
 	app->Release();
 	
 	delete app;

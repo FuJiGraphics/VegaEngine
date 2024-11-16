@@ -15,6 +15,7 @@ namespace fz {
 	void HierarchyPanel::SetContext(const Shared<Scene>& scene)
 	{
 		m_Context = scene;
+		m_SelectionContext = {};
 	}
 
 	void HierarchyPanel::OnImGuiRender()
@@ -29,7 +30,13 @@ namespace fz {
 			if (ImGui::BeginPopupContextWindow(0, 1))
 			{
 				if (ImGui::MenuItem("New Entity..."))
+				{
+					if (!m_Context)
+					{
+						m_Context = CreateShared<Scene>(1024, 768);
+					}
 					m_Context->CreateEntity("NewEntity");
+				}
 
 				ImGui::EndPopup();
 			}
