@@ -24,4 +24,47 @@ namespace fz {
         return fz::MouseButtonType();
     }
 
+	std::string Converter::ToString(Origins origin)
+	{
+		switch (origin)
+		{
+			case Origins::Custom:   return "Custom";
+			case Origins::TL:       return "TL";
+			case Origins::TC:       return "TC";
+			case Origins::TR:       return "TR";
+			case Origins::ML:       return "ML";
+			case Origins::MC:       return "MC";
+			case Origins::MR:       return "MR";
+			case Origins::BL:       return "BL";
+			case Origins::BC:       return "BC";
+			case Origins::BR:       return "BR";
+		}
+		return "Unknown";
+	}
+
+	Origins Converter::StringToOrigins(const std::string& str)
+	{
+		if (str == "Custom")
+			return Origins::Custom;
+		else if (str == "TL")
+			return Origins::TL;
+		else if (str == "TC")
+			return Origins::TC;
+		else if (str == "TR")
+			return Origins::TR;
+		else if (str == "ML")
+			return Origins::ML;
+		else if (str == "MC")
+			return Origins::MC;
+		else if (str == "MR")
+			return Origins::MR;
+		else if (str == "BL")
+			return Origins::BL;
+		else if (str == "BC")
+			return Origins::BC;
+		else if (str == "BR")
+			return Origins::BR;
+		return Origins::Custom;
+	}
+
 } // namespace fz

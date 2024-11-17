@@ -7,7 +7,7 @@ namespace fz {
         const double s_Pi = std::atan(1) * 4;
     }
 
-    sf::Vector2f Utils::SetOrigin(sf::Transformable& obj, Origins preset, const sf::FloatRect rect)
+    sf::Vector2f Utils::SetOrigin(sf::Transformable& obj, Origins preset, const sf::FloatRect& rect)
     {
         sf::Vector2f newOrigin(rect.width, rect.height);
         newOrigin.x *= ((int)preset % 3) * 0.5f;
@@ -24,6 +24,15 @@ namespace fz {
     sf::Vector2f Utils::SetOrigin(sf::RectangleShape& obj, Origins preset)
     {
         return Utils::SetOrigin(obj, preset, obj.getLocalBounds());
+    }
+
+    sf::Vector2f Utils::SetOrigin(sf::Vector2f& vec2, Origins preset, const sf::Vector2f& size)
+    {
+		sf::Vector2f newOrigin(size.x, size.y);
+		newOrigin.x *= ((int)preset % 3) * 0.5f;
+		newOrigin.y *= ((int)preset / 3) * 0.5f;
+        vec2 = newOrigin;
+        return newOrigin;
     }
 
     float Utils::Clamp(float value, float min, float max)

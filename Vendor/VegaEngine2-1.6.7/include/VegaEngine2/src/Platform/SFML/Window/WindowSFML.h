@@ -29,6 +29,7 @@ namespace fz {
 		int GetHeight() const override;
 		std::string GetTitle() const override;
 		void* GetNativeWindow() const override;
+		HWND GetHandle() const override;
 		bool IsFocus() const override;
 		bool IsVSync() const override;
 		bool IsOpen() const override;

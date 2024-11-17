@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "ScriptCore.h"
 #include "EntryPoint.h"
 
 int main(int argc, char** argv)
@@ -8,7 +9,6 @@ int main(int argc, char** argv)
 	app->Init();
 	do {
 		app->Run();
-		// app->Reset();
 	} while (app->IsRunning());
 	app->Release();
 	

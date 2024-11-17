@@ -156,6 +156,11 @@ namespace fz {
 		return m_Window.get();
 	}
 
+	HWND WindowSFML::GetHandle() const
+	{
+		return m_Window->getSystemHandle();
+	}
+
 	bool WindowSFML::IsFocus() const
 	{
 		return m_Window->hasFocus();

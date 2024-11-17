@@ -157,6 +157,12 @@ namespace fz {
 		return true;
 	}
 
+	Shared<Scene> System::LoadScene(const std::string& path)
+	{
+		SceneSerializer serializer(nullptr);
+		return serializer.Deserialize(path);
+	}
+
 	bool System::GenerateWindow()
 	{
 		bool result = true;

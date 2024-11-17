@@ -3,10 +3,7 @@
 namespace fz {
 	Editor2D::Editor2D(const std::string& name)
 		: Layer(name)
-		, texId(0)
 		, m_ActiveScene(nullptr)
-		, m_SquareEntity()
-		, m_CameraEntity()
 		, m_HierarchyPanel(m_ActiveScene)
 	{
 
@@ -16,24 +13,13 @@ namespace fz {
 	{
 		FZLOG_INFO("Editor2D 시작");
 		TEXTURE_MGR.Load("graphics/player.png");
-
-		m_ActiveScene = CreateShared<Scene>(1024, 768);
-		//// Entity
-		//m_SquareEntity = m_ActiveScene->CreateEntity("Player");
-		//auto& spriteComp = m_SquareEntity.AddComponent<SpriteComponent>();
-		//spriteComp.Sprite.SetTexture("graphics/player.png");
-
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-		auto& camera = m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
-		camera.Primary = true;
-
-	} /// OnAttach
+		m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
+	}
 
 	void Editor2D::OnDetach()
 	{
 		FZLOG_INFO("Editor2D 종료");
 		TEXTURE_MGR.Unload("Graphics/player.png");
-		texId = 0;
 	}
 
 	void Editor2D::OnUpdate(float dt)
@@ -55,92 +41,38 @@ namespace fz {
 
 		if (ImGui::BeginMenu("File"))
 		{
-			
-
 			if (ImGui::MenuItem("New", "Ctrl+N"))
 			{
-
-
+				m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
+				m_HierarchyPanel.SetContext(m_ActiveScene);
 			}
 			if (ImGui::MenuItem("Open...", "Ctrl+O"))
 			{
-				std::string path = VegaUI::OpenFile(handle, "Scene File (*.json)\0*.json\0");
-				SceneSerializer serializer;
-				m_ActiveScene = serializer.Deserialize(path);
-				if (!m_ActiveScene)
+				Shared<Scene> prevScene = m_ActiveScene;
+				m_ActiveSceneFilePath = VegaUI::OpenFile(handle, "Scene File (*.json)\0*.json\0");
+				if (m_ActiveSceneFilePath.empty())
+					m_ActiveScene = prevScene;
+				else
 				{
-					m_ActiveScene = CreateShared<Scene>(1024, 768);
-					m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-					auto& camera = m_CameraEntity.AddComponent<CameraComponent>(sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 1024.f, 768.f });
-					camera.Primary = true;
+					m_ActiveScene = LoadScene(m_ActiveSceneFilePath);
+					if (!m_ActiveScene)
+						m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 				}
 				m_HierarchyPanel.SetContext(m_ActiveScene);
-
-				// TODO: Test
-				class CameraController : public ScriptableEntity
-				{
-				public:
-					void OnCreate()
-					{
-						auto& transform = GetComponent<TransformComponent>();
-						transform.Transform.SetTranslate(0.0f, 0.0f);
-					}
-
-					void OnDestroy()
-					{
-
-					}
-
-					void OnUpdate(float dt)
-					{
-						auto& transformComponent = GetComponent<TransformComponent>();
-						auto& transform = transformComponent.Transform;
-						auto prevPos = transform.GetTranslate();
-						if (InputManager::IsKeyPressed(KeyType::W))
-						{
-							prevPos.y -= m_Speed * dt;
-							transform.SetTranslate(prevPos);
-						}
-						if (InputManager::IsKeyPressed(KeyType::S))
-						{
-							prevPos.y += m_Speed * dt;
-							transform.SetTranslate(prevPos);
-						}
-						if (InputManager::IsKeyPressed(KeyType::A))
-						{
-							prevPos.x -= m_Speed * dt;
-							transform.SetTranslate(prevPos);
-						}
-						if (InputManager::IsKeyPressed(KeyType::D))
-						{
-							prevPos.x += m_Speed * dt;
-							transform.SetTranslate(prevPos);
-						}
-					};
-				private:
-					float m_Speed = 100.f;
-				};
-
-				if (m_ActiveScene)
-				{
-					m_CameraEntity = m_ActiveScene->GetEntityFromTag("Camera");
-					if (m_CameraEntity)
-						m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-				}
 			}
-
+			if (ImGui::MenuItem("Save", "Ctrl+S"))
+			{
+				SaveScene(m_ActiveScene, m_ActiveSceneFilePath);
+			}
 			if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 			{
 				std::string path = VegaUI::SaveFile(handle, "Scene File (*.json)\0*.json\0");
-				SceneSerializer serializer(m_ActiveScene);
-				serializer.Serialize(path);
+				SaveScene(m_ActiveScene, path);
 			}
-
 			if (ImGui::MenuItem("Exit"))
 			{
 				System::GetSystem().ExitSystem();
 			}
-
 			ImGui::EndMenu();
 		}
 
@@ -168,18 +100,28 @@ namespace fz {
 		ImGui::EndMainMenuBar();
 	}
 
-	void Editor2D::SaveScene(const Shared<Scene>& scene)
+	Shared<Scene> Editor2D::CreateScene(unsigned int width, unsigned int height)
 	{
-		// TODO: 테스트
+		Shared<Scene> newScene = CreateShared<Scene>(width, height);
+		return newScene;
+	}
+
+	void Editor2D::SaveScene(const Shared<Scene>& scene, const std::string& path)
+	{
 		SceneSerializer serializer(scene);
-		serializer.Serialize("json/scenes.json");
+		serializer.Serialize(path);
 	}
 
 	Shared<Scene> Editor2D::LoadScene(const std::string& path)
 	{
-		// TODO: 테스트
 		SceneSerializer serializer(nullptr);
-		return serializer.Deserialize(path);
+		Shared<Scene> loadScene = serializer.Deserialize(path);
+		auto& base = BindScriptBase::GetInstance();
+		for (auto& script : base)
+		{
+			script->Bind(path, loadScene);
+		}
+		return loadScene;
 	}
 
 } // namespace fz

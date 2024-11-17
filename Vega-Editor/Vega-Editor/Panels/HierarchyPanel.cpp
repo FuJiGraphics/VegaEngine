@@ -33,7 +33,7 @@ namespace fz {
 				{
 					if (!m_Context)
 					{
-						m_Context = CreateShared<Scene>(1024, 768);
+						m_Context = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 					}
 					m_Context->CreateEntity("NewEntity");
 				}
@@ -85,7 +85,6 @@ namespace fz {
 		{
 			m_SelectionContext = entity;
 		}
- 
 		if (opened)
 		{
 			ImGui::TreePop();
@@ -113,6 +112,7 @@ namespace fz {
 			{
 				DisplayAddComponentEntry<CameraComponent>("Camera");
 				DisplayAddComponentEntry<SpriteComponent>("Sprite");
+
 				ImGui::EndPopup();
 			} 
 		}
@@ -128,14 +128,15 @@ namespace fz {
 
 			if (ImGui::TreeNodeEx("TransformComponent1", treeFlag, "Translate"))
 			{
+				if (VegaUI::DrawControl2("Origin", origin, 1.0f, 1.0f))
+					transform.SetOrigin(origin);
 				if (VegaUI::DrawControl2("Translate", translate, 1.0f, 1.0f))
 					transform.SetTranslate(translate);
 				if (VegaUI::DrawControl2("Scale", scale, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f))
 					transform.SetScale(scale);
-				if (VegaUI::DrawControl1("Rotation", "Z", rotation, 1.0f, 0.0f, 360.f, 0.0f))
+				if (VegaUI::DrawControl1("Rotation", "Reset", rotation, 1.0f, 0.0f, 360.f, 0.0f))
 					transform.SetRotation(rotation);
 				ImGui::TreePop();
-
 			}
 		}
 
@@ -161,11 +162,22 @@ namespace fz {
 			if (ImGui::TreeNodeEx("SpriteComponent", treeFlag, "Sprite"))
 			{
 				SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
-				sf::Sprite& sprite = spriteComp.Sprite;
-				sf::Color color = sprite.getColor();
+				std::string path = spriteComp.Sprite.GetTexturePath();
+				if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
+				{
+					if (path != spriteComp.Sprite.GetTexturePath())
+					{
+						TEXTURE_MGR.Load(path);
+						spriteComp.Sprite.SetTexture(path);
+					}
+				}
+
+				VegaUI::SelectOrigins(spriteComp.Sprite);
+
+				sf::Color color = spriteComp.Sprite.GetColor();
 				if (VegaUI::ColorEdit4(color, "Color"))
 				{
-					sprite.setColor(color);
+					spriteComp.Sprite.SetColor(color);
 				}
 				ImGui::TreePop();
 			}

@@ -21,15 +21,15 @@ namespace fz {
 			ImGui::Text(label.c_str());
 			ImGui::NextColumn();
 
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 4.f });
 
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-			ImVec2 buttonSize = { lineHeight, lineHeight };
+			ImVec2 buttonSize = { lineHeight * 1.81f, lineHeight };
 
-			ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+			ImGui::PushMultiItemsWidths(1, ImGui::CalcItemWidth());
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.3f, 0.3f, 0.3f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.4f, 0.4f, 0.4f, 1.0f });
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.3f, 0.3f, 0.3f, 1.0f });
 			if (ImGui::Button(buttonLabel.c_str(), buttonSize))
 			{
 				v = resetValue;
@@ -39,8 +39,8 @@ namespace fz {
 			ImGui::SameLine();
 			if (ImGui::DragFloat("##y", &v, speed_x, x_min, x_max))
 				result = true;
-			ImGui::PopItemWidth();
 
+			ImGui::PopItemWidth();
 			ImGui::PopStyleVar();
 			ImGui::Columns(1);
 
@@ -67,7 +67,7 @@ namespace fz {
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			ImVec2 buttonSize = { lineHeight, lineHeight };
 
-			ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+			ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
 			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
 			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
@@ -80,7 +80,6 @@ namespace fz {
 			ImGui::SameLine();
 			if (ImGui::DragFloat("##x", &vec2.x, speed_x, x_min, x_max))
 				result = true;
-			ImGui::PopItemWidth();
 			ImGui::SameLine();
 
 			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
@@ -95,8 +94,8 @@ namespace fz {
 			ImGui::SameLine();
 			if (ImGui::DragFloat("##y", &vec2.y, speed_y, y_min, y_max))
 				result = true;
-			ImGui::PopItemWidth();
 
+			ImGui::PopItemWidth();
 			ImGui::PopStyleVar();
 			ImGui::Columns(1);
 
@@ -313,7 +312,6 @@ namespace fz {
 				return ofn.lpstrFile;
 
 			return std::string();
-
 		}
 
 		static std::string SaveFile(HWND hwnd, const char* filter)
@@ -340,6 +338,77 @@ namespace fz {
 
 			return std::string();
 		}
+		static bool OpenTextureFile(HWND handle, std::string& path, float columnWidth = 100.f)
+		{
+			bool result = false;
+			ImGui::PushID("Texture Path");
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, columnWidth);
+			ImGui::Text("Texture Path");
+			ImGui::NextColumn();
+
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+			ImVec2 buttonSize = { lineHeight * 2.0f, lineHeight };
+			ImGui::PushMultiItemsWidths(1, ImGui::CalcItemWidth());
+
+			char c[256];
+			strcpy_s(c, sizeof(c), path.c_str());
+			ImGui::InputText("##InputText", c, IM_ARRAYSIZE(c));
+
+			ImGui::SameLine();
+			if (ImGui::Button("Add", buttonSize))
+			{
+				std::string prevPath = path;
+				path = VegaUI::OpenFile(handle, "Texture File (*.png)\0*.png\0");
+				if (path.empty())
+					path = prevPath;
+				result = true;
+			}
+
+			ImGui::PopItemWidth();
+			ImGui::Columns(1);
+			ImGui::PopID();
+			return result;
+		}
+		static void SelectOrigins(fz::Sprite& sprite, float columnWidth = 100.f)
+		{
+			ImGui::PushID("Origins");
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, columnWidth);
+			ImGui::Text("Origins");
+			ImGui::NextColumn();
+
+			const char* items[] = { "Custom", "TopLeft", "TopCenter", "TopRight", "MidLeft", "MidCenter", "MidRight", "BotLeft", "BotCenter", "BotRight" };
+			Origins item_selected_origins = sprite.GetOrigins();
+
+			int preview = (item_selected_origins == Origins::Custom) ? 0 : (int)(item_selected_origins) + 1;
+			const char* combo_preview_value = items[preview];
+			if (ImGui::BeginCombo("##Origins", combo_preview_value))
+			{
+				for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+				{
+					bool is_selected = false;
+					if (ImGui::Selectable(items[n], is_selected))
+					{
+						item_selected_origins = (n == 0) ? Origins::Custom : (Origins)(n - 1);
+						is_selected = true;
+					}
+
+					if (is_selected)
+					{
+						ImGui::SetItemDefaultFocus();
+						sprite.SetOrigins(item_selected_origins);
+					}
+				}
+				ImGui::EndCombo();
+			}
+
+
+			ImGui::PopItemWidth();
+			ImGui::Columns(1);
+			ImGui::PopID();
+		}
+
 	};
 
 } // namespace fz

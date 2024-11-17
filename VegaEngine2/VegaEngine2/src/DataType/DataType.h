@@ -1,5 +1,7 @@
 #pragma once
 
+// Enums
+#include "DataType/Custom/Enums.h"
 // Pointer
 #include "DataType/Memory/Pointer.h"
 // Key type

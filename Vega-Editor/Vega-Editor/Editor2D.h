@@ -16,15 +16,14 @@ namespace fz {
 		void OnUI() override;
 
 	protected:
-		void SaveScene(const Shared<Scene>& scene);
+		Shared<Scene> CreateScene(unsigned int width, unsigned int height);
+		void SaveScene(const Shared<Scene>& scene, const std::string& path);
 		Shared<Scene> LoadScene(const std::string& path);
 
 	private:
+		std::string	m_ActiveSceneFilePath;
 		Shared<Scene> m_ActiveScene;
-		Entity m_SquareEntity;
-		Entity m_CameraEntity;
 		HierarchyPanel m_HierarchyPanel;
-		unsigned int texId;
 	};
 
 } // namespace fz

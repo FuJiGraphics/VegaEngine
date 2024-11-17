@@ -30,7 +30,6 @@
 
 // Renderer
 #include "Renderer/Renderer2D.h"
-#include "Renderer/CameraController.h"
 #include "Renderer/FrameBuffer.h"
 
 // Scene
@@ -39,4 +38,5 @@
 #include "Core/Scene/Scene.h"
 
 /* Entry Point */
+#include "ScriptCore.h"
 #include "EntryPoint.h"

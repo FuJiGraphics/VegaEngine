@@ -6,7 +6,6 @@ namespace fz {
 	sf::Sprite Renderer2D::s_Spirte;
 	sf::RenderWindow* Renderer2D::s_RenderWindow = nullptr; 
 	Weak<Framebuffer> Renderer2D::s_FrameBuffer = nullptr;
-	CameraController* Renderer2D::s_CameraController = nullptr;
 	OrthoCamera* Renderer2D::s_OrthoCamera = nullptr;
 	sf::Vector2f Renderer2D::s_PrevCameraPos = { 0.0f, 0.0f };
 
@@ -24,19 +23,6 @@ namespace fz {
 	void Renderer2D::Reset()
 	{
 		s_RenderWindow = nullptr;
-	}
-
-	void Renderer2D::BeginScene(CameraController& controller, Shared<Framebuffer>& framebuffer)
-	{
-		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
-		FZLOG_ASSERT(framebuffer, "Renderer2D를 사용할 수 없습니다. 프레임 버퍼를 찾을 수 없습니다.");
-		FZLOG_ASSERT(!s_CameraController, "Renderer2D를 사용할 수 없습니다. 이미 호출된 BeginScene입니다.");
-
-		s_FrameBuffer = framebuffer;
-		s_CameraController = &controller;
-		s_FrameBuffer->GetBuffer().setView(s_CameraController->GetOrthoCamera());
-		if (s_FrameBuffer)
-			s_FrameBuffer->Clear();
 	}
 
 	void Renderer2D::BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer)
@@ -61,7 +47,7 @@ namespace fz {
 	void Renderer2D::EndScene()
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
-		FZLOG_ASSERT(s_OrthoCamera || s_CameraController, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
+		FZLOG_ASSERT(s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
 		if (s_FrameBuffer)
 		{
@@ -79,13 +65,12 @@ namespace fz {
 		}
 		s_FrameBuffer = nullptr;
 		s_OrthoCamera = nullptr;
-		s_CameraController = nullptr;
 	} 
 
 	void Renderer2D::Draw(sf::Sprite& obj, fz::Transform& transform)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
-		FZLOG_ASSERT(s_OrthoCamera || s_CameraController, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
+		FZLOG_ASSERT(s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
 		sf::RenderStates state;
 		state.transform = transform;

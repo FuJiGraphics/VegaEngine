@@ -26,4 +26,11 @@ namespace fz {
 		m_Sprite.setColor(color);
 	}
 
+	void Sprite::SetOrigins(Origins origins)
+	{
+		m_Origins = origins;
+		if (origins != Origins::Custom)
+			Utils::SetOrigin(m_Sprite, origins);
+	}
+
 } // namespace fz

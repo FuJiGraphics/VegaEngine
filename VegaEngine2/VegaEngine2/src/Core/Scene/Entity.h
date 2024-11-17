@@ -27,6 +27,7 @@ namespace fz {
 		template <typename T, typename ...Args>
 		T& AddComponent(Args&&... args)
 		{
+			FZLOG_ASSERT(m_Handle != entt::null, "앤티티가 존재하지 않습니다.");
 			bool result = !HasComponent<T>();
 			FZLOG_ASSERT(result, "엔티티에 동일한 컴포넌트가 이미 존재합니다.");
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
@@ -35,6 +36,7 @@ namespace fz {
 		template <typename T>
 		void RemoveComponent()
 		{
+			FZLOG_ASSERT(m_Handle != entt::null, "앤티티가 존재하지 않습니다.");
 			FZLOG_ASSERT(HasComponent<T>(), "엔티티에서 제거하려는 컴포넌트를 찾을 수 없습니다.");
 			m_Scene->m_Registry.remove<T>(m_Handle);
 		}
@@ -42,6 +44,7 @@ namespace fz {
 		template <typename T>
 		T& GetComponent()
 		{
+			FZLOG_ASSERT(m_Handle != entt::null, "앤티티가 존재하지 않습니다.");
 			FZLOG_ASSERT(HasComponent<T>(), "컴포넌트를 찾을 수 없습니다.");
 			return m_Scene->m_Registry.get<T>(m_Handle);
 		}
@@ -49,6 +52,7 @@ namespace fz {
 		template <typename T>
 		bool HasComponent()
 		{
+			FZLOG_ASSERT(m_Handle != entt::null, "앤티티가 존재하지 않습니다.");
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 

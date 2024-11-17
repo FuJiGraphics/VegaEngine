@@ -110,6 +110,7 @@ namespace fz {
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Scale"]	= { rawSprite.getScale().x, rawSprite.getScale().y };
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Rotation"] = rawSprite.getRotation();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origin"] = { rawSprite.getOrigin().x, rawSprite.getOrigin().y };
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origins"] = Converter::ToString(sprite.GetOrigins());
 		}
 	}
 
@@ -182,10 +183,13 @@ namespace fz {
 		std::vector<float> scale = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Scale"];
 		float rotation = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Rotation"];
 		std::vector<float> origin = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origin"];
+		std::string originsStr = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origins"];
+		Origins origins = Converter::StringToOrigins(originsStr);
 		rawSprite.setPosition(pos[0], pos[1]);
 		rawSprite.setScale(scale[0], scale[1]);
 		rawSprite.setRotation(rotation);
 		rawSprite.setOrigin(origin[0], origin[1]);
+		sprite.SetOrigins(origins);
 	}
 
 } // namespace fz

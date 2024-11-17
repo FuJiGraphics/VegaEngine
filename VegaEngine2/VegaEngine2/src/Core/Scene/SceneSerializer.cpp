@@ -52,7 +52,7 @@ namespace fz {
 		for (json::iterator itSceneUUID = json.begin(); itSceneUUID != json.end(); ++itSceneUUID)
 		{
 			const std::string& sceneUUID = itSceneUUID.key();
-			newScene = CreateShared<Scene>(1024, 768, 1, sceneUUID);
+			newScene = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight(), 1, sceneUUID);
 			for (json::iterator itEntityUUID = json[sceneUUID].begin(); itEntityUUID != json[sceneUUID].end(); ++itEntityUUID)
 			{
 				const std::string& entityUUID = itEntityUUID.key();

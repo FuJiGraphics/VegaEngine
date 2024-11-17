@@ -3,7 +3,6 @@
 namespace fz {
 	
 	class Framebuffer;
-	class CameraController;
 	class OrthoCamera;
 	class Window;
 
@@ -14,7 +13,6 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
-		static void BeginScene(CameraController& controller, Shared<Framebuffer>& framebuffer);
 		static void BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 
@@ -24,7 +22,6 @@ namespace fz {
 		static sf::Sprite s_Spirte;
 		static sf::RenderWindow* s_RenderWindow;
 		static Weak<Framebuffer> s_FrameBuffer;
-		static CameraController* s_CameraController;
 		static OrthoCamera* s_OrthoCamera;
 		static sf::Vector2f s_PrevCameraPos;
 	};

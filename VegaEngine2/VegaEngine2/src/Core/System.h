@@ -34,12 +34,13 @@ namespace fz {
 		bool OnWindowClose(WindowCloseEvent e);
 		bool OnWindowResize(WindowResizeEvent e);
 
+		Shared<Scene> LoadScene(const std::string& path);
+
 		inline void ExitSystem() { this->OnWindowClose({}); }
 		inline bool IsRunning() const { return m_Window->IsOpen(); }
 		inline Window& GetWindow() const { return *m_Window; }
 		inline int GetWidth() const { return Width; }
 		inline int GetHeight() const { return Height; }
-
 		static System& GetSystem() { return *s_System; }
 
 	private:
