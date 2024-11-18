@@ -180,6 +180,14 @@ namespace fz {
 				if (!isRemove)
 				{
 					SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
+
+					// SortingOrder
+					int sortingOrder = spriteComp.SortingOrder;
+					if (VegaUI::DrawControl1("Sorting Order", "Reset", sortingOrder, 1))
+					{
+						spriteComp.SortingOrder = sortingOrder;
+					}
+
 					std::string path = spriteComp.Sprite.GetTexturePath();
 					if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
 					{

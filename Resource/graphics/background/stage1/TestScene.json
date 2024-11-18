@@ -49,6 +49,7 @@
                     1.0,
                     1.0
                 ],
+                "SortingOrder": 0,
                 "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\graphics\\player.png",
                 "TexRect": {
                     "Height": 50,
@@ -105,6 +106,7 @@
                     1.0,
                     1.0
                 ],
+                "SortingOrder": 0,
                 "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 0,
@@ -201,6 +203,7 @@
                     1.0,
                     1.0
                 ],
+                "SortingOrder": -1,
                 "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 100,
@@ -277,6 +280,7 @@
                     1.0,
                     1.0
                 ],
+                "SortingOrder": 0,
                 "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 224,

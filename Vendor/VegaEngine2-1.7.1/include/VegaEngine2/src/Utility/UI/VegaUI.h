@@ -8,6 +8,11 @@ namespace fz {
 	{
 	public:
 		static bool DrawControl1(const std::string& label, const std::string& buttonLabel,
+								 int& v,
+								 int speed_x = 1,
+								 int x_min = 0, float x_max = 0,
+								 int resetValue = 0, float columnWidth = 100.f);
+		static bool DrawControl1(const std::string& label, const std::string& buttonLabel,
 								 float& v,
 								 float speed_x = 0.1f,
 								 float x_min = 0.0f, float x_max = 0.0f,

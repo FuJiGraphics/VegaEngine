@@ -93,7 +93,8 @@ namespace fz {
 	{
 		if (m_Entity.HasComponent<SpriteComponent>())
 		{
-			auto& sprite = m_Entity.GetComponent<SpriteComponent>().Sprite;
+			auto& spriteComp = m_Entity.GetComponent<SpriteComponent>();
+			auto& sprite = spriteComp.Sprite;
 			const auto& texPath = sprite.GetTexturePath();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexPath"] = texPath;
 			sf::Sprite& rawSprite = sprite;
@@ -118,6 +119,7 @@ namespace fz {
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["G"] = maskColor.g;
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["B"] = maskColor.b;
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["A"] = maskColor.a;
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["SortingOrder"] = spriteComp.SortingOrder;
 		}
 	}
 
@@ -175,6 +177,9 @@ namespace fz {
 		sprite.SetTexture(texPath);
 
 		sf::Sprite& rawSprite = sprite;
+
+		// Get SortingOrder
+		spriteComp.SortingOrder = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["SortingOrder"];
 
 		// Get MaskColor
 		bool maskMode = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskMode"];

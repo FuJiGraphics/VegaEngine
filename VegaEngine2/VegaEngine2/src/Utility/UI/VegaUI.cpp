@@ -2,6 +2,42 @@
 #include "VegaUI.h"
 
 namespace fz {
+	bool VegaUI::DrawControl1(const std::string& label, const std::string& buttonLabel, int& v, int speed_x, int x_min, float x_max, int resetValue, float columnWidth)
+	{
+		bool result = false;
+		ImGui::PushID(label.c_str());
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, columnWidth);
+
+		ImGui::Text(label.c_str());
+		ImGui::NextColumn();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 4.f });
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize = { lineHeight * 1.81f, lineHeight };
+
+		ImGui::PushMultiItemsWidths(1, ImGui::CalcItemWidth());
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.3f, 0.3f, 0.3f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.4f, 0.4f, 0.4f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.3f, 0.3f, 0.3f, 1.0f });
+		if (ImGui::Button(buttonLabel.c_str(), buttonSize))
+		{
+			v = resetValue;
+			result = true;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		if (ImGui::DragInt("##y", &v, speed_x, x_min, x_max))
+			result = true;
+
+		ImGui::PopItemWidth();
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
+
+		ImGui::PopID();
+		return result;
+	}
 	bool VegaUI::DrawControl1(const std::string& label,
 							  const std::string& buttonLabel,
 							  float& v,
