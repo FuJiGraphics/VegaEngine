@@ -1,0 +1,80 @@
+{
+    "f349df2e-11de-4eea-b176-1b2cacc2d73c": {
+        "fc21fe0f-0e03-4a35-9f6c-47d440e739c4": {
+            "CameraComponent": {
+                "Center": [
+                    0.0,
+                    0.0
+                ],
+                "FixedAspectRatio": false,
+                "Primary": true,
+                "Rotation": 0.0,
+                "Size": [
+                    1920.0,
+                    1080.0
+                ],
+                "Viewport": {
+                    "Height": 1.0,
+                    "Left": 0.0,
+                    "Top": 0.0,
+                    "Width": 1.0
+                },
+                "Zoom": 1.0
+            },
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 248,
+                    "G": 0,
+                    "R": 248
+                },
+                "MaskMode": true,
+                "Origin": [
+                    1981.5,
+                    486.5
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
+                "TexRect": {
+                    "Height": 973,
+                    "Left": 0,
+                    "Top": 0,
+                    "Width": 3963
+                }
+            },
+            "TagComponent": {
+                "Tag": "Background"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            }
+        }
+    }
+}

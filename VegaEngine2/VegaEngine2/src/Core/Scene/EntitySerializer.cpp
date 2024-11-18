@@ -65,6 +65,7 @@ namespace fz {
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Center"] = { camera.GetCenter().x, camera.GetCenter().y };
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Size"] = { camera.GetSize().x, camera.GetSize().y };
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Rotation"] = camera.GetRotation();
+			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Zoom"] = camera.GetZoom();
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Left"] = camera.GetViewport().left;
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Top"] = camera.GetViewport().top;
 			json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Width"] = camera.GetViewport().width;
@@ -98,6 +99,7 @@ namespace fz {
 			sf::Sprite& rawSprite = sprite;
 			const auto& texRect = rawSprite.getTextureRect();
 			const auto& color = rawSprite.getColor();
+			const auto& maskColor = sprite.GetMaskColor();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Left"] = texRect.left;
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Top"] = texRect.top;
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Width"] = texRect.width;
@@ -111,6 +113,11 @@ namespace fz {
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Rotation"] = rawSprite.getRotation();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origin"] = { rawSprite.getOrigin().x, rawSprite.getOrigin().y };
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Origins"] = Converter::ToString(sprite.GetOrigins());
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskMode"] = sprite.IsMaskMode();
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["R"] = maskColor.r;
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["G"] = maskColor.g;
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["B"] = maskColor.b;
+			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["A"] = maskColor.a;
 		}
 	}
 
@@ -129,6 +136,7 @@ namespace fz {
 		std::vector<float> centorPos = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Center"];
 		std::vector<float> size = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Size"];
 		float rotation = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Rotation"];
+		float zoom = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Zoom"];
 		float left = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Left"];
 		float top = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Top"];
 		float width = json[m_SceneUUID][m_EntityUUID]["CameraComponent"]["Viewport"]["Width"];
@@ -138,6 +146,7 @@ namespace fz {
 		camera.SetCenter(centorPos[0], centorPos[1]);
 		camera.SetSize(size[0], size[1]);
 		camera.SetRotation(rotation);
+		camera.Zoom(zoom);
 		camera.SetViewport({ left, top, width, height });
 	}
 
@@ -172,6 +181,13 @@ namespace fz {
 		int height = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Height"];
 		rawSprite.setTextureRect({ left, top, width, height });
 
+		// Get MaskColor
+		bool maskMode = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskMode"];
+		sf::Uint8 mr = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["R"];
+		sf::Uint8 mg = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["G"];
+		sf::Uint8 mb = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["B"];
+		sf::Uint8 ma = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskColor"]["A"];
+		sprite.SetMaskColor(maskMode, { mr, mg, mb, ma });
 
 		sf::Uint8 r = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Color"]["R"];
 		sf::Uint8 g = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["Color"]["G"];

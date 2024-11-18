@@ -139,6 +139,48 @@ namespace fz {
 			ImGui::PopID();
 			return result;
 		}
+		static bool ColorEdit4WidthCheckbox(sf::Color& dst, bool& check, const std::string& label)
+		{
+			const char* newLabel = "##Empty";
+
+			ImGui::PushID(label.c_str());
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, 100.f);
+
+			ImGui::Text(label.c_str());
+			ImGui::NextColumn();
+
+			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+			// rect 초기화
+			auto& [r, g, b, a] = dst;  // dst가 sf::Color라고 가정
+			std::vector<float> rect(4, 0.0f);
+			rect[0] = r / 255.0f;
+			rect[1] = g / 255.0f;
+			rect[2] = b / 255.0f;
+			rect[3] = a / 255.0f;
+
+			bool result = false;
+			if (ImGui::ColorEdit4(newLabel, rect.data()))
+			{
+				r = (sf::Uint8)(rect[0] * 255);
+				g = (sf::Uint8)(rect[1] * 255);
+				b = (sf::Uint8)(rect[2] * 255);
+				a = (sf::Uint8)(rect[3] * 255);
+				if (check)
+					result = true;
+			}
+
+			ImGui::SameLine();
+			if (ImGui::Checkbox("##Mask", &check))
+			{
+				result = true;
+			}
+			ImGui::PopStyleVar();
+			ImGui::Columns(1);
+
+			ImGui::PopID();
+			return result;
+		}
 		static bool InputText(std::string& dst, const std::string& label = "", bool isRightLabel = false)
 		{
 			const char* newLabel = "##Empty";

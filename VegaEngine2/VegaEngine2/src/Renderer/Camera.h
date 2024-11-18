@@ -26,6 +26,8 @@ namespace fz {
         void SetRotation(float angle);
         void SetViewport(const sf::FloatRect& viewport);
         void Reset(const sf::FloatRect& rectangle);
+
+        float GetZoom() const;
         const sf::Vector2f& GetCenter() const;
         const sf::Vector2f& GetSize() const;
         float GetRotation() const;
@@ -46,6 +48,8 @@ namespace fz {
 	private:
 		sf::View	    m_View;
         sf::Vector2f    m_OldSize;
+        sf::Vector2f    m_Size;
+        float           m_Zoom;
 	};
 
 

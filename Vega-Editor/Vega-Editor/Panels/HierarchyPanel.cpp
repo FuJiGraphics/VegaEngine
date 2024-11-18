@@ -128,12 +128,12 @@ namespace fz {
 
 			if (ImGui::TreeNodeEx("TransformComponent1", treeFlag, "Translate"))
 			{
-				if (VegaUI::DrawControl2("Origin", origin, 1.0f, 1.0f))
-					transform.SetOrigin(origin);
 				if (VegaUI::DrawControl2("Translate", translate, 1.0f, 1.0f))
 					transform.SetTranslate(translate);
 				if (VegaUI::DrawControl2("Scale", scale, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f))
 					transform.SetScale(scale);
+				if (VegaUI::DrawControl2("Origin", origin, 1.0f, 1.0f))
+					transform.SetOrigin(origin);
 				if (VegaUI::DrawControl1("Rotation", "Reset", rotation, 1.0f, 0.0f, 360.f, 0.0f))
 					transform.SetRotation(rotation);
 				ImGui::TreePop();
@@ -144,9 +144,16 @@ namespace fz {
 		{
 			if (ImGui::TreeNodeEx("CameraComponent", treeFlag, "Camera"))
 			{
-				auto& cameraComp = entity.GetComponent<CameraComponent>();
+				CameraComponent& cameraComp = entity.GetComponent<CameraComponent>();
 				ImGui::Checkbox("Main", &cameraComp.Primary);
 				ImGui::Checkbox("Fixed Aspect Ratio", &cameraComp.FixedAspectRatio);
+
+				float zoom = cameraComp.Camera.GetZoom();
+				if (VegaUI::DrawControl1("Zoom", "Reset", zoom, 0.01f, 0.001f, 10.f, 1.0f))
+				{
+					cameraComp.Camera.Zoom(zoom);
+				}
+
 				sf::FloatRect viewport = cameraComp.Camera.GetViewport();
 				if (VegaUI::DragFloat4(viewport, "Viewport", true, 0.01))
 				{
@@ -178,6 +185,13 @@ namespace fz {
 				if (VegaUI::ColorEdit4(color, "Color"))
 				{
 					spriteComp.Sprite.SetColor(color);
+				}
+
+				bool maskMode = spriteComp.Sprite.IsMaskMode();
+				sf::Color maskColor = spriteComp.Sprite.GetMaskColor();
+				if (VegaUI::ColorEdit4WidthCheckbox(maskColor, maskMode, "Mask"))
+				{
+					spriteComp.Sprite.SetMaskColor(maskMode, maskColor);
 				}
 				ImGui::TreePop();
 			}

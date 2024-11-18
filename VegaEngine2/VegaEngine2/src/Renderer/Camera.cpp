@@ -5,6 +5,7 @@ namespace fz {
 
 	OrthoCamera::OrthoCamera()
 		: m_View()
+		, m_Zoom(1.0f)
 	{
 		// Empty
 	}
@@ -51,12 +52,14 @@ namespace fz {
 
 	void OrthoCamera::SetSize(float width, float height)
 	{
-		m_View.setSize(width, height);
+		m_Size = { width, height };
+		m_View.setSize(m_Size * m_Zoom);
 	}
 
 	void OrthoCamera::SetSize(const sf::Vector2f& size)
 	{
-		m_View.setSize(size);
+		m_Size = size;
+		m_View.setSize(m_Size * m_Zoom);
 	}
 
 	void OrthoCamera::SetRotation(float angle)
@@ -72,6 +75,11 @@ namespace fz {
 	void OrthoCamera::Reset(const sf::FloatRect& rectangle)
 	{
 		m_View.reset(rectangle);
+	}
+
+	float OrthoCamera::GetZoom() const
+	{
+		return m_Zoom;
 	}
 
 	const sf::Vector2f& OrthoCamera::GetCenter() const
@@ -111,7 +119,8 @@ namespace fz {
 
 	void OrthoCamera::Zoom(float factor)
 	{
-		m_View.zoom(factor);
+		m_Zoom = factor;
+		m_View.setSize(m_Size * m_Zoom);
 	}
 
 	const sf::Transform& OrthoCamera::GetTransform() const
