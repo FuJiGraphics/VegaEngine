@@ -1,6 +1,6 @@
 {
-    "f349df2e-11de-4eea-b176-1b2cacc2d73c": {
-        "fc21fe0f-0e03-4a35-9f6c-47d440e739c4": {
+    "43214ac5-feb7-4c5c-9846-69b4f7b1f2ce": {
+        "ed5d5e05-674d-48da-a92f-44f1153bc5c1": {
             "CameraComponent": {
                 "Center": [
                     0.0,
@@ -30,16 +30,16 @@
                 },
                 "MaskColor": {
                     "A": 255,
-                    "B": 248,
+                    "B": 0,
                     "G": 0,
-                    "R": 248
+                    "R": 0
                 },
-                "MaskMode": true,
+                "MaskMode": false,
                 "Origin": [
-                    1981.5,
-                    486.5
+                    0.0,
+                    0.0
                 ],
-                "Origins": "MC",
+                "Origins": "TL",
                 "Position": [
                     0.0,
                     0.0
@@ -49,16 +49,16 @@
                     1.0,
                     1.0
                 ],
-                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
+                "TexPath": "",
                 "TexRect": {
-                    "Height": 973,
+                    "Height": 0,
                     "Left": 0,
                     "Top": 0,
-                    "Width": 3963
+                    "Width": 0
                 }
             },
             "TagComponent": {
-                "Tag": "Background"
+                "Tag": "NewEntity"
             },
             "TransformComponent": {
                 "Origin": [

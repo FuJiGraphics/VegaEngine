@@ -117,7 +117,6 @@ namespace fz {
 			} 
 		}
 
-
 		if (entity.HasComponent<TransformComponent>())
 		{
 			auto& transform = entity.GetComponent<TransformComponent>().Transform;
@@ -144,21 +143,28 @@ namespace fz {
 		{
 			if (ImGui::TreeNodeEx("CameraComponent", treeFlag, "Camera"))
 			{
-				CameraComponent& cameraComp = entity.GetComponent<CameraComponent>();
-				ImGui::Checkbox("Main", &cameraComp.Primary);
-				ImGui::Checkbox("Fixed Aspect Ratio", &cameraComp.FixedAspectRatio);
+				bool isRemove = VegaUI::PopupContextItem("Remove CameraComponent", [&entity]() {
+											 entity.RemoveComponent<CameraComponent>();
+										 });
 
-				float zoom = cameraComp.Camera.GetZoom();
-				if (VegaUI::DrawControl1("Zoom", "Reset", zoom, 0.01f, 0.001f, 10.f, 1.0f))
+				if (!isRemove)
 				{
-					cameraComp.Camera.Zoom(zoom);
-				}
+					CameraComponent& cameraComp = entity.GetComponent<CameraComponent>();
+					ImGui::Checkbox("Main", &cameraComp.Primary);
+					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComp.FixedAspectRatio);
 
-				sf::FloatRect viewport = cameraComp.Camera.GetViewport();
-				if (VegaUI::DragFloat4(viewport, "Viewport", true, 0.01))
-				{
-					if (viewport.width > viewport.left && viewport.height > viewport.top)
-						cameraComp.Camera.SetViewport(viewport);
+					float zoom = cameraComp.Camera.GetZoom();
+					if (VegaUI::DrawControl1("Zoom", "Reset", zoom, 0.01f, 0.001f, 10.f, 1.0f))
+					{
+						cameraComp.Camera.Zoom(zoom);
+					}
+
+					sf::FloatRect viewport = cameraComp.Camera.GetViewport();
+					if (VegaUI::DragFloat4(viewport, "Viewport", true, 0.01))
+					{
+						if (viewport.width > viewport.left && viewport.height > viewport.top)
+							cameraComp.Camera.SetViewport(viewport);
+					}
 				}
 				ImGui::TreePop();
 			}
@@ -168,30 +174,36 @@ namespace fz {
 		{
 			if (ImGui::TreeNodeEx("SpriteComponent", treeFlag, "Sprite"))
 			{
-				SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
-				std::string path = spriteComp.Sprite.GetTexturePath();
-				if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
+				bool isRemove = VegaUI::PopupContextItem("Remove SpriteComponent", [&entity]() {
+															 entity.RemoveComponent<SpriteComponent>();
+														 });
+				if (!isRemove)
 				{
-					if (path != spriteComp.Sprite.GetTexturePath())
+					SpriteComponent& spriteComp = entity.GetComponent<SpriteComponent>();
+					std::string path = spriteComp.Sprite.GetTexturePath();
+					if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
 					{
-						TEXTURE_MGR.Load(path);
-						spriteComp.Sprite.SetTexture(path);
+						if (path != spriteComp.Sprite.GetTexturePath())
+						{
+							TEXTURE_MGR.Load(path);
+							spriteComp.Sprite.SetTexture(path);
+						}
 					}
-				}
 
-				VegaUI::SelectOrigins(spriteComp.Sprite);
+					VegaUI::SelectOrigins(spriteComp.Sprite);
 
-				sf::Color color = spriteComp.Sprite.GetColor();
-				if (VegaUI::ColorEdit4(color, "Color"))
-				{
-					spriteComp.Sprite.SetColor(color);
-				}
+					sf::Color color = spriteComp.Sprite.GetColor();
+					if (VegaUI::ColorEdit4(color, "Color"))
+					{
+						spriteComp.Sprite.SetColor(color);
+					}
 
-				bool maskMode = spriteComp.Sprite.IsMaskMode();
-				sf::Color maskColor = spriteComp.Sprite.GetMaskColor();
-				if (VegaUI::ColorEdit4WidthCheckbox(maskColor, maskMode, "Mask"))
-				{
-					spriteComp.Sprite.SetMaskColor(maskMode, maskColor);
+					bool maskMode = spriteComp.Sprite.IsMaskMode();
+					sf::Color maskColor = spriteComp.Sprite.GetMaskColor();
+					if (VegaUI::ColorEdit4WidthCheckbox(maskColor, maskMode, "Mask"))
+					{
+						spriteComp.Sprite.SetMaskColor(maskMode, maskColor);
+					}
 				}
 				ImGui::TreePop();
 			}

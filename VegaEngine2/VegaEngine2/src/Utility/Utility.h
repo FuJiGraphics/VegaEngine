@@ -11,4 +11,4 @@
 // Utils
 #include "Utility/Utils/Utils.h"
 // UI
-#include "Utility/UI/VegaUI.hpp"
+#include "Utility/UI/VegaUI.h"
