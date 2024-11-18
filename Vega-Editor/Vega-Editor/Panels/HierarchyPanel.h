@@ -13,9 +13,9 @@ namespace fz {
 		void OnImGuiRender();
 
 	protected:
-		void DrawTreeNode(const fz::Entity& entity, const char* tag);
+		void DrawTreeNode(fz::Entity& entity, const char* tag);
 		void DrawSceneComponents(fz::Entity& entity);
-
+		void DeleteChildEntities(fz::Entity& entity);
 
 		template<typename T>
 		void DisplayAddComponentEntry(const std::string& entryName);

@@ -6,6 +6,29 @@
 
 namespace fz {
 
+	struct RootEntityComponent
+	{
+		fz::Entity RootEntity;
+
+		RootEntityComponent() = default;
+		RootEntityComponent(const RootEntityComponent&) = default;
+		RootEntityComponent(const fz::Entity& other)
+			: RootEntity(other)
+		{/*Empty*/}
+	};
+
+	struct ChildEntityComponent
+	{
+		fz::Entity ParentEntity;
+		std::vector<fz::Entity> CurrentChildEntities;
+
+		ChildEntityComponent() = default;
+		ChildEntityComponent(const ChildEntityComponent&) = default;
+		ChildEntityComponent(const fz::Entity& other)
+			: ParentEntity(other)
+		{/*Empty*/}
+	};
+
 	struct TagComponent
 	{
 		std::string Tag;
@@ -20,6 +43,8 @@ namespace fz {
 	struct TransformComponent
 	{
 		fz::Transform Transform;
+		fz::Transform RenderTransform;
+		bool IsChildRenderMode = false;
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;

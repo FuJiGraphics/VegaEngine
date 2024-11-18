@@ -63,4 +63,29 @@ namespace fz {
 		return *this;
 	}
 
+	fz::Entity Entity::CreateChildEntity(const std::string& uuid, const std::string& tagName)
+	{
+		fz::Entity childEntity = {};
+		const auto& it = m_Scene->m_EntityPool.find(uuid);
+		if (it == m_Scene->m_EntityPool.end())
+		{
+			childEntity = m_Scene->CreateEntity(uuid, tagName);
+			if (this->HasComponent<ChildEntityComponent>())
+			{
+				auto& childComp = this->GetComponent<ChildEntityComponent>();
+				childComp.ParentEntity = *this;
+				childComp.CurrentChildEntities.push_back(childEntity);
+			}
+			else
+			{
+				auto& childComp = this->AddComponent<ChildEntityComponent>();
+				childComp.ParentEntity = *this;
+				childComp.CurrentChildEntities.push_back(childEntity);
+			}
+			auto& dhildTransformComp = childEntity.GetComponent<TransformComponent>();
+			dhildTransformComp.IsChildRenderMode = true;
+		}
+		return childEntity;
+	}
+
 } // namespace fz

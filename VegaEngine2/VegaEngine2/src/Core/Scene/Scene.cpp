@@ -81,6 +81,21 @@ namespace fz {
 							nsc.OnUpdateFunction(nsc.Instance, dt);
 						});
 
+		// 차일드 엔티티 트랜스폼 업데이트
+		auto chileView = m_Registry.view<ChildEntityComponent>();
+		for (auto childEntity : chileView)
+		{
+			auto& childComp = chileView.get<ChildEntityComponent>(childEntity);
+			auto& parentTransform = childComp.ParentEntity.GetComponent<TransformComponent>();
+			for (auto& childs : childComp.CurrentChildEntities)
+			{
+				TransformComponent& childTransform = childs.GetComponent<TransformComponent>();
+				childTransform.IsChildRenderMode = true;
+				childTransform.RenderTransform = parentTransform.Transform;
+				childTransform.RenderTransform *= childTransform.Transform;
+			}
+		}
+
 		// 카메라 업데이트
 		OrthoCamera* mainCamera = nullptr;
 		fz::Transform* cameraTransform = nullptr;
@@ -108,7 +123,11 @@ namespace fz {
 			for (auto entity : group)
 			{
 				const auto& [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
-				Renderer2D::Draw(sprite.SortingOrder, sprite, transform);
+				if (transform.IsChildRenderMode)
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.RenderTransform);
+				else
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform);
+
 			}
 
 			Renderer2D::EndScene();

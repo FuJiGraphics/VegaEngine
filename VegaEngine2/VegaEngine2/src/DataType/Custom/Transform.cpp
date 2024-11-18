@@ -83,6 +83,17 @@ namespace fz {
 		return m_World;
 	}
 
+	fz::Transform& Transform::operator*=(const fz::Transform& other)
+	{
+		m_Translate += other.m_Translate;
+		m_Rotation += other.m_Rotation;
+		m_Scale.x *= other.m_Scale.x;
+		m_Scale.y *= other.m_Scale.y;
+		m_Origin += other.m_Origin;
+		ResetTransform();
+		return *this;
+	}
+
 	sf::Vector2f Transform::operator*(const sf::Vector2f& other) const
 	{
 		return m_World * other;

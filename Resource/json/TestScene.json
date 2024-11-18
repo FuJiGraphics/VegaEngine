@@ -1,6 +1,7 @@
 {
     "43214ac5-feb7-4c5c-9846-69b4f7b1f2ce": {
         "2bf3bc1d-3d29-42eb-9c73-7e034fd58ff2": {
+            "RootEntity": true,
             "CameraComponent": {
                 "Center": [
                     0.0,
@@ -50,7 +51,7 @@
                     1.0
                 ],
                 "SortingOrder": 1,
-                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\players\\marco_pistol.png",
+                "TexPath": "graphics\\players\\marco_pistol.png",
                 "TexRect": {
                     "Height": 36,
                     "Left": 2,
@@ -63,8 +64,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    -0.0,
-                    -0.0
+                    0.0,
+                    0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [
@@ -78,6 +79,7 @@
             }
         },
         "4f1d3403-9657-43ca-8af2-e7dac0a3ec34": {
+            "RootEntity": true,
             "SpriteComponent": {
                 "Color": {
                     "A": 255,
@@ -107,7 +109,7 @@
                     1.0
                 ],
                 "SortingOrder": 0,
-                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
+                "TexPath": "graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 0,
                     "Left": 0,
@@ -120,8 +122,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    -0.0,
-                    -0.0
+                    0.0,
+                    0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [
@@ -135,6 +137,7 @@
             }
         },
         "52253c62-8cfe-4284-896d-b4f6086e29e8": {
+            "RootEntity": true,
             "CameraComponent": {
                 "Center": [
                     0.0,
@@ -160,8 +163,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    -0.0,
-                    -0.0
+                    0.0,
+                    0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [
@@ -175,6 +178,7 @@
             }
         },
         "da9dd502-2ee4-438c-99cd-4dc3d671db07": {
+            "RootEntity": true,
             "SpriteComponent": {
                 "Color": {
                     "A": 255,
@@ -204,7 +208,7 @@
                     1.0
                 ],
                 "SortingOrder": -1,
-                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
+                "TexPath": "graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 100,
                     "Left": 0,
@@ -217,8 +221,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    -0.0,
-                    -0.0
+                    0.0,
+                    0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [
@@ -232,6 +236,7 @@
             }
         },
         "fd93228a-a2a7-446c-afbc-84187e8edb9f": {
+            "RootEntity": true,
             "CameraComponent": {
                 "Center": [
                     0.0,
@@ -281,7 +286,7 @@
                     1.0
                 ],
                 "SortingOrder": 0,
-                "TexPath": "C:\\Dev\\VegaEngine.ver2\\Resource\\graphics\\background\\stage1\\stage1.png",
+                "TexPath": "graphics\\background\\stage1\\stage1.png",
                 "TexRect": {
                     "Height": 224,
                     "Left": 0,
@@ -294,8 +299,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    0.0,
-                    0.0
+                    -0.0,
+                    -0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [

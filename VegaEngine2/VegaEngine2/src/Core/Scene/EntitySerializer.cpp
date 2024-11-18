@@ -17,6 +17,12 @@ namespace fz {
 
 		m_EntityUUID = m_Entity.m_UUID;
 
+		// Root Entity Á÷·ÄÈ­
+		if (m_Entity.HasComponent<RootEntityComponent>())
+			json[m_SceneUUID][m_EntityUUID]["RootEntity"] = true;
+		else
+			json[m_SceneUUID][m_EntityUUID]["RootEntity"] = false;
+
 		this->SerializeTag(json);
 		this->SerializeTransform(json);
 		this->SerializeCamera(json);
@@ -28,6 +34,10 @@ namespace fz {
 		auto& json = Database::GetJsonObject(path);
 
 		m_EntityUUID = m_Entity.m_UUID;
+
+		bool isRootEntity = json[m_SceneUUID][m_EntityUUID]["RootEntity"];
+		if (isRootEntity)
+			m_Entity.AddComponent<RootEntityComponent>();
 
 		for (json::iterator itComponent = json[m_SceneUUID][m_EntityUUID].begin(); 
 			 itComponent != json[m_SceneUUID][m_EntityUUID].end(); ++itComponent)

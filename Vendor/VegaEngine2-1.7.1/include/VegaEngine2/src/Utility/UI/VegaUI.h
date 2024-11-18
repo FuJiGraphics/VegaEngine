@@ -3,7 +3,7 @@
 #include <imgui_internal.h>
 
 namespace fz {
-	
+
 	class VegaUI
 	{
 	public:
@@ -37,23 +37,26 @@ namespace fz {
 		static const char* LabelPrefix(const std::string& label);
 		static std::string OpenFile(HWND hwnd, const char* filter)
 		{
+			namespace fs = std::filesystem;
 			OPENFILENAMEA ofn;
 			CHAR szFile[260] = { 0 };
 			CHAR currentDir[256] = { 0 };
 			ZeroMemory(&ofn, sizeof(OPENFILENAME));
 			ofn.lStructSize = sizeof(OPENFILENAME);
 			ofn.hwndOwner = hwnd;
-			ofn.lpstrFile = szFile;
+			ofn.lpstrFile = szFile; 
 			ofn.nMaxFile = sizeof(szFile);
-			if (GetCurrentDirectoryA(256, currentDir))
+			if (GetCurrentDirectoryA(256, currentDir)) 
 				ofn.lpstrInitialDir = currentDir;
-			ofn.lpstrFilter = filter;
+			ofn.lpstrFilter = filter; 
 			ofn.nFilterIndex = 1;
 			ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-
-			if (GetOpenFileNameA(&ofn) == TRUE)
-				return ofn.lpstrFile;
-
+			if (GetOpenFileNameA(&ofn) == TRUE) {
+				fs::path absolutePath = ofn.lpstrFile;
+				fs::path currentPath = fs::current_path();
+				fs::path relativePath = fs::relative(absolutePath, currentPath);
+				return relativePath.string();
+			}
 			return std::string();
 		}
 

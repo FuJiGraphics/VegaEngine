@@ -35,9 +35,9 @@ namespace fz {
 					{
 						m_Context = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 					}
-					m_Context->CreateEntity("NewEntity");
+					fz::Entity entity = m_Context->CreateEntity("NewEntity");
+					entity.AddComponent<RootEntityComponent>();
 				}
-
 				ImGui::EndPopup();
 			}
 
@@ -47,15 +47,9 @@ namespace fz {
 				view.each([this](entt::entity entityID, const TagComponent& tagComp)
 						  {
 							  Entity entity = { entityID, m_Context };
-							  this->DrawTreeNode(entity, tagComp.Tag.c_str());
-							  if (ImGui::BeginPopupContextItem(0, ImGuiPopupFlags_MouseButtonRight))
+							  if (entity.HasComponent<RootEntityComponent>())
 							  {
-								  if (ImGui::MenuItem("Remove"))
-								  {
-									  m_OnEntityRemove = true;
-									  m_SelectionContext = entity;
-								  }
-								  ImGui::EndPopup();
+									this->DrawTreeNode(entity, tagComp.Tag.c_str());
 							  }
 						  });
 			}
@@ -70,6 +64,28 @@ namespace fz {
 			if (m_OnEntityRemove)
 			{
 				m_OnEntityRemove = false;
+				DeleteChildEntities(m_SelectionContext);
+				if (m_SelectionContext.HasComponent<RootEntityComponent>() == false)
+				{
+					auto view = m_Context->m_Registry.view<ChildEntityComponent>();
+					for (auto& entity : view)
+					{
+						fz::Entity baseEntity = { entity, m_Context };
+						auto& childComp = view.get<ChildEntityComponent>(entity);
+						for (auto& child : childComp.CurrentChildEntities)
+						{
+							//if (it != childComp.CurrentChildEntities.end())
+							//{
+							//	childComp.CurrentChildEntities.erase(it);
+							//}
+							//if (childComp.CurrentChildEntities.empty())
+							//{
+							//	childComp.ParentEntity.RemoveComponent<ChildEntityComponent>();
+							//}
+						}
+						
+					}
+				}
 				m_Context->DeleteEntity(m_SelectionContext);
 				m_SelectionContext = {};
 			}
@@ -77,16 +93,38 @@ namespace fz {
 		ImGui::End();
 	}
 
-	void HierarchyPanel::DrawTreeNode(const fz::Entity& entity, const char* tag)
+	void HierarchyPanel::DrawTreeNode(fz::Entity& entity, const char* tag)
 	{
 		ImGuiTreeNodeFlags flag = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		bool opened = ImGui::TreeNodeEx((const void*)(std::uint64_t)(std::uint32_t)entity, flag, tag);
-		if (ImGui::IsItemClicked())
+		
+		if (ImGui::IsItemClicked() || ImGui::IsItemClicked(1))
 		{
 			m_SelectionContext = entity;
+			if (ImGui::BeginPopupContextItem(0, ImGuiPopupFlags_MouseButtonRight))
+			{
+				if (ImGui::MenuItem("Add Child Entity"))
+				{
+					Entity childEntity = m_SelectionContext.CreateChildEntity(Random.GetUUID(), "New Child Entity");
+				}
+				if (ImGui::MenuItem("Remove"))
+				{
+					m_OnEntityRemove = true;
+				}
+				ImGui::EndPopup();
+			}
 		}
 		if (opened)
 		{
+			if (entity.HasComponent<ChildEntityComponent>())
+			{
+				auto& childComp = entity.GetComponent<ChildEntityComponent>();
+				for (auto& child : childComp.CurrentChildEntities)
+				{
+					auto& childTagComp = child.GetComponent<TagComponent>();
+					DrawTreeNode(child, childTagComp.Tag.c_str());
+				}
+			}
 			ImGui::TreePop();
 		}
 	}
@@ -225,6 +263,21 @@ namespace fz {
 				}
 				ImGui::TreePop();
 			}
+		}
+	}
+
+	void HierarchyPanel::DeleteChildEntities(fz::Entity& entity)
+	{
+		if (entity.HasComponent<ChildEntityComponent>())
+		{
+			ChildEntityComponent& childComp = entity.GetComponent<ChildEntityComponent>();
+			for (auto& child : childComp.CurrentChildEntities)
+			{
+				DeleteChildEntities(child);
+			}
+			m_Context->DeleteEntity(entity);
+			childComp.CurrentChildEntities.clear();
+			childComp.ParentEntity.RemoveComponent<ChildEntityComponent>();
 		}
 	}
 
