@@ -97,7 +97,7 @@ namespace fz {
 			const auto& texPath = sprite.GetTexturePath();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexPath"] = texPath;
 			sf::Sprite& rawSprite = sprite;
-			const auto& texRect = rawSprite.getTextureRect();
+			const auto& texRect = sprite.GetTextureRect();
 			const auto& color = rawSprite.getColor();
 			const auto& maskColor = sprite.GetMaskColor();
 			json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Left"] = texRect.left;
@@ -175,11 +175,6 @@ namespace fz {
 		sprite.SetTexture(texPath);
 
 		sf::Sprite& rawSprite = sprite;
-		int left = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Left"];
-		int top = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Top"];
-		int width = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Width"];
-		int height = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Height"];
-		rawSprite.setTextureRect({ left, top, width, height });
 
 		// Get MaskColor
 		bool maskMode = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["MaskMode"];
@@ -206,6 +201,12 @@ namespace fz {
 		rawSprite.setRotation(rotation);
 		rawSprite.setOrigin(origin[0], origin[1]);
 		sprite.SetOrigins(origins);
+
+		int left = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Left"];
+		int top = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Top"];
+		int width = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Width"];
+		int height = json[m_SceneUUID][m_EntityUUID]["SpriteComponent"]["TexRect"]["Height"];
+		sprite.SetTextureRect({ left, top, width, height });
 	}
 
 } // namespace fz

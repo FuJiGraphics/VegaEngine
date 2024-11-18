@@ -6,6 +6,12 @@ namespace fz {
 	class OrthoCamera;
 	class Window;
 
+	struct RenderFrame
+	{
+		sf::Sprite* Sprite;
+		fz::Transform* Transform;
+	};
+
 	class Renderer2D
 	{
 	public:
@@ -16,7 +22,7 @@ namespace fz {
 		static void BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 
-		static void Draw(sf::Sprite& target, fz::Transform& transform);
+		static void Draw(int order, sf::Sprite& target, fz::Transform& transform);
 		
 	private:
 		static sf::Sprite s_Spirte;
@@ -24,6 +30,7 @@ namespace fz {
 		static Weak<Framebuffer> s_FrameBuffer;
 		static OrthoCamera* s_OrthoCamera;
 		static sf::Vector2f s_PrevCameraPos;
+		static std::multimap<int, RenderFrame> s_CommandBuffer;
 	};
 
 } // namespace fz

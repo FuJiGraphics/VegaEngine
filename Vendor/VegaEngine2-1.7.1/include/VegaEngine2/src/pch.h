@@ -9,6 +9,7 @@
 #include <functional>
 #include <list>
 #include <cassert>
+#include <map>
 
 // Data Types
 #include "DataType/DataType.h"

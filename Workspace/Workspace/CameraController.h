@@ -1,8 +1,6 @@
 #pragma once
 #include "VegaEngine2.h"
 
-
-
 namespace fz {
 
 	class CameraController : public ScriptableEntity

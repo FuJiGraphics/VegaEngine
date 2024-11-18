@@ -11,7 +11,10 @@ namespace fz {
 	Sprite::Sprite(const std::string& texPath)
 		: m_TexPath(texPath)
 	{
-		m_Sprite.setTexture(TEXTURE_MGR.Get(texPath));
+		const sf::Texture& texture = TEXTURE_MGR.Get(texPath);
+		m_Sprite.setTexture(texture);
+		m_Sprite.setTextureRect({ 0, 0, (int)texture.getSize().x, (int)texture.getSize().y });
+		m_Size = texture.getSize();
 		m_TexPath = texPath;
 	}
 
@@ -27,6 +30,7 @@ namespace fz {
 		m_Sprite.setTexture(texture);
 		m_Sprite.setTextureRect({ 0, 0, (int)texture.getSize().x, (int)texture.getSize().y });
 		m_TexPath = texPath;
+		m_Size = texture.getSize();
 		m_Mask = alphaMask;
 	}
 
@@ -35,6 +39,7 @@ namespace fz {
 		const sf::Texture& texture = TEXTURE_MGR.Get(texPath);
 		m_Sprite.setTexture(texture);
 		m_Sprite.setTextureRect({ 0, 0, (int)texture.getSize().x, (int)texture.getSize().y });
+		m_Size = texture.getSize();
 		m_TexPath = texPath;
 	}
 
@@ -58,6 +63,11 @@ namespace fz {
 			this->SetTextureWithMask(m_TexPath, m_Mask);
 		else
 			this->SetTexture(m_TexPath);
+	}
+
+	void Sprite::SetTextureRect(const sf::IntRect& rect)
+	{
+		m_Sprite.setTextureRect(rect);
 	}
 
 } // namespace fz

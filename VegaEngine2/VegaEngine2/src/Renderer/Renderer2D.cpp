@@ -8,6 +8,7 @@ namespace fz {
 	Weak<Framebuffer> Renderer2D::s_FrameBuffer = nullptr;
 	OrthoCamera* Renderer2D::s_OrthoCamera = nullptr;
 	sf::Vector2f Renderer2D::s_PrevCameraPos = { 0.0f, 0.0f };
+	std::multimap<int, RenderFrame> Renderer2D::s_CommandBuffer;
 
 	void Renderer2D::Init(sf::RenderWindow* renderWindow)
 	{
@@ -51,6 +52,14 @@ namespace fz {
 
 		if (s_FrameBuffer)
 		{
+			for (auto& renderFrame : s_CommandBuffer)
+			{
+				sf::RenderStates state;
+				state.transform = *renderFrame.second.Transform;
+				state.texture = renderFrame.second.Sprite->getTexture();
+				s_FrameBuffer->GetBuffer().draw(*renderFrame.second.Sprite, state);
+			}
+
 			auto& renderBuffer = s_FrameBuffer->GetBuffer();
 			renderBuffer.display();
 			s_RenderWindow->clear();
@@ -65,18 +74,16 @@ namespace fz {
 		}
 		s_FrameBuffer = nullptr;
 		s_OrthoCamera = nullptr;
+		s_CommandBuffer.clear();
 	} 
 
-	void Renderer2D::Draw(sf::Sprite& obj, fz::Transform& transform)
+	void Renderer2D::Draw(int order, sf::Sprite& target, fz::Transform& transform)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
 		FZLOG_ASSERT(s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
-		sf::RenderStates state;
-		state.transform = transform;
-		state.texture = obj.getTexture();
-		if (s_FrameBuffer)
-			s_FrameBuffer->GetBuffer().draw(obj, state);
+		RenderFrame renderFrame = { &target, &transform };
+		s_CommandBuffer.insert({ order, renderFrame });
 	}
 } // namespace fz
 

@@ -190,6 +190,16 @@ namespace fz {
 						}
 					}
 
+					sf::IntRect texRect = spriteComp.Sprite.GetTextureRect();
+					sf::Vector2u texSize = spriteComp.Sprite.GetSize();
+					if (VegaUI::DrawControl4("Texture Rect", texRect,
+						{ 1, 1, 1, 1 }, { 0, 0, 0, 0 }, 
+						{ (int)texSize.x, (int)texSize.y, (int)texSize.x, (int)texSize.y }, 
+						{ 0, 0, (int)texSize.x, (int)texSize.y }))
+					{
+						spriteComp.Sprite.SetTextureRect(texRect);
+					}
+
 					VegaUI::SelectOrigins(spriteComp.Sprite);
 
 					sf::Color color = spriteComp.Sprite.GetColor();

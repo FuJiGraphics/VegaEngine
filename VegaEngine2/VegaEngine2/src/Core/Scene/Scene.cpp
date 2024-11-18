@@ -108,7 +108,7 @@ namespace fz {
 			for (auto entity : group)
 			{
 				const auto& [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
-				Renderer2D::Draw(sprite, transform);
+				Renderer2D::Draw(sprite.SortingOrder, sprite, transform);
 			}
 
 			Renderer2D::EndScene();

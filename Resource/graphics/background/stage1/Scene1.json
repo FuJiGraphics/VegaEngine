@@ -1,62 +1,6 @@
 {
     "43214ac5-feb7-4c5c-9846-69b4f7b1f2ce": {
         "ed5d5e05-674d-48da-a92f-44f1153bc5c1": {
-            "CameraComponent": {
-                "Center": [
-                    0.0,
-                    0.0
-                ],
-                "FixedAspectRatio": false,
-                "Primary": true,
-                "Rotation": 0.0,
-                "Size": [
-                    1920.0,
-                    1080.0
-                ],
-                "Viewport": {
-                    "Height": 1.0,
-                    "Left": 0.0,
-                    "Top": 0.0,
-                    "Width": 1.0
-                },
-                "Zoom": 1.0
-            },
-            "SpriteComponent": {
-                "Color": {
-                    "A": 255,
-                    "B": 255,
-                    "G": 255,
-                    "R": 255
-                },
-                "MaskColor": {
-                    "A": 255,
-                    "B": 0,
-                    "G": 0,
-                    "R": 0
-                },
-                "MaskMode": false,
-                "Origin": [
-                    0.0,
-                    0.0
-                ],
-                "Origins": "TL",
-                "Position": [
-                    0.0,
-                    0.0
-                ],
-                "Rotation": 0.0,
-                "Scale": [
-                    1.0,
-                    1.0
-                ],
-                "TexPath": "",
-                "TexRect": {
-                    "Height": 0,
-                    "Left": 0,
-                    "Top": 0,
-                    "Width": 0
-                }
-            },
             "TagComponent": {
                 "Tag": "NewEntity"
             },

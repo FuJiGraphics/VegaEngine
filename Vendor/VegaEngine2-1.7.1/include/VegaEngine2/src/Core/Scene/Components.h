@@ -33,6 +33,7 @@ namespace fz {
 
 	struct SpriteComponent
 	{
+		int SortingOrder = 0;
 		fz::Sprite Sprite;
 
 		SpriteComponent() = default;

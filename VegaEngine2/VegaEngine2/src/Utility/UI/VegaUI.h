@@ -17,6 +17,10 @@ namespace fz {
 								 float x_min = 0.0f, float x_max = 0.0f,
 								 float y_min = 0.0f, float y_max = 0.0f,
 								 float resetValue = 0.0f, float columnWidth = 100.f);
+		static bool DrawControl4(const std::string& label, sf::IntRect& rect,
+								 const sf::IntRect& rectSpeed = { 1, 1, 1, 1 },
+								 const sf::IntRect& rectMin = { 0, 0, 0, 0 }, const sf::IntRect& rectMax = { 0, 0, 0, 0 },
+								 const sf::IntRect& resetValues = { 0, 0, 0, 0 }, float columnWidth = 100.f);
 		static bool ColorEdit4(sf::Color& dst, const std::string& label);
 		static bool ColorEdit4WidthCheckbox(sf::Color& dst, bool& check, const std::string& label);
 		static bool InputText(std::string& dst, const std::string& label = "", bool isRightLabel = false);
