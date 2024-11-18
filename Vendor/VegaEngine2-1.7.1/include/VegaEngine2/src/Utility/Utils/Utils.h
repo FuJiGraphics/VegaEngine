@@ -32,6 +32,7 @@ namespace fz {
 
 		static sf::Vector2f GetRotateVector(float angle, const sf::Vector2f& target);
 		static const double GetPi();
+		static bool CanFileOpen(const std::string& path);
 
 	};
 

@@ -30,6 +30,16 @@ public:
 		resources.clear();
 	}
 
+	void Save(const std::string& path, T& data)
+	{
+		if (resources.find(path) != resources.end())
+			return;
+
+		T* resource = new T();
+		*resource = data;
+		resources.insert({ path, resource });
+	}
+
 	bool Load(const std::string& id)
 	{
 		if (resources.find(id) != resources.end())

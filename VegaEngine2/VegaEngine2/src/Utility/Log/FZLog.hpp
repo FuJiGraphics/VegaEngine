@@ -234,7 +234,7 @@ namespace fz {
                 s_Logger.error(std::forward<Args>(args)...);
             }
             file.close();
-            return (false);
+            return result;
         }
 
         static void SetName(const std::string& name) {

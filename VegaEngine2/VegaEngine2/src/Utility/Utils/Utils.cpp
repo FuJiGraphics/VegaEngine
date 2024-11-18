@@ -140,5 +140,17 @@ namespace fz {
         return s_Pi;
     }
 
+    bool Utils::CanFileOpen(const std::string& path)
+    {
+		bool result = false;
+		std::ifstream file(path);
+		if (file.is_open())
+		{
+			result = true;
+		}
+		file.close();
+		return result;
+    }
+
 } // namespace fz
 

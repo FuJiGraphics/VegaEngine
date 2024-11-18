@@ -20,11 +20,14 @@ namespace fz {
 
 	void Sprite::SetTextureWithMask(const std::string& texPath, const sf::Color& alphaMask)
 	{
+		if (Utils::CanFileOpen(texPath) == false)
+			return;
+
 		m_IsMaskMode = true;
 		sf::Image image;
 		image.loadFromFile(texPath);
 		image.createMaskFromColor(alphaMask);
-		static sf::Texture texture;
+		sf::Texture& texture = TEXTURE_MGR.Get(texPath);
 		texture.create(image.getSize().x, image.getSize().y);
 		texture.loadFromImage(image);
 		m_Sprite.setTexture(texture);
@@ -36,6 +39,7 @@ namespace fz {
 
 	void Sprite::SetTexture(const std::string& texPath)
 	{
+		TEXTURE_MGR.Load(texPath);
 		const sf::Texture& texture = TEXTURE_MGR.Get(texPath);
 		m_Sprite.setTexture(texture);
 		m_Sprite.setTextureRect({ 0, 0, (int)texture.getSize().x, (int)texture.getSize().y });
@@ -60,9 +64,17 @@ namespace fz {
 		m_IsMaskMode = enabled;
 		m_Mask = alphaMask;
 		if (m_IsMaskMode)
+		{
+			sf::IntRect prevRect = m_Sprite.getTextureRect();
 			this->SetTextureWithMask(m_TexPath, m_Mask);
+			this->SetTextureRect(prevRect);
+		}
 		else
+		{
+			sf::IntRect prevRect = m_Sprite.getTextureRect();
 			this->SetTexture(m_TexPath);
+			this->SetTextureRect(prevRect);
+		}
 	}
 
 	void Sprite::SetTextureRect(const sf::IntRect& rect)
