@@ -13,7 +13,7 @@ namespace fz {
 		void OnImGuiRender();
 
 	protected:
-		void DrawTreeNode(fz::Entity& entity, const char* tag);
+		bool DrawTreeNode(fz::Entity& entity, const char* tag);
 		void DrawSceneComponents(fz::Entity& entity);
 		void DeleteChildEntities(fz::Entity& entity);
 
