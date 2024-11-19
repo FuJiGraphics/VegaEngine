@@ -8,8 +8,6 @@ namespace fz {
 	public:
 		void OnCreate()
 		{
-			auto& transform = GetComponent<TransformComponent>();
-			transform.Transform.SetTranslate(0.0f, 0.0f);
 		}
 
 		void OnDestroy()
@@ -44,8 +42,8 @@ namespace fz {
 		};
 
 	private:
-		float m_Speed = 100.f;
+		float m_Speed = 400.f;
 	};
 }
 
-BIND_SCRIPT(1, "D:\\dev\\VegaEngine.ver2\\Resource\\json\\scene1.json", "Camera", CameraController);
+BIND_SCRIPT(1, "8fc401b3-19ba-4183-833f-2cf6b0c13d01", "EditorCamera", CameraController);

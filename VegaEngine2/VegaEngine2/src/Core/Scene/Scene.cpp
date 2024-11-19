@@ -39,6 +39,22 @@ namespace fz {
 		return entity;
 	}
 
+	Entity Scene::CreateEntityWithUUID(const std::string& tagName, const std::string& uuid)
+	{
+		Entity entity = { m_Registry.create(), shared_from_this() };
+		entity.m_UUID = uuid;
+		auto& tagComp = entity.AddComponent<TagComponent>(tagName);
+		if (tagComp.Tag.empty())
+			tagComp.Tag = "Entity";
+		if (!tagName.empty())
+		{
+			tagComp.Tag = tagName;
+		}
+		entity.AddComponent<TransformComponent>();
+		m_EntityPool.insert({ entity.m_UUID, entity.m_Handle });
+		return entity;
+	}
+
 	Entity Scene::CreateEntity(const std::string& uuid, const std::string& tagName)
 	{
 		Entity entity = { uuid, m_Registry.create(), shared_from_this() };
@@ -107,8 +123,11 @@ namespace fz {
 
 				if (camera.Primary)
 				{
+					if (transform.IsChildRenderMode)
+						cameraTransform = &transform.RenderTransform;
+					else
+						cameraTransform = &transform.Transform;
 					mainCamera = &camera.Camera;
-					cameraTransform = &transform.Transform;
 					break;
 				}
 			}

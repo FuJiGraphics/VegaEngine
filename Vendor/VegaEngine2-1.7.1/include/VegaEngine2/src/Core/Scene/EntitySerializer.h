@@ -6,12 +6,15 @@ namespace fz {
 	class EntitySerializer
 	{
 	public:
-		EntitySerializer(const std::string& sceneUUID, const fz::Entity& entity);
+		EntitySerializer(const fz::Entity& entity);
 
-		void Serialize(const std::string& path);
-		void Deserialize(const std::string& path);
+		void Serialize(fz::json& json);
+		void Deserialize(fz::json& json);
 
 	protected:
+		void ChildSerialize(fz::json& json, fz::Entity& child);
+		void ChildDerialize(fz::json& json, fz::Entity& child);
+
 		void SerializeTag(json& json);
 		void SerializeCamera(json& json);
 		void SerializeTransform(json& json);
@@ -35,6 +38,7 @@ namespace fz {
 		fz::Entity m_Entity;
 		std::string m_SceneUUID;
 		std::string m_EntityUUID;
+		std::string m_Path;
 	};
 
 } // namespace fz

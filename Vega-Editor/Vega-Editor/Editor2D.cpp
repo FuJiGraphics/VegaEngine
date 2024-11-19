@@ -14,6 +14,7 @@ namespace fz {
 		FZLOG_INFO("Editor2D 시작");
 		TEXTURE_MGR.Load("graphics/player.png");
 		m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
+		m_HierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void Editor2D::OnDetach()
@@ -74,6 +75,9 @@ namespace fz {
 				System::GetSystem().ExitSystem();
 			}
 			ImGui::EndMenu();
+
+			// TODO: 임시
+			Scene::s_CurrentScene = m_ActiveScene;
 		}
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
@@ -119,7 +123,7 @@ namespace fz {
 		auto& base = BindScriptBase::GetInstance();
 		for (auto& script : base)
 		{
-			script->Bind(path, loadScene);
+			script->Bind(loadScene->GetUUID(), loadScene);
 		}
 		return loadScene;
 	}

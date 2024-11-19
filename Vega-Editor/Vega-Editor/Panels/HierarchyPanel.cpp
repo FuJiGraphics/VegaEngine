@@ -106,6 +106,7 @@ namespace fz {
 		}
 
 		if (!result && ImGui::IsItemClicked())
+
 		{
 			m_SelectionContext = entity;
 			result = true;

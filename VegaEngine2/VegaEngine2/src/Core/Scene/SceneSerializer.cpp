@@ -27,12 +27,16 @@ namespace fz {
 		Database::LoadFromJson(path);
 		auto& json = Database::GetJsonObject(path);
 		json.clear();
+
 		std::string sceneUUID = m_Scene->m_UUID;
 		for (auto& it : m_Scene->m_EntityPool)
 		{
 			Entity entity = { it.first, it.second, m_Scene };
-			EntitySerializer entitySerializer(sceneUUID, entity);
-			entitySerializer.Serialize(path);
+			if (entity.HasComponent<RootEntityComponent>())
+			{
+				EntitySerializer entitySerializer(entity);
+				entitySerializer.Serialize(json[sceneUUID]);
+			}
 		}
 
 		Database::Unload(path);
@@ -56,10 +60,10 @@ namespace fz {
 			for (json::iterator itEntityUUID = json[sceneUUID].begin(); itEntityUUID != json[sceneUUID].end(); ++itEntityUUID)
 			{
 				const std::string& entityUUID = itEntityUUID.key();
-				std::string tagName = json[sceneUUID][entityUUID]["TagComponent"]["Tag"];
-				fz::Entity entity = newScene->CreateEntity(entityUUID, tagName);
-				EntitySerializer serialize(sceneUUID, entity);
-				serialize.Deserialize(path);
+				fz::Entity entity = newScene->CreateEntityWithUUID("New Entity...", entityUUID);
+				entity.m_UUID = entityUUID;
+				EntitySerializer serialize(entity);
+				serialize.Deserialize(json[sceneUUID]);
 			}
 			break;
 		}

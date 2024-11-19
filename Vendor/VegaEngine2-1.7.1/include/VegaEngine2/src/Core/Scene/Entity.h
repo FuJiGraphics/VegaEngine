@@ -13,6 +13,7 @@ namespace fz {
 	protected:
 		friend fz::Scene;
 		friend fz::EntitySerializer;
+		friend fz::SceneSerializer;
 
 	public:
 		Entity();

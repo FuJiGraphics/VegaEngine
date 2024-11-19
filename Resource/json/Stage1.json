@@ -1,0 +1,663 @@
+{
+    "8fc401b3-19ba-4183-833f-2cf6b0c13d01": {
+        "2d193a6d-7d42-4d22-bf90-33455c66791a": {
+            "6503ebe6-37ad-45d2-b381-562be3a34e33": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 234,
+                        "G": 217,
+                        "R": 153
+                    },
+                    "MaskMode": true,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 0,
+                    "TexPath": "graphics\\players\\marco_pistol.png",
+                    "TexRect": {
+                        "Height": 36,
+                        "Left": 0,
+                        "Top": 258,
+                        "Width": 44
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "Body"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -16.0,
+                        -99.0
+                    ]
+                }
+            },
+            "871df9ae-a464-4a8e-b4b2-303cbb1fd5a2": {
+                "CameraComponent": {
+                    "Center": [
+                        0.0,
+                        0.0
+                    ],
+                    "FixedAspectRatio": true,
+                    "Primary": true,
+                    "Rotation": 0.0,
+                    "Size": [
+                        361.15692138671875,
+                        230.4224853515625
+                    ],
+                    "Viewport": {
+                        "Height": 1.090000033378601,
+                        "Left": 0.0,
+                        "Top": -0.09000000357627869,
+                        "Width": 1.0
+                    },
+                    "Zoom": 1.0
+                },
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "PlayerCamera"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        105.0,
+                        -127.0
+                    ]
+                }
+            },
+            "HasChild": true,
+            "RootEntity": true,
+            "TagComponent": {
+                "Tag": "Player"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    51.449893951416016,
+                    244.9473114013672
+                ]
+            },
+            "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 0,
+                    "TexPath": "graphics\\players\\marco_pistol.png",
+                    "TexRect": {
+                        "Height": 36,
+                        "Left": 148,
+                        "Top": 261,
+                        "Width": 25
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "Leg"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -7.0,
+                        -87.0
+                    ]
+                }
+            }
+        },
+        "99ceb685-93cd-428f-a1ef-c6c82e3c1a89": {
+            "CameraComponent": {
+                "Center": [
+                    0.0,
+                    0.0
+                ],
+                "FixedAspectRatio": false,
+                "Primary": false,
+                "Rotation": 0.0,
+                "Size": [
+                    820.4390258789063,
+                    568.6320190429688
+                ],
+                "Viewport": {
+                    "Height": 1.0,
+                    "Left": 0.0,
+                    "Top": 0.0,
+                    "Width": 1.0
+                },
+                "Zoom": 0.5509999990463257
+            },
+            "HasChild": false,
+            "RootEntity": true,
+            "TagComponent": {
+                "Tag": "EditorCamera"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    -0.0,
+                    -0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    16.90121841430664,
+                    -67.18879699707031
+                ]
+            }
+        },
+        "ecb5e2c7-f7f7-4da8-943d-dac6b28a2222": {
+            "073e760c-35dc-4ebe-b7f8-6858e743c44b": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -3,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 32,
+                        "Left": 1019,
+                        "Top": 545,
+                        "Width": 249
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "BackMountain4"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        753.0,
+                        92.0
+                    ]
+                }
+            },
+            "2a94a422-28a9-420d-be83-3bc8ce2627ee": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 248,
+                        "G": 0,
+                        "R": 248
+                    },
+                    "MaskMode": true,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -1,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 239,
+                        "Left": 0,
+                        "Top": 40,
+                        "Width": 2648
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "Around"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -28.0,
+                        0.0
+                    ]
+                }
+            },
+            "8902b679-9345-44a3-9ee7-5f56c1c3b257": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -3,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 32,
+                        "Left": 1019,
+                        "Top": 546,
+                        "Width": 249
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "BackMountain3"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        506.0,
+                        92.0
+                    ]
+                }
+            },
+            "HasChild": true,
+            "RootEntity": true,
+            "TagComponent": {
+                "Tag": "Stage"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    -0.0,
+                    -0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            },
+            "a6bb4f79-2843-408f-8b40-a3a5e6ec24f2": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -3,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 32,
+                        "Left": 1022,
+                        "Top": 615,
+                        "Width": 249
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "BackMountain2"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        220.0,
+                        92.0
+                    ]
+                }
+            },
+            "b29bc1ab-a36f-4018-8a6d-b0ba389b3f54": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -4,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 61,
+                        "Left": 1271,
+                        "Top": 545,
+                        "Width": 512
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "Sky"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.7999999523162842,
+                        1.399999976158142
+                    ],
+                    "Translate": [
+                        -28.0,
+                        21.0
+                    ]
+                }
+            },
+            "b6a3f621-9222-42b5-b4be-dea8daf16864": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -2,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 100,
+                        "Left": 0,
+                        "Top": 510,
+                        "Width": 1016
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "Mountain"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -28.0,
+                        78.0
+                    ]
+                }
+            },
+            "bb2e62b2-3ac2-46b0-a939-a9617ee7c8b1": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Origins": "TL",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": -3,
+                    "TexPath": "graphics\\background\\stage1\\stage1.png",
+                    "TexRect": {
+                        "Height": 32,
+                        "Left": 1019,
+                        "Top": 510,
+                        "Width": 249
+                    }
+                },
+                "TagComponent": {
+                    "Tag": "BackMountain1"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        -0.0,
+                        -0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -28.0,
+                        90.0
+                    ]
+                }
+            }
+        }
+    }
+}
