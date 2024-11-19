@@ -29,6 +29,8 @@ namespace fz {
 		static float DegreeToRadian(float degree);
 		static float AngleRadian(const sf::Vector2f& vec);
 		static float Angle(const sf::Vector2f& vec);
+		static float GetAngleToCos(float degree);
+		static float GetAngleToSin(float degree);
 
 		static sf::Vector2f GetRotateVector(float angle, const sf::Vector2f& target);
 		static const double GetPi();

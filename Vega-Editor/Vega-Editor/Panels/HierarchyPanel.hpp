@@ -14,13 +14,17 @@ namespace fz {
 					sf::Vector2f pos;
 					if (m_SelectionContext.HasComponent<SpriteComponent>())
 					{
-						SpriteComponent& spriteComp = m_SelectionContext.GetComponent<SpriteComponent>();
-						sf::Sprite& sprite = spriteComp.Sprite;
-						pos = sprite.getPosition();
+						TransformComponent& transformComp = m_SelectionContext.GetComponent<TransformComponent>();
+						pos = transformComp.Transform.GetTranslate();
 					}
 					CameraComponent& cameraComp = m_SelectionContext.GetComponent<CameraComponent>();
 					cameraComp.Camera.SetCenter(pos);
 					cameraComp.Camera.SetSize(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
+				}
+				if (std::is_same<T, RigidbodyComponent>().value)
+				{
+					// TODO: 임시 물리
+					m_Context->StartPhysics();
 				}
 				ImGui::CloseCurrentPopup();
 			}

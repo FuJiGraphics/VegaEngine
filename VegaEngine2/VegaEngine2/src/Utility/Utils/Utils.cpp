@@ -126,6 +126,16 @@ namespace fz {
         return RadianToDegree(AngleRadian(vec));
     }
 
+    float Utils::GetAngleToCos(float degree)
+    {
+        return cosf(DegreeToRadian(degree));
+    }
+
+    float Utils::GetAngleToSin(float degree)
+    {
+        return sinf(DegreeToRadian(degree));
+    }
+
     sf::Vector2f Utils::GetRotateVector(float angle, const sf::Vector2f& target)
     {
         sf::Transform rotMat = sf::Transform::Identity;

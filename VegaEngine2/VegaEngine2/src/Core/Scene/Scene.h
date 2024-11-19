@@ -31,6 +31,9 @@ namespace fz {
 		Entity CreateEntity(const std::string& uuid, const std::string& tagName);
 		void DeleteEntity(fz::Entity& entity);
 		
+		void StartPhysics();
+		void StopPhysics();
+
 		void OnUpdate(float dt);
 		void OnViewportResize(unsigned int width, unsigned int height);
 
@@ -52,7 +55,7 @@ namespace fz {
 		Shared<Framebuffer>		m_FrameBuffer;
 		std::string				m_UUID;
 		EntityPool				m_EntityPool;
-		b2WorldId*				m_World;
+		b2World*				m_World;
 	};
 
 #define FZ_CURRENT_SCENE Scene::s_CurrentScene

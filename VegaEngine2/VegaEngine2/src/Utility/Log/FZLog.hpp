@@ -278,8 +278,8 @@ namespace fz {
     #define FZLOG_WARN(...)        
     #define FZLOG_ERROR(...)       
     #define FZLOG_CRITICAL(...)    
-    #define FZLOG_ASSERT(flag, ...)
-    #define FZLOG_ASSERT_FILE(filePath, ...)
+    #define FZLOG_ASSERT(flag, ...)             flag;
+    #define FZLOG_ASSERT_FILE(filePath, ...)        
 #endif
 
 #endif /* defined(__FZ_VEGA_HEADER_H_) */

@@ -76,7 +76,6 @@ namespace fz {
 			}
 			ImGui::EndMenu();
 
-			// TODO: юс╫ц
 			Scene::s_CurrentScene = m_ActiveScene;
 		}
 

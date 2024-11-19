@@ -152,7 +152,8 @@ namespace fz {
 			{
 				DisplayAddComponentEntry<CameraComponent>("Camera");
 				DisplayAddComponentEntry<SpriteComponent>("Sprite");
-
+				DisplayAddComponentEntry<RigidbodyComponent>("Rigidbody");
+				DisplayAddComponentEntry<ColliderComponent>("Collider");
 				ImGui::EndPopup();
 			} 
 		}
@@ -261,6 +262,62 @@ namespace fz {
 					if (VegaUI::ColorEdit4WidthCheckbox(maskColor, maskMode, "Mask"))
 					{
 						spriteComp.Sprite.SetMaskColor(maskMode, maskColor);
+					}
+				}
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<RigidbodyComponent>())
+		{
+			if (ImGui::TreeNodeEx("RigidbodyComponent", treeFlag, "Rigidbody"))
+			{
+				bool isRemove = VegaUI::PopupContextItem("Remove RigidbodyComponent", [&entity]() {
+					entity.RemoveComponent<RigidbodyComponent>();
+														 });
+				if (!isRemove)
+				{
+					auto& rigidComp = entity.GetComponent<RigidbodyComponent>();
+					const char* bodyTypes[] = { "Static", "Dynamic", "Kinematic" };
+					const char* currBodyTypeString = bodyTypes[(int)rigidComp.RigidType];
+					if (ImGui::BeginCombo("Body Type", currBodyTypeString))
+					{
+						for (int i = 0; i < 2; ++i)
+						{
+							bool isSelected = currBodyTypeString == bodyTypes[i];
+							if (ImGui::Selectable(bodyTypes[i], isSelected))
+							{
+								currBodyTypeString = bodyTypes[i];
+								rigidComp.RigidType = (RigidbodyComponent::BodyType)i;
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
+						}
+						ImGui::EndCombo();
+					}
+					ImGui::Checkbox("Fixed Rotation", &rigidComp.FixedRotation);
+				}
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<ColliderComponent>())
+		{
+			if (ImGui::TreeNodeEx("ColliderComponent", treeFlag, "Collider"))
+			{
+				bool isRemove = VegaUI::PopupContextItem("Remove ColliderComponent", [&entity]() {
+					entity.RemoveComponent<ColliderComponent>();
+														 });
+
+				if (!isRemove)
+				{
+					if (entity.HasComponent<ColliderComponent>())
+					{
+						auto& colComp = entity.GetComponent<ColliderComponent>();
+						VegaUI::DrawControl2("Offset", colComp.Offset);
+						VegaUI::DrawControl2("Size", colComp.Size);
+						VegaUI::DrawControl1("Density", "Reset", colComp.Density);
+						VegaUI::DrawControl1("Restitution", "Reset", colComp.Restitution);
 					}
 				}
 				ImGui::TreePop();

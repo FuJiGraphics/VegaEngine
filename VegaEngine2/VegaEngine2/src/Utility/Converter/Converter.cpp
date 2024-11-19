@@ -2,7 +2,7 @@
 
 namespace fz {
 
-    MouseButtonType Converter::SfmlToFzType(sf::Mouse::Button button)
+	MouseButtonType Converter::SfmlToFzType(sf::Mouse::Button button)
     {
         switch (button)
         {

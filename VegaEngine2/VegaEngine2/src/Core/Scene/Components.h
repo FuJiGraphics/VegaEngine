@@ -90,6 +90,36 @@ namespace fz {
 		inline operator const OrthoCamera& () const	{ return Camera; }
 	};
 
+	struct RigidbodyComponent
+	{
+		enum class BodyType {
+			Static, Dynamic, Kinematic
+		};
+		BodyType RigidType = BodyType::Dynamic;
+		bool FixedRotation = false;
+
+		void* RuntimeBody = nullptr;
+
+		RigidbodyComponent() = default;
+		RigidbodyComponent(const RigidbodyComponent& other) = default;
+	}; 
+
+	struct ColliderComponent
+	{
+		sf::Vector2f Offset = { 0.0f, 0.0f };
+		sf::Vector2f Size = { 0.5f, 0.5f };
+
+		float Density = 1.0f;
+		float Friction = 0.5f;
+		float Restitution = 0.0f;
+		float RestitutionThreshold = 0.5f;
+
+		void* RuntimeFixture = nullptr;
+
+		ColliderComponent() = default;
+		ColliderComponent(const ColliderComponent& other) = default;
+	};
+
 	struct NativeScriptComponent
 	{
 	public:
@@ -114,5 +144,6 @@ namespace fz {
 			OnUpdateFunction = [](ScriptableEntity* instance, float dt) { ((T*)instance)->OnUpdate(dt); };
 		}
 	};
+
 
 } // namespace fz

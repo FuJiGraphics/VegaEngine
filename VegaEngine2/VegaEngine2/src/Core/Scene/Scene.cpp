@@ -4,6 +4,26 @@
 #include "ScriptableEntity.h"
 
 namespace fz {
+
+	namespace {
+		static b2BodyType ToBox2dBodyType(const fz::RigidbodyComponent::BodyType& rigidType)
+		{
+			switch (rigidType)
+			{
+				case RigidbodyComponent::BodyType::Static:
+					return b2BodyType::b2_staticBody;
+				case RigidbodyComponent::BodyType::Dynamic:
+					return b2BodyType::b2_dynamicBody;
+				case RigidbodyComponent::BodyType::Kinematic:
+					return b2BodyType::b2_kinematicBody;
+				default:
+					FZLOG_ASSERT(false, "타입 변환을 할 수 없습니다. 알 수 없는 타입입니다.");
+					break;
+			}
+			return b2BodyType();
+		}
+	}
+
 	Scene::Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel, const std::string& uuid)
 		: m_UUID(uuid.empty() ? Random.GetUUID() : uuid)
 		, m_World(nullptr)
@@ -23,11 +43,6 @@ namespace fz {
 							if (nsc.Instance)
 								nsc.OnDestroyFunction(nsc.Instance);
 						});
-		if (m_World)
-		{
-			b2DestroyWorld(*m_World);
-			*m_World = b2_nullWorldId;
-		}
 	}
 
 	Entity Scene::CreateEntity(const std::string& tagName)
@@ -87,6 +102,56 @@ namespace fz {
 		entity.m_Handle = entt::null;
 	}
 
+	void Scene::StartPhysics()
+	{
+		StopPhysics();
+		m_World = new b2World({ 0.0f, -9.8f });
+
+		auto view = m_Registry.view<RigidbodyComponent>();
+		for (auto& handle : view)
+		{
+			fz::Entity entity = { handle, shared_from_this() };
+			auto& transformComp = entity.GetComponent<TransformComponent>();
+			auto& rigidBodyComp = entity.GetComponent<RigidbodyComponent>();
+			const auto& translate = transformComp.Transform.GetTranslate();
+			const auto& rotation = transformComp.Transform.GetRotation();
+			const auto& scale = transformComp.Transform.GetScale();
+
+			b2BodyDef bodyDef;
+			bodyDef.type = b2BodyType::b2_dynamicBody;
+			bodyDef.position.Set(translate.x, translate.y);
+			bodyDef.angle = Utils::DegreeToRadian(rotation);
+			b2Body* body = m_World->CreateBody(&bodyDef);
+			body->SetFixedRotation(rigidBodyComp.FixedRotation);
+			rigidBodyComp.RuntimeBody = body;
+
+			if (!entity.HasComponent<ColliderComponent>())
+			{
+				auto& collider = entity.AddComponent<ColliderComponent>();
+
+				b2PolygonShape polygonShape;
+				polygonShape.SetAsBox(collider.Size.x * scale.x, collider.Size.y * scale.y);
+
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &polygonShape;
+				fixtureDef.density = collider.Density;
+				fixtureDef.friction = collider.Friction;
+				fixtureDef.restitution = collider.Restitution;
+				fixtureDef.restitutionThreshold = collider.RestitutionThreshold;
+				body->CreateFixture(&fixtureDef);
+			}
+		}
+	}
+
+	void Scene::StopPhysics()
+	{
+		if (m_World)
+		{
+			delete m_World;
+			m_World = nullptr;
+		}
+	}
+
 	void Scene::OnUpdate(float dt)
 	{
 		// 스크립트 업데이트
@@ -102,6 +167,29 @@ namespace fz {
 							}
 							nsc.OnUpdateFunction(nsc.Instance, dt);
 						});
+
+		// 물리 시스템 업데이트
+		if (m_World)
+		{
+			const int32_t velocityIterations = 6;
+			const int32_t positionIterations = 2;
+			m_World->Step(dt, velocityIterations, positionIterations);
+
+			auto view = m_Registry.view<RigidbodyComponent>();
+			for (auto e : view)
+			{
+				Entity entity = { e, shared_from_this() };
+				auto& transformComp = entity.GetComponent<TransformComponent>();
+				auto& transform = transformComp.Transform;
+				auto& rigid = entity.GetComponent<RigidbodyComponent>();
+				b2Body* body = (b2Body*)rigid.RuntimeBody;
+				const auto& bodyPos = body->GetPosition();
+				const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
+				transform.SetTranslate(bodyPos.x, bodyPos.y);
+				transform.SetRotation(bodyRot);
+			}
+		}
+
 
 		// 차일드 엔티티 트랜스폼 업데이트
 		auto chileView = m_Registry.view<ChildEntityComponent>();
