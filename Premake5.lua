@@ -28,12 +28,14 @@ workspace "Solution"
 	IncludeDir["Workspace"]		= "%{wks.location}/Workspace/Workspace"
 	IncludeDir["ImGui"]			= "%{wks.location}/Vendor/ImGui/"
 	IncludeDir["Entt"]			= "%{wks.location}/Vendor/Entt/include/"
+	IncludeDir["Box2D"]			= "%{wks.location}/Vendor/Box2D/include"
 
 	-- Library Path
 	LibraryDir = {}
 	LibraryDir["VegaEngine2"]	= "%{wks.location}/Vendor/VegaEngine2-"..version.."/lib"
 	LibraryDir["SFML"]			= "%{wks.location}/Vendor/SFML-2.6.1/lib"
 	LibraryDir["ImGui"]			= "%{wks.location}/Vendor/ImGui/lib"
+	LibraryDir["Box2D"]			= "%{wks.location}/Vendor/Box2D/lib"
 
 	-- DLL Working Directories
 	WorkingDir = {}

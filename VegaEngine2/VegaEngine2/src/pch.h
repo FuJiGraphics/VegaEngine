@@ -11,6 +11,9 @@
 #include <cassert>
 #include <map>
 
+// Box2D
+#include "box2d/box2d.h"
+
 // Data Types
 #include "DataType/DataType.h"
 

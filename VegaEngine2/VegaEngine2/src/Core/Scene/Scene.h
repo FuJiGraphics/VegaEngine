@@ -2,6 +2,8 @@
 #include "Renderer/FrameBuffer.h"
 #include "SceneSerializer.h"
 
+class b2WorldId;
+
 namespace fz {
 	
 	// Forwards
@@ -50,8 +52,9 @@ namespace fz {
 		Shared<Framebuffer>		m_FrameBuffer;
 		std::string				m_UUID;
 		EntityPool				m_EntityPool;
+		b2WorldId*				m_World;
 	};
 
-#define CURRENT_SCENE Scene::s_CurrentScene
+#define FZ_CURRENT_SCENE Scene::s_CurrentScene
 
 } // namespace fz

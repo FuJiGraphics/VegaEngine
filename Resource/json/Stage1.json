@@ -60,48 +60,6 @@
                     ]
                 }
             },
-            "871df9ae-a464-4a8e-b4b2-303cbb1fd5a2": {
-                "CameraComponent": {
-                    "Center": [
-                        0.0,
-                        0.0
-                    ],
-                    "FixedAspectRatio": true,
-                    "Primary": true,
-                    "Rotation": 0.0,
-                    "Size": [
-                        361.15692138671875,
-                        230.4224853515625
-                    ],
-                    "Viewport": {
-                        "Height": 1.090000033378601,
-                        "Left": 0.0,
-                        "Top": -0.09000000357627869,
-                        "Width": 1.0
-                    },
-                    "Zoom": 1.0
-                },
-                "HasChild": false,
-                "RootEntity": false,
-                "TagComponent": {
-                    "Tag": "PlayerCamera"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        105.0,
-                        -127.0
-                    ]
-                }
-            },
             "HasChild": true,
             "RootEntity": true,
             "TagComponent": {
@@ -118,8 +76,8 @@
                     1.0
                 ],
                 "Translate": [
-                    51.449893951416016,
-                    244.9473114013672
+                    83.98088836669922,
+                    294.9575500488281
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -193,7 +151,7 @@
                 "Rotation": 0.0,
                 "Size": [
                     820.4390258789063,
-                    568.6320190429688
+                    523.4500122070313
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -219,8 +177,50 @@
                     1.0
                 ],
                 "Translate": [
-                    16.90121841430664,
-                    -67.18879699707031
+                    154.47122192382813,
+                    132.65318298339844
+                ]
+            }
+        },
+        "b81ee0a6-60e8-42c4-b06d-656d2555b324": {
+            "CameraComponent": {
+                "Center": [
+                    0.0,
+                    0.0
+                ],
+                "FixedAspectRatio": false,
+                "Primary": true,
+                "Rotation": 0.0,
+                "Size": [
+                    1920.0,
+                    1080.0
+                ],
+                "Viewport": {
+                    "Height": 1.0,
+                    "Left": 0.0,
+                    "Top": 0.0,
+                    "Width": 1.0
+                },
+                "Zoom": 1.0
+            },
+            "HasChild": false,
+            "RootEntity": true,
+            "TagComponent": {
+                "Tag": "SceneCamera"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
                 ]
             }
         },
@@ -237,11 +237,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0
@@ -355,11 +355,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0
@@ -434,11 +434,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0
@@ -493,11 +493,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0
@@ -552,11 +552,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0
@@ -611,11 +611,11 @@
                     },
                     "MaskColor": {
                         "A": 255,
-                        "B": 0,
+                        "B": 248,
                         "G": 0,
-                        "R": 0
+                        "R": 248
                     },
-                    "MaskMode": false,
+                    "MaskMode": true,
                     "Origin": [
                         0.0,
                         0.0

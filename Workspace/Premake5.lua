@@ -29,6 +29,7 @@ includedirs
 	"%{IncludeDir.Spdlog}/",
 	"%{IncludeDir.ImGui}/",
 	"%{IncludeDir.Entt}/",
+	"%{IncludeDir.Box2D}/",
 }
 
 libdirs
@@ -36,6 +37,7 @@ libdirs
 	"%{LibraryDir.VegaEngine2}/%{cfg.buildcfg}/",
 	"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
 	"%{LibraryDir.ImGui}/%{cfg.buildcfg}/",
+	"%{LibraryDir.Box2D}/%{cfg.buildcfg}/",
 }
 
 links
@@ -50,6 +52,7 @@ links
 	"sfml-window.lib",
 	"ImGui.lib",
 	"opengl32",
+	"box2d.lib",
 }
 
 prebuildcommands 

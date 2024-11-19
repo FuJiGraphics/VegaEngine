@@ -28,12 +28,14 @@ includedirs
 	"%{IncludeDir.Spdlog}/",
 	"%{IncludeDir.ImGui}/",
 	"%{IncludeDir.Entt}/",
+	"%{IncludeDir.Box2D}/",
 }
 
 libdirs
 {
 	"%{LibraryDir.SFML}/%{cfg.buildcfg}/",
 	"%{LibraryDir.ImGui}/%{cfg.buildcfg}/",
+	"%{LibraryDir.Box2D}/%{cfg.buildcfg}/",
 }
 
 prebuildcommands 

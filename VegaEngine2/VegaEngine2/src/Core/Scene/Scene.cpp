@@ -6,6 +6,7 @@
 namespace fz {
 	Scene::Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel, const std::string& uuid)
 		: m_UUID(uuid.empty() ? Random.GetUUID() : uuid)
+		, m_World(nullptr)
 	{
 		FramebufferSpec frameSpec;
 		frameSpec.Width = width;
@@ -22,6 +23,11 @@ namespace fz {
 							if (nsc.Instance)
 								nsc.OnDestroyFunction(nsc.Instance);
 						});
+		if (m_World)
+		{
+			b2DestroyWorld(*m_World);
+			*m_World = b2_nullWorldId;
+		}
 	}
 
 	Entity Scene::CreateEntity(const std::string& tagName)
