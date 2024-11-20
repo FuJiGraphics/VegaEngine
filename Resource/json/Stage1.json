@@ -60,7 +60,25 @@
                     ]
                 }
             },
+            "ColliderComponent": {
+                "Density": 1.0,
+                "Friction": 0.5,
+                "Offset": {
+                    "X": 6.400000095367432,
+                    "Y": 3.5999999046325684
+                },
+                "Restitution": 0.0,
+                "RestitutionThreshold": 0.5,
+                "Size": {
+                    "X": 0.5,
+                    "Y": 0.5
+                }
+            },
             "HasChild": true,
+            "RigidbodyComponent": {
+                "FixedRotation": false,
+                "RigidType": "Static"
+            },
             "RootEntity": true,
             "TagComponent": {
                 "Tag": "Player"
@@ -76,8 +94,8 @@
                     1.0
                 ],
                 "Translate": [
-                    74.18499755859375,
-                    232.05099487304688
+                    63.11056900024414,
+                    247.08609008789063
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -140,48 +158,6 @@
                 }
             }
         },
-        "99ceb685-93cd-428f-a1ef-c6c82e3c1a89": {
-            "CameraComponent": {
-                "Center": [
-                    0.0,
-                    0.0
-                ],
-                "FixedAspectRatio": false,
-                "Primary": false,
-                "Rotation": 0.0,
-                "Size": [
-                    811.072021484375,
-                    523.4500122070313
-                ],
-                "Viewport": {
-                    "Height": 1.0,
-                    "Left": 0.0,
-                    "Top": 0.0,
-                    "Width": 1.0
-                },
-                "Zoom": 0.5509999990463257
-            },
-            "HasChild": false,
-            "RootEntity": true,
-            "TagComponent": {
-                "Tag": "EditorCamera"
-            },
-            "TransformComponent": {
-                "Origin": [
-                    -0.0,
-                    -0.0
-                ],
-                "Rotation": 0.0,
-                "Scale": [
-                    1.0,
-                    1.0
-                ],
-                "Translate": [
-                    47.2120246887207,
-                    119.1047592163086
-                ]
-            }
-        },
         "b81ee0a6-60e8-42c4-b06d-656d2555b324": {
             "CameraComponent": {
                 "Center": [
@@ -192,8 +168,8 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    1399.8719482421875,
-                    903.449951171875
+                    1444.5689697265625,
+                    871.115966796875
                 ],
                 "Viewport": {
                     "Height": 1.0,

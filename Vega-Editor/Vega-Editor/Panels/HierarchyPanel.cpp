@@ -317,7 +317,9 @@ namespace fz {
 						VegaUI::DrawControl2("Offset", colComp.Offset);
 						VegaUI::DrawControl2("Size", colComp.Size);
 						VegaUI::DrawControl1("Density", "Reset", colComp.Density);
+						VegaUI::DrawControl1("Friction", "Reset", colComp.Friction);
 						VegaUI::DrawControl1("Restitution", "Reset", colComp.Restitution);
+						VegaUI::DrawControl1("Threshold", "Reset", colComp.RestitutionThreshold);
 					}
 				}
 				ImGui::TreePop();

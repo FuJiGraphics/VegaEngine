@@ -21,11 +21,6 @@ namespace fz {
 					cameraComp.Camera.SetCenter(pos);
 					cameraComp.Camera.SetSize(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 				}
-				if (std::is_same<T, RigidbodyComponent>().value)
-				{
-					// TODO: 임시 물리
-					m_Context->StartPhysics();
-				}
 				ImGui::CloseCurrentPopup();
 			}
 		}

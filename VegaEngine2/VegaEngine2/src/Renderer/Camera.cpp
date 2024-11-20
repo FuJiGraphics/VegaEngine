@@ -30,6 +30,7 @@ namespace fz {
 
 	OrthoCamera::OrthoCamera(const sf::Vector2f& center, const sf::Vector2f& size)
 		: m_View(center, size)
+		, m_Size(size)
 	{
 		// Empty
 	}

@@ -17,7 +17,7 @@ namespace fz {
 		FZLOG_INFO("WindowSFML 객체 해제 중..");
 	}
 
-	void WindowSFML::Init(const Shared<RenderContext>& context)
+	void WindowSFML::Init()
 	{
 		FZLOG_INFO("Window 초기화 중..");
 		m_Window = std::make_unique<sf::RenderWindow>();
@@ -28,8 +28,11 @@ namespace fz {
 		FZLOG_INFO("- Title: {0}", m_Mode.Title);
 		FZLOG_INFO("- Width: {0}, Height: {1}", m_Mode.Width, m_Mode.Height);
 		FZLOG_INFO("- VSync 활성화 여부: {0}", m_IsVSync);
+		FZLOG_INFO("- Antialiasing Level: {0}", m_Mode.AntialiasingLevel);
 		FZLOG_INFO("------------------------------------------------------");
-		m_Window->create(mode, m_Mode.Title, sf::Style::Default);
+		sf::ContextSettings context;
+		context.antialiasingLevel = m_Mode.AntialiasingLevel;
+		m_Window->create(mode, m_Mode.Title, sf::Style::Default, context);
 		m_Window->setVerticalSyncEnabled(m_IsVSync);
 		FZLOG_INFO("Window 초기화 완료");
 	}

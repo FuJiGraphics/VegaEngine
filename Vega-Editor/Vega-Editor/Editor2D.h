@@ -4,8 +4,16 @@
 
 namespace fz {
 
+	const std::string g_TempProjectPath = "temp.json";
+
 	class Editor2D : public fz::Layer
 	{
+	protected:
+		enum class SceneState {
+			Edit = 0, Play, Count
+		};
+		FZ_DELETE_COPY(Editor2D)
+
 	public:
 		Editor2D(const std::string& name);
 
@@ -20,10 +28,17 @@ namespace fz {
 		void SaveScene(const Shared<Scene>& scene, const std::string& path);
 		Shared<Scene> LoadScene(const std::string& path);
 
+		void OnScenePlay();
+		void OnSceneStop();
+		void UiToolbar(const char* title = "##Toolbar");
+
 	private:
 		std::string	m_ActiveSceneFilePath;
+		Shared<Scene> m_TempScene;
 		Shared<Scene> m_ActiveScene;
 		HierarchyPanel m_HierarchyPanel;
+		SceneState m_SceneState;
+		EditorCamera m_EditorCamera;
 	};
 
 } // namespace fz

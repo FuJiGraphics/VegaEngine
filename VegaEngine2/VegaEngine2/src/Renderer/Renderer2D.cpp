@@ -26,6 +26,22 @@ namespace fz {
 		s_RenderWindow = nullptr;
 	}
 
+	void Renderer2D::BeginScene(OrthoCamera& camera, Shared<Framebuffer>& framebuffer)
+	{
+		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
+		FZLOG_ASSERT(framebuffer, "Renderer2D를 사용할 수 없습니다. 프레임 버퍼를 찾을 수 없습니다.");
+		FZLOG_ASSERT(!s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. 이미 호출된 BeginScene입니다.");
+
+		s_FrameBuffer = framebuffer;
+		s_OrthoCamera = &camera;
+		s_PrevCameraPos = s_OrthoCamera->GetCenter();
+		if (s_FrameBuffer)
+		{
+			s_FrameBuffer->Clear();
+			s_FrameBuffer->GetBuffer().setView(*s_OrthoCamera);
+		}
+	}
+
 	void Renderer2D::BeginScene(OrthoCamera& camera, const sf::Transform& transform, Shared<Framebuffer>& framebuffer)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");

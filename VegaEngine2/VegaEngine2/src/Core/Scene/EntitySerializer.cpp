@@ -4,6 +4,37 @@
 
 namespace fz {
 
+	namespace {
+		static std::string ToString(RigidbodyComponent::BodyType type)
+		{
+			switch (type)
+			{
+				case RigidbodyComponent::BodyType::Static:
+					return "Static";
+				case RigidbodyComponent::BodyType::Dynamic:
+					return "Dynamic";
+				case RigidbodyComponent::BodyType::Kinematic:
+					return "Kinematic";
+				default:
+					FZLOG_ASSERT(false, "타입 변환을 할 수 없습니다. 알 수 없는 타입입니다.");
+					break;
+			}
+			return std::string("Unknown");
+		}
+		static RigidbodyComponent::BodyType ToBodyType(const std::string& type)
+		{
+			if (type == "Static")
+				return RigidbodyComponent::BodyType::Static;
+			else if (type == "Dynamic")
+				return RigidbodyComponent::BodyType::Dynamic;
+			else if (type == "Kinematic")
+				return RigidbodyComponent::BodyType::Kinematic;
+			FZLOG_ASSERT(false, "타입 변환을 할 수 없습니다. 알 수 없는 타입입니다.");
+			return RigidbodyComponent::BodyType::Static;
+		}
+	}
+
+
 	EntitySerializer::EntitySerializer(const fz::Entity& entity)
 		: m_Entity(entity)
 		, m_EntityUUID(m_Entity.m_UUID)
@@ -37,6 +68,8 @@ namespace fz {
 		this->SerializeTransform(json[m_EntityUUID]);
 		this->SerializeCamera(json[m_EntityUUID]);
 		this->SerializeSprite(json[m_EntityUUID]);
+		this->SerializeCollider(json[m_EntityUUID]);
+		this->SerializeRigidBody(json[m_EntityUUID]);
 	}
 
 	void EntitySerializer::Deserialize(fz::json& json)
@@ -60,6 +93,10 @@ namespace fz {
 				this->DeserializeCamera(json[m_EntityUUID]);
 			else if (component == "SpriteComponent")
 				this->DeserializeSprite(json[m_EntityUUID]);
+			else if (component == "RigidbodyComponent")
+				this->DeserializeRigidBody(json[m_EntityUUID]);
+			else if (component == "ColliderComponent")
+				this->DeserializeCollider(json[m_EntityUUID]);
 			else if (component == "RootEntity")
 				isRootEntity = json[m_EntityUUID]["RootEntity"];
 			else if (component == "HasChild")
@@ -163,6 +200,41 @@ namespace fz {
 		}
 	}
 
+	void EntitySerializer::SerializeRigidBody(json& json)
+	{
+		if (m_Entity.HasComponent<RigidbodyComponent>())
+		{
+			auto& bodyComp = m_Entity.GetComponent<RigidbodyComponent>();
+			bool fixedRotation = bodyComp.FixedRotation;
+			std::string rigidType = ToString(bodyComp.RigidType);
+			json["RigidbodyComponent"]["FixedRotation"] = fixedRotation;
+			json["RigidbodyComponent"]["RigidType"] = rigidType;
+		}
+	}
+
+	void EntitySerializer::SerializeCollider(json& json)
+	{
+		if (m_Entity.HasComponent<ColliderComponent>())
+		{
+			auto& colliderComp = m_Entity.GetComponent<ColliderComponent>();
+			sf::Vector2f offset = colliderComp.Offset;
+			sf::Vector2f size = colliderComp.Size;
+			float density = colliderComp.Density;
+			float friction = colliderComp.Friction;
+			float restitution = colliderComp.Restitution;
+			float restitutionThreshold = colliderComp.RestitutionThreshold;
+
+			json["ColliderComponent"]["Offset"]["X"] = offset.x;
+			json["ColliderComponent"]["Offset"]["Y"] = offset.y;
+			json["ColliderComponent"]["Size"]["X"] = size.x;
+			json["ColliderComponent"]["Size"]["Y"] = size.y;
+			json["ColliderComponent"]["Density"] = density;
+			json["ColliderComponent"]["Friction"] = friction;
+			json["ColliderComponent"]["Restitution"] = restitution;
+			json["ColliderComponent"]["RestitutionThreshold"] = restitutionThreshold;
+		}
+	}
+
 	void EntitySerializer::DeserializeTag(json& json)
 	{
 		TagComponent& tagComp = FindComponent<TagComponent>();
@@ -254,6 +326,27 @@ namespace fz {
 			rawSprite.setOrigin(origin[0], origin[1]);
 		else
 			sprite.SetOrigins(origins);
+	}
+
+	void EntitySerializer::DeserializeRigidBody(json& json)
+	{
+		RigidbodyComponent& rigidComp = FindComponent<RigidbodyComponent>();
+		std::string rigidType = json["RigidbodyComponent"]["RigidType"];
+		rigidComp.FixedRotation = json["RigidbodyComponent"]["FixedRotation"];
+		rigidComp.RigidType = ToBodyType(rigidType);
+	}
+
+	void EntitySerializer::DeserializeCollider(json& json)
+	{
+		ColliderComponent& colliderComp = FindComponent<ColliderComponent>();
+		colliderComp.Density = json["ColliderComponent"]["Density"];
+		colliderComp.Friction = json["ColliderComponent"]["Friction"];
+		colliderComp.Restitution = json["ColliderComponent"]["Restitution"];
+		colliderComp.RestitutionThreshold = json["ColliderComponent"]["RestitutionThreshold"];
+		colliderComp.Offset.x = json["ColliderComponent"]["Offset"]["X"];
+		colliderComp.Offset.y = json["ColliderComponent"]["Offset"]["Y"];
+		colliderComp.Size.x = json["ColliderComponent"]["Size"]["X"];
+		colliderComp.Size.y = json["ColliderComponent"]["Size"]["Y"];
 	}
 
 } // namespace fz

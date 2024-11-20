@@ -11,7 +11,6 @@ namespace fz {
 		, LayerGenerator(nullptr)
 		, m_LayerStack(nullptr)
 		, m_Window(nullptr)
-		, m_RenderContext(nullptr)
 	{
 		this->Init();
 		s_System = this;
@@ -172,11 +171,12 @@ namespace fz {
 		winMode.Title = Title;
 		winMode.Api = WindowAPI::SFML;
 		winMode.VSync = true;
+		winMode.AntialiasingLevel = 4;
 		m_Window = Window::Create(winMode);
 		if (m_Window != nullptr)
 		{
 			m_Window->SetEventCallback(BIND_EVENT_FUNC(System::OnEvent));
-			m_Window->Init(m_RenderContext);
+			m_Window->Init();
 		}
 		else
 		{

@@ -19,6 +19,7 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
+		static void BeginScene(OrthoCamera& camera, Shared<Framebuffer>& framebuffer);
 		static void BeginScene(OrthoCamera& camera, const sf::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 

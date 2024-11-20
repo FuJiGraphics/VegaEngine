@@ -11,6 +11,7 @@ namespace fz {
 	class Framebuffer;
 	class HierarchyPanel;
 	class SceneSerializer;
+	class EditorCamera;
 
 	class Scene : public std::enable_shared_from_this<Scene>
 	{
@@ -34,7 +35,7 @@ namespace fz {
 		void StartPhysics();
 		void StopPhysics();
 
-		void OnUpdate(float dt);
+		void OnUpdate(float dt, EditorCamera* editorCamera = nullptr);
 		void OnViewportResize(unsigned int width, unsigned int height);
 
 		Entity GetEntityFromUUID(const std::string& uuid);

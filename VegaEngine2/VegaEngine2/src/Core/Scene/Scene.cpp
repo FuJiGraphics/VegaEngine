@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "ScriptableEntity.h"
+#include "EditorCamera.h"
 
 namespace fz {
 
@@ -31,7 +32,7 @@ namespace fz {
 		FramebufferSpec frameSpec;
 		frameSpec.Width = width;
 		frameSpec.Height = height;
-		frameSpec.MultisampleLevel = 1;
+		frameSpec.MultisampleLevel = 8;
 		m_FrameBuffer = Framebuffer::Create(frameSpec);
 	}
 
@@ -125,9 +126,9 @@ namespace fz {
 			body->SetFixedRotation(rigidBodyComp.FixedRotation);
 			rigidBodyComp.RuntimeBody = body;
 
-			if (!entity.HasComponent<ColliderComponent>())
+			if (entity.HasComponent<ColliderComponent>())
 			{
-				auto& collider = entity.AddComponent<ColliderComponent>();
+				auto& collider = entity.GetComponent<ColliderComponent>();
 
 				b2PolygonShape polygonShape;
 				polygonShape.SetAsBox(collider.Size.x * scale.x, collider.Size.y * scale.y);
@@ -152,102 +153,22 @@ namespace fz {
 		}
 	}
 
-	void Scene::OnUpdate(float dt)
+	void Scene::OnUpdateEditor(float dt, EditorCamera& editorCamera)
 	{
-		// 스크립트 업데이트
-		auto nativeView = m_Registry.view<NativeScriptComponent>();
-		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
-						{
-							if (nsc.Instance == nullptr)
-							{
-								nsc.Instance = nsc.CreateInstanceFunc();
-								if(!nsc.Instance->m_Entity) 
-									nsc.Instance->m_Entity = {entity, shared_from_this()};
-								nsc.OnCreateFunction(nsc.Instance);
-							}
-							nsc.OnUpdateFunction(nsc.Instance, dt);
-						});
+		this->OnUpdateChildEntity();
+		editorCamera.OnUpdate(dt);
+		this->OnRenderEditorSprite(&editorCamera.GetOrthoCamera());
+	}
 
-		// 물리 시스템 업데이트
-		if (m_World)
-		{
-			const int32_t velocityIterations = 6;
-			const int32_t positionIterations = 2;
-			m_World->Step(dt, velocityIterations, positionIterations);
-
-			auto view = m_Registry.view<RigidbodyComponent>();
-			for (auto e : view)
-			{
-				Entity entity = { e, shared_from_this() };
-				auto& transformComp = entity.GetComponent<TransformComponent>();
-				auto& transform = transformComp.Transform;
-				auto& rigid = entity.GetComponent<RigidbodyComponent>();
-				b2Body* body = (b2Body*)rigid.RuntimeBody;
-				const auto& bodyPos = body->GetPosition();
-				const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
-				transform.SetTranslate(bodyPos.x, bodyPos.y);
-				transform.SetRotation(bodyRot);
-			}
-		}
-
-
-		// 차일드 엔티티 트랜스폼 업데이트
-		auto chileView = m_Registry.view<ChildEntityComponent>();
-		for (auto childEntity : chileView)
-		{
-			auto& childComp = chileView.get<ChildEntityComponent>(childEntity);
-			auto& parentTransform = childComp.ParentEntity.GetComponent<TransformComponent>();
-			for (auto& childs : childComp.CurrentChildEntities)
-			{
-				TransformComponent& childTransform = childs.GetComponent<TransformComponent>();
-				childTransform.IsChildRenderMode = true;
-				childTransform.RenderTransform = parentTransform.Transform * childTransform.Transform;
-			}
-		}
-
-		// 카메라 업데이트
-		OrthoCamera* mainCamera = nullptr;
-		sf::Transform* cameraTransform = nullptr;
-		{
-			auto view = m_Registry.view<TransformComponent, CameraComponent>();
-			for (auto entity : view)
-			{
-				const auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-
-				if (camera.Primary)
-				{
-					if (transform.IsChildRenderMode)
-						cameraTransform = &transform.RenderTransform;
-					else
-						cameraTransform = &transform.Transform.GetRawTransform();
-					mainCamera = &camera.Camera;
-					break;
-				}
-			}
-		}
-
-		// 스프라이트 렌더링
-		if (mainCamera)
-		{
-			Renderer2D::BeginScene(*mainCamera, *cameraTransform, m_FrameBuffer);
-
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
-			for (auto entity : group)
-			{
-				const auto& [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
-				if (transform.IsChildRenderMode)
-					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.RenderTransform);
-				else
-					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
-
-			}
-
-			Renderer2D::EndScene();
-		}
-		else
-		{
-			m_FrameBuffer->Clear();
-		}
+	void Scene::OnUpdateRuntime(float dt)
+	{
+		OrthoCamera* camera = nullptr;
+		sf::Transform* transform = nullptr;
+		this->OnUpdateScript(dt);
+		this->OnUpdatePhysicsSystem(dt);
+		this->OnUpdateChildEntity();
+		this->OnUpdateCamera(&camera, &transform);
+		this->OnRenderRuntimeSprite(camera, *transform);
 	}
 
 	void Scene::OnViewportResize(unsigned int width, unsigned int height)
@@ -293,6 +214,131 @@ namespace fz {
 				return entity;
 		}
 		return {};
+	}
+
+	void Scene::OnUpdateScript(float dt)
+	{
+		auto nativeView = m_Registry.view<NativeScriptComponent>();
+		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
+						{
+							if (nsc.Instance == nullptr)
+							{
+								nsc.Instance = nsc.CreateInstanceFunc();
+								if (!nsc.Instance->m_Entity)
+									nsc.Instance->m_Entity = { entity, shared_from_this() };
+								nsc.OnCreateFunction(nsc.Instance);
+							}
+							nsc.OnUpdateFunction(nsc.Instance, dt);
+						});
+	}
+
+	void Scene::OnUpdateChildEntity()
+	{
+		// 차일드 엔티티 트랜스폼 업데이트
+		auto chileView = m_Registry.view<ChildEntityComponent>();
+		for (auto childEntity : chileView)
+		{
+			auto& childComp = chileView.get<ChildEntityComponent>(childEntity);
+			auto& parentTransform = childComp.ParentEntity.GetComponent<TransformComponent>();
+			for (auto& childs : childComp.CurrentChildEntities)
+			{
+				TransformComponent& childTransform = childs.GetComponent<TransformComponent>();
+				childTransform.IsChildRenderMode = true;
+				childTransform.RenderTransform = parentTransform.Transform * childTransform.Transform;
+			}
+		}
+	}
+
+	void Scene::OnUpdatePhysicsSystem(float dt)
+	{
+		// 물리 시스템 업데이트
+		if (m_World)
+		{
+			const int32_t velocityIterations = 6;
+			const int32_t positionIterations = 2;
+			m_World->Step(dt, velocityIterations, positionIterations);
+
+			auto view = m_Registry.view<RigidbodyComponent>();
+			for (auto e : view)
+			{
+				Entity entity = { e, shared_from_this() };
+				auto& transformComp = entity.GetComponent<TransformComponent>();
+				auto& transform = transformComp.Transform;
+				auto& rigid = entity.GetComponent<RigidbodyComponent>();
+				b2Body* body = (b2Body*)rigid.RuntimeBody;
+				const auto& bodyPos = body->GetPosition();
+				const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
+				transform.SetTranslate(bodyPos.x, bodyPos.y);
+				transform.SetRotation(bodyRot);
+			}
+		}
+	}
+
+	void Scene::OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform** dstTransform)
+	{
+		auto view = m_Registry.view<TransformComponent, CameraComponent>();
+		for (auto entity : view)
+		{
+			const auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
+
+			if (camera.Primary)
+			{
+				if (transform.IsChildRenderMode)
+					*dstTransform = &transform.RenderTransform;
+				else
+					*dstTransform = &transform.Transform.GetRawTransform();
+				*dstCamera = &camera.Camera;
+				break;
+			}
+		}
+	}
+
+	void Scene::OnRenderEditorSprite(OrthoCamera* mainCamera)
+	{
+		// 스프라이트 렌더링
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(*mainCamera, m_FrameBuffer);
+
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+			for (auto entity : group)
+			{
+				const auto& [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+				if (transform.IsChildRenderMode)
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.RenderTransform);
+				else
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
+			}
+			Renderer2D::EndScene();
+		}
+		else
+		{
+			m_FrameBuffer->Clear();
+		}
+	}
+
+	void Scene::OnRenderRuntimeSprite(OrthoCamera* mainCamera, sf::Transform& transform)
+	{
+		// 스프라이트 렌더링
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(*mainCamera, transform, m_FrameBuffer);
+
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+			for (auto entity : group)
+			{
+				const auto& [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+				if (transform.IsChildRenderMode)
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.RenderTransform);
+				else
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
+			}
+			Renderer2D::EndScene();
+		}
+		else
+		{
+			m_FrameBuffer->Clear();
+		}
 	}
 
 } // namespace fz
