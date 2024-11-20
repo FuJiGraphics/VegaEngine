@@ -10,6 +10,7 @@ namespace fz {
 
 		void OnCreate()
 		{
+			
 		}
 
 		void OnDestroy()
@@ -18,28 +19,22 @@ namespace fz {
 
 		void OnUpdate(float dt)
 		{
-			auto& transformComponent = GetComponent<TransformComponent>();
-			auto& transform = transformComponent.Transform;
-			auto prevPos = transform.GetTranslate();
-			if (InputManager::IsKeyPressed(KeyType::W))
+			float h = InputManager::GetAxis(Axis::Horizontal);
+			float v = InputManager::GetAxis(Axis::Vertical);
+			if (HasComponent<RigidbodyComponent>())
 			{
-				prevPos.y -= Speed * dt;
-				transform.SetTranslate(prevPos);
-			}
-			if (InputManager::IsKeyPressed(KeyType::S))
-			{
-				prevPos.y += Speed * dt;
-				transform.SetTranslate(prevPos);
-			}
-			if (InputManager::IsKeyPressed(KeyType::A))
-			{
-				prevPos.x -= Speed * dt;
-				transform.SetTranslate(prevPos);
-			}
-			if (InputManager::IsKeyPressed(KeyType::D))
-			{
-				prevPos.x += Speed * dt;
-				transform.SetTranslate(prevPos);
+				auto& body = GetComponent<RigidbodyComponent>();
+				sf::Vector2f dir = { h, v };
+
+				sf::Vector2f groundNormal;
+				if (body.IsOnGround(groundNormal))
+				{
+					dir = Utils::ProjectOnSlope(dir, groundNormal);
+					body.SetGravityScale(4.0f);
+				}
+
+				body.SetLinearVelocity(dir * Speed);
+				//body.AddForce((dir) * Speed);
 			}
 		};
 	};

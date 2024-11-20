@@ -108,6 +108,11 @@ namespace fz {
         return Magnitude(p2 - p1);
     }
 
+    float Utils::Dot(const sf::Vector2f& v1, const sf::Vector2f& v2)
+    {
+        return v1.x * v2.x + v1.y * v2.y;
+    }
+
     float Utils::RadianToDegree(float radian)
     {
         return radian * (180.f / Utils::GetPi());
@@ -137,6 +142,17 @@ namespace fz {
     {
         return sinf(DegreeToRadian(degree));
     }
+
+    sf::Vector2f Utils::ProjectOnSlope(const sf::Vector2f& velocity, const sf::Vector2f& slopeNormal)
+	{
+		// 경사로 정규 벡터 (단위 벡터로 정규화 되어 있어야 함)
+		sf::Vector2f norm = slopeNormal;
+		// 속도 벡터와 경사로 정규 벡터의 내적을 계산
+        float dotProduct = Utils::Dot(velocity, slopeNormal);
+		// 경사로에 수직인 성분을 빼는 방식으로 투영 계산
+		sf::Vector2f projection = velocity - dotProduct * norm;
+        return { projection.x, projection.y };
+	}
 
     sf::Vector2f Utils::GetRotateVector(float angle, const sf::Vector2f& target)
     {

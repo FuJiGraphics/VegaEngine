@@ -24,6 +24,7 @@ namespace fz {
 		static void Normalize(sf::Vector2f& vec);
 		static sf::Vector2f GetNormal(const sf::Vector2f& vec);
 		static float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2);
+		static float Dot(const sf::Vector2f& v1, const sf::Vector2f& v2);
 
 		static float RadianToDegree(float radian);
 		static float DegreeToRadian(float degree);
@@ -31,6 +32,7 @@ namespace fz {
 		static float Angle(const sf::Vector2f& vec);
 		static float GetAngleToCos(float degree);
 		static float GetAngleToSin(float degree);
+		static sf::Vector2f ProjectOnSlope(const sf::Vector2f& velocity, const sf::Vector2f& slopeNormal);
 
 		static sf::Vector2f GetRotateVector(float angle, const sf::Vector2f& target);
 		static const double GetPi();

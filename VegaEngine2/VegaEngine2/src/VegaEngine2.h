@@ -38,6 +38,8 @@
 #include "Core/Scene/EditorCamera.h"
 #include "Core/Scene/Scene.h"
 
+#include "Animation/Anim.h"
+
 /* Entry Point */
 #include "ScriptCore.h"
 #include "EntryPoint.h"

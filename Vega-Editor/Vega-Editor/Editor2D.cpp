@@ -22,6 +22,7 @@ namespace fz {
 		else
 			m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 		m_HierarchyPanel.SetContext(m_ActiveScene);
+		Scene::s_CurrentScene = m_ActiveScene;
 	}
 
 	void Editor2D::OnDetach()

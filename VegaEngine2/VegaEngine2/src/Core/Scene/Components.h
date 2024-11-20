@@ -104,6 +104,13 @@ namespace fz {
 		bool FixedRotation = false;
 
 		void AddForce(const sf::Vector2f& force);
+		void SetGravityScale(float scale);
+		void SetLinearVelocity(const sf::Vector2f& velocity);
+
+		bool IsOnGround();
+		bool IsOnGround(sf::Vector2f& normal);
+		bool IsOnGround(sf::Vector2f& normal, sf::Vector2f& pos);
+		bool IsOnGround(sf::Vector2f& normal, sf::Vector2f& pos, float& fraction);
 
 		RigidbodyComponent() = default;
 		RigidbodyComponent(const RigidbodyComponent& other) = default;

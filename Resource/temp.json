@@ -55,8 +55,8 @@
                         1.0
                     ],
                     "Translate": [
-                        0.0,
-                        0.0
+                        2.0,
+                        -12.0
                     ]
                 }
             },
@@ -65,18 +65,18 @@
                 "Friction": 0.5,
                 "Offset": {
                     "X": 0.0,
-                    "Y": 0.0
+                    "Y": -1.399999976158142
                 },
                 "Restitution": 0.0,
                 "RestitutionThreshold": 0.5,
                 "Size": {
-                    "X": 15.199999809265137,
-                    "Y": 15.199999809265137
+                    "X": 10.100000381469727,
+                    "Y": 13.0
                 }
             },
             "HasChild": true,
             "RigidbodyComponent": {
-                "FixedRotation": false,
+                "FixedRotation": true,
                 "RigidType": "Dynamic"
             },
             "RootEntity": true,
@@ -88,14 +88,14 @@
                     0.0,
                     0.0
                 ],
-                "Rotation": 0.0059099155478179455,
+                "Rotation": 0.0,
                 "Scale": [
                     1.0,
                     1.0
                 ],
                 "Translate": [
-                    0.0,
-                    -417.0
+                    121.1579818725586,
+                    144.12747192382813
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -168,8 +168,8 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    1444.5689697265625,
-                    775.0650024414063
+                    407.0920104980469,
+                    218.4199981689453
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -177,7 +177,7 @@
                     "Top": 0.0,
                     "Width": 1.0
                 },
-                "Zoom": 0.9509999752044678
+                "Zoom": 0.2680000066757202
             },
             "HasChild": false,
             "RootEntity": true,
@@ -195,85 +195,8 @@
                     1.0
                 ],
                 "Translate": [
-                    257.0,
-                    -25.0
-                ]
-            }
-        },
-        "bfe2feb3-47ee-4517-8a20-9b1d0db79b90": {
-            "BoxCollider2DComponent": {
-                "Density": 1.0,
-                "Friction": 0.5,
-                "Offset": {
-                    "X": 0.0,
-                    "Y": 0.0
-                },
-                "Restitution": 0.0,
-                "RestitutionThreshold": 0.5,
-                "Size": {
-                    "X": 55.0,
-                    "Y": 55.0
-                }
-            },
-            "HasChild": false,
-            "RigidbodyComponent": {
-                "FixedRotation": false,
-                "RigidType": "Static"
-            },
-            "RootEntity": true,
-            "SpriteComponent": {
-                "Color": {
-                    "A": 255,
-                    "B": 255,
-                    "G": 255,
-                    "R": 255
-                },
-                "MaskColor": {
-                    "A": 255,
-                    "B": 0,
-                    "G": 0,
-                    "R": 0
-                },
-                "MaskMode": false,
-                "Origin": [
-                    27.5,
-                    27.5
-                ],
-                "Origins": "MC",
-                "Position": [
-                    0.0,
-                    0.0
-                ],
-                "Rotation": 0.0,
-                "Scale": [
-                    1.0,
-                    1.0
-                ],
-                "SortingOrder": 0,
-                "TexPath": "..\\..\\ZombieArena\\bin\\Debug\\graphics\\health_pickup.png",
-                "TexRect": {
-                    "Height": 55,
-                    "Left": 0,
-                    "Top": 0,
-                    "Width": 55
-                }
-            },
-            "TagComponent": {
-                "Tag": "NewEntity"
-            },
-            "TransformComponent": {
-                "Origin": [
-                    0.0,
-                    0.0
-                ],
-                "Rotation": 0.0,
-                "Scale": [
-                    1.0,
-                    1.0
-                ],
-                "Translate": [
-                    0.0,
-                    0.0
+                    145.0,
+                    130.0
                 ]
             }
         },
@@ -708,6 +631,268 @@
                     "Translate": [
                         -28.0,
                         90.0
+                    ]
+                }
+            }
+        },
+        "f8210587-b52c-45d6-b508-acc043198a45": {
+            "259e476b-ab34-4390-8a4c-d3cf402f668e": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.0,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 141.8000030517578,
+                        "Y": 12.779999732971191
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Ground1"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 169.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -40.0,
+                        195.0
+                    ]
+                }
+            },
+            "55c72d9b-cf14-4fcd-bd34-cc4f3ee0dbd4": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 128.0,
+                        "Y": 4.599999904632568
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Ground3"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        180.0,
+                        196.99998474121094
+                    ]
+                }
+            },
+            "71fa4136-8a78-43d7-98e9-2b57498e006c": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 0.5,
+                        "Y": 106.5
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Right"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        359.0,
+                        128.0
+                    ]
+                }
+            },
+            "8990e593-ac20-486d-accc-fc4c9a116cab": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 0.5,
+                        "Y": 2.799999952316284
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Left"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        30.700000762939453
+                    ],
+                    "Translate": [
+                        -58.999996185302734,
+                        125.0
+                    ]
+                }
+            },
+            "HasChild": true,
+            "RootEntity": true,
+            "TagComponent": {
+                "Tag": "Blocks"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            },
+            "a27e01ca-c8bf-4b71-8d3b-cd00aea121ec": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.0,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 112.9000015258789,
+                        "Y": 7.980000019073486
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Ground2"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 14.5,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        205.60000610351563,
+                        191.39999389648438
+                    ]
+                }
+            },
+            "f7f871aa-a84d-477a-a8b6-32ff0b8e0766": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 58.099998474121094,
+                        "Y": 3.700000047683716
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Ground4"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 165.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        306.0,
+                        195.0
                     ]
                 }
             }

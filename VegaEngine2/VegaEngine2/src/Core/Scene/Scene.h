@@ -48,6 +48,7 @@ namespace fz {
 		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
 
 		std::string GetUUID() const { return m_UUID; }
+		void* GetPhysicsWorld() const { return m_World; }
 
 		bool IsDebugDisplayMode() const { return m_IsDebugMode; }
 		void SetDebugDisplayMode(bool enabled) { m_IsDebugMode = enabled; }

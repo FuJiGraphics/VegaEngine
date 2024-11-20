@@ -170,9 +170,9 @@ namespace fz {
 		OrthoCamera* camera = nullptr;
 		sf::Transform* transform = nullptr;
 		this->OnUpdateScript(dt);
-		this->OnUpdatePhysicsSystem(dt);
 		this->OnUpdateChildEntity();
 		this->OnUpdateCamera(&camera, &transform);
+		this->OnUpdatePhysicsSystem(dt);
 		this->OnRenderRuntimeSprite(camera, *transform);
 	}
 
@@ -272,10 +272,13 @@ namespace fz {
 				auto& transform = transformComp.Transform;
 				auto& rigid = entity.GetComponent<RigidbodyComponent>();
 				b2Body* body = (b2Body*)rigid.RuntimeBody;
-				const sf::Vector2f& pixelBoxPos = Utils::MeterToPixel(body->GetPosition());
-				const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
-				transform.SetTranslate(pixelBoxPos.x, pixelBoxPos.y);
-				transform.SetRotation(bodyRot);
+				if (body)
+				{
+					const sf::Vector2f& pixelBoxPos = Utils::MeterToPixel(body->GetPosition());
+					const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
+					transform.SetTranslate(pixelBoxPos.x, pixelBoxPos.y);
+					transform.SetRotation(bodyRot);
+				}
 			}
 		}
 	}
@@ -362,7 +365,7 @@ namespace fz {
 			const auto& [transformComp, boxComp] = boxView.get<TransformComponent, BoxCollider2DComponent>(handle);
 			sf::RectangleShape* rect = new sf::RectangleShape;
 			rect->setOutlineColor(sf::Color::Green);
-			rect->setOutlineThickness(5.0f);
+			rect->setOutlineThickness(1.0f);
 			rect->setFillColor(sf::Color::Transparent);
 			rect->setSize({ boxComp.Size.x * 2.0f, boxComp.Size.y * 2.0f });
 			rect->setPosition({ boxComp.Size.x * -1.0f, boxComp.Size.y * -1.0f });
