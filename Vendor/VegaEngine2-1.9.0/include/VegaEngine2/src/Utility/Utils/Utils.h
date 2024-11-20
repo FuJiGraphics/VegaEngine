@@ -35,8 +35,8 @@ namespace fz {
 		static sf::Vector2f GetRotateVector(float angle, const sf::Vector2f& target);
 		static const double GetPi();
 		static bool CanFileOpen(const std::string& path);
-		static b2Vec2 PixelToMeter(const sf::Vector2f& vec, float PixelsPerMeter = 100.f);
-		static sf::Vector2f MeterToPixel(const b2Vec2& vec, float PixelsPerMeter = 100.f);
+		static b2Vec2 PixelToMeter(const sf::Vector2f& vec);
+		static sf::Vector2f MeterToPixel(const b2Vec2& vec);
 	};
 
 } // namespace fz

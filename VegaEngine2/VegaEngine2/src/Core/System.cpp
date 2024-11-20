@@ -34,6 +34,7 @@ namespace fz {
 		FZLOG_ASSERT(this->GenerateLayerStack(), "레이어 스택 생성에 실패하였습니다.");
 		FZLOG_ASSERT(ImGuiManager::Init(*m_Window), "ImGui 초기화에 실패하였습니다.");
 		InputManager::SetTargetTrackingWindow((sf::RenderWindow*)m_Window->GetNativeWindow());
+		InputManager::Init();
 		Renderer2D::Init((sf::RenderWindow*)m_Window->GetNativeWindow());
 		IsInit = true;
 		FZLOG_INFO("System 초기화 성공");
@@ -102,6 +103,7 @@ namespace fz {
 					obj->OnUpdate(dt);
 				}
 			}
+			InputManager::Update(dt);
 
 			// ImGui
 			ImGuiManager::Begin(t);

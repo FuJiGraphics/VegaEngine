@@ -92,13 +92,18 @@ namespace fz {
 
 	struct RigidbodyComponent
 	{
+	protected:
+		friend fz::Scene;
+		void* RuntimeBody = nullptr;
+
+	public:
 		enum class BodyType {
 			Static, Dynamic, Kinematic
 		};
 		BodyType RigidType = BodyType::Static;
 		bool FixedRotation = false;
 
-		void* RuntimeBody = nullptr;
+		void AddForce(const sf::Vector2f& force);
 
 		RigidbodyComponent() = default;
 		RigidbodyComponent(const RigidbodyComponent& other) = default;
@@ -106,6 +111,11 @@ namespace fz {
 
 	struct BoxCollider2DComponent
 	{
+	protected:
+		friend fz::Scene;
+		void* RuntimeFixture = nullptr;
+
+	public:
 		sf::Vector2f Offset = { 0.0f, 0.0f };
 		sf::Vector2f Size = { 0.5f, 0.5f };
 
@@ -113,8 +123,6 @@ namespace fz {
 		float Friction = 0.5f;
 		float Restitution = 0.0f;
 		float RestitutionThreshold = 0.5f;
-
-		void* RuntimeFixture = nullptr;
 
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;

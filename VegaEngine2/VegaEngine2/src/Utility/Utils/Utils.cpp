@@ -5,6 +5,8 @@ namespace fz {
 
     namespace {
         const double s_Pi = std::atan(1) * 4;
+        static float s_PPM = 100.0f;
+		static float s_MPP = 1.0f / s_PPM;
     }
 
     sf::Vector2f Utils::SetOrigin(sf::Transformable& obj, Origins preset, const sf::FloatRect& rect)
@@ -162,14 +164,14 @@ namespace fz {
 		return result;
     }
 
-    b2Vec2 Utils::PixelToMeter(const sf::Vector2f& vec, float PixelsPerMeter)
+    b2Vec2 Utils::PixelToMeter(const sf::Vector2f& vec)
 	{
-        return { vec.x / PixelsPerMeter, vec.y / PixelsPerMeter };
+        return { vec.x * s_MPP, vec.y * s_MPP };
 	}
 
-    sf::Vector2f Utils::MeterToPixel(const b2Vec2& vec, float PixelsPerMeter)
+    sf::Vector2f Utils::MeterToPixel(const b2Vec2& vec)
     {
-        return { vec.x * PixelsPerMeter, vec.y * PixelsPerMeter };
+		return { vec.x * s_PPM, vec.y * s_PPM };
     }
 
 } // namespace fz
