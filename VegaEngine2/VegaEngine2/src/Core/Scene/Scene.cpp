@@ -105,7 +105,7 @@ namespace fz {
 	void Scene::StartPhysics()
 	{
 		StopPhysics();
-		m_World = new b2World({ 0.0f, -9.8f });
+		m_World = new b2World({ 0.0f, 9.8f });
 
 		auto view = m_Registry.view<RigidbodyComponent>();
 		for (auto& handle : view)

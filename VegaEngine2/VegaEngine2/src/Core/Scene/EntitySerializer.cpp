@@ -241,17 +241,19 @@ namespace fz {
 		std::vector<float> origin = json["SpriteComponent"]["Origin"];
 		std::string originsStr = json["SpriteComponent"]["Origins"];
 		Origins origins = Converter::StringToOrigins(originsStr);
-		rawSprite.setPosition(pos[0], pos[1]);
-		rawSprite.setScale(scale[0], scale[1]);
-		rawSprite.setRotation(rotation);
-		rawSprite.setOrigin(origin[0], origin[1]);
-		sprite.SetOrigins(origins);
 
 		int left = json["SpriteComponent"]["TexRect"]["Left"];
 		int top = json["SpriteComponent"]["TexRect"]["Top"];
 		int width = json["SpriteComponent"]["TexRect"]["Width"];
 		int height = json["SpriteComponent"]["TexRect"]["Height"];
 		sprite.SetTextureRect({ left, top, width, height });
+		rawSprite.setPosition(pos[0], pos[1]);
+		rawSprite.setScale(scale[0], scale[1]);
+		rawSprite.setRotation(rotation);
+		if (origins == Origins::Custom)
+			rawSprite.setOrigin(origin[0], origin[1]);
+		else
+			sprite.SetOrigins(origins);
 	}
 
 } // namespace fz
