@@ -95,7 +95,7 @@ namespace fz {
 				this->DeserializeSprite(json[m_EntityUUID]);
 			else if (component == "RigidbodyComponent")
 				this->DeserializeRigidBody(json[m_EntityUUID]);
-			else if (component == "ColliderComponent")
+			else if (component == "BoxCollider2DComponent")
 				this->DeserializeCollider(json[m_EntityUUID]);
 			else if (component == "RootEntity")
 				isRootEntity = json[m_EntityUUID]["RootEntity"];
@@ -177,6 +177,10 @@ namespace fz {
 			const auto& texRect = sprite.GetTextureRect();
 			const auto& color = rawSprite.getColor();
 			const auto& maskColor = sprite.GetMaskColor();
+			std::vector<float> pos = { rawSprite.getPosition().x, rawSprite.getPosition().y };
+			std::vector<float> scale = { rawSprite.getScale().x, rawSprite.getScale().y };
+			std::vector<float> origin = { rawSprite.getOrigin().x, rawSprite.getOrigin().y };
+
 			json["SpriteComponent"]["TexPath"] = texPath;
 			json["SpriteComponent"]["TexRect"]["Left"] = texRect.left;
 			json["SpriteComponent"]["TexRect"]["Top"] = texRect.top;
@@ -186,10 +190,10 @@ namespace fz {
 			json["SpriteComponent"]["Color"]["G"] = color.g;
 			json["SpriteComponent"]["Color"]["B"] = color.b;
 			json["SpriteComponent"]["Color"]["A"] = color.a;
-			json["SpriteComponent"]["Position"] = { rawSprite.getPosition().x, rawSprite.getPosition().y };
-			json["SpriteComponent"]["Scale"] = { rawSprite.getScale().x, rawSprite.getScale().y };
+			json["SpriteComponent"]["Position"] = pos;
+			json["SpriteComponent"]["Scale"] = scale;
 			json["SpriteComponent"]["Rotation"] = rawSprite.getRotation();
-			json["SpriteComponent"]["Origin"] = { rawSprite.getOrigin().x, rawSprite.getOrigin().y };
+			json["SpriteComponent"]["Origin"] = origin;
 			json["SpriteComponent"]["Origins"] = Converter::ToString(sprite.GetOrigins());
 			json["SpriteComponent"]["MaskMode"] = sprite.IsMaskMode();
 			json["SpriteComponent"]["MaskColor"]["R"] = maskColor.r;
@@ -214,9 +218,9 @@ namespace fz {
 
 	void EntitySerializer::SerializeCollider(json& json)
 	{
-		if (m_Entity.HasComponent<ColliderComponent>())
+		if (m_Entity.HasComponent<BoxCollider2DComponent>())
 		{
-			auto& colliderComp = m_Entity.GetComponent<ColliderComponent>();
+			auto& colliderComp = m_Entity.GetComponent<BoxCollider2DComponent>();
 			sf::Vector2f offset = colliderComp.Offset;
 			sf::Vector2f size = colliderComp.Size;
 			float density = colliderComp.Density;
@@ -224,14 +228,14 @@ namespace fz {
 			float restitution = colliderComp.Restitution;
 			float restitutionThreshold = colliderComp.RestitutionThreshold;
 
-			json["ColliderComponent"]["Offset"]["X"] = offset.x;
-			json["ColliderComponent"]["Offset"]["Y"] = offset.y;
-			json["ColliderComponent"]["Size"]["X"] = size.x;
-			json["ColliderComponent"]["Size"]["Y"] = size.y;
-			json["ColliderComponent"]["Density"] = density;
-			json["ColliderComponent"]["Friction"] = friction;
-			json["ColliderComponent"]["Restitution"] = restitution;
-			json["ColliderComponent"]["RestitutionThreshold"] = restitutionThreshold;
+			json["BoxCollider2DComponent"]["Offset"]["X"] = offset.x;
+			json["BoxCollider2DComponent"]["Offset"]["Y"] = offset.y;
+			json["BoxCollider2DComponent"]["Size"]["X"] = size.x;
+			json["BoxCollider2DComponent"]["Size"]["Y"] = size.y;
+			json["BoxCollider2DComponent"]["Density"] = density;
+			json["BoxCollider2DComponent"]["Friction"] = friction;
+			json["BoxCollider2DComponent"]["Restitution"] = restitution;
+			json["BoxCollider2DComponent"]["RestitutionThreshold"] = restitutionThreshold;
 		}
 	}
 
@@ -319,13 +323,13 @@ namespace fz {
 		int width = json["SpriteComponent"]["TexRect"]["Width"];
 		int height = json["SpriteComponent"]["TexRect"]["Height"];
 		sprite.SetTextureRect({ left, top, width, height });
-		rawSprite.setPosition(pos[0], pos[1]);
-		rawSprite.setScale(scale[0], scale[1]);
-		rawSprite.setRotation(rotation);
 		if (origins == Origins::Custom)
 			rawSprite.setOrigin(origin[0], origin[1]);
 		else
 			sprite.SetOrigins(origins);
+		rawSprite.setPosition(pos[0], pos[1]);
+		rawSprite.setScale(scale[0], scale[1]);
+		rawSprite.setRotation(rotation);
 	}
 
 	void EntitySerializer::DeserializeRigidBody(json& json)
@@ -338,15 +342,15 @@ namespace fz {
 
 	void EntitySerializer::DeserializeCollider(json& json)
 	{
-		ColliderComponent& colliderComp = FindComponent<ColliderComponent>();
-		colliderComp.Density = json["ColliderComponent"]["Density"];
-		colliderComp.Friction = json["ColliderComponent"]["Friction"];
-		colliderComp.Restitution = json["ColliderComponent"]["Restitution"];
-		colliderComp.RestitutionThreshold = json["ColliderComponent"]["RestitutionThreshold"];
-		colliderComp.Offset.x = json["ColliderComponent"]["Offset"]["X"];
-		colliderComp.Offset.y = json["ColliderComponent"]["Offset"]["Y"];
-		colliderComp.Size.x = json["ColliderComponent"]["Size"]["X"];
-		colliderComp.Size.y = json["ColliderComponent"]["Size"]["Y"];
+		BoxCollider2DComponent& colliderComp = FindComponent<BoxCollider2DComponent>();
+		colliderComp.Density = json["BoxCollider2DComponent"]["Density"];
+		colliderComp.Friction = json["BoxCollider2DComponent"]["Friction"];
+		colliderComp.Restitution = json["BoxCollider2DComponent"]["Restitution"];
+		colliderComp.RestitutionThreshold = json["BoxCollider2DComponent"]["RestitutionThreshold"];
+		colliderComp.Offset.x = json["BoxCollider2DComponent"]["Offset"]["X"];
+		colliderComp.Offset.y = json["BoxCollider2DComponent"]["Offset"]["Y"];
+		colliderComp.Size.x = json["BoxCollider2DComponent"]["Size"]["X"];
+		colliderComp.Size.y = json["BoxCollider2DComponent"]["Size"]["Y"];
 	}
 
 } // namespace fz

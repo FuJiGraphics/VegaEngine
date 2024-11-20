@@ -162,5 +162,15 @@ namespace fz {
 		return result;
     }
 
+    b2Vec2 Utils::PixelToMeter(const sf::Vector2f& vec, float PixelsPerMeter)
+	{
+        return { vec.x / PixelsPerMeter, vec.y / PixelsPerMeter };
+	}
+
+    sf::Vector2f Utils::MeterToPixel(const b2Vec2& vec, float PixelsPerMeter)
+    {
+        return { vec.x * PixelsPerMeter, vec.y * PixelsPerMeter };
+    }
+
 } // namespace fz
 

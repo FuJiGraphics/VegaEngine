@@ -68,12 +68,28 @@ namespace fz {
 
 		if (s_FrameBuffer)
 		{
-			for (auto& renderFrame : s_CommandBuffer)
+			for (auto& it : s_CommandBuffer)
 			{
+				RenderFrame& renderFrame = it.second;
 				sf::RenderStates state;
-				state.transform = *renderFrame.second.Transform;
-				state.texture = renderFrame.second.Sprite->getTexture();
-				s_FrameBuffer->GetBuffer().draw(*renderFrame.second.Sprite, state);
+				state.transform = *renderFrame.Transform;
+				if (renderFrame.Sprite)
+				{
+					state.texture = renderFrame.Sprite->getTexture();
+					s_FrameBuffer->GetBuffer().draw(*renderFrame.Sprite, state);
+				}
+				if (renderFrame.RectangleShape)
+				{
+					s_FrameBuffer->GetBuffer().draw(*renderFrame.RectangleShape, state);
+					delete renderFrame.RectangleShape;
+					renderFrame.RectangleShape = nullptr;
+				}
+				if (renderFrame.CircleShape)
+				{
+					s_FrameBuffer->GetBuffer().draw(*renderFrame.CircleShape, state);
+					delete renderFrame.CircleShape;
+					renderFrame.CircleShape = nullptr;
+				}
 			}
 
 			auto& renderBuffer = s_FrameBuffer->GetBuffer();
@@ -101,5 +117,13 @@ namespace fz {
 		RenderFrame renderFrame = { &target, &transform };
 		s_CommandBuffer.insert({ order, renderFrame });
 	}
+
+	void Renderer2D::Draw(sf::RectangleShape* target, sf::Transform& transform)
+	{
+		const auto& lastElement = *s_CommandBuffer.rbegin();
+		RenderFrame renderFrame = { nullptr, &transform, target, nullptr };
+		s_CommandBuffer.insert({ lastElement.first + 1, renderFrame });
+	}
+
 } // namespace fz
 

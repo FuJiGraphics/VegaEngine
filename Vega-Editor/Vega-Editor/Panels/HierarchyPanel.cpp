@@ -153,7 +153,7 @@ namespace fz {
 				DisplayAddComponentEntry<CameraComponent>("Camera");
 				DisplayAddComponentEntry<SpriteComponent>("Sprite");
 				DisplayAddComponentEntry<RigidbodyComponent>("Rigidbody");
-				DisplayAddComponentEntry<ColliderComponent>("Collider");
+				DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider2D");
 				ImGui::EndPopup();
 			} 
 		}
@@ -301,19 +301,19 @@ namespace fz {
 			}
 		}
 
-		if (entity.HasComponent<ColliderComponent>())
+		if (entity.HasComponent<BoxCollider2DComponent>())
 		{
 			if (ImGui::TreeNodeEx("ColliderComponent", treeFlag, "Collider"))
 			{
 				bool isRemove = VegaUI::PopupContextItem("Remove ColliderComponent", [&entity]() {
-					entity.RemoveComponent<ColliderComponent>();
+					entity.RemoveComponent<BoxCollider2DComponent>();
 														 });
 
 				if (!isRemove)
 				{
-					if (entity.HasComponent<ColliderComponent>())
+					if (entity.HasComponent<BoxCollider2DComponent>())
 					{
-						auto& colComp = entity.GetComponent<ColliderComponent>();
+						auto& colComp = entity.GetComponent<BoxCollider2DComponent>();
 						VegaUI::DrawControl2("Offset", colComp.Offset);
 						VegaUI::DrawControl2("Size", colComp.Size);
 						VegaUI::DrawControl1("Density", "Reset", colComp.Density);

@@ -129,6 +129,15 @@ namespace fz {
 
 		this->UiToolbar();
 		m_HierarchyPanel.OnImGuiRender();
+		if (ImGui::Begin("Draw Debug Mode"))
+		{
+			bool flag = m_ActiveScene->IsDebugDisplayMode();
+			if (ImGui::Checkbox("##debugMode", &flag))
+			{
+				m_ActiveScene->SetDebugDisplayMode(flag);
+			}
+		}
+		ImGui::End();
 
 		ImGui::EndMainMenuBar();
 	}

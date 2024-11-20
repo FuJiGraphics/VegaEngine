@@ -55,29 +55,29 @@
                         1.0
                     ],
                     "Translate": [
-                        -19.0,
-                        -99.0
+                        0.0,
+                        0.0
                     ]
                 }
             },
-            "ColliderComponent": {
+            "BoxCollider2DComponent": {
                 "Density": 1.0,
                 "Friction": 0.5,
                 "Offset": {
-                    "X": 6.400000095367432,
-                    "Y": 3.5999999046325684
+                    "X": 0.0,
+                    "Y": 0.0
                 },
                 "Restitution": 0.0,
                 "RestitutionThreshold": 0.5,
                 "Size": {
-                    "X": 0.5,
-                    "Y": 0.5
+                    "X": 15.199999809265137,
+                    "Y": 15.199999809265137
                 }
             },
             "HasChild": true,
             "RigidbodyComponent": {
                 "FixedRotation": false,
-                "RigidType": "Static"
+                "RigidType": "Dynamic"
             },
             "RootEntity": true,
             "TagComponent": {
@@ -88,14 +88,14 @@
                     0.0,
                     0.0
                 ],
-                "Rotation": 0.0,
+                "Rotation": 0.0059099155478179455,
                 "Scale": [
                     1.0,
                     1.0
                 ],
                 "Translate": [
-                    63.11056900024414,
-                    247.08609008789063
+                    0.0,
+                    0.0
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -116,10 +116,10 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        0.0,
-                        36.0
+                        12.5,
+                        18.0
                     ],
-                    "Origins": "BL",
+                    "Origins": "MC",
                     "Position": [
                         0.0,
                         0.0
@@ -152,8 +152,8 @@
                         1.0
                     ],
                     "Translate": [
-                        -34.0,
-                        -70.0
+                        0.0,
+                        0.0
                     ]
                 }
             }
@@ -169,7 +169,7 @@
                 "Rotation": 0.0,
                 "Size": [
                     1444.5689697265625,
-                    871.115966796875
+                    949.0979614257813
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -197,6 +197,83 @@
                 "Translate": [
                     257.0,
                     -25.0
+                ]
+            }
+        },
+        "bfe2feb3-47ee-4517-8a20-9b1d0db79b90": {
+            "BoxCollider2DComponent": {
+                "Density": 1.0,
+                "Friction": 0.5,
+                "Offset": {
+                    "X": 0.0,
+                    "Y": 0.0
+                },
+                "Restitution": 0.0,
+                "RestitutionThreshold": 0.5,
+                "Size": {
+                    "X": 55.0,
+                    "Y": 55.0
+                }
+            },
+            "HasChild": false,
+            "RigidbodyComponent": {
+                "FixedRotation": false,
+                "RigidType": "Static"
+            },
+            "RootEntity": true,
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 0,
+                    "G": 0,
+                    "R": 0
+                },
+                "MaskMode": false,
+                "Origin": [
+                    27.5,
+                    27.5
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "SortingOrder": 0,
+                "TexPath": "..\\..\\ZombieArena\\bin\\Debug\\graphics\\health_pickup.png",
+                "TexRect": {
+                    "Height": 55,
+                    "Left": 0,
+                    "Top": 0,
+                    "Width": 55
+                }
+            },
+            "TagComponent": {
+                "Tag": "NewEntity"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
                 ]
             }
         },
@@ -246,8 +323,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -305,8 +382,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -364,8 +441,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -385,8 +462,8 @@
             },
             "TransformComponent": {
                 "Origin": [
-                    -0.0,
-                    -0.0
+                    0.0,
+                    0.0
                 ],
                 "Rotation": 0.0,
                 "Scale": [
@@ -394,7 +471,7 @@
                     1.0
                 ],
                 "Translate": [
-                    0.0,
+                    -30.0,
                     0.0
                 ]
             },
@@ -443,8 +520,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -502,8 +579,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -561,8 +638,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [
@@ -620,8 +697,8 @@
                 },
                 "TransformComponent": {
                     "Origin": [
-                        -0.0,
-                        -0.0
+                        0.0,
+                        0.0
                     ],
                     "Rotation": 0.0,
                     "Scale": [

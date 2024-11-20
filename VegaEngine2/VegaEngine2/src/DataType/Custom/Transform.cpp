@@ -49,7 +49,6 @@ namespace fz {
 	void Transform::SetOrigin(float originX, float originY)
 	{
 		m_Origin = { originX, originY };
-		m_Origin *= -1.0f;
 		ResetTransform();
 	}
 
@@ -85,9 +84,7 @@ namespace fz {
 
 	sf::Transform Transform::operator*(const fz::Transform& other) const
 	{
-		const sf::Transform& lhs = this->GetRawTransform();
-		const sf::Transform& rhs = other.GetRawTransform();
-		return lhs * rhs;
+		return m_World * other.GetRawTransform();
 	}
 
 	sf::Vector2f Transform::operator*(const sf::Vector2f& other) const

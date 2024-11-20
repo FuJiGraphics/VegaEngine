@@ -28,6 +28,7 @@ namespace fz {
 	Scene::Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel, const std::string& uuid)
 		: m_UUID(uuid.empty() ? Random.GetUUID() : uuid)
 		, m_World(nullptr)
+		, m_IsDebugMode(false)
 	{
 		FramebufferSpec frameSpec;
 		frameSpec.Width = width;
@@ -106,6 +107,7 @@ namespace fz {
 	void Scene::StartPhysics()
 	{
 		StopPhysics();
+
 		m_World = new b2World({ 0.0f, 9.8f });
 
 		auto view = m_Registry.view<RigidbodyComponent>();
@@ -114,24 +116,27 @@ namespace fz {
 			fz::Entity entity = { handle, shared_from_this() };
 			auto& transformComp = entity.GetComponent<TransformComponent>();
 			auto& rigidBodyComp = entity.GetComponent<RigidbodyComponent>();
-			const auto& translate = transformComp.Transform.GetTranslate();
-			const auto& rotation = transformComp.Transform.GetRotation();
-			const auto& scale = transformComp.Transform.GetScale();
+			auto& transform = transformComp.Transform;
+
+			const b2Vec2& meterPos = Utils::PixelToMeter(transform.GetTranslate());
 
 			b2BodyDef bodyDef;
-			bodyDef.type = b2BodyType::b2_dynamicBody;
-			bodyDef.position.Set(translate.x, translate.y);
-			bodyDef.angle = Utils::DegreeToRadian(rotation);
+			bodyDef.type = ToBox2dBodyType(rigidBodyComp.RigidType);
+			bodyDef.position.Set(meterPos.x, meterPos.y);
+			bodyDef.angle = Utils::DegreeToRadian(transform.GetRotation());
 			b2Body* body = m_World->CreateBody(&bodyDef);
 			body->SetFixedRotation(rigidBodyComp.FixedRotation);
 			rigidBodyComp.RuntimeBody = body;
 
-			if (entity.HasComponent<ColliderComponent>())
+			if (entity.HasComponent<BoxCollider2DComponent>())
 			{
-				auto& collider = entity.GetComponent<ColliderComponent>();
+				auto& collider = entity.GetComponent<BoxCollider2DComponent>();
+
+				const b2Vec2& meterBoxSize = Utils::PixelToMeter({ collider.Size.x * transform.GetScale().x, 
+																 collider.Size.y * transform.GetScale().y });
 
 				b2PolygonShape polygonShape;
-				polygonShape.SetAsBox(collider.Size.x * scale.x, collider.Size.y * scale.y);
+				polygonShape.SetAsBox(meterBoxSize.x, meterBoxSize.y);
 
 				b2FixtureDef fixtureDef;
 				fixtureDef.shape = &polygonShape;
@@ -254,9 +259,10 @@ namespace fz {
 		// 물리 시스템 업데이트
 		if (m_World)
 		{
-			const int32_t velocityIterations = 6;
-			const int32_t positionIterations = 2;
-			m_World->Step(dt, velocityIterations, positionIterations);
+			float timeStep = 1.0f / 60.0f; // 초당 60프레임
+			const int32_t velocityIterations = 8;
+			const int32_t positionIterations = 3;
+			m_World->Step(timeStep, velocityIterations, positionIterations);
 
 			auto view = m_Registry.view<RigidbodyComponent>();
 			for (auto e : view)
@@ -266,9 +272,9 @@ namespace fz {
 				auto& transform = transformComp.Transform;
 				auto& rigid = entity.GetComponent<RigidbodyComponent>();
 				b2Body* body = (b2Body*)rigid.RuntimeBody;
-				const auto& bodyPos = body->GetPosition();
+				const sf::Vector2f& pixelBoxPos = Utils::MeterToPixel(body->GetPosition());
 				const auto& bodyRot = Utils::RadianToDegree(body->GetAngle());
-				transform.SetTranslate(bodyPos.x, bodyPos.y);
+				transform.SetTranslate(pixelBoxPos.x, pixelBoxPos.y);
 				transform.SetRotation(bodyRot);
 			}
 		}
@@ -309,6 +315,9 @@ namespace fz {
 				else
 					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
 			}
+
+			// Debug Display Mode
+			OnDrawDebugShape();
 			Renderer2D::EndScene();
 		}
 		else
@@ -323,7 +332,6 @@ namespace fz {
 		if (mainCamera)
 		{
 			Renderer2D::BeginScene(*mainCamera, transform, m_FrameBuffer);
-
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
 			for (auto entity : group)
 			{
@@ -333,12 +341,34 @@ namespace fz {
 				else
 					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
 			}
+			// Debug Display Mode
+			OnDrawDebugShape();
 			Renderer2D::EndScene();
 		}
 		else
 		{
 			m_FrameBuffer->Clear();
 		}
+	}
+
+	void Scene::OnDrawDebugShape()
+	{
+		if (!m_IsDebugMode)
+			return;
+
+		auto boxView = GetEntities<TransformComponent, BoxCollider2DComponent>();
+		for (auto& handle : boxView)
+		{
+			const auto& [transformComp, boxComp] = boxView.get<TransformComponent, BoxCollider2DComponent>(handle);
+			sf::RectangleShape* rect = new sf::RectangleShape;
+			rect->setOutlineColor(sf::Color::Green);
+			rect->setOutlineThickness(5.0f);
+			rect->setFillColor(sf::Color::Transparent);
+			rect->setSize({ boxComp.Size.x * 2.0f, boxComp.Size.y * 2.0f });
+			rect->setPosition({ boxComp.Size.x * -1.0f, boxComp.Size.y * -1.0f });
+			Renderer2D::Draw(rect, transformComp.Transform);
+		}
+		// auto circleView = GetEntities<TransformComponent, CircleCollider2DComponent>();
 	}
 
 } // namespace fz

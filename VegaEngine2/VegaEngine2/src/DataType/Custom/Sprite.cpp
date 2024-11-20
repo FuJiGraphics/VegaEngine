@@ -3,6 +3,8 @@
 
 namespace fz {
 	Sprite::Sprite(const fz::Sprite& other)
+		: m_TexPath("")
+		, m_Origins(Origins::MC)
 	{
 		m_Sprite = other.m_Sprite;
 		m_TexPath = other.m_TexPath;
@@ -10,6 +12,7 @@ namespace fz {
 
 	Sprite::Sprite(const std::string& texPath)
 		: m_TexPath(texPath)
+		, m_Origins(Origins::MC)
 	{
 		const sf::Texture& texture = TEXTURE_MGR.Get(texPath);
 		m_Sprite.setTexture(texture);
