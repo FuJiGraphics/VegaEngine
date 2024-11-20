@@ -201,14 +201,13 @@ namespace fz {
 			{
 				TransformComponent& childTransform = childs.GetComponent<TransformComponent>();
 				childTransform.IsChildRenderMode = true;
-				childTransform.RenderTransform = parentTransform.Transform;
-				childTransform.RenderTransform *= childTransform.Transform;
+				childTransform.RenderTransform = parentTransform.Transform * childTransform.Transform;
 			}
 		}
 
 		// 카메라 업데이트
 		OrthoCamera* mainCamera = nullptr;
-		fz::Transform* cameraTransform = nullptr;
+		sf::Transform* cameraTransform = nullptr;
 		{
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : view)
@@ -220,7 +219,7 @@ namespace fz {
 					if (transform.IsChildRenderMode)
 						cameraTransform = &transform.RenderTransform;
 					else
-						cameraTransform = &transform.Transform;
+						cameraTransform = &transform.Transform.GetRawTransform();
 					mainCamera = &camera.Camera;
 					break;
 				}
@@ -239,7 +238,7 @@ namespace fz {
 				if (transform.IsChildRenderMode)
 					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.RenderTransform);
 				else
-					Renderer2D::Draw(sprite.SortingOrder, sprite, transform);
+					Renderer2D::Draw(sprite.SortingOrder, sprite, transform.Transform);
 
 			}
 

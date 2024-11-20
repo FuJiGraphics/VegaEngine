@@ -26,7 +26,7 @@ namespace fz {
 		sf::Transform& GetRawTransform();
 		const sf::Transform& GetRawTransform() const;
 
-		fz::Transform& operator*=(const fz::Transform& other);
+		sf::Transform operator*(const fz::Transform& other) const;
 		sf::Vector2f operator*(const sf::Vector2f& other) const;
 		operator sf::Transform& ();
 		operator const sf::Transform& () const;

@@ -26,7 +26,7 @@ namespace fz {
 		s_RenderWindow = nullptr;
 	}
 
-	void Renderer2D::BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer)
+	void Renderer2D::BeginScene(OrthoCamera& camera, const sf::Transform& transform, Shared<Framebuffer>& framebuffer)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
 		FZLOG_ASSERT(framebuffer, "Renderer2D를 사용할 수 없습니다. 프레임 버퍼를 찾을 수 없습니다.");
@@ -37,7 +37,7 @@ namespace fz {
 		s_PrevCameraPos = s_OrthoCamera->GetCenter();
 		// 일단 카메라가 오브젝트의 포지션만 따라가게 하도록 설정
 		s_OrthoCamera->SetCenter(transform * s_OrthoCamera->GetCenter());
-		s_OrthoCamera->SetRotation(transform.GetRotation());
+		// s_OrthoCamera->SetRotation(transform.GetRotation());
 		if (s_FrameBuffer)
 		{
 			s_FrameBuffer->Clear();
@@ -77,7 +77,7 @@ namespace fz {
 		s_CommandBuffer.clear();
 	} 
 
-	void Renderer2D::Draw(int order, sf::Sprite& target, fz::Transform& transform)
+	void Renderer2D::Draw(int order, sf::Sprite& target, sf::Transform& transform)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
 		FZLOG_ASSERT(s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");

@@ -9,7 +9,7 @@ namespace fz {
 	struct RenderFrame
 	{
 		sf::Sprite* Sprite;
-		fz::Transform* Transform;
+		sf::Transform* Transform;
 	};
 
 	class Renderer2D
@@ -19,10 +19,10 @@ namespace fz {
 		static void Release();
 		static void Reset();
 
-		static void BeginScene(OrthoCamera& camera, fz::Transform& transform, Shared<Framebuffer>& framebuffer);
+		static void BeginScene(OrthoCamera& camera, const sf::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 
-		static void Draw(int order, sf::Sprite& target, fz::Transform& transform);
+		static void Draw(int order, sf::Sprite& target, sf::Transform& transform);
 		
 	private:
 		static sf::Sprite s_Spirte;

@@ -43,7 +43,7 @@ namespace fz {
 	struct TransformComponent
 	{
 		fz::Transform Transform;
-		fz::Transform RenderTransform;
+		sf::Transform RenderTransform;
 		bool IsChildRenderMode = false;
 
 		TransformComponent() = default;
