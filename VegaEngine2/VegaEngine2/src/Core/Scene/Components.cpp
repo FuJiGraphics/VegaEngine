@@ -17,6 +17,11 @@ namespace fz {
 		((b2Body*)RuntimeBody)->SetLinearVelocity(Utils::PixelToMeter(velocity));
 	}
 
+	sf::Vector2f RigidbodyComponent::GetLinearVelocity() const
+	{
+		return Utils::MeterToPixel(((b2Body*)RuntimeBody)->GetLinearVelocity());
+	}
+
 	bool RigidbodyComponent::IsOnGround()
 	{
 		sf::Vector2f empty;

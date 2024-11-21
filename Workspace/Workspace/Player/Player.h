@@ -19,22 +19,22 @@ namespace fz {
 
 		void OnUpdate(float dt)
 		{
-			float h = InputManager::GetAxis(Axis::Horizontal);
-			float v = InputManager::GetAxis(Axis::Vertical);
 			if (HasComponent<RigidbodyComponent>())
 			{
 				auto& body = GetComponent<RigidbodyComponent>();
-				sf::Vector2f dir = { h, v };
+				sf::Vector2f velocity = body.GetLinearVelocity();
+				sf::Vector2f movement;
 
-				sf::Vector2f groundNormal;
-				if (body.IsOnGround(groundNormal))
-				{
-					dir = Utils::ProjectOnSlope(dir, groundNormal);
-					body.SetGravityScale(4.0f);
-				}
+				if (InputManager::IsKeyPressed(KeyType::A))
+					movement = { Speed * -1.0f, velocity.y };
+				else if (InputManager::IsKeyPressed(KeyType::D))
+					movement = { Speed, velocity.y };
+				else
+					movement = { 0, velocity.y };
 
-				body.SetLinearVelocity(dir * Speed);
-				//body.AddForce((dir) * Speed);
+				body.SetLinearVelocity(movement);
+
+
 			}
 		};
 	};

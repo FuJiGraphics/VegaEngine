@@ -106,6 +106,7 @@ namespace fz {
 		void AddForce(const sf::Vector2f& force);
 		void SetGravityScale(float scale);
 		void SetLinearVelocity(const sf::Vector2f& velocity);
+		sf::Vector2f GetLinearVelocity() const;
 
 		bool IsOnGround();
 		bool IsOnGround(sf::Vector2f& normal);
