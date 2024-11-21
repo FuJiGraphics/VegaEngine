@@ -85,3 +85,4 @@ T ResourceMgr<T>::Empty;
 
 #define TEXTURE_MGR (ResourceMgr<sf::Texture>::Instance())
 #define FONT_MGR (ResourceMgr<sf::Font>::Instance())
+#define ANI_CLIP_MGR (ResourceMgr<AnimationClip>::Instance())

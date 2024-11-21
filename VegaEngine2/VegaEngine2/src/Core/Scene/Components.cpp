@@ -56,10 +56,11 @@ namespace fz {
 			RayCastCallback() = default;
 			~RayCastCallback() = default;
 
+			float Fraction = 0.0f;
 			bool HitGround = false;
 			sf::Vector2f Normal = { 0.0f, 0.0f };
 			sf::Vector2f Position = { 0.0f, 0.0f };
-			float ReportFixture(b2Fixture* f, const b2Vec2& p, const b2Vec2& n, float fri) override
+			float ReportFixture(b2Fixture* f, const b2Vec2& p, const b2Vec2& n, float fraction) override
 			{
 				// 바닥(정적 물체)과 충돌했을 때
 				if (f->GetBody()->GetType() == b2_staticBody)
@@ -67,6 +68,7 @@ namespace fz {
 					HitGround = true;
 					Normal = { n.x, n.y };
 					Position = Utils::MeterToPixel(p);
+					Fraction = fraction;
 					return 0.0f;  // 충돌 후 추가 검사 방지
 				}
 				return 1.0f;  // 계속 진행
@@ -82,7 +84,7 @@ namespace fz {
 		((b2World*)rawWorld)->RayCast(&callback, start, end);
 		normal = callback.Normal;
 		pos = callback.Position;
-		return callback.HitGround;
+		return callback.HitGround && callback.Fraction < 0.3f;
 	}
 
 } // namespace fz

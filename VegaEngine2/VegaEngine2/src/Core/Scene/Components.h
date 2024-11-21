@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Renderer/Camera.h>
-#include "ScriptableEntity.h"
+#include "VegaScript.h"
 #include <functional>
 
 namespace fz {
@@ -140,24 +140,24 @@ namespace fz {
 	{
 	public:
 
-		ScriptableEntity* Instance = nullptr;
+		VegaScript* Instance = nullptr;
 
-		ScriptableEntity* (*CreateInstanceFunc)();
-		void (*DeleteInstanceFunc)(ScriptableEntity* instance);
+		VegaScript* (*CreateInstanceFunc)();
+		void (*DeleteInstanceFunc)(VegaScript* instance);
 
-		void(*OnCreateFunction)(ScriptableEntity*);
-		void(*OnDestroyFunction)(ScriptableEntity*);
-		void(*OnUpdateFunction)(ScriptableEntity*, float);
+		void(*OnCreateFunction)(VegaScript*);
+		void(*OnDestroyFunction)(VegaScript*);
+		void(*OnUpdateFunction)(VegaScript*, float);
 
 		template <typename T>
 		void Bind()
 		{
-			CreateInstanceFunc = []() { return static_cast<ScriptableEntity*>(new T()); };
-			DeleteInstanceFunc = [](ScriptableEntity* instance) { delete (T*)instance; instance = nullptr; };
+			CreateInstanceFunc = []() { return static_cast<VegaScript*>(new T()); };
+			DeleteInstanceFunc = [](VegaScript* instance) { delete (T*)instance; instance = nullptr; };
 
-			OnCreateFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnCreate(); };
-			OnDestroyFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnDestroy(); };
-			OnUpdateFunction = [](ScriptableEntity* instance, float dt) { ((T*)instance)->OnUpdate(dt); };
+			OnCreateFunction = [](VegaScript* instance) { ((T*)instance)->OnCreate(); };
+			OnDestroyFunction = [](VegaScript* instance) { ((T*)instance)->OnDestroy(); };
+			OnUpdateFunction = [](VegaScript* instance, float dt) { ((T*)instance)->OnUpdate(dt); };
 		}
 	};
 

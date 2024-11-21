@@ -11,6 +11,7 @@
 #include <functional>
 #include <list>
 #include <cassert>
+#include <queue>
 #include <map>
 
 // Box2D
@@ -47,3 +48,6 @@
 #include "Renderer/Camera.h"
 #include "Renderer/Renderer2D.h"
 
+// Animation
+#include "Animation/AnimationClip.h"
+#include "Animation/Animator.h"

@@ -39,5 +39,6 @@ public:																					\
 inline bindClassBind##tag bindClassBindObj##tag;										\
 }
 
-#include "../../Workspace/Workspace/CameraController.h"
 #include "../../Workspace/Workspace/Player/Player.h"
+#include "../../Workspace/Workspace/Player/PlayerBody.h"
+#include "../../Workspace/Workspace/Player/PlayerLeg.h"

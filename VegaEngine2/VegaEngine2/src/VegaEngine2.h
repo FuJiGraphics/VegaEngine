@@ -34,11 +34,12 @@
 
 // Scene
 #include "Core/Scene/Entity.h"
-#include "Core/Scene/ScriptableEntity.h"
+#include "Core/Scene/VegaScript.h"
 #include "Core/Scene/EditorCamera.h"
 #include "Core/Scene/Scene.h"
 
-#include "Animation/Anim.h"
+#include "Animation/AnimationClip.h"
+#include "Animation/Animator.h"
 
 /* Entry Point */
 #include "ScriptCore.h"

@@ -3,10 +3,11 @@
 
 namespace fz {
 
-	class Player : public ScriptableEntity
+	class Player : public VegaScript
 	{
 	public:
-		float Speed = 100.f;
+		float Speed = 110.f;
+		float JumpPower = -300.f;
 
 		void OnCreate()
 		{
@@ -15,27 +16,43 @@ namespace fz {
 
 		void OnDestroy()
 		{
+
 		}
 
 		void OnUpdate(float dt)
 		{
-			if (HasComponent<RigidbodyComponent>())
+			auto& body = GetComponent<RigidbodyComponent>();
+			auto& transform = GetComponent<TransformComponent>();
+			body.SetGravityScale(0.75f);
+			sf::Vector2f velocity = body.GetLinearVelocity();
+			sf::Vector2f movement;
+
+			const auto& scale = transform.Transform.GetScale();
+			if (InputManager::IsKeyPressed(KeyType::A))
 			{
-				auto& body = GetComponent<RigidbodyComponent>();
-				sf::Vector2f velocity = body.GetLinearVelocity();
-				sf::Vector2f movement;
-
-				if (InputManager::IsKeyPressed(KeyType::A))
-					movement = { Speed * -1.0f, velocity.y };
-				else if (InputManager::IsKeyPressed(KeyType::D))
-					movement = { Speed, velocity.y };
-				else
-					movement = { 0, velocity.y };
-
-				body.SetLinearVelocity(movement);
-
-
+				movement = { Speed * -1.0f, velocity.y };
+				float scaleX = (scale.x * -1.0f < 0.0f) ? scale.x * -1.0f : scale.x;
+				transform.Transform.SetScale(scaleX, scale.y);
 			}
+			else if (InputManager::IsKeyPressed(KeyType::D))
+			{
+				movement = { Speed, velocity.y };
+				float scaleX = (scale.x * -1.0f > 0.0f) ? scale.x * -1.0f : scale.x;
+				transform.Transform.SetScale(scaleX, scale.y);
+			}
+			else
+				movement = { 0, velocity.y };
+
+			if (body.IsOnGround())
+			{
+				if (InputManager::IsKeyPressed(KeyType::Space))
+				{
+					movement = { velocity.x, JumpPower };
+				}
+			}
+
+
+			body.SetLinearVelocity(movement);
 		};
 	};
 }

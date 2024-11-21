@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Entity.h"
-#include "ScriptableEntity.h"
+#include "VegaScript.h"
 #include "EditorCamera.h"
 
 namespace fz {
@@ -135,6 +135,8 @@ namespace fz {
 				const b2Vec2& meterBoxSize = Utils::PixelToMeter({ collider.Size.x * transform.GetScale().x, 
 																 collider.Size.y * transform.GetScale().y });
 
+				auto& tag = entity.GetComponent<TagComponent>();
+				FZLOG_DEBUG("UUID = {0}, Tag = {1}", entity.m_UUID, tag.Tag);
 				b2PolygonShape polygonShape;
 				polygonShape.SetAsBox(meterBoxSize.x, meterBoxSize.y);
 

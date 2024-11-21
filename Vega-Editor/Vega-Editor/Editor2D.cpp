@@ -164,6 +164,11 @@ namespace fz {
 		{
 			script->Bind(loadScene->GetUUID(), loadScene);
 		}
+		//for (int i = 0; i < base.size(); ++i)
+		//{
+		//	delete base[i];
+		//	base[i] = nullptr;
+		//}
 		return loadScene;
 	}
 
