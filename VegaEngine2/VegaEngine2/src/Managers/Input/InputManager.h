@@ -64,6 +64,8 @@ namespace fz {
 		static std::unordered_map<Axis, AxisInfo> s_AxisInfoMap;
 	};
 
+	using Input = fz::InputManager;
+
 } // namespace fz
 
 

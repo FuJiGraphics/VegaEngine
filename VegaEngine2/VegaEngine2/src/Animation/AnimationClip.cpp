@@ -14,9 +14,9 @@ namespace fz {
 		for (int i = 3; i < doc.GetRowCount(); ++i)
 		{
 			auto row = doc.GetRow<std::string>(i);
-			frames.push_back({ Origins::MC,
-					{ std::stoi(row[1]), std::stoi(row[2]), std::stoi(row[3]), std::stoi(row[4]) }
-				});
+			frames.push_back({ Origins::MC, 
+							 { std::stoi(row[1]), std::stoi(row[2]), std::stoi(row[3]), std::stoi(row[4]) 
+							 }});
 		}
 
 		return true;

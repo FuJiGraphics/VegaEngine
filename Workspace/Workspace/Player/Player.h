@@ -11,7 +11,6 @@ namespace fz {
 
 		void OnCreate()
 		{
-			
 		}
 
 		void OnDestroy()

@@ -8,6 +8,7 @@ namespace fz {
 	public:
 		Animator Animator;
 		std::unordered_map<std::string, fz::AnimationClip> Animations;
+		bool IsPressedButton = false;
 
 		void OnCreate()
 		{
@@ -16,7 +17,7 @@ namespace fz {
 			auto& transformComp = GetComponent<TransformComponent>();
 			Animator.SetTarget(&sprite);
 			Animator.SetSpeed(1.5f);
-			transformComp.Transform.SetTranslate(5.f, -6.f);
+			transformComp.Transform.SetTranslate(5.f, -1.f);
 
 			Animations.insert({ "Idle", {} });
 			Animations["Idle"].id = "Idle";
@@ -27,6 +28,24 @@ namespace fz {
 			Animations["Idle"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 78, 260, 32, 32 } });
 			Animations["Idle"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 113, 260, 32, 32 } });
 			Animator.Play(&Animations["Idle"]);
+			
+
+			Animations.insert({ "Move", {} });
+			Animations["Move"].id = "Move";
+			Animations["Move"].fps = 13;
+			Animations["Move"].loopType = AnimationLoopTypes::PingPong;
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 10, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 47, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 82, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 115, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 147, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 181, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 216, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 254, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 291, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 328, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 364, 475, 32, 32 } });
+			Animations["Move"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 400, 475, 32, 32 } });
 		}
 
 		void OnDestroy()
@@ -36,7 +55,17 @@ namespace fz {
 
 		void OnUpdate(float dt)
 		{
-			Animator.Update(dt);
+			if (Input::IsKeyPressed(KeyType::A) || Input::IsKeyPressed(KeyType::D))
+			{
+				Animator.Play(&Animations["Move"]);
+			}
+			else
+			{
+				Animator.Play(&Animations["Idle"]);
+			}
+
+			Animator.Update(dt); 
+			
 		}
 
 	private:

@@ -16,14 +16,14 @@ namespace fz {
 			auto& transformComp = GetComponent<TransformComponent>();
 			Animator.SetTarget(&sprite);
 			Animator.SetSpeed(1.5f);
-			transformComp.Transform.SetTranslate(-2.f, 9.f);
+			transformComp.Transform.SetTranslate(-1.f, 9.f);
 
-			Animations.insert({ "Idle", {} });
-			Animations["Idle"].id = "Idle";
-			Animations["Idle"].fps = 1;
-			Animations["Idle"].loopType = AnimationLoopTypes::Loop;
-			Animations["Idle"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 149, 276, 21, 16 } });
-			Animator.Play(&Animations["Idle"]);
+			//Animations.insert({ "Idle", {} });
+			//Animations["Idle"].id = "Idle";
+			//Animations["Idle"].fps = 1;
+			//Animations["Idle"].loopType = AnimationLoopTypes::Loop;
+			//Animations["Idle"].frames.push_back({ spriteComp.Sprite.GetOrigins(), { 149, 276, 21, 16 } });
+			//Animator.Play(&Animations["Idle"]);
 		}
 
 		void OnDestroy()
@@ -35,7 +35,7 @@ namespace fz {
 		{
 			if (!HasComponent<SpriteComponent>())
 				return;
-			Animator.Update(dt);
+			//Animator.Update(dt);
 		}
 	private:
 

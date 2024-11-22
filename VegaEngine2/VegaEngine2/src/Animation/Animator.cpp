@@ -83,6 +83,11 @@ namespace fz {
 
 	void Animator::Play(AnimationClip* clip, bool clearQueue)
 	{
+		if (currentClip == clip)
+			return;
+		else
+			this->Stop();
+
 		if (clearQueue)
 		{
 			while (!playeQueue.empty())
@@ -111,6 +116,8 @@ namespace fz {
 	void Animator::Stop()
 	{
 		isPlaying = false;
+		currentFrame = 0;
+		checkFrame = totalFrame - 1;
 	}
 
 	void Animator::SetFrame(const AnimationFrame& frame)
