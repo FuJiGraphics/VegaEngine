@@ -36,7 +36,7 @@
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
                         "Height": 32,
-                        "Left": 78,
+                        "Left": 44,
                         "Top": 260,
                         "Width": 32
                     }
@@ -94,8 +94,8 @@
                     1.0
                 ],
                 "Translate": [
-                    -29.05784797668457,
-                    163.36036682128906
+                    65.82110595703125,
+                    144.91995239257813
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -152,7 +152,7 @@
                         1.0
                     ],
                     "Translate": [
-                        -2.0,
+                        -1.0,
                         9.0
                     ]
                 }
@@ -169,7 +169,7 @@
                 "Rotation": 0.0,
                 "Size": [
                     413.5240173339844,
-                    196.71200561523438
+                    218.68800354003906
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -639,7 +639,7 @@
             "259e476b-ab34-4390-8a4c-d3cf402f668e": {
                 "BoxCollider2DComponent": {
                     "Density": 1.0,
-                    "Friction": 0.0,
+                    "Friction": 0.5,
                     "Offset": {
                         "X": 0.0,
                         "Y": 0.0
@@ -819,7 +819,7 @@
             "a27e01ca-c8bf-4b71-8d3b-cd00aea121ec": {
                 "BoxCollider2DComponent": {
                     "Density": 1.0,
-                    "Friction": 0.0,
+                    "Friction": 0.5,
                     "Offset": {
                         "X": 0.0,
                         "Y": 0.0

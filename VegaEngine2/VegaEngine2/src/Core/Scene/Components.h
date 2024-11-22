@@ -30,6 +30,7 @@ namespace fz {
 
 	struct ChildEntityComponent
 	{
+		fz::Entity ParentEntity;
 		std::vector<fz::Entity> CurrentChildEntities;
 
 		ChildEntityComponent() = default;

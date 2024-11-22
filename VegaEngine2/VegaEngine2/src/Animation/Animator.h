@@ -32,6 +32,7 @@ namespace fz {
 		std::unordered_map<std::pair<std::string, int>, AnimationEvent, AnimationEventHash> events;
 		std::queue<std::string> playeQueue;
 
+		std::string currentTag;
 		AnimationClip* currentClip;
 		sf::Sprite* sprite;
 

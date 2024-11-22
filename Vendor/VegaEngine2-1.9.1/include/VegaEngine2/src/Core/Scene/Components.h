@@ -17,6 +17,17 @@ namespace fz {
 		{/*Empty*/}
 	};
 
+	struct ParentEntityComponent
+	{
+		fz::Entity ParentEntity;
+
+		ParentEntityComponent() = default;
+		ParentEntityComponent(const ParentEntityComponent&) = default;
+		ParentEntityComponent(const fz::Entity& other)
+			: ParentEntity(other)
+		{/*Empty*/}
+	};
+
 	struct ChildEntityComponent
 	{
 		fz::Entity ParentEntity;
