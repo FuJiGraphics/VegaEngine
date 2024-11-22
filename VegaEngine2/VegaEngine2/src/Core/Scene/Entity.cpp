@@ -70,6 +70,12 @@ namespace fz {
 		if (it == m_Scene->m_EntityPool.end())
 		{
 			childEntity = m_Scene->CreateEntity(uuid, tagName);
+			if (!childEntity.HasComponent<ParentEntityComponent>())
+			{
+				auto& parentComp = childEntity.AddComponent<ParentEntityComponent>();
+				parentComp.ParentEntity = *this;
+			}
+
 			if (this->HasComponent<ChildEntityComponent>())
 			{
 				auto& childComp = this->GetComponent<ChildEntityComponent>();
