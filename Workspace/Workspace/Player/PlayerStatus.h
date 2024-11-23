@@ -8,9 +8,13 @@ namespace fz {
 	public:
 		enum class Type
 		{
-			Idle = 0, Move, Crouch,
+			Idle,
 			IdleJump,
 
+			Run,
+			RunJump,
+
+			Crouch,
 			MeleeAttack,
 
 			CrouchAttack, CrouchAttackUp,

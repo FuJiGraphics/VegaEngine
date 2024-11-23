@@ -22,6 +22,7 @@ namespace fz {
 		else
 			m_ActiveScene = CreateScene(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 		m_HierarchyPanel.SetContext(m_ActiveScene);
+		SpriteEditor::SetContext(m_ActiveScene);
 		Scene::s_CurrentScene = m_ActiveScene;
 	}
 
@@ -39,6 +40,7 @@ namespace fz {
 		{
 			case SceneState::Edit:
 				m_ActiveScene->OnUpdateEditor(dt, m_EditorCamera);
+				SpriteEditor::OnUpdate(dt);
 				break;
 			case SceneState::Play:
 				m_ActiveScene->OnUpdateRuntime(dt);
@@ -51,6 +53,7 @@ namespace fz {
 		if (m_SceneState == SceneState::Edit)
 		{
 			m_EditorCamera.OnEvent(ev);
+			SpriteEditor::OnEvent(ev);
 		}
 	}
 
@@ -103,6 +106,20 @@ namespace fz {
 			Scene::s_CurrentScene = m_ActiveScene;
 		}
 
+		if (ImGui::BeginMenu("Tools"))
+		{
+			if (ImGui::MenuItem("Sprite Editor"))
+			{
+				std::string imagePath = VegaUI::OpenFile(handle, "Sprite File (*.png)\0*.png\0");
+				if (!imagePath.empty())
+				{
+					SpriteEditor::SetTarget(imagePath);
+					SpriteEditor::SetActive(true);
+				}
+			}
+			ImGui::EndMenu();
+		}
+
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		if (ImGui::Begin("Viewports"))
 		{
@@ -118,8 +135,7 @@ namespace fz {
 				}
 			}
 			// 마우스 이동 허용 여부
-			bool isMouseHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
-			if (isMouseHovered)
+			if (ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) && ImGui::IsWindowFocused())
 				m_EditorCamera.SetActivated(true);
 			else
 				m_EditorCamera.SetActivated(false);
@@ -138,7 +154,9 @@ namespace fz {
 				m_ActiveScene->SetDebugDisplayMode(flag);
 			}
 		}
-		ImGui::End();
+		ImGui::End(); // Viewports
+
+		SpriteEditor::OnUI();
 
 		ImGui::EndMainMenuBar();
 	}

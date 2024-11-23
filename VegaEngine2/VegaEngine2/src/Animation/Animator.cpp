@@ -122,9 +122,11 @@ namespace fz {
 
 	void Animator::SetFrame(const AnimationFrame& frame)
 	{
-		// sprite->setTexture(TEXTURE_MGR.Get(frame.texId));
-		sprite->setTextureRect(frame.texCoord);
-		Utils::SetOrigin(*sprite, frame.origin);
+		if (sprite == nullptr || transformComp == nullptr)
+			return;
+
+		*sprite = frame.sprite;
+		transformComp->Transform = currentClip->transform;
 	}
 
 } // namespace fz

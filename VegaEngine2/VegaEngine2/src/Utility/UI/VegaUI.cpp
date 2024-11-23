@@ -509,4 +509,85 @@ namespace fz {
 		return result;
 	}
 
+	bool VegaUI::DragRect(sf::Vector2f& start, sf::Vector2f& end, bool currentWindow, ImGuiMouseButton button)
+	{
+		bool result = false;
+		static ImVec2 startPos, endPos;
+		ImVec2 winPos = ImGui::GetWindowPos(); 
+		float titleBarH = ImGui::GetFrameHeight();
+		ImVec2 currPos = ImGui::GetMousePos();
+		if (ImGui::IsMouseClicked(button))
+		{
+			startPos = ImGui::GetMousePos();
+			float dx = startPos.x;
+			float dy = startPos.y;
+			if (currentWindow) 
+			{
+				dx -= winPos.x;
+				dy -= winPos.y - titleBarH;
+			}
+			if (dx > 0.0f && dy > 0.0f)
+				start = { dx, dy };
+			else
+				start = { -1.0f, -1.0f };
+		}
+		if (VegaUI::IsWindowFocused({ currPos.x, currPos.y }) && ImGui::IsMouseDown(button))
+		{
+			endPos = ImGui::GetMousePos();
+			ImDrawList* draw_list = ImGui::GetForegroundDrawList();
+			draw_list->AddRect(startPos, endPos, ImGui::GetColorU32(IM_COL32(0, 130, 216, 255)));
+		}
+		if (VegaUI::IsWindowFocused({ currPos.x, currPos.y }) && ImGui::IsMouseReleased(button))
+		{
+			result = true;
+			float dx = endPos.x;
+			float dy = endPos.y;
+			if (currentWindow)
+			{
+				dx -= winPos.x;
+				dy -= winPos.y - titleBarH;
+			}
+			if (dx > 0.0f && dy > 0.0f)
+				end = { dx, dy };
+			else
+				end = { -1.0f, -1.0f };
+		}
+		return result;
+	}
+
+	bool VegaUI::IsWindowFocused(const sf::Vector2f& pos)
+	{
+		ImVec2 winPos = ImGui::GetWindowPos();
+		float titleBarH = ImGui::GetFrameHeight();
+		const auto& winSize = ImGui::GetWindowSize();
+		if (pos.x < winPos.x || pos.y < winPos.y + titleBarH)
+			return false;
+		if ((pos.x > (winPos.x + winSize.x)) || (pos.y > (winPos.y + winSize.y + titleBarH)))
+			return false;
+		return true;
+	}
+
+	void VegaUI::DrawGrid(float gridSize, const sf::FloatRect& borderRect)
+	{
+		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+		const auto& winPos = ImGui::GetWindowPos();
+		const auto& winSize = ImGui::GetWindowSize();
+		const auto& frameHeight = ImGui::GetFrameHeight();
+		ImU32 gridColor = ImGui::GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
+
+		draw_list->AddRectFilled(
+			ImVec2(winPos.x, winPos.y + frameHeight),
+			ImVec2(winPos.x + winSize.x, winPos.y + winSize.y),
+			ImGui::GetColorU32(ImVec4(0.5f, 0.5f, 0.5f, 0.5f))
+		);
+		for (float y = winPos.y + frameHeight + borderRect.top; y < winPos.y + winSize.y; y += gridSize) {
+			draw_list->AddLine(ImVec2(winPos.x + borderRect.left, y), ImVec2(winPos.x + winSize.x - borderRect.width, y), gridColor);
+		}
+
+		for (float x = winPos.x + borderRect.left; x < winPos.x + winSize.x; x += gridSize) {
+			draw_list->AddLine(ImVec2(x, winPos.y + frameHeight + borderRect.top), ImVec2(x, winPos.y + winSize.y - borderRect.height), gridColor);
+		}
+	}
+
 } // namespace fz

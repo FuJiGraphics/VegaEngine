@@ -17,45 +17,15 @@ namespace fz {
 
 		void OnCreate()
 		{
+			auto& transformComp = GetComponent<TransformComponent>();
 			auto& spriteComp = GetComponent<SpriteComponent>();
 			sf::Sprite& sprite = spriteComp;
-			Animator.SetTarget(&sprite);
-			Animator.SetSpeed(1.5f);
+			Animator.SetTarget(sprite, transformComp);
+			Animator.SetSpeed(2.0f);
 			const auto& origin = spriteComp.Sprite.GetOrigins();
 
-			Animations["Idle"].id = "Idle";
-			Animations["Idle"].fps = 4;
-			Animations["Idle"].loopType = AnimationLoopTypes::PingPong;
-			Animations["Idle"].frames.push_back({ origin, { 10, 260, 32, 32 } });
-			Animations["Idle"].frames.push_back({ origin, { 44, 260, 32, 32 } });
-			Animations["Idle"].frames.push_back({ origin, { 78, 260, 32, 32 } });
-			Animations["Idle"].frames.push_back({ origin, { 113, 260, 32, 32 } });
-			
-			Animations["Move"].id = "Move";
-			Animations["Move"].fps = 13;
-			Animations["Move"].loopType = AnimationLoopTypes::Loop;
-			Animations["Move"].frames.push_back({ origin, { 10, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 47, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 82, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 115, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 147, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 181, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 216, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 254, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 291, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 328, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 364, 475, 32, 32 } });
-			Animations["Move"].frames.push_back({ origin, { 400, 475, 32, 32 } });
-
-			Animations["IdleJump"].id = "IdleJump";
-			Animations["IdleJump"].fps = 6;
-			Animations["IdleJump"].loopType = AnimationLoopTypes::Loop;
-			Animations["IdleJump"].frames.push_back({ origin, { 10, 863, 29, 26 } });
-			Animations["IdleJump"].frames.push_back({ origin, { 44, 863, 29, 25 } });
-			Animations["IdleJump"].frames.push_back({ origin, { 79, 863, 29, 24 } });
-			Animations["IdleJump"].frames.push_back({ origin, { 114, 863, 29, 23 } });
-			Animations["IdleJump"].frames.push_back({ origin, { 147, 863, 29, 22 } });
-			Animations["IdleJump"].frames.push_back({ origin, { 181, 863, 29, 23 } });
+			Animations["Idle"].loadFromFile("animations/player_body_idle.json");
+			Animations["Run"].loadFromFile("animations/player_body_run.json");
 		}
 
 		void OnDestroy()
@@ -71,11 +41,13 @@ namespace fz {
 			switch (CurrentType)
 			{
 				case AnimType::Idle:
-					transform.SetTranslate(5.f, -1.f);
 					Animator.Play(&Animations["Idle"]);
 					break;
-				case AnimType::Move:
-					Animator.Play(&Animations["Move"]);
+				case AnimType::Run:
+					Animator.Play(&Animations["Run"]);
+					break;
+				case AnimType::IdleJump:
+					//Animator.Play(&Animations["IdleJump"]);
 					break;
 			}
 		}

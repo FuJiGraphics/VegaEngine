@@ -1,6 +1,28 @@
 {
     "8fc401b3-19ba-4183-833f-2cf6b0c13d01": {
         "2d193a6d-7d42-4d22-bf90-33455c66791a": {
+            "3a2f7072-9895-4b2e-a859-234cd1c8a625": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Tag": "Test"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        0.0,
+                        0.0
+                    ]
+                }
+            },
             "6503ebe6-37ad-45d2-b381-562be3a34e33": {
                 "HasChild": false,
                 "RootEntity": false,
@@ -19,8 +41,8 @@
                     },
                     "MaskMode": true,
                     "Origin": [
-                        16.0,
-                        16.0
+                        17.0,
+                        17.0
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -35,10 +57,10 @@
                     "SortingOrder": 0,
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
-                        "Height": 32,
-                        "Left": 44,
+                        "Height": 34,
+                        "Left": 110,
                         "Top": 260,
-                        "Width": 32
+                        "Width": 34
                     }
                 },
                 "TagComponent": {
@@ -55,8 +77,8 @@
                         1.0
                     ],
                     "Translate": [
-                        5.0,
-                        -1.0
+                        -14.0,
+                        -28.0
                     ]
                 }
             },
@@ -94,8 +116,8 @@
                     1.0
                 ],
                 "Translate": [
-                    65.82110595703125,
-                    144.91995239257813
+                    35.4197883605957,
+                    150.4897003173828
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -117,7 +139,7 @@
                     "MaskMode": false,
                     "Origin": [
                         12.5,
-                        18.0
+                        12.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -132,9 +154,9 @@
                     "SortingOrder": 0,
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
-                        "Height": 36,
-                        "Left": 148,
-                        "Top": 261,
+                        "Height": 25,
+                        "Left": 147,
+                        "Top": 273,
                         "Width": 25
                     }
                 },
@@ -152,8 +174,8 @@
                         1.0
                     ],
                     "Translate": [
-                        -1.0,
-                        9.0
+                        -12.5,
+                        -6.0
                     ]
                 }
             }
@@ -169,7 +191,7 @@
                 "Rotation": 0.0,
                 "Size": [
                     413.5240173339844,
-                    218.68800354003906
+                    218.4199981689453
                 ],
                 "Viewport": {
                     "Height": 1.0,

@@ -92,6 +92,15 @@ namespace fz {
 		return m_World * other;
 	}
 
+	Transform& Transform::operator=(const fz::Transform& other)
+	{
+		this->SetTranslate(other.GetTranslate());
+		this->SetRotation(other.GetRotation());
+		this->SetScale(other.GetScale());
+		this->SetOrigin(other.GetOrigin());
+		return *this;
+	}
+
 	Transform::operator sf::Transform& ()
 	{
 		return m_World;

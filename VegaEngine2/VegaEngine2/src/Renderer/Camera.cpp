@@ -103,12 +103,12 @@ namespace fz {
 		return m_View.getViewport();
 	}
 
-	void OrthoCamera::Move(float offsetX, float offsetY)
+	void OrthoCamera::Run(float offsetX, float offsetY)
 	{
 		m_View.move(offsetX, offsetY);
 	}
 
-	void OrthoCamera::Move(const sf::Vector2f& offset)
+	void OrthoCamera::Run(const sf::Vector2f& offset)
 	{
 		m_View.move(offset);
 	}

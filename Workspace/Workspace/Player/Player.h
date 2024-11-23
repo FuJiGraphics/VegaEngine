@@ -36,10 +36,10 @@ namespace fz {
 			const auto& scale = transform.Transform.GetScale();
 			if (InputManager::IsKeyPressed(KeyType::D))
 			{
-				CurrentType = AnimType::Move;
 				movement = { Speed * fx, velocity.y };
 				if (body.IsOnGround())
 				{
+					CurrentType = AnimType::Run;
 					float scaleX = (scale.x * -1.0f > 0.0f) ? scale.x * -1.0f : scale.x;
 					transform.Transform.SetScale(scaleX, scale.y);
 					if (InputManager::IsKeyPressed(KeyType::Space))
@@ -50,10 +50,10 @@ namespace fz {
 			}
 			else if (InputManager::IsKeyPressed(KeyType::A))
 			{
-				CurrentType = AnimType::Move;
 				movement = { Speed * fx, velocity.y };
 				if (body.IsOnGround())
 				{
+					CurrentType = AnimType::Run;
 					float scaleX = (scale.x * -1.0f < 0.0f) ? scale.x * -1.0f : scale.x;
 					transform.Transform.SetScale(scaleX, scale.y);
 					if (InputManager::IsKeyPressed(KeyType::Space))

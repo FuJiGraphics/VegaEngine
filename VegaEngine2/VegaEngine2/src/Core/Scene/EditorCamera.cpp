@@ -12,9 +12,13 @@ namespace fz {
 		, m_IsMouseButtonPressed(false)
 		, m_ActivatedRotation(rotation)
 		, m_Camera(nullptr)
+		, m_ActiveMouseClickMove(true)
+		, m_ActiveBounds(false)
+		, m_ActiveScroll(true)
 	{
 		sf::Vector2f pos{ size.x * 0.5f, size.y * 0.5f };
 		m_Camera = CreateShared<fz::OrthoCamera>(pos, size);
+		m_Camera->Zoom(m_CameraZoomFactor);
 	}
 
 	void EditorCamera::SetSize(float width, float height)
@@ -40,16 +44,17 @@ namespace fz {
 	{
 		if (!m_ActivatedController)
 			return;
+		static sf::Vector2f prevPos = m_Camera->GetCenter();
 
 		if (InputManager::IsKeyPressed(KeyType::A))
-			m_Camera->Move(m_CameraMoveSpeed * -1.0f * dt, 0.0f);
+			m_Camera->Run(m_CameraMoveSpeed * -1.0f * dt, 0.0f);
 		else if (InputManager::IsKeyPressed(KeyType::D))
-			m_Camera->Move(m_CameraMoveSpeed * dt, 0.0f);
+			m_Camera->Run(m_CameraMoveSpeed * dt, 0.0f);
 
 		if (InputManager::IsKeyPressed(KeyType::W))
-			m_Camera->Move(0.0f, m_CameraMoveSpeed * -1.0f * dt);
+			m_Camera->Run(0.0f, m_CameraMoveSpeed * -1.0f * dt);
 		else if (InputManager::IsKeyPressed(KeyType::S))
-			m_Camera->Move(0.0f, m_CameraMoveSpeed * dt);
+			m_Camera->Run(0.0f, m_CameraMoveSpeed * dt);
 
 		if (m_ActivatedRotation)
 		{
@@ -57,6 +62,15 @@ namespace fz {
 				m_Camera->Rotate(m_CameraRotateSpeed * dt);
 			else if (InputManager::IsKeyPressed(KeyType::E))
 				m_Camera->Rotate(m_CameraRotateSpeed * -1.0f * dt);
+		}
+
+		if (m_ActiveBounds)
+		{
+			sf::Vector2f currPos = m_Camera->GetCenter();
+			if (currPos.x < m_Bounds.left || currPos.y < m_Bounds.top)
+				m_Camera->SetCenter(prevPos);
+			if (currPos.x > m_Bounds.left + m_Bounds.width || currPos.y > m_Bounds.top + m_Bounds.height)
+				m_Camera->SetCenter(prevPos);
 		}
 	}
 
@@ -80,9 +94,25 @@ namespace fz {
 		m_ActivatedController = enabled;
 	}
 
+	void EditorCamera::ActiveMouseClickMove(bool enabled)
+	{
+		m_ActiveMouseClickMove = enabled;
+	}
+
+	void EditorCamera::SetBounds(float x, float y, float w, float h)
+	{
+		m_Bounds = { x, y, w, h };
+		m_ActiveBounds = true;
+	}
+
+	void EditorCamera::ActiveScroll(bool enabled)
+	{
+		m_ActiveScroll = enabled;
+	}
+
 	bool EditorCamera::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		if (!m_ActivatedController)
+		if (!m_ActivatedController || !m_ActiveScroll)
 			return false;
 
 		float offset = e.GetYOffset();
@@ -129,7 +159,7 @@ namespace fz {
 		m_MousePrevPos = m_MousePos;
 		m_MousePos.x = e.GetX();
 		m_MousePos.y = e.GetY();
-		if (m_IsMouseButtonPressed && m_ActivatedController)
+		if (m_ActiveMouseClickMove && m_IsMouseButtonPressed && m_ActivatedController)
 		{
 			float dx = (m_MousePos.x - m_MousePrevPos.x) * -1.0f;
 			float dy = (m_MousePos.y - m_MousePrevPos.y) * -1.0f;

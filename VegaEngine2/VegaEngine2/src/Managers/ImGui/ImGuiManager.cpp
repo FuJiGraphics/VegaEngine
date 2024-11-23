@@ -18,6 +18,7 @@ namespace fz {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;     // Enable Multi-Viewport / Platform Windows
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;       // Enable Docking
+		io.ConfigWindowsMoveFromTitleBarOnly = true;			// 제목 표시줄로만 이동 가능
 
 		io.Fonts->Clear();
 		io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", 18.0f);

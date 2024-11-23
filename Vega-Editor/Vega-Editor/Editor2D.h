@@ -1,6 +1,7 @@
 #pragma once
 #include <VegaEngine2.h>
 #include "Panels/HierarchyPanel.h"
+#include "Editors/SpriteEditor.h"
 
 namespace fz {
 
