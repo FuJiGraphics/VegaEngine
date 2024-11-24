@@ -19,7 +19,7 @@ namespace fz {
 			return m_Entity.HasComponent<T>();
 		}
 
-		virtual void OnCreate() {}
+		virtual void Start() {}
 		virtual void OnDestroy() {}
 		virtual void OnUpdate(float dt) {}
 

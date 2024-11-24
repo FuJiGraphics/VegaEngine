@@ -23,10 +23,10 @@ namespace fz {
 		float JumpPower = -300.f;
 		float IdleElap = 0.0f;
 		float IdleTime = 1.0f;
-		float AttackElap = 0.0f;
-		float AttackTime = 0.5f;
+		float AttackElap = 0.3f;
+		float AttackTime = 0.3f;
 
-		void OnCreate() override
+		void Start() override
 		{
 		}
 
@@ -43,6 +43,7 @@ namespace fz {
 			auto& body = GetComponent<RigidbodyComponent>();
 			auto& transform = GetComponent<TransformComponent>();
 			float fx = Input::GetAxis(Axis::Horizontal);
+			float fy = Input::GetAxis(Axis::Vertical);
 
 			body.SetGravityScale(0.85f);
 			sf::Vector2f velocity = body.GetLinearVelocity();
@@ -92,10 +93,16 @@ namespace fz {
 				}
 			}
 
-			if (InputManager::IsKeyPressed(KeyType::Z))
+			if (AttackElap >= AttackTime && InputManager::IsKeyPressed(KeyType::Z))
 			{
+				AttackElap = 0.0f;
 				InputKey.key1 = KeyType::Z;
-				// Bullets = new Bullet;
+				GameObject obj = FZ_CURRENT_SCENE->GetEntityFromTag("Bullet");
+				float angle = Utils::Angle({ fx, fy });
+				sf::Vector2f pos = transform.Transform.GetTranslate();
+				pos.y += -15.f;
+				sf::Vector2f dir = Utils::GetRotateVector(angle, sf::Vector2f(20.f, 0.0f));
+				FZ_CURRENT_SCENE->Instantiate(obj, pos + dir, angle);
 			}
 
 			UpdateAnimStatus();
@@ -108,23 +115,30 @@ namespace fz {
 
 			if (InputKey.key1 == KeyType::Z)
 			{
-				AttackElap = 0.0f;
 				CurrentType = AnimType::IdleAttack;
 			}
 			if (InputKey.key1 == KeyType::A || InputKey.key1 == KeyType::D)
 			{
-				if (InputKey.key2 == KeyType::Space)
-					CurrentType = AnimType::RunJump;
-				else if (body.IsOnGround())
-					CurrentType = AnimType::Run;
+				if (AttackElap >= AttackTime) {
+					if (InputKey.key2 == KeyType::Space)
+						CurrentType = AnimType::RunJump;
+					else if (body.IsOnGround())
+						CurrentType = AnimType::Run;
+				}
 			}
 
 			if (InputKey.key1 == KeyType::Space)
-				CurrentType = AnimType::IdleJump;
-
+			{
+				if (AttackElap >= AttackTime) {
+					CurrentType = AnimType::IdleJump;
+				}
+			}
 			if (body.IsOnGround() && InputKey.key1 == KeyType::Unknown)
-				CurrentType = AnimType::Idle;
-
+			{
+				if (AttackElap >= AttackTime) {
+					CurrentType = AnimType::Idle;
+				}
+			}
 			InputKey.key1 = KeyType::Unknown;
 			InputKey.key2 = KeyType::Unknown;
 		}

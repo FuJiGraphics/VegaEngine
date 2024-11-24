@@ -22,7 +22,7 @@ namespace fz {																			\
 			if (scene == path)															\
 			{																			\
 				auto Entity = currScene->GetEntityFromTag(entity);						\
-				if (Entity)																\
+				if (Entity && !Entity.HasComponent<NativeScriptComponent>())			\
 					Entity.AddComponent<NativeScriptComponent>().Bind<##script>();		\
 			}																			\
 		}																				\

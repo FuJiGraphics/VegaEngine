@@ -15,7 +15,7 @@ namespace fz {
 		std::unordered_map<std::string, fz::AnimationClip> Animations;
 		bool IsPressedButton = false;
 
-		void OnCreate() override
+		void Start() override
 		{
 			auto& transformComp = GetComponent<TransformComponent>();
 			auto& spriteComp = GetComponent<SpriteComponent>();

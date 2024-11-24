@@ -14,7 +14,7 @@ namespace fz {
 		Animator Animator;
 		std::unordered_map<std::string, fz::AnimationClip> Animations;
 
-		void OnCreate() override
+		void Start() override
 		{
 			auto& transformComp = GetComponent<TransformComponent>();
 			auto& spriteComp = GetComponent<SpriteComponent>();

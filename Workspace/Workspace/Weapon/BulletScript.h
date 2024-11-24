@@ -6,7 +6,9 @@ namespace fz {
 	class BulletScript : public VegaScript
 	{
 	public:
-		void OnCreate()
+		float Speed = 500.f;
+
+		void Start()
 		{
 		}
 
@@ -17,6 +19,13 @@ namespace fz {
 
 		void OnUpdate(float dt)
 		{
+			auto& transform = GetComponent<TransformComponent>();
+			auto& body = GetComponent<RigidbodyComponent>();
+			body.SetGravityScale(0.0f);
+
+			float angle = transform.Transform.GetRotation();
+			sf::Vector2f dir = Utils::Angle(angle);
+			body.AddPosition({ Speed * dir.x, Speed * dir.y });
 		}
 
 	};

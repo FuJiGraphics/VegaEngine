@@ -33,6 +33,9 @@ namespace fz {
 		void OnSceneStop();
 		void UiToolbar(const char* title = "##Toolbar");
 
+		// TODO: 임시 스크립트 코어
+		void BindScript();
+
 	private:
 		std::string	m_ActiveSceneFilePath;
 		Shared<Scene> m_TempScene;

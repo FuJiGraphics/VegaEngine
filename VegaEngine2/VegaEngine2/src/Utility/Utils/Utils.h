@@ -30,6 +30,7 @@ namespace fz {
 		static float DegreeToRadian(float degree);
 		static float AngleRadian(const sf::Vector2f& vec);
 		static float Angle(const sf::Vector2f& vec);
+		static sf::Vector2f Angle(float degree);
 		static float GetAngleToCos(float degree);
 		static float GetAngleToSin(float degree);
 		static sf::Vector2f ProjectOnSlope(const sf::Vector2f& velocity, const sf::Vector2f& slopeNormal);

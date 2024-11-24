@@ -133,6 +133,13 @@ namespace fz {
         return RadianToDegree(AngleRadian(vec));
     }
 
+    sf::Vector2f Utils::Angle(float degree)
+    {
+		float cos = Utils::GetAngleToCos(degree);
+		float sin = Utils::GetAngleToSin(degree);
+        return { cos, sin };
+    }
+
     float Utils::GetAngleToCos(float degree)
     {
         return cosf(DegreeToRadian(degree));
@@ -159,7 +166,6 @@ namespace fz {
         sf::Transform rotMat = sf::Transform::Identity;
         rotMat.rotate(angle);
         sf::Vector2f v = rotMat * target;
-        Utils::Normalize(v);
         return v;
     }
 

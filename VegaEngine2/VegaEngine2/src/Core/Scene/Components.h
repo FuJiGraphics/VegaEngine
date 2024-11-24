@@ -130,6 +130,7 @@ namespace fz {
 		bool FixedRotation = false;
 
 		void AddForce(const sf::Vector2f& force);
+		void AddPosition(const sf::Vector2f& pos);
 		void SetGravityScale(float scale);
 		void SetLinearVelocity(const sf::Vector2f& velocity);
 		sf::Vector2f GetLinearVelocity() const;
@@ -186,7 +187,7 @@ namespace fz {
 			CreateInstanceFunc = []() { return static_cast<VegaScript*>(new T()); };
 			DeleteInstanceFunc = [](VegaScript* instance) { delete instance; instance = nullptr; };
 
-			OnCreateFunction = [](VegaScript* instance) { (instance)->OnCreate(); };
+			OnCreateFunction = [](VegaScript* instance) { (instance)->Start(); };
 			OnDestroyFunction = [](VegaScript* instance) { (instance)->OnDestroy(); };
 			OnUpdateFunction = [](VegaScript* instance, float dt) { (instance)->OnUpdate(dt); };
 		}

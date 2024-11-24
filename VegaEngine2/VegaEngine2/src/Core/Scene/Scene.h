@@ -45,6 +45,8 @@ namespace fz {
 		bool IsDebugDisplayMode() const { return m_IsDebugMode; }
 		void SetDebugDisplayMode(bool enabled) { m_IsDebugMode = enabled; }
 
+		GameObject Instantiate(GameObject entity, const sf::Vector2f& position, float rotation);
+		GameObject Instantiate(GameObject entity, const sf::Vector2f& position);
 		GameObject Instantiate(GameObject entity, const fz::Transform& transform);
 		GameObject Instantiate(GameObject entity, const std::string& tag, const fz::Transform& transform);
 
@@ -56,7 +58,7 @@ namespace fz {
 
 	protected:
 		Entity CreateEntityWithUUID(const std::string& tagName, const std::string& uuid);
-		void CopyEntityForPrefab(fz::Entity dst, fz::Entity src);
+		void CopyEntityForPrefab(fz::Entity dst, fz::Entity src, bool isRootTransform = false);
 
 		void OnUpdateEditor(float dt, EditorCamera& editorCamera);
 		void OnPreUpdate();
@@ -81,6 +83,8 @@ namespace fz {
 		void OnDrawDebugShape();
 		void OnViewportResize(unsigned int width, unsigned int height);
 
+		void ReleasePrefabInstancies();
+
 		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
 
 		std::string GetUUID() const { return m_UUID; }
@@ -97,6 +101,7 @@ namespace fz {
 		bool					m_IsDebugMode;
 		std::string				m_prefabTempPath;
 		int						m_prefabInstanceCount;
+		EntityPool				m_PrefabInstancePool;
 	};
 
 #define FZ_CURRENT_SCENE fz::Scene::s_CurrentScene

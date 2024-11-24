@@ -17,6 +17,19 @@ namespace fz {
 		((b2Body*)RuntimeBody)->SetLinearVelocity(Utils::PixelToMeter(velocity));
 	}
 
+	void RigidbodyComponent::AddPosition(const sf::Vector2f& pos)
+	{
+		sf::Vector2f velocity = this->GetLinearVelocity();
+		float nextPosX = velocity.x;
+		float nextPosY = velocity.y;
+		// TODO: float 연산 정확도 수정
+		if (pos.x != 0.0f)
+			nextPosX = pos.x;
+		if (pos.y != 0.0f)
+			nextPosY = pos.y;
+		this->SetLinearVelocity({ nextPosX, nextPosY });
+	}
+
 	sf::Vector2f RigidbodyComponent::GetLinearVelocity() const
 	{
 		return Utils::MeterToPixel(((b2Body*)RuntimeBody)->GetLinearVelocity());
@@ -84,7 +97,7 @@ namespace fz {
 		((b2World*)rawWorld)->RayCast(&callback, start, end);
 		normal = callback.Normal;
 		pos = callback.Position;
-		return callback.HitGround && callback.Fraction < 0.5f;
+ 		return callback.HitGround && callback.Fraction <= 0.5f;
 	}
 
 	void BoxCollider2DComponent::SetTrigger(bool enabled)

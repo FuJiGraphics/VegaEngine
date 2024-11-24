@@ -126,8 +126,8 @@ namespace fz {
 		if (m_Entity.HasComponent<TagComponent>())
 		{
 			const auto& tag = m_Entity.GetComponent<TagComponent>();
-			const auto& tagName = tag.Tag;
-			json["TagComponent"]["Tag"] = tagName;
+			json["TagComponent"]["Tag"] = tag.Tag;
+			json["TagComponent"]["Active"] = tag.Active;
 		}
 	}
 
@@ -243,6 +243,7 @@ namespace fz {
 	{
 		TagComponent& tagComp = FindComponent<TagComponent>();
 		tagComp.Tag = json["TagComponent"]["Tag"];
+		tagComp.Active = json["TagComponent"]["Active"];
 	}
 
 	void EntitySerializer::DeserializeCamera(json& json)

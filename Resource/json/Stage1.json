@@ -1,28 +1,6 @@
 {
     "8fc401b3-19ba-4183-833f-2cf6b0c13d01": {
         "2d193a6d-7d42-4d22-bf90-33455c66791a": {
-            "3a2f7072-9895-4b2e-a859-234cd1c8a625": {
-                "HasChild": false,
-                "RootEntity": false,
-                "TagComponent": {
-                    "Tag": "Test"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        0.0,
-                        0.0
-                    ]
-                }
-            },
             "6503ebe6-37ad-45d2-b381-562be3a34e33": {
                 "HasChild": false,
                 "RootEntity": false,
@@ -58,12 +36,13 @@
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
                         "Height": 34,
-                        "Left": 110,
+                        "Left": 7,
                         "Top": 260,
                         "Width": 34
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Body"
                 },
                 "TransformComponent": {
@@ -87,13 +66,13 @@
                 "Friction": 1.0,
                 "Offset": {
                     "X": 0.0,
-                    "Y": -1.399999976158142
+                    "Y": 0.0
                 },
                 "Restitution": 0.0,
-                "RestitutionThreshold": 0.5,
+                "RestitutionThreshold": 7.0,
                 "Size": {
                     "X": 10.100000381469727,
-                    "Y": 13.0
+                    "Y": 13.300000190734863
                 }
             },
             "HasChild": true,
@@ -103,6 +82,7 @@
             },
             "RootEntity": true,
             "TagComponent": {
+                "Active": true,
                 "Tag": "Player"
             },
             "TransformComponent": {
@@ -116,8 +96,8 @@
                     1.0
                 ],
                 "Translate": [
-                    53.328590393066406,
-                    146.91758728027344
+                    102.27584838867188,
+                    141.35379028320313
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -161,6 +141,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Leg"
                 },
                 "TransformComponent": {
@@ -180,6 +161,84 @@
                 }
             }
         },
+        "83646c9e-070c-4216-a0d2-b584b70cc6f5": {
+            "BoxCollider2DComponent": {
+                "Density": 1.0,
+                "Friction": 0.5,
+                "Offset": {
+                    "X": 0.0,
+                    "Y": 0.0
+                },
+                "Restitution": 0.0,
+                "RestitutionThreshold": 0.5,
+                "Size": {
+                    "X": 5.0,
+                    "Y": 5.0
+                }
+            },
+            "HasChild": false,
+            "RigidbodyComponent": {
+                "FixedRotation": true,
+                "RigidType": "Dynamic"
+            },
+            "RootEntity": true,
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 0,
+                    "G": 0,
+                    "R": 0
+                },
+                "MaskMode": false,
+                "Origin": [
+                    5.0,
+                    5.0
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "SortingOrder": 0,
+                "TexPath": "..\\..\\ZombieArena\\bin\\Debug\\graphics\\bullet.png",
+                "TexRect": {
+                    "Height": 10,
+                    "Left": 0,
+                    "Top": 0,
+                    "Width": 10
+                }
+            },
+            "TagComponent": {
+                "Active": false,
+                "Tag": "Bullet"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 6.827183824498206e-05,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            }
+        },
         "b81ee0a6-60e8-42c4-b06d-656d2555b324": {
             "CameraComponent": {
                 "Center": [
@@ -190,8 +249,8 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    413.5240173339844,
-                    218.4199981689453
+                    396.6400146484375,
+                    214.93600463867188
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -204,6 +263,7 @@
             "HasChild": false,
             "RootEntity": true,
             "TagComponent": {
+                "Active": true,
                 "Tag": "SceneCamera"
             },
             "TransformComponent": {
@@ -264,6 +324,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "BackMountain4"
                 },
                 "TransformComponent": {
@@ -323,6 +384,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Around"
                 },
                 "TransformComponent": {
@@ -382,6 +444,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "BackMountain3"
                 },
                 "TransformComponent": {
@@ -403,6 +466,7 @@
             "HasChild": true,
             "RootEntity": true,
             "TagComponent": {
+                "Active": true,
                 "Tag": "Stage"
             },
             "TransformComponent": {
@@ -461,6 +525,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "BackMountain2"
                 },
                 "TransformComponent": {
@@ -520,6 +585,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Sky"
                 },
                 "TransformComponent": {
@@ -579,6 +645,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Mountain"
                 },
                 "TransformComponent": {
@@ -638,6 +705,7 @@
                     }
                 },
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "BackMountain1"
                 },
                 "TransformComponent": {
@@ -667,7 +735,7 @@
                         "Y": 0.0
                     },
                     "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
+                    "RestitutionThreshold": 7.0,
                     "Size": {
                         "X": 141.8000030517578,
                         "Y": 12.779999732971191
@@ -680,6 +748,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Ground1"
                 },
                 "TransformComponent": {
@@ -693,8 +762,8 @@
                         1.0
                     ],
                     "Translate": [
-                        -39.999996185302734,
-                        195.0
+                        -37.0,
+                        195.99998474121094
                     ]
                 }
             },
@@ -720,6 +789,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Ground3"
                 },
                 "TransformComponent": {
@@ -760,6 +830,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Right"
                 },
                 "TransformComponent": {
@@ -800,6 +871,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Left"
                 },
                 "TransformComponent": {
@@ -821,6 +893,7 @@
             "HasChild": true,
             "RootEntity": true,
             "TagComponent": {
+                "Active": true,
                 "Tag": "Blocks"
             },
             "TransformComponent": {
@@ -849,7 +922,7 @@
                     "Restitution": 0.0,
                     "RestitutionThreshold": 0.5,
                     "Size": {
-                        "X": 112.9000015258789,
+                        "X": 116.19999694824219,
                         "Y": 7.980000019073486
                     }
                 },
@@ -860,6 +933,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Ground2"
                 },
                 "TransformComponent": {
@@ -873,8 +947,8 @@
                         1.0
                     ],
                     "Translate": [
-                        205.60000610351563,
-                        191.39999389648438
+                        211.59999084472656,
+                        193.5
                     ]
                 }
             },
@@ -900,6 +974,7 @@
                 },
                 "RootEntity": false,
                 "TagComponent": {
+                    "Active": true,
                     "Tag": "Ground4"
                 },
                 "TransformComponent": {

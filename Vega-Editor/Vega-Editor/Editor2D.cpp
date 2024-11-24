@@ -177,11 +177,6 @@ namespace fz {
 	{
 		SceneSerializer serializer(nullptr);
 		Shared<Scene> loadScene = serializer.Deserialize(path);
-		auto& base = BindScriptBase::GetInstance();
-		for (auto& script : base)
-		{
-			script->Bind(loadScene->GetUUID(), loadScene);
-		}
 		//for (int i = 0; i < base.size(); ++i)
 		//{
 		//	delete base[i];
@@ -194,15 +189,16 @@ namespace fz {
 	{
 		m_SceneState = SceneState::Play;
 		SaveScene(m_ActiveScene, g_TempProjectPath);
+		this->BindScript();
 		m_ActiveScene->OnPreUpdate();
 	}
 
 	void Editor2D::OnSceneStop()
 	{
 		m_SceneState = SceneState::Edit;
+		m_ActiveScene->OnPostUpdate();
 		if (!m_ActiveSceneFilePath.empty())
 		{
-			m_ActiveScene->OnPostUpdate();
 			m_ActiveScene = LoadScene(g_TempProjectPath);
 			m_HierarchyPanel.SetContext(m_ActiveScene);
 		}
@@ -239,6 +235,15 @@ namespace fz {
 		ImGui::PopStyleVar(2);
 		ImGui::PopStyleColor(3);
 		ImGui::End();
+	}
+
+	void Editor2D::BindScript()
+	{
+		auto& base = BindScriptBase::GetInstance();
+		for (auto& script : base)
+		{
+			script->Bind(m_ActiveScene->GetUUID(), m_ActiveScene);
+		}
 	}
 
 } // namespace fz

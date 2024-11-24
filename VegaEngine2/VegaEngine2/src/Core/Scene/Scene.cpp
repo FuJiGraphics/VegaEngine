@@ -81,7 +81,7 @@ namespace fz {
 		return entity;
 	}
 
-	void Scene::CopyEntityForPrefab(fz::Entity dst, fz::Entity src)
+	void Scene::CopyEntityForPrefab(fz::Entity dst, fz::Entity src, bool isRootTransform)
 	{
 		if (!dst.HasComponent<PrefabInstance>())
 		{
@@ -119,7 +119,8 @@ namespace fz {
 		{
 			auto& srcTransformComp = src.GetComponent<TransformComponent>();
 			auto& dstTransformComp = dst.GetComponent<TransformComponent>();
-			dstTransformComp.Transform = srcTransformComp.Transform;
+			if (!isRootTransform) // 지정된 Transform일 경우 복사 제외 (차일드 엔티티일 경우)
+				dstTransformComp.Transform = srcTransformComp.Transform;
 			dstTransformComp.AnimTransform = srcTransformComp.AnimTransform;
 			dstTransformComp.RenderTransform = srcTransformComp.RenderTransform;
 			dstTransformComp.IsChildRenderMode = srcTransformComp.IsChildRenderMode;
@@ -162,7 +163,23 @@ namespace fz {
 				dstBoxComp.RestitutionThreshold = srcBoxComp.RestitutionThreshold;
 				dstBoxComp.Size = srcBoxComp.Size;
 			}
+			// TODO: 스크립트 복사
+			if (src.HasComponent<NativeScriptComponent>())
+			{
+				auto& srcNativeComp = src.GetComponent<NativeScriptComponent>();
+				auto& dstNativeComp = dst.AddComponent<NativeScriptComponent>();
+				dstNativeComp.Instance = srcNativeComp.CreateInstanceFunc();
+				dstNativeComp.Instance->m_Entity = dst;
+				dstNativeComp.CreateInstanceFunc = srcNativeComp.CreateInstanceFunc;
+				dstNativeComp.DeleteInstanceFunc = srcNativeComp.DeleteInstanceFunc;
+				dstNativeComp.OnCreateFunction = srcNativeComp.OnCreateFunction;
+				dstNativeComp.OnDestroyFunction = srcNativeComp.OnDestroyFunction;
+				dstNativeComp.OnUpdateFunction = srcNativeComp.OnUpdateFunction;
+			}
+
 			LoginPhysicsWorld(dst);
+
+			m_PrefabInstancePool.insert({ dst.m_UUID, dst.m_Handle });
 		}
 	}
 
@@ -254,6 +271,7 @@ namespace fz {
 
 	void Scene::OnPreUpdate()
 	{
+		this->ReleasePrefabInstancies();
 		this->StartPhysics();
 		this->OnPreUpdateScript();
 	}
@@ -271,6 +289,7 @@ namespace fz {
 
 	void Scene::OnPostUpdate()
 	{
+		this->ReleasePrefabInstancies();
 		this->OnPostUpdateScript();
 		this->StopPhysics();
 	}
@@ -291,6 +310,16 @@ namespace fz {
  				cameraComponent.Camera.SetSize(width, height);
 			}
 		}
+	}
+
+	void Scene::ReleasePrefabInstancies()
+	{
+		for (auto& instance : m_PrefabInstancePool)
+		{
+			fz::Entity deleteEntity = { instance.first, instance.second, shared_from_this() };
+			this->DeleteEntity(deleteEntity);
+		}
+		m_PrefabInstancePool.clear();
 	}
 
 	fz::Entity Scene::GetEntityFromUUID(const std::string& uuid)
@@ -320,6 +349,23 @@ namespace fz {
 		return {};
 	}
 
+	GameObject Scene::Instantiate(GameObject entity, const sf::Vector2f& position, float rotation)
+	{
+		std::string tempTag = ("prefabInstance" + std::to_string(m_prefabInstanceCount));
+		fz::Transform transform;
+		transform.SetTranslate(position);
+		transform.SetRotation(rotation);
+		return this->Instantiate(entity, tempTag, transform);
+	}
+
+	GameObject Scene::Instantiate(GameObject entity, const sf::Vector2f& position)
+	{
+		std::string tempTag = ("prefabInstance" + std::to_string(m_prefabInstanceCount));
+		fz::Transform transform;
+		transform.SetTranslate(position);
+		return this->Instantiate(entity, tempTag, transform);
+	}
+
 	GameObject Scene::Instantiate(GameObject entity, const fz::Transform& transform)
 	{
 		std::string tempTag = ("prefabInstance" + std::to_string(m_prefabInstanceCount));
@@ -331,9 +377,9 @@ namespace fz {
 		fz::Entity newEntity = CreateEntity(tag);
 		newEntity.AddComponent<PrefabInstance>();
 
-		CopyEntityForPrefab(newEntity, entity);
 		auto& transformComp = newEntity.GetComponent<TransformComponent>();
 		transformComp.Transform = transform;
+		CopyEntityForPrefab(newEntity, entity, true);
 
 		return newEntity;
 	}
