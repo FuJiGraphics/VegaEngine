@@ -124,6 +124,10 @@ namespace fz {
 				m_SelectionContext = entity;
 				m_OnEntityRemove = true;
 			}
+			if (ImGui::MenuItem("Create Prefab"))
+			{
+
+			}
 			ImGui::EndPopup();
 			result = true;
 		}
@@ -137,8 +141,9 @@ namespace fz {
 			ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_Framed;
 		if (entity.HasComponent<TagComponent>())
 		{
-			auto& tag = entity.GetComponent<TagComponent>().Tag;
-			VegaUI::InputText(tag, "Tag");
+			auto& tagComp = entity.GetComponent<TagComponent>();
+			VegaUI::Checkbox("Active", tagComp.Active);
+			VegaUI::InputText(tagComp.Tag, "Tag");
 		}
 
 		{
@@ -314,6 +319,7 @@ namespace fz {
 					if (entity.HasComponent<BoxCollider2DComponent>())
 					{
 						auto& colComp = entity.GetComponent<BoxCollider2DComponent>();
+						VegaUI::Checkbox("IsTrigger", colComp.IsTrigger);
 						VegaUI::DrawControl2("Offset", colComp.Offset);
 						VegaUI::DrawControl2("Size", colComp.Size);
 						VegaUI::DrawControl1("Density", "Reset", colComp.Density);

@@ -18,7 +18,7 @@ namespace fz {
 			MeleeAttack,
 
 			CrouchAttack, CrouchAttackUp,
-			IdleAttack, IdleAttackUp,
+			IdleAttack, IdleAttackReflash, IdleAttackUp,
 			JumpAttack, JumpAttackUp, JumpAttackDown,
 
 			Count,

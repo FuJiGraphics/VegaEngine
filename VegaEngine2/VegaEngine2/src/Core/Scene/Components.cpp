@@ -44,7 +44,7 @@ namespace fz {
 
 	bool RigidbodyComponent::IsOnGround(sf::Vector2f& normal, sf::Vector2f& pos, float& fraction)
 	{
-		if (FZ_CURRENT_SCENE.IsEmpty())
+		if (!FZ_CURRENT_SCENE)
 			return false;
 		void* rawWorld = FZ_CURRENT_SCENE->GetPhysicsWorld();
 		if (rawWorld == nullptr)
@@ -84,7 +84,14 @@ namespace fz {
 		((b2World*)rawWorld)->RayCast(&callback, start, end);
 		normal = callback.Normal;
 		pos = callback.Position;
-		return callback.HitGround && callback.Fraction < 0.3f;
+		return callback.HitGround && callback.Fraction < 0.5f;
+	}
+
+	void BoxCollider2DComponent::SetTrigger(bool enabled)
+	{
+		IsTrigger = enabled;
+		b2FixtureDef* fixture = (b2FixtureDef*)RuntimeFixture;
+		fixture->isSensor = IsTrigger;
 	}
 
 } // namespace fz

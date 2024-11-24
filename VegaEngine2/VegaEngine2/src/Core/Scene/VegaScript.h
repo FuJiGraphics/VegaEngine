@@ -19,6 +19,18 @@ namespace fz {
 			return m_Entity.HasComponent<T>();
 		}
 
+		virtual void OnCreate() {}
+		virtual void OnDestroy() {}
+		virtual void OnUpdate(float dt) {}
+
+		virtual void OnTriggerEnter() {}
+		virtual void OnTriggerStay() {}
+		virtual void OnTriggerExit() {}
+
+		virtual void OnCollisionEnter() {}
+		virtual void OnCollisionStay() {}
+		virtual void OnCollisionExit() {}
+
 	private:
 		Entity m_Entity;
 

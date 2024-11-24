@@ -6,24 +6,38 @@ namespace fz {
 	OrthoCamera::OrthoCamera()
 		: m_View()
 		, m_Zoom(1.0f)
+		, m_Size(1.0f, 1.0f)
+		, m_OldSize(1.0f, 1.0f)
 	{
 		// Empty
 	}
 
 	OrthoCamera::OrthoCamera(const OrthoCamera& other)
 		: m_View(other.m_View)
+		, m_Size(other.m_Size)
+		, m_Zoom(other.m_Zoom)
+		, m_OldSize(other.m_OldSize)
 	{
 		// Empty
 	}
 
 	OrthoCamera::OrthoCamera(OrthoCamera&& other)
 		: m_View(other.m_View)
+		, m_Size(other.m_Size)
+		, m_Zoom(other.m_Zoom)
+		, m_OldSize(other.m_OldSize)
 	{
 		other.m_View = sf::View();
+		other.m_Size = { 1.0f, 1.0f };
+		other.m_Zoom = 1.0f;
+		other.m_OldSize = { 1.0f, 1.0f };
 	}
 
 	OrthoCamera::OrthoCamera(const sf::FloatRect& viewport)
 		: m_View(viewport)
+		, m_Zoom(1.0f)
+		, m_Size(1.0f, 1.0f)
+		, m_OldSize(1.0f, 1.0f)
 	{
 		// Empty
 	}
@@ -31,12 +45,17 @@ namespace fz {
 	OrthoCamera::OrthoCamera(const sf::Vector2f& center, const sf::Vector2f& size)
 		: m_View(center, size)
 		, m_Size(size)
+		, m_Zoom(1.0f)
+		, m_OldSize(1.0f, 1.0f)
 	{
 		// Empty
 	}
 
 	OrthoCamera::OrthoCamera(const sf::View& view)
 		: m_View(view)
+		, m_Zoom(1.0f)
+		, m_Size(1.0f, 1.0f)
+		, m_OldSize(1.0f, 1.0f)
 	{
 		// Empty
 	}
@@ -142,6 +161,15 @@ namespace fz {
 	sf::View& OrthoCamera::GetView()
 	{
 		return m_View;
+	}
+
+	OrthoCamera& OrthoCamera::operator=(const OrthoCamera& other)
+	{
+		m_View = other.m_View;
+		m_Size = other.m_Size;
+		m_OldSize = other.m_OldSize;
+		m_Zoom = other.m_Zoom;
+		return *this;
 	}
 
 } // namespace fz

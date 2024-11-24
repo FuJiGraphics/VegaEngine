@@ -14,7 +14,7 @@ namespace fz {
 		Animator Animator;
 		std::unordered_map<std::string, fz::AnimationClip> Animations;
 
-		void OnCreate()
+		void OnCreate() override
 		{
 			auto& transformComp = GetComponent<TransformComponent>();
 			auto& spriteComp = GetComponent<SpriteComponent>();
@@ -22,13 +22,10 @@ namespace fz {
 			Animator.SetTarget(sprite, transformComp);
 			Animator.SetSpeed(2.0f);
 
-			Animations["Idle"].loadFromFile("animations/player_leg_idle.json");
-			Animations["Run"].loadFromFile("animations/player_leg_run.json");
-		}
-
-		void OnDestroy()
-		{
-
+			Animations["Idle"].loadFromFile("animations/player/player_leg_idle.json");
+			Animations["Run"].loadFromFile("animations/player/player_leg_run.json");
+			Animations["IdleJump"].loadFromFile("animations/player/player_leg_idle_jump.json");
+			Animations["RunJump"].loadFromFile("animations/player/player_leg_run_jump.json");
 		}
 
 		void OnUpdate(float dt)
@@ -45,7 +42,10 @@ namespace fz {
 					Animator.Play(&Animations["Run"]);
 					break;
 				case AnimType::IdleJump:
-					//Animator.Play(&Animations["IdleJump"]);
+					Animator.Play(&Animations["IdleJump"]);
+					break;
+				case AnimType::RunJump:
+					Animator.Play(&Animations["RunJump"]);
 					break;
 			}
 		}

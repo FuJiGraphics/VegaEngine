@@ -6,6 +6,17 @@
 
 namespace fz {
 
+	struct PrefabInstance
+	{
+		fz::Entity PrefabInstanceEntity;
+
+		PrefabInstance() = default;
+		PrefabInstance(const PrefabInstance&) = default;
+		PrefabInstance(const fz::Entity& other)
+			: PrefabInstanceEntity(other)
+		{/*Empty*/}
+	};
+
 	struct RootEntityComponent
 	{
 		fz::Entity RootEntity;
@@ -42,6 +53,7 @@ namespace fz {
 
 	struct TagComponent
 	{
+		bool Active = true;
 		std::string Tag;
 
 		TagComponent() = default;
@@ -54,6 +66,7 @@ namespace fz {
 	struct TransformComponent
 	{
 		fz::Transform Transform;
+		fz::Transform AnimTransform;
 		sf::Transform RenderTransform;
 		bool IsChildRenderMode = false;
 
@@ -69,6 +82,7 @@ namespace fz {
 
 	struct SpriteComponent
 	{
+		bool Active = true;
 		int SortingOrder = 0;
 		fz::Sprite Sprite;
 
@@ -84,6 +98,7 @@ namespace fz {
 
 	struct CameraComponent
 	{
+		bool Active = true;
 		OrthoCamera Camera;
 		bool Primary = true;
 		bool FixedAspectRatio = false; //∞Ì¡§ ¡æ»æ∫Ò(Fixed Aspect Ratio)
@@ -132,9 +147,12 @@ namespace fz {
 	{
 	protected:
 		friend fz::Scene;
-		void* RuntimeFixture = nullptr;
+		friend fz::HierarchyPanel;
+		friend fz::EntitySerializer;
 
-	public:
+		void* RuntimeFixture = nullptr;
+		bool IsTrigger = false;
+
 		sf::Vector2f Offset = { 0.0f, 0.0f };
 		sf::Vector2f Size = { 0.5f, 0.5f };
 
@@ -143,6 +161,9 @@ namespace fz {
 		float Restitution = 0.0f;
 		float RestitutionThreshold = 0.5f;
 
+	public:
+		void SetTrigger(bool enabled);
+
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
 	};
@@ -150,7 +171,6 @@ namespace fz {
 	struct NativeScriptComponent
 	{
 	public:
-
 		VegaScript* Instance = nullptr;
 
 		VegaScript* (*CreateInstanceFunc)();
@@ -164,11 +184,11 @@ namespace fz {
 		void Bind()
 		{
 			CreateInstanceFunc = []() { return static_cast<VegaScript*>(new T()); };
-			DeleteInstanceFunc = [](VegaScript* instance) { delete (T*)instance; instance = nullptr; };
+			DeleteInstanceFunc = [](VegaScript* instance) { delete instance; instance = nullptr; };
 
-			OnCreateFunction = [](VegaScript* instance) { ((T*)instance)->OnCreate(); };
-			OnDestroyFunction = [](VegaScript* instance) { ((T*)instance)->OnDestroy(); };
-			OnUpdateFunction = [](VegaScript* instance, float dt) { ((T*)instance)->OnUpdate(dt); };
+			OnCreateFunction = [](VegaScript* instance) { (instance)->OnCreate(); };
+			OnDestroyFunction = [](VegaScript* instance) { (instance)->OnDestroy(); };
+			OnUpdateFunction = [](VegaScript* instance, float dt) { (instance)->OnUpdate(dt); };
 		}
 	};
 

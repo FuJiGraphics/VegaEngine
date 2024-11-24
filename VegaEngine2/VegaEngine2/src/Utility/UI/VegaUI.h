@@ -122,6 +122,7 @@ namespace fz {
 		static bool DragRect(sf::Vector2f& start, sf::Vector2f& end, bool currentWindow = true, ImGuiMouseButton button = ImGuiMouseButton_Left);
 		static bool IsWindowFocused(const sf::Vector2f& pos);
 		static void DrawGrid(float gridSize, const sf::FloatRect& borderRect = { 0.0f, 0.0f, 0.0f, 0.0f });
+		static bool Checkbox(const std::string& label, bool& check, float columnWidth = 100.f);
 	};
 
 } // namespace fz

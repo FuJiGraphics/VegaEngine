@@ -590,4 +590,30 @@ namespace fz {
 		}
 	}
 
+	bool VegaUI::Checkbox(const std::string& label, bool& check, float columnWidth)
+	{
+		bool result = false;
+		ImGui::PushID(label.c_str());
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, columnWidth);
+
+		ImGui::Text(label.c_str());
+		ImGui::NextColumn();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 4.f });
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize = { lineHeight * 1.81f, lineHeight };
+
+		// ImGui::SameLine();
+		if (ImGui::Checkbox(("##CheckBox" + label).c_str(), &check))
+			result = true;
+
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
+
+		ImGui::PopID();
+		return result;
+	}
+
 } // namespace fz

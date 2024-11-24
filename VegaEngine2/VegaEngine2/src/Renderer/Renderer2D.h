@@ -9,9 +9,10 @@ namespace fz {
 	struct RenderFrame
 	{
 		sf::Sprite*	Sprite = nullptr;
-		sf::Transform* Transform = nullptr;
+		const sf::Transform* Transform = nullptr;
 		sf::RectangleShape* RectangleShape = nullptr;
 		sf::CircleShape* CircleShape = nullptr;
+		sf::Transform subTranform = sf::Transform::Identity;
 	};
 
 	class Renderer2D
@@ -25,8 +26,8 @@ namespace fz {
 		static void BeginScene(OrthoCamera& camera, const sf::Transform& transform, Shared<Framebuffer>& framebuffer);
 		static void EndScene();
 
-		static void Draw(int order, sf::Sprite& target, sf::Transform& transform);
-		static void Draw(sf::RectangleShape* target, sf::Transform& transform);
+		static void Draw(int order, sf::Sprite& target, const sf::Transform& transform, const sf::Transform& subTransform = sf::Transform::Identity);
+		static void Draw(sf::RectangleShape* target, const sf::Transform& transform, const sf::Transform& subTransform = sf::Transform::Identity);
 	private:
 		static sf::Sprite s_Spirte;
 		static sf::RenderWindow* s_RenderWindow;

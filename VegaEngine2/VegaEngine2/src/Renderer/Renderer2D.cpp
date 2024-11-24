@@ -72,7 +72,7 @@ namespace fz {
 			{
 				RenderFrame& renderFrame = it.second;
 				sf::RenderStates state;
-				state.transform = *renderFrame.Transform;
+				state.transform = *renderFrame.Transform * renderFrame.subTranform;
 				if (renderFrame.Sprite)
 				{
 					state.texture = renderFrame.Sprite->getTexture();
@@ -109,19 +109,19 @@ namespace fz {
 		s_CommandBuffer.clear();
 	} 
 
-	void Renderer2D::Draw(int order, sf::Sprite& target, sf::Transform& transform)
+	void Renderer2D::Draw(int order, sf::Sprite& target, const sf::Transform& transform, const sf::Transform& subTransform)
 	{
 		FZLOG_ASSERT(s_RenderWindow, "Renderer2D를 사용할 수 없습니다. 초기화되지 않은 Renderer2D 입니다.");
 		FZLOG_ASSERT(s_OrthoCamera, "Renderer2D를 사용할 수 없습니다. BeginScene이 호출되지 않았습니다.");
 
-		RenderFrame renderFrame = { &target, &transform };
+		RenderFrame renderFrame = { &target, &transform, nullptr, nullptr, subTransform };
 		s_CommandBuffer.insert({ order, renderFrame });
 	}
 
-	void Renderer2D::Draw(sf::RectangleShape* target, sf::Transform& transform)
+	void Renderer2D::Draw(sf::RectangleShape* target, const sf::Transform& transform, const sf::Transform& subTransform)
 	{
 		const auto& lastElement = *s_CommandBuffer.rbegin();
-		RenderFrame renderFrame = { nullptr, &transform, target, nullptr };
+		RenderFrame renderFrame = { nullptr, &transform, target, nullptr, subTransform };
 		s_CommandBuffer.insert({ lastElement.first + 1, renderFrame });
 	}
 

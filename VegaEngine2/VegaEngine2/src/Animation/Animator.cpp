@@ -126,7 +126,7 @@ namespace fz {
 			return;
 
 		*sprite = frame.sprite;
-		transformComp->Transform = currentClip->transform;
+		transformComp->AnimTransform = currentClip->transform;
 	}
 
 } // namespace fz

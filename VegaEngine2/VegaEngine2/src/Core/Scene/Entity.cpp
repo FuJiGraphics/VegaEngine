@@ -69,7 +69,7 @@ namespace fz {
 		const auto& it = m_Scene->m_EntityPool.find(uuid);
 		if (it == m_Scene->m_EntityPool.end())
 		{
-			childEntity = m_Scene->CreateEntity(uuid, tagName);
+			childEntity = m_Scene->CreateEntityWithUUID(tagName, uuid);
 			if (!childEntity.HasComponent<ParentEntityComponent>())
 			{
 				auto& parentComp = childEntity.AddComponent<ParentEntityComponent>();

@@ -7,6 +7,7 @@
 namespace fz {
 
 	class EntitySerializer;
+	class HierarchyPanel;
 
 	class Entity 
 	{
@@ -14,6 +15,7 @@ namespace fz {
 		friend fz::Scene;
 		friend fz::EntitySerializer;
 		friend fz::SceneSerializer;
+		friend fz::HierarchyPanel;
 
 	public:
 		Entity();
@@ -21,9 +23,6 @@ namespace fz {
 		Entity(const std::string& uuid, entt::entity handle, const Shared<Scene>& scene);
 		Entity(const Entity& other);
 		Entity(Entity&& other) noexcept;
-
-		Entity& operator=(const Entity& other);
-		Entity& operator=(Entity&& other);
 
 		template <typename T, typename ...Args>
 		T& AddComponent(Args&&... args)
@@ -64,17 +63,23 @@ namespace fz {
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 
-		fz::Entity CreateChildEntity(const std::string& uuid, const std::string& tagName);
-
 		inline bool operator ==(const fz::Entity& other) const	{ return m_Handle == other.m_Handle && m_Scene == other.m_Scene; }
 		inline bool operator !=(const fz::Entity& other) const	{ return !((*this) == other); }
 		inline operator bool() const							{ return m_Handle != entt::null; }
 		inline operator std::uint32_t() const					{ return (std::uint32_t)m_Handle; }
+
+		Entity& operator=(const Entity& other);
+		Entity& operator=(Entity&& other);
+
+	protected:
+		fz::Entity CreateChildEntity(const std::string& uuid, const std::string& tagName);
 
 	private:
 		entt::entity	m_Handle;
 		Weak<Scene>		m_Scene;
 		std::string		m_UUID;
 	};
+
+	using GameObject = fz::Entity;
 
 } // namespace fz

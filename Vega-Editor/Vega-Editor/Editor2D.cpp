@@ -43,7 +43,7 @@ namespace fz {
 				SpriteEditor::OnUpdate(dt);
 				break;
 			case SceneState::Play:
-				m_ActiveScene->OnUpdateRuntime(dt);
+				m_ActiveScene->OnUpdate(dt);
 				break;
 		}
 	}
@@ -193,8 +193,8 @@ namespace fz {
 	void Editor2D::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
-		m_ActiveScene->StartPhysics();
 		SaveScene(m_ActiveScene, g_TempProjectPath);
+		m_ActiveScene->OnPreUpdate();
 	}
 
 	void Editor2D::OnSceneStop()
@@ -202,7 +202,7 @@ namespace fz {
 		m_SceneState = SceneState::Edit;
 		if (!m_ActiveSceneFilePath.empty())
 		{
-			m_ActiveScene->StopPhysics();
+			m_ActiveScene->OnPostUpdate();
 			m_ActiveScene = LoadScene(g_TempProjectPath);
 			m_HierarchyPanel.SetContext(m_ActiveScene);
 		}

@@ -1,28 +1,6 @@
 {
     "8fc401b3-19ba-4183-833f-2cf6b0c13d01": {
         "2d193a6d-7d42-4d22-bf90-33455c66791a": {
-            "3a2f7072-9895-4b2e-a859-234cd1c8a625": {
-                "HasChild": false,
-                "RootEntity": false,
-                "TagComponent": {
-                    "Tag": "Test"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        0.0,
-                        0.0
-                    ]
-                }
-            },
             "6503ebe6-37ad-45d2-b381-562be3a34e33": {
                 "HasChild": false,
                 "RootEntity": false,
@@ -58,7 +36,7 @@
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
                         "Height": 34,
-                        "Left": 110,
+                        "Left": 41,
                         "Top": 260,
                         "Width": 34
                     }
@@ -77,7 +55,7 @@
                         1.0
                     ],
                     "Translate": [
-                        -14.0,
+                        -13.0,
                         -28.0
                     ]
                 }
@@ -87,13 +65,13 @@
                 "Friction": 1.0,
                 "Offset": {
                     "X": 0.0,
-                    "Y": -1.399999976158142
+                    "Y": 0.0
                 },
                 "Restitution": 0.0,
                 "RestitutionThreshold": 0.5,
                 "Size": {
                     "X": 10.100000381469727,
-                    "Y": 13.0
+                    "Y": 13.300000190734863
                 }
             },
             "HasChild": true,
@@ -116,8 +94,8 @@
                     1.0
                 ],
                 "Translate": [
-                    35.4197883605957,
-                    150.4897003173828
+                    1.890989899635315,
+                    156.7447509765625
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -174,7 +152,7 @@
                         1.0
                     ],
                     "Translate": [
-                        -12.5,
+                        -12.0,
                         -6.0
                     ]
                 }
@@ -190,8 +168,8 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    413.5240173339844,
-                    218.4199981689453
+                    428.8000183105469,
+                    228.06800842285156
                 ],
                 "Viewport": {
                     "Height": 1.0,

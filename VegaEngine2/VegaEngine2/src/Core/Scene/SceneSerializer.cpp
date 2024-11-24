@@ -32,6 +32,11 @@ namespace fz {
 		for (auto& it : m_Scene->m_EntityPool)
 		{
 			Entity entity = { it.first, it.second, m_Scene };
+
+			// Prefab용 instance면 직렬화 제외
+			if (entity.HasComponent<PrefabInstance>())
+				continue;
+
 			if (entity.HasComponent<RootEntityComponent>())
 			{
 				EntitySerializer entitySerializer(entity);

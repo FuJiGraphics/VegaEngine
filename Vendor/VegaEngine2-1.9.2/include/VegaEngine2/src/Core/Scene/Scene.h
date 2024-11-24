@@ -13,6 +13,9 @@ namespace fz {
 	class SceneSerializer;
 	class EntitySerializer;
 	class EditorCamera;
+	class Editor2D;
+
+	using GameObject = fz::Entity;
 
 	class Scene : public std::enable_shared_from_this<Scene>
 	{
@@ -23,6 +26,7 @@ namespace fz {
 		friend fz::HierarchyPanel;
 		friend fz::SceneSerializer;
 		friend fz::EntitySerializer;
+		friend fz::Editor2D;
 		FZ_DELETE_COPY(Scene)
 
 	public:
@@ -30,28 +34,19 @@ namespace fz {
 		~Scene();
 
 		Entity CreateEntity(const std::string& tagName = "");
-		Entity CreateEntityWithUUID(const std::string& tagName, const std::string& uuid);
-		Entity CreateEntity(const std::string& uuid, const std::string& tagName);
 		void DeleteEntity(fz::Entity& entity);
-		
-		void StartPhysics();
-		void StopPhysics();
-
-		void OnUpdateEditor(float dt, EditorCamera& editorCamera);
-		void OnUpdateRuntime(float dt);
-		void OnViewportResize(unsigned int width, unsigned int height);
 
 		Entity GetEntityFromUUID(const std::string& uuid);
 		Entity GetEntityFromTag(const std::string& tag);
 		inline sf::Vector2u GetViewportSize() const { return { m_FrameBuffer->GetWidth(), m_FrameBuffer->GetHeight() }; }
 		inline Shared<Framebuffer>& GetFrameBuffer() { return m_FrameBuffer; }
-		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
-
-		std::string GetUUID() const { return m_UUID; }
 		void* GetPhysicsWorld() const { return m_World; }
 
 		bool IsDebugDisplayMode() const { return m_IsDebugMode; }
 		void SetDebugDisplayMode(bool enabled) { m_IsDebugMode = enabled; }
+
+		GameObject Instantiate(GameObject entity, const fz::Transform& transform);
+		GameObject Instantiate(GameObject entity, const std::string& tag, const fz::Transform& transform);
 
 		template <typename... Components>
 		auto GetEntities()
@@ -60,17 +55,38 @@ namespace fz {
 		}
 
 	protected:
+		Entity CreateEntityWithUUID(const std::string& tagName, const std::string& uuid);
+		void CopyEntityForPrefab(fz::Entity dst, fz::Entity src);
+
+		void OnUpdateEditor(float dt, EditorCamera& editorCamera);
+		void OnPreUpdate();
+		void OnUpdate(float dt);
+		void OnPostUpdate();
+
+		// Physics
+		void StartPhysics();
+		void StopPhysics();
+		void LoginPhysicsWorld(fz::Entity entity);
+
+		// Scripts
+		void OnPreUpdateScript();
 		void OnUpdateScript(float dt);
+		void OnPostUpdateScript();
+
 		void OnUpdateChildEntity();
 		void OnUpdatePhysicsSystem(float dt);
 		void OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform** dstTransform);
 		void OnRenderEditorSprite(OrthoCamera* mainCamera);
 		void OnRenderRuntimeSprite(OrthoCamera* mainCamera, sf::Transform& transform);
 		void OnDrawDebugShape();
+		void OnViewportResize(unsigned int width, unsigned int height);
 
+		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
+
+		std::string GetUUID() const { return m_UUID; }
 	public:
 		// TODO: юс╫ц
-		inline static Weak<Scene>	s_CurrentScene;
+		inline static Shared<Scene>	s_CurrentScene;
 
 	private:
 		entt::registry			m_Registry;
@@ -79,8 +95,10 @@ namespace fz {
 		EntityPool				m_EntityPool;
 		b2World*				m_World;
 		bool					m_IsDebugMode;
+		std::string				m_prefabTempPath;
+		int						m_prefabInstanceCount;
 	};
 
-#define FZ_CURRENT_SCENE Scene::s_CurrentScene
+#define FZ_CURRENT_SCENE fz::Scene::s_CurrentScene
 
 } // namespace fz

@@ -15,7 +15,7 @@ namespace fz {
 		std::unordered_map<std::string, fz::AnimationClip> Animations;
 		bool IsPressedButton = false;
 
-		void OnCreate()
+		void OnCreate() override
 		{
 			auto& transformComp = GetComponent<TransformComponent>();
 			auto& spriteComp = GetComponent<SpriteComponent>();
@@ -24,16 +24,14 @@ namespace fz {
 			Animator.SetSpeed(2.0f);
 			const auto& origin = spriteComp.Sprite.GetOrigins();
 
-			Animations["Idle"].loadFromFile("animations/player_body_idle.json");
-			Animations["Run"].loadFromFile("animations/player_body_run.json");
+			Animations["Idle"].loadFromFile("animations/player/player_body_idle.json");
+			Animations["Run"].loadFromFile("animations/player/player_body_run.json");
+			Animations["IdleJump"].loadFromFile("animations/player/player_body_idle_jump.json");
+			Animations["RunJump"].loadFromFile("animations/player/player_body_run_jump.json");
+			Animations["PistolAttack"].loadFromFile("animations/player/player_pistol_attack.json");
 		}
 
-		void OnDestroy()
-		{
-
-		}
-
-		void OnUpdate(float dt)
+		void OnUpdate(float dt) override
 		{
 			auto& transform = GetComponent<TransformComponent>().Transform;
 			Animator.Update(dt);
@@ -47,8 +45,15 @@ namespace fz {
 					Animator.Play(&Animations["Run"]);
 					break;
 				case AnimType::IdleJump:
-					//Animator.Play(&Animations["IdleJump"]);
+					Animator.Play(&Animations["IdleJump"]);
 					break;
+				case AnimType::RunJump:
+					Animator.Play(&Animations["RunJump"]);
+					break;
+				case AnimType::IdleAttackReflash:
+					Animator.Stop(); 
+				case AnimType::IdleAttack: 
+					Animator.Play(&Animations["PistolAttack"]);
 			}
 		}
 	};

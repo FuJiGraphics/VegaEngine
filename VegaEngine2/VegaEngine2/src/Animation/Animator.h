@@ -94,6 +94,11 @@ namespace fz {
 				return "";
 			return currentClip->id;
 		}
+
+		AnimationClip* GetCurrentClip() const 
+		{
+			return currentClip;
+		}
 	};
 
 } // namespace fz
