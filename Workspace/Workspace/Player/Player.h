@@ -146,4 +146,9 @@ namespace fz {
 	
 } // namespace fz
 
+// 엔진이 사용할 팩토리 함수
+//extern "C" __declspec(dllexport) fz::VegaScript* CreateScript() {
+//	return new fz::Player();
+//}
+
 BIND_SCRIPT(Player, "8fc401b3-19ba-4183-833f-2cf6b0c13d01", "Player", Player);

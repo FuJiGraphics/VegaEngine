@@ -1,7 +1,7 @@
 #pragma warning(disable : 4006)
 #pragma once
 
-#define FZLOG_DEBUG_MODE_ENABLED
+// #define FZLOG_DEBUG_MODE_ENABLED
 
 // Standards
 #include <iostream>

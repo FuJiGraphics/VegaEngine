@@ -19,8 +19,8 @@
                     },
                     "MaskMode": true,
                     "Origin": [
-                        0.0,
-                        0.0
+                        17.0,
+                        17.0
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -35,10 +35,10 @@
                     "SortingOrder": 0,
                     "TexPath": "graphics\\players\\marco_pistol.png",
                     "TexRect": {
-                        "Height": 30,
-                        "Left": 216,
-                        "Top": 1045,
-                        "Width": 43
+                        "Height": 34,
+                        "Left": 75,
+                        "Top": 260,
+                        "Width": 34
                     }
                 },
                 "TagComponent": {
@@ -96,8 +96,8 @@
                     1.0
                 ],
                 "Translate": [
-                    219.50543212890625,
-                    169.72756958007813
+                    176.33712768554688,
+                    106.4000244140625
                 ]
             },
             "c83d2c0c-8b60-4d18-9f82-5fafd92c4b70": {
@@ -118,8 +118,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        0.0,
-                        0.0
+                        12.5,
+                        12.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -249,7 +249,7 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    430.9440002441406,
+                    406.28802490234375,
                     216.0080108642578
                 ],
                 "Viewport": {
@@ -949,6 +949,47 @@
                     "Translate": [
                         211.59999084472656,
                         193.5
+                    ]
+                }
+            },
+            "cc51f621-85f9-4a83-856b-b60b86554d4d": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 68.0,
+                        "Y": 13.800000190734863
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": false,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "DD"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        216.0,
+                        143.0
                     ]
                 }
             },

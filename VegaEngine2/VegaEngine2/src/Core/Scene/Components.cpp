@@ -75,11 +75,10 @@ namespace fz {
 			sf::Vector2f Position = { 0.0f, 0.0f };
 			float ReportFixture(b2Fixture* f, const b2Vec2& p, const b2Vec2& n, float fraction) override
 			{
-				// 바닥(정적 물체)과 충돌했을 때
 				if (f->GetBody()->GetType() == b2_staticBody)
 				{
-					HitGround = true;
-					Normal = { n.x, n.y };
+  					HitGround = true;
+   					Normal = { n.x, n.y };
 					Position = Utils::MeterToPixel(p);
 					Fraction = fraction;
 					return 0.0f;  // 충돌 후 추가 검사 방지
@@ -87,17 +86,19 @@ namespace fz {
 				return 1.0f;  // 계속 진행
 			}
 		};
-		static RayCastCallback callback;
+		RayCastCallback callback;
 
 		// 객체의 현재 위치
 		b2Vec2 start = ((b2Body*)RuntimeBody)->GetPosition();
 		// 바닥으로 1미터 떨어진 위치
-		b2Vec2 end = start - b2Vec2(0.0f, -1.0f);
+		b2Vec2 end = start - b2Vec2(0.0f, -0.2f);
 
+		bool hitGround = false;
 		((b2World*)rawWorld)->RayCast(&callback, start, end);
 		normal = callback.Normal;
 		pos = callback.Position;
- 		return callback.HitGround && callback.Fraction <= 0.5f;
+		hitGround = callback.HitGround;
+ 		return hitGround;
 	}
 
 	void BoxCollider2DComponent::SetTrigger(bool enabled)

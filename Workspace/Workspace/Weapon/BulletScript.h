@@ -27,7 +27,7 @@ namespace fz {
 			sf::Vector2f dir = Utils::Angle(angle);
 			body.AddPosition({ Speed * dir.x, Speed * dir.y });
 		}
-
+		
 	};
 
 } // namespace fz

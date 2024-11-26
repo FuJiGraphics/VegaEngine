@@ -49,8 +49,6 @@ namespace fz {
 					break;
 			}
 		}
-	private:
-
 	};
 
 } // namespace fz
