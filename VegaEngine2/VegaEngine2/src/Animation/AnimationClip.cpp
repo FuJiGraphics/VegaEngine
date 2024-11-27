@@ -58,7 +58,7 @@ namespace fz {
 			newSprite.setTextureRect({ rect[0], rect[1], rect[2], rect[3] });
 			newSprite.setPosition({ border[0], border[1] });
 			newSprite.setColor({ color[0], color[1], color[2], color[3] });
-			Utils::SetOrigin(newSprite, Origins::TL);
+			Utils::SetOrigin(newSprite, Origins::MC);
 			frames.push_back(newSprite);
 
 			FZLOG_DEBUG("Origin = {0}, {1}", newSprite.getOrigin().x, newSprite.getOrigin().y);
