@@ -25,6 +25,8 @@ namespace fz {
 		static sf::Vector2f GetNormal(const sf::Vector2f& vec);
 		static float Distance(const sf::Vector2f& p1, const sf::Vector2f& p2);
 		static float Dot(const sf::Vector2f& v1, const sf::Vector2f& v2);
+		static float Cross(const sf::Vector2f& v1, const sf::Vector2f& v2);
+		sf::Vector2f GetNormalVector(const sf::Vector2f& v1, const sf::Vector2f& v2);
 
 		static float RadianToDegree(float radian);
 		static float DegreeToRadian(float degree);

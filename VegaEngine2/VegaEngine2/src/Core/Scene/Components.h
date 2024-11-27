@@ -169,6 +169,32 @@ namespace fz {
 		BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
 	};
 
+	struct EdgeCollider2DComponent
+	{
+	protected:
+		friend fz::Scene;
+		friend fz::HierarchyPanel;
+		friend fz::EntitySerializer;
+
+		void* RuntimeFixture = nullptr;
+		bool IsTrigger = false;
+		bool IsOneSides = false;
+
+		float Density = 1.0f;
+		float Friction = 0.5f;
+		float Restitution = 0.0f;
+		float RestitutionThreshold = 0.5f;
+
+		sf::Vector2f StartPos = { 0.0f, 0.0f };
+		sf::Vector2f EndPos = { 1.0f, 0.0f };
+
+	public:
+		void SetTrigger(bool enabled);
+
+		EdgeCollider2DComponent() = default;
+		EdgeCollider2DComponent(const EdgeCollider2DComponent& other) = default;
+	};
+
 	struct NativeScriptComponent
 	{
 	public:

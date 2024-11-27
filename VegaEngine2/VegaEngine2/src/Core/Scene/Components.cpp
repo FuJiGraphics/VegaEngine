@@ -108,4 +108,11 @@ namespace fz {
 		fixture->isSensor = IsTrigger;
 	}
 
+	void EdgeCollider2DComponent::SetTrigger(bool enabled)
+	{
+		IsTrigger = enabled;
+		b2FixtureDef* fixture = (b2FixtureDef*)RuntimeFixture;
+		fixture->isSensor = IsTrigger;
+	}
+
 } // namespace fz

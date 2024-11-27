@@ -90,7 +90,7 @@ namespace fz {
 
 }
 
-BIND_SCRIPT(RibbonPig, "8fc401b3-19ba-4183-833f-2cf6b0c13d01", "RibbonPig", RibbonPig);
+// BIND_SCRIPT(RibbonPig, "8fc401b3-19ba-4183-833f-2cf6b0c13d01", "RibbonPig", RibbonPig);
 
 
 

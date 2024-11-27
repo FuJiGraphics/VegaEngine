@@ -39,5 +39,3 @@ public:																					\
 inline bindClassBind##tag bindClassBindObj##tag;										\
 }
 
-#include "../../Workspace/Workspace/RibbonPig.h"
-#include "../../Workspace/Workspace/Spoa.h"

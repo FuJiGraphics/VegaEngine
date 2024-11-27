@@ -158,7 +158,10 @@ namespace fz {
 				DisplayAddComponentEntry<CameraComponent>("Camera");
 				DisplayAddComponentEntry<SpriteComponent>("Sprite");
 				DisplayAddComponentEntry<RigidbodyComponent>("Rigidbody");
-				DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider2D");
+				if (!m_SelectionContext.HasComponent<EdgeCollider2DComponent>())
+					DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider2D");
+				if (!m_SelectionContext.HasComponent<BoxCollider2DComponent>())
+					DisplayAddComponentEntry<EdgeCollider2DComponent>("EdgeCollider2D");
 				ImGui::EndPopup();
 			} 
 		}
@@ -311,8 +314,7 @@ namespace fz {
 			if (ImGui::TreeNodeEx("ColliderComponent", treeFlag, "Collider"))
 			{
 				bool isRemove = VegaUI::PopupContextItem("Remove ColliderComponent", [&entity]() {
-					entity.RemoveComponent<BoxCollider2DComponent>();
-														 });
+					entity.RemoveComponent<BoxCollider2DComponent>(); });
 
 				if (!isRemove)
 				{
@@ -322,6 +324,32 @@ namespace fz {
 						VegaUI::Checkbox("IsTrigger", colComp.IsTrigger);
 						VegaUI::DrawControl2("Offset", colComp.Offset);
 						VegaUI::DrawControl2("Size", colComp.Size);
+						VegaUI::DrawControl1("Density", "Reset", colComp.Density);
+						VegaUI::DrawControl1("Friction", "Reset", colComp.Friction);
+						VegaUI::DrawControl1("Restitution", "Reset", colComp.Restitution);
+						VegaUI::DrawControl1("Threshold", "Reset", colComp.RestitutionThreshold);
+					}
+				}
+				ImGui::TreePop();
+			}
+		}
+
+		if (entity.HasComponent<EdgeCollider2DComponent>())
+		{
+			if (ImGui::TreeNodeEx("ColliderComponent", treeFlag, "Collider"))
+			{
+				bool isRemove = VegaUI::PopupContextItem("Remove ColliderComponent", [&entity]() {
+					entity.RemoveComponent<EdgeCollider2DComponent>(); });
+
+				if (!isRemove)
+				{
+					if (entity.HasComponent<EdgeCollider2DComponent>())
+					{
+						auto& colComp = entity.GetComponent<EdgeCollider2DComponent>();
+						VegaUI::Checkbox("IsTrigger", colComp.IsTrigger);
+						VegaUI::Checkbox("IsOneSides", colComp.IsOneSides);
+						VegaUI::DrawControl2("Start Position", colComp.StartPos, 0.1f, 0.1f, 0.0f, colComp.EndPos.x - 1.0f, 0.0f, colComp.EndPos.y - 1.0f);
+						VegaUI::DrawControl2("End Position", colComp.EndPos, 0.1f, 0.1f, colComp.StartPos.x + 1.0f, 0.0f, colComp.StartPos.y, 0.0f );
 						VegaUI::DrawControl1("Density", "Reset", colComp.Density);
 						VegaUI::DrawControl1("Friction", "Reset", colComp.Friction);
 						VegaUI::DrawControl1("Restitution", "Reset", colComp.Restitution);
