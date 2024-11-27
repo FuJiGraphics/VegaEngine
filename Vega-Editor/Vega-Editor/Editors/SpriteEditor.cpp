@@ -13,6 +13,7 @@ namespace fz {
 		static bool s_HasCrop = false;
 		static std::string s_ClipName = "None";
 		static AnimationLoopTypes s_LoopType = AnimationLoopTypes::Loop;
+		static std::string s_OpenFilePath = "";
 		static std::string s_CurrentPath = "";
 		static sf::Vector2f s_Translate = { 0.0f, 0.0f };
 		static sf::Vector2f s_Scale = { 1.0f, 1.0f };
@@ -79,7 +80,7 @@ namespace fz {
 		{
 			if( ImGui::BeginMenu("Options"))
 			{
-				if (ImGui::MenuItem("Add Frame"))
+				if (s_IsOpenedFile && ImGui::MenuItem("Add Frame"))
 				{
 					s_Frames.push_back(s_WorkSprite);
 					auto iter = (s_Frames.end() - 1);
@@ -90,12 +91,25 @@ namespace fz {
 					sf::IntRect rect = { x, y, sizeW, sizeH };
 					iter->setTextureRect(rect);
 				}
-				if (ImGui::MenuItem("Save Clip..."))
+				if (ImGui::MenuItem("Open Clip"))
 				{
 					auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
 					HWND handle = (HWND)nativeWindow->getSystemHandle();
-					std::string savePath = VegaUI::SaveFile(handle, "Scene File (*.json)\0*.json\0");
-					SpriteEditor::SaveAnimationClip(savePath);
+					std::string openPath = VegaUI::OpenFile(handle, "Animation Clip (*.anim)\0*.anim\0");
+					if (!openPath.empty())
+					{
+						SpriteEditor::OpenAniamtionClip(openPath);
+					}
+				}
+				if (s_IsOpenedFile && ImGui::MenuItem("Save Clip..."))
+				{
+					auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
+					HWND handle = (HWND)nativeWindow->getSystemHandle();
+					std::string savePath = VegaUI::SaveFile(handle, "Animation Clip (*.anim)\0*.anim\0");
+					if (!savePath.empty())
+					{
+						SpriteEditor::SaveAnimationClip(savePath);
+					}
 				}
 				if (ImGui::MenuItem("Exit"))
 				{
@@ -144,64 +158,78 @@ namespace fz {
 	{
 		if (ImGui::Begin("Preview"))
 		{
-			VegaUI::InputText(s_ClipName, "Clip Name");
-
-			const char* loopTypes[] = { "Single", "Loop", "PingPong", "None" };
-			const char* currLoopTypeString = loopTypes[(int)s_LoopType];
-			if (ImGui::BeginCombo("Loop Type", currLoopTypeString))
+			if (s_IsOpenedFile)
 			{
-				for (int i = 0; i < 3; ++i)
+				VegaUI::InputText(s_ClipName, "Clip Name");
+				std::string path = s_CurrentPath;
+				if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
 				{
-					bool isSelected = currLoopTypeString == loopTypes[i];
-					if (ImGui::Selectable(loopTypes[i], isSelected))
+					if (path != s_CurrentPath)
 					{
-						currLoopTypeString = loopTypes[i];
-						s_LoopType = (AnimationLoopTypes)i;
+						s_CurrentPath = path;
+						SpriteEditor::SaveAnimationClip(s_OpenFilePath);
+						SpriteEditor::OpenAniamtionClip(s_OpenFilePath);
+						SpriteEditor::SetTarget(path);
 					}
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-				ImGui::EndCombo();
-			}
-
-			if (s_IsClickedFrame >= 0 && s_IsClickedFrame < s_Frames.size() && !s_Frames.empty())
-			{
-				sf::IntRect texRect = s_Frames[s_IsClickedFrame].getTextureRect();
-				if (VegaUI::DrawControl4("Texture Rect", texRect))
-				{
-					s_Frames[s_IsClickedFrame].setTextureRect(texRect);
-				}
-				sf::Vector2f border = s_Frames[s_IsClickedFrame].getPosition();
-				if (VegaUI::DrawControl2("Border", border))
-				{
-					s_Frames[s_IsClickedFrame].setPosition(border);
-				}
-				sf::Color color = s_Frames[s_IsClickedFrame].getColor();
-				if (VegaUI::ColorEdit4(color, "Color"))
-				{
-					s_Frames[s_IsClickedFrame].setColor(color);
-				}
-				sf::Vector2f translate = s_Translate;
-				if (VegaUI::DrawControl2("Translate", translate))
-				{
-					s_Translate = translate;
-				}
-				float rotation = s_Rotation;
-				if (VegaUI::DrawControl1("Rotation", "Reset", rotation))
-				{
-					s_Rotation = rotation;
-				}
-				sf::Vector2f scale = s_Scale;
-				if (VegaUI::DrawControl2("Scale", scale))
-				{
-					s_Scale = scale;
 				}
 
-				auto& buffer = s_PreviewBuffer->GetBuffer();
-				buffer.clear();
-				buffer.draw(s_Frames[s_IsClickedFrame]);
-				buffer.display();
-				ImGui::Image(buffer);
+				const char* loopTypes[] = { "Single", "Loop", "PingPong", "None" };
+				const char* currLoopTypeString = loopTypes[(int)s_LoopType];
+				if (ImGui::BeginCombo("Loop Type", currLoopTypeString))
+				{
+					for (int i = 0; i < 3; ++i)
+					{
+						bool isSelected = currLoopTypeString == loopTypes[i];
+						if (ImGui::Selectable(loopTypes[i], isSelected))
+						{
+							currLoopTypeString = loopTypes[i];
+							s_LoopType = (AnimationLoopTypes)i;
+						}
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+					ImGui::EndCombo();
+				}
+
+				if (s_IsClickedFrame >= 0 && s_IsClickedFrame < s_Frames.size() && !s_Frames.empty())
+				{
+					sf::IntRect texRect = s_Frames[s_IsClickedFrame].getTextureRect();
+					if (VegaUI::DrawControl4("Texture Rect", texRect))
+					{
+						s_Frames[s_IsClickedFrame].setTextureRect(texRect);
+					}
+					sf::Vector2f border = s_Frames[s_IsClickedFrame].getPosition();
+					if (VegaUI::DrawControl2("Border", border))
+					{
+						s_Frames[s_IsClickedFrame].setPosition(border);
+					}
+					sf::Color color = s_Frames[s_IsClickedFrame].getColor();
+					if (VegaUI::ColorEdit4(color, "Color"))
+					{
+						s_Frames[s_IsClickedFrame].setColor(color);
+					}
+					sf::Vector2f translate = s_Translate;
+					if (VegaUI::DrawControl2("Translate", translate))
+					{
+						s_Translate = translate;
+					}
+					float rotation = s_Rotation;
+					if (VegaUI::DrawControl1("Rotation", "Reset", rotation))
+					{
+						s_Rotation = rotation;
+					}
+					sf::Vector2f scale = s_Scale;
+					if (VegaUI::DrawControl2("Scale", scale))
+					{
+						s_Scale = scale;
+					}
+
+					auto& buffer = s_PreviewBuffer->GetBuffer();
+					buffer.clear();
+					buffer.draw(s_Frames[s_IsClickedFrame]);
+					buffer.display();
+					ImGui::Image(buffer);
+				}
 			}
 		}
 		ImGui::End();
@@ -239,6 +267,48 @@ namespace fz {
 		Database::Unload(path);
 	}
 
+	void SpriteEditor::OpenAniamtionClip(const std::string& path)
+	{
+		std::string newPath = path;
+		SpriteEditor::Clear();
+		s_IsOpenedFile = true;
+		s_OpenFilePath = newPath;
+		SpriteEditor::SetActive(true);
+
+		Database::LoadFromJson(s_OpenFilePath);
+		auto& json = Database::GetJsonObject(s_OpenFilePath);
+
+		unsigned int frameCount = json["AnimationClip"]["FrameCount"];
+		s_CurrentPath = json["AnimationClip"]["TexturePath"];
+		s_ClipName = json["AnimationClip"]["ClipName"];
+		s_LoopType = ToLoopType(json["AnimationClip"]["LoopType"]);
+
+		SpriteEditor::SetTarget(s_CurrentPath);
+
+		auto& target = json["AnimationClip"];
+		auto& j_translate = target["Transform"]["Translate"];
+		auto& j_rotation = target["Transform"]["Rotation"];
+		auto& j_scale = target["Transform"]["Scale"];
+
+		s_Translate = { j_translate[0], j_translate[1] };
+		s_Rotation = j_rotation;
+		s_Scale = { j_scale[0], j_scale[1] };
+		for (int i = 0; i < frameCount; ++i)
+		{
+			std::string frameIndex = std::to_string(i);
+			auto& j_border = target[frameIndex]["Border"];
+			auto& j_rect = target[frameIndex]["Rect"];
+			auto& j_color = target[frameIndex]["Color"];
+
+			s_Frames.push_back(s_WorkSprite);
+			auto iter = (s_Frames.end() - 1);
+			(*iter).setPosition(j_border[0], j_border[1]);
+			(*iter).setTextureRect({ j_rect[0], j_rect[1], j_rect[2], j_rect[3] });
+			(*iter).setColor({ j_color[0], j_color[1], j_color[2], j_color[3] });
+		}
+		Database::Unload(s_OpenFilePath);
+	}
+
 	void SpriteEditor::SetContext(Shared<Scene>& scene)
 	{
 		s_Scene = scene;
@@ -256,9 +326,11 @@ namespace fz {
 		s_BaseSize = s_EditorCamera.GetOrthoCamera().GetSize(); // OrthoCamera 기본 크기
 	}
 
-	void SpriteEditor::SetTarget(const std::string& texturePath)
+	bool SpriteEditor::SetTarget(const std::string& texturePath)
 	{
-		TEXTURE_MGR.Load(texturePath);
+		bool result = false;
+
+		result = TEXTURE_MGR.Load(texturePath);
 		auto& texture = TEXTURE_MGR.Get(texturePath);
 		sf::Vector2u size = texture.getSize();
 		s_CurrentPath = texturePath;
@@ -267,6 +339,8 @@ namespace fz {
 		s_WorkSprite.setTexture(texture);
 		s_FrameBuffer->Resize((float)size.x, (float)size.y);
 		s_EditorCamera.SetViewport(0.0f, 0.0f, 200.f, 200.f);
+
+		return result;
 	}
 
 	void SpriteEditor::SetActive(bool enabled)
@@ -283,6 +357,7 @@ namespace fz {
 			s_Translate = { 0.0f, 0.0f };
 			s_Scale = { 1.0f, 1.0f };
 			s_Rotation = 0.0f;
+			s_IsOpenedFile = false;
 		}
 	}
 
@@ -329,6 +404,21 @@ namespace fz {
 		s_EditorCamera.OnUpdate(dt);
 		ClampCameraBounds();
 		ClampCameraZoom();
+	}
+
+	void SpriteEditor::Clear()
+	{
+		s_IsActive = false;
+		s_CurrentPath = "";
+		s_ClipName = "None";
+		s_LoopType = AnimationLoopTypes::Loop;
+		s_Frames.clear();
+		s_WorkSprite = sf::Sprite();
+		s_Mode = SelectMode::Select;
+		s_Translate = { 0.0f, 0.0f };
+		s_Scale = { 1.0f, 1.0f };
+		s_Rotation = 0.0f;
+		s_OpenFilePath = "";
 	}
 
 	void SpriteEditor::RenderSprite(const sf::Sprite& sprite, Shared<fz::Framebuffer>& buffer)

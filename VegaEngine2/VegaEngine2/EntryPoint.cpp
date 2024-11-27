@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "ScriptCore.h"
 #include "EntryPoint.h"
 
 int main(int argc, char** argv)

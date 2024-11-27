@@ -12,15 +12,15 @@
                 255
             ],
             "Rect": [
-                7,
-                260,
-                34,
-                34
+                0,
+                0,
+                77,
+                57
             ]
         },
         "1": {
             "Border": [
-                0.0,
+                5.699999809265137,
                 0.0
             ],
             "Color": [
@@ -30,15 +30,15 @@
                 255
             ],
             "Rect": [
-                41,
-                260,
-                34,
-                34
+                77,
+                0,
+                71,
+                56
             ]
         },
         "2": {
             "Border": [
-                0.0,
+                6.300000190734863,
                 0.0
             ],
             "Color": [
@@ -48,42 +48,25 @@
                 255
             ],
             "Rect": [
-                75,
-                260,
-                34,
-                34
+                148,
+                0,
+                99,
+                58
             ]
         },
-        "3": {
-            "Border": [
-                0.0,
-                0.0
-            ],
-            "Color": [
-                255,
-                255,
-                255,
-                255
-            ],
-            "Rect": [
-                110,
-                260,
-                34,
-                34
-            ]
-        },
-        "ClipName": "BodyIdle",
-        "FrameCount": 4,
+        "ClipName": "None",
+        "FrameCount": 3,
         "LoopType": "Loop",
-        "TexturePath": "graphics\\players\\marco_pistol.png",
+        "TexturePath": "..\\..\\..\\Users\\chyuy\\Pictures\\Screenshots\\1a47c64ce6fadb2fd7477ad5db12379b.png",
         "Transform": {
+            "Rotation": 0.0,
+            "Scale": [
+                1.0,
+                1.0
+            ],
             "Translate": [
                 0.0,
                 0.0
-            ],
-            "Rotation": 0.0,
-            "Scale": [
-                1.0, 1.0
             ]
         }
     }

@@ -11,12 +11,14 @@ namespace fz {
 		};
 
 		static void SetContext(Shared<Scene>& scene);
-		static void SetTarget(const std::string& texturePath);
+		static bool SetTarget(const std::string& texturePath);
 		static void SetActive(bool enabled);
 
 		static void OnUI();
 		static void OnEvent(fz::Event& ev);
 		static void OnUpdate(float dt);
+
+		static void Clear();
 
 	protected:
 		static void RenderSprite(const sf::Sprite& sprite, Shared<fz::Framebuffer>& buffer);
@@ -28,8 +30,10 @@ namespace fz {
 		static void UpdateFrames();
 		static void RenderFrameViewport();
 		static void SaveAnimationClip(const std::string& path);
+		static void OpenAniamtionClip(const std::string& path);
 
 	private:
+		inline static bool s_IsOpenedFile = false;
 		inline static bool s_IsActive = false;
 		inline static SelectMode s_Mode = SelectMode::Movement;
 		inline static sf::Vector2f start = { 0.0f, 0.0f };

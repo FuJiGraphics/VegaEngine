@@ -42,12 +42,7 @@ namespace fz {
 
 	Scene::~Scene()
 	{
-		auto nativeView = m_Registry.view<NativeScriptComponent>();
-		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
-						{
-							if (nsc.Instance)
-								nsc.OnDestroyFunction(nsc.Instance);
-						});
+		this->ReleaseNativeComponent();
 	}
 
 	Entity Scene::CreateEntity(const std::string& tagName)
@@ -181,6 +176,16 @@ namespace fz {
 
 			m_PrefabInstancePool.insert({ dst.m_UUID, dst.m_Handle });
 		}
+	}
+
+	void Scene::ReleaseNativeComponent()
+	{
+		auto nativeView = m_Registry.view<NativeScriptComponent>();
+		nativeView.each([&](auto entity, NativeScriptComponent& nsc)
+						{
+							if (nsc.Instance)
+								nsc.OnDestroyFunction(nsc.Instance);
+						});
 	}
 
 	void Scene::DeleteEntity(fz::Entity& entity)

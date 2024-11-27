@@ -42,5 +42,4 @@
 #include "Animation/Animator.h"
 
 /* Entry Point */
-#include "ScriptCore.h"
 #include "EntryPoint.h"

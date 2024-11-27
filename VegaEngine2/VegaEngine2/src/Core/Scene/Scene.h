@@ -60,6 +60,8 @@ namespace fz {
 		Entity CreateEntityWithUUID(const std::string& tagName, const std::string& uuid);
 		void CopyEntityForPrefab(fz::Entity dst, fz::Entity src, bool isRootTransform = false);
 
+		void ReleaseNativeComponent();
+
 		void OnUpdateEditor(float dt, EditorCamera& editorCamera);
 		void OnPreUpdate();
 		void OnUpdate(float dt);
