@@ -7,7 +7,7 @@ namespace fz {
 		, m_Rotation{ 0.0f }
 		, m_Scale{ 1.0f, 1.0f }
 		, m_Origin{ 0.0f, 0.0f }
-		, m_World{ sf::Transform::Identity }
+		, s_World{ sf::Transform::Identity }
 	{
 	}
 	void Transform::SetTranslate(const sf::Vector2f& pos)
@@ -74,22 +74,22 @@ namespace fz {
 
 	sf::Transform& Transform::GetRawTransform()
 	{
-		return m_World;
+		return s_World;
 	}
 
 	const sf::Transform& Transform::GetRawTransform() const
 	{
-		return m_World;
+		return s_World;
 	}
 
 	sf::Transform Transform::operator*(const fz::Transform& other) const
 	{
-		return m_World * other.GetRawTransform();
+		return s_World * other.GetRawTransform();
 	}
 
 	sf::Vector2f Transform::operator*(const sf::Vector2f& other) const
 	{
-		return m_World * other;
+		return s_World * other;
 	}
 
 	Transform& Transform::operator=(const fz::Transform& other)
@@ -103,21 +103,21 @@ namespace fz {
 
 	Transform::operator sf::Transform& ()
 	{
-		return m_World;
+		return s_World;
 	}
 
 	Transform::operator const sf::Transform& () const
 	{
-		return m_World;
+		return s_World;
 	}
 
 	void Transform::ResetTransform()
 	{
-		m_World = sf::Transform::Identity;
-		m_World.translate(m_Translate);
-		m_World.rotate(m_Rotation);
-		m_World.scale(m_Scale);
-		m_World.translate(m_Origin * -1.0f);
+		s_World = sf::Transform::Identity;
+		s_World.translate(m_Translate);
+		s_World.rotate(m_Rotation);
+		s_World.scale(m_Scale);
+		s_World.translate(m_Origin * -1.0f);
 	}
 
 } // namespace fz

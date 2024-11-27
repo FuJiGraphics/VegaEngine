@@ -40,7 +40,7 @@ namespace fz {
 		Entity GetEntityFromTag(const std::string& tag);
 		inline sf::Vector2u GetViewportSize() const { return { m_FrameBuffer->GetWidth(), m_FrameBuffer->GetHeight() }; }
 		inline Shared<Framebuffer>& GetFrameBuffer() { return m_FrameBuffer; }
-		void* GetPhysicsWorld() const { return m_World; }
+		void* GetPhysicsWorld() const { return s_World; }
 
 		bool IsDebugDisplayMode() const { return m_IsDebugMode; }
 		void SetDebugDisplayMode(bool enabled) { m_IsDebugMode = enabled; }
@@ -93,13 +93,13 @@ namespace fz {
 	public:
 		// TODO: юс╫ц
 		inline static Shared<Scene>	s_CurrentScene;
+		inline static b2World*	s_World = nullptr;
 
 	private:
 		entt::registry			m_Registry;
 		Shared<Framebuffer>		m_FrameBuffer;
 		std::string				m_UUID;
 		EntityPool				m_EntityPool;
-		b2World*				m_World;
 		bool					m_IsDebugMode;
 		std::string				m_prefabTempPath;
 		int						m_prefabInstanceCount;

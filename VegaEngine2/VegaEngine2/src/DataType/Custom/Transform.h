@@ -40,7 +40,7 @@ namespace fz {
 		float			m_Rotation;
 		sf::Vector2f	m_Scale;
 		sf::Vector2f	m_Origin;
-		sf::Transform	m_World;
+		sf::Transform	s_World;
 	};
 
 } // namespace fz

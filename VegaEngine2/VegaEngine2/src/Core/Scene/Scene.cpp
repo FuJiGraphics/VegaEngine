@@ -28,7 +28,6 @@ namespace fz {
 
 	Scene::Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel, const std::string& uuid)
 		: m_UUID(uuid.empty() ? Random.GetUUID() : uuid)
-		, m_World(nullptr)
 		, m_IsDebugMode(false)
 		, m_prefabTempPath("Prefabs/temp.prefab")
 		, m_prefabInstanceCount(0)
@@ -203,7 +202,7 @@ namespace fz {
 	{
 		StopPhysics();
 
-		m_World = new b2World({ 0.0f, 9.8f });
+		s_World = new b2World({ 0.0f, 9.8f });
 
 		auto view = m_Registry.view<RigidbodyComponent>();
 		for (auto& handle : view)
@@ -215,10 +214,10 @@ namespace fz {
 
 	void Scene::StopPhysics()
 	{
-		if (m_World)
+		if (s_World)
 		{
-			delete m_World;
-			m_World = nullptr;
+			delete s_World;
+			s_World = nullptr;
 		}
 	}
 
@@ -234,7 +233,7 @@ namespace fz {
 		bodyDef.type = ToBox2dBodyType(rigidBodyComp.RigidType);
 		bodyDef.position.Set(meterPos.x, meterPos.y);
 		bodyDef.angle = Utils::DegreeToRadian(transform.GetRotation());
-		b2Body* body = m_World->CreateBody(&bodyDef);
+		b2Body* body = s_World->CreateBody(&bodyDef);
 		body->SetFixedRotation(rigidBodyComp.FixedRotation);
 		rigidBodyComp.RuntimeBody = body;
 
@@ -455,12 +454,12 @@ namespace fz {
 	void Scene::OnUpdatePhysicsSystem(float dt)
 	{
 		// 물리 시스템 업데이트
-		if (m_World)
+		if (s_World)
 		{
 			float timeStep = 1.0f / 60.0f; // 초당 60프레임
 			const int32_t velocityIterations = 8;
 			const int32_t positionIterations = 3;
-			m_World->Step(timeStep, velocityIterations, positionIterations);
+			s_World->Step(timeStep, velocityIterations, positionIterations);
 
 			auto view = m_Registry.view<RigidbodyComponent>();
 			for (auto e : view)
