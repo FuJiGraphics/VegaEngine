@@ -5,6 +5,8 @@ namespace fz {
 
 	sf::WindowBase* InputManager::s_TargetWindow = nullptr;
 	std::unordered_map<Axis, AxisInfo> InputManager::s_AxisInfoMap;
+	std::unordered_map<sf::Keyboard::Key, bool> InputManager::s_KeyStates;
+	std::unordered_map<sf::Keyboard::Key, bool> InputManager::s_PrevKeyStates;
 
 	void InputManager::Init()
 	{
@@ -19,7 +21,7 @@ namespace fz {
 		infoV.axis = Axis::Vertical;
 		infoV.AddKey(true, sf::Keyboard::S);
 		infoV.AddKey(false, sf::Keyboard::W);
-		s_AxisInfoMap.insert({ infoV.axis, infoV });
+		s_AxisInfoMap.insert({ infoV.axis, infoV });	
 	}
 
 	void InputManager::Update(float dt)
@@ -43,6 +45,14 @@ namespace fz {
 				axisInfo.value = 0.f;
 			}
 		}
+	}
+
+	void InputManager::PollEvent(const sf::Event& ev)
+	{
+		if (ev.type == sf::Event::KeyPressed)
+			s_KeyStates[ev.key.code] = true;
+		else if (ev.type == sf::Event::KeyReleased)
+			s_KeyStates[ev.key.code] = false;
 	}
 
 	float InputManager::GetAxisRaw(Axis axis)
@@ -75,7 +85,44 @@ namespace fz {
 
 	bool InputManager::IsKeyPressedImpl(KeyType keycode)
 	{
-		return sf::Keyboard::isKeyPressed((sf::Keyboard::Key)keycode);
+		return s_KeyStates[(sf::Keyboard::Key)keycode];
+	}
+
+	bool InputManager::IsKeyReleasedImpl(KeyType keycode)
+	{
+		return !InputManager::IsKeyPressedImpl(keycode);
+	}
+
+	bool InputManager::IsKeyDownImpl(KeyType keycode)
+	{
+		auto it = s_PrevKeyStates.find((sf::Keyboard::Key)keycode);
+		if (it == s_PrevKeyStates.end())
+		{
+			if (InputManager::IsKeyPressedImpl(keycode))
+			{
+				s_PrevKeyStates.insert({ (sf::Keyboard::Key)keycode, true });
+				return true;
+			}
+			else
+			{
+				s_PrevKeyStates.insert({ (sf::Keyboard::Key)keycode, false });
+				return false;
+			}
+		}
+		else
+		{
+			if (!it->second && InputManager::IsKeyPressed(keycode))
+			{
+				s_PrevKeyStates[(sf::Keyboard::Key)keycode] = true;
+				return true;
+			}
+			else if (it->second && InputManager::IsKeyReleasedImpl(keycode))
+			{
+				s_PrevKeyStates[(sf::Keyboard::Key)keycode] = false;
+				return false;
+			}
+		}
+		return false;
 	}
 
 	bool InputManager::IsMouseButtonPressedImpl(MouseButtonType button)

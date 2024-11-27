@@ -55,6 +55,7 @@ namespace fz {
 		while (m_Window->pollEvent(input))
 		{
 			ImGuiManager::PollEvent(input);
+			InputManager::PollEvent(input);
 			switch (input.type)
 			{
 				case sf::Event::Closed: {

@@ -53,23 +53,23 @@ namespace fz {
 			fz::Transform& transform = GetComponent<TransformComponent>();
 			auto& body = GetComponent<RigidbodyComponent>();
 
-			if (Input::IsKeyPressed(KeyType::D))
+			if (Input::IsKeyDown(KeyType::D))
 			{
 				body.AddPosition({ 100.0, 0.0f });
 				transform.SetScale(-1.0f, 1.0f);
-				//	animator.Play(&move);
+					animator.Play(&move);
 			}
-			else if (Input::IsKeyPressed(KeyType::A))
+			else if (Input::IsKeyDown(KeyType::A))
 			{
 				body.AddPosition({ -100.0, 0.0f });
-				//	animator.Play(&move);
+				animator.Play(&move);
 
 			}
 
 			// 점프 처리
 			if (body.IsOnGround() && !isJumping)
 			{
-				if (Input::IsKeyPressed(KeyType::Space))
+				if (Input::IsKeyDown(KeyType::Space))
 				{
 					body.AddPosition({ 0.0f, -500.f });
 					isJumping = true; // 점프 시작

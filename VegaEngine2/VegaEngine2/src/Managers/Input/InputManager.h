@@ -36,10 +36,20 @@ namespace fz {
 	public:
 		static void Init();
 		static void Update(float dt);
+		static void PollEvent(const sf::Event& ev);
+
+		inline static bool IsKeyDown(KeyType keycode) {
+			return InputManager::IsKeyDownImpl(keycode);
+		}
 
 		inline static bool IsKeyPressed(KeyType keycode) {
 			return InputManager::IsKeyPressedImpl(keycode); 
 		}
+
+		inline static bool IsKeyReleased(KeyType keycode) {
+			return InputManager::IsKeyReleasedImpl(keycode);
+		}
+		
 		inline static bool IsMouseButtonPressed(MouseButtonType button) {
 			return InputManager::IsMouseButtonPressedImpl(button);
 		}
@@ -55,6 +65,8 @@ namespace fz {
 
 	protected:
 		static bool IsKeyPressedImpl(KeyType keycode);
+		static bool IsKeyReleasedImpl(KeyType keycode);
+		static bool IsKeyDownImpl(KeyType keycode);
 		static bool IsMouseButtonPressedImpl(MouseButtonType button);
 		static sf::Vector2f GetMousePositionImpl();
 		static bool Contains(const std::list<int>& list, int code);
@@ -62,6 +74,8 @@ namespace fz {
 	private:
 		static sf::WindowBase* s_TargetWindow;
 		static std::unordered_map<Axis, AxisInfo> s_AxisInfoMap;
+		static std::unordered_map<sf::Keyboard::Key, bool> s_KeyStates;
+		static std::unordered_map<sf::Keyboard::Key, bool> s_PrevKeyStates;
 	};
 
 	using Input = fz::InputManager;
