@@ -37,9 +37,11 @@
 #include "Core/Scene/VegaScript.h"
 #include "Core/Scene/EditorCamera.h"
 #include "Core/Scene/Scene.h"
+#include "Core/Scene/ScriptCore.h"
 
 #include "Animation/AnimationClip.h"
 #include "Animation/Animator.h"
 
 /* Entry Point */
 #include "EntryPoint.h"
+#include "AttachScripts.h"

@@ -190,6 +190,7 @@ namespace fz {
 		if (loadScene)
 			m_ActiveScene = loadScene;
 		m_HierarchyPanel.SetContext(m_ActiveScene);
+		this->BindScript();
 		m_ActiveScene->OnPreUpdate();
 	}
 
@@ -235,6 +236,15 @@ namespace fz {
 		ImGui::PopStyleVar(2);
 		ImGui::PopStyleColor(3);
 		ImGui::End();
+	}
+
+	void Editor2D::BindScript()
+	{
+		auto& base = BindScriptBase::GetInstance();
+		for (auto& script : base)
+		{
+			script->Bind(m_ActiveScene->GetUUID(), m_ActiveScene);
+		}
 	}
 
 } // namespace fz

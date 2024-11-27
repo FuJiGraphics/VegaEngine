@@ -24,6 +24,7 @@ files
 includedirs
 {
 	"%{IncludeDir.VegaEngine2}/src/",
+	"%{IncludeDir.Workspace}/",
 	"%{IncludeDir.SFML}/",
 	"%{IncludeDir.Spdlog}/",
 	"%{IncludeDir.ImGui}/",
