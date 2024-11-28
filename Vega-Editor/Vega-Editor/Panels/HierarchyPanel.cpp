@@ -32,11 +32,21 @@ namespace fz {
 				if (ImGui::MenuItem("New Entity..."))
 				{
 					if (!m_Context)
+						m_Context = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
+					fz::Entity entity = m_Context->CreateEntity("NewEntity");
+					entity.AddComponent<RootEntityComponent>();
+				}
+				if (ImGui::MenuItem("Load Prefab"))
+				{
+					if (!m_Context)
 					{
 						m_Context = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 					}
+					auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
+					HWND handle = (HWND)nativeWindow->getSystemHandle();
+					std::string prefabOpenPath = VegaUI::OpenFile(handle, "Prefab File (*.prefab)\0*.prefab\0");
 					fz::Entity entity = m_Context->CreateEntity("NewEntity");
-					entity.AddComponent<RootEntityComponent>();
+					entity.LoadPrefab(prefabOpenPath);
 				}
 				ImGui::EndPopup();
 			}
@@ -124,9 +134,12 @@ namespace fz {
 				m_SelectionContext = entity;
 				m_OnEntityRemove = true;
 			}
-			if (ImGui::MenuItem("Create Prefab"))
+			if (ImGui::MenuItem("Save Prefab"))
 			{
-
+				auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
+				HWND handle = (HWND)nativeWindow->getSystemHandle();
+				std::string prefabSavePath = VegaUI::SaveFile(handle, "Prefab File (*.prefab)\0*.prefab\0");
+				m_SelectionContext.SavePrefab(prefabSavePath);
 			}
 			ImGui::EndPopup();
 			result = true;
@@ -142,7 +155,10 @@ namespace fz {
 		if (entity.HasComponent<TagComponent>())
 		{
 			auto& tagComp = entity.GetComponent<TagComponent>();
-			VegaUI::Checkbox("Active", tagComp.Active);
+			if (VegaUI::Checkbox("Active", tagComp.Active))
+			{
+				entity.SetActiveWithChild(tagComp.Active);
+			}
 			VegaUI::InputText(tagComp.Tag, "Tag");
 		}
 

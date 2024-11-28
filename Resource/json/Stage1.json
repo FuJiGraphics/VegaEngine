@@ -19,7 +19,7 @@
             "HasChild": false,
             "RigidbodyComponent": {
                 "FixedRotation": false,
-                "RigidType": "Static"
+                "RigidType": "Dynamic"
             },
             "RootEntity": true,
             "SpriteComponent": {
@@ -74,12 +74,35 @@
                     1.0
                 ],
                 "Translate": [
-                    0.0,
+                    282.0,
                     0.0
                 ]
             }
         },
         "a448af75-3c72-46dc-8e24-2924a53aa201": {
+            "12dbdf37-222d-403b-9c78-dae916d6a277": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "AmherstHunt"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        0.0,
+                        0.0
+                    ]
+                }
+            },
             "HasChild": true,
             "RootEntity": true,
             "TagComponent": {
@@ -102,20 +125,21 @@
                 ]
             },
             "dfeab3be-6836-4d19-a038-2a2cd52c4cdc": {
-                "15710db4-8249-45f7-8cb4-51aafb5890c6": {
-                    "BoxCollider2DComponent": {
+                "082ce458-6fce-4dcb-a26e-3bc5c64dba95": {
+                    "EdgeCollider2DComponent": {
                         "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
-                            "X": 0.0,
+                        "EndPos": {
+                            "X": 860.7000122070313,
                             "Y": 0.0
                         },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
                         "Restitution": 0.0,
                         "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 346.8999938964844,
-                            "Y": 80.0
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
                         }
                     },
                     "HasChild": false,
@@ -125,8 +149,8 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block6"
+                        "Active": false,
+                        "Tag": "Line6"
                     },
                     "TransformComponent": {
                         "Origin": [
@@ -139,25 +163,26 @@
                             1.0
                         ],
                         "Translate": [
-                            2441.0,
-                            757.0
+                            1143.0,
+                            553.0
                         ]
                     }
                 },
-                "1706b368-f225-471b-b660-1fba25e523b0": {
-                    "BoxCollider2DComponent": {
+                "163e0842-1b0c-4388-856e-6fa9fe1a6100": {
+                    "EdgeCollider2DComponent": {
                         "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
-                            "X": 0.0,
+                        "EndPos": {
+                            "X": 91.9000015258789,
                             "Y": 0.0
                         },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
                         "Restitution": 0.0,
                         "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 425.5,
-                            "Y": 31.700000762939453
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
                         }
                     },
                     "HasChild": false,
@@ -167,8 +192,8 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block4"
+                        "Active": false,
+                        "Tag": "Line8"
                     },
                     "TransformComponent": {
                         "Origin": [
@@ -181,63 +206,26 @@
                             1.0
                         ],
                         "Translate": [
-                            1576.0,
-                            586.0
+                            2004.0,
+                            612.0
                         ]
                     }
                 },
-                "638faaf6-e3fc-4d8c-b1a7-5ad1d90eccac": {
-                    "BoxCollider2DComponent": {
+                "1cc81534-2b61-4a91-bf33-f46c3fdf48ab": {
+                    "EdgeCollider2DComponent": {
                         "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
-                            "X": 0.0,
+                        "EndPos": {
+                            "X": 93.0999984741211,
                             "Y": 0.0
                         },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
                         "Restitution": 0.0,
                         "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 70.0,
-                            "Y": 77.4000015258789
-                        }
-                    },
-                    "HasChild": false,
-                    "RootEntity": false,
-                    "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block2"
-                    },
-                    "TransformComponent": {
-                        "Origin": [
-                            0.0,
-                            0.0
-                        ],
-                        "Rotation": 49.0,
-                        "Scale": [
-                            1.0,
-                            1.0
-                        ],
-                        "Translate": [
-                            1053.0,
-                            718.0
-                        ]
-                    }
-                },
-                "72c35b94-3a0a-41db-9c9b-a19c4868d976": {
-                    "BoxCollider2DComponent": {
-                        "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
+                        "StartPos": {
                             "X": 0.0,
                             "Y": 0.0
-                        },
-                        "Restitution": 0.0,
-                        "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 48.5,
-                            "Y": 53.0
                         }
                     },
                     "HasChild": false,
@@ -247,8 +235,94 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block5"
+                        "Active": false,
+                        "Tag": "Line7"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 90.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2003.0,
+                            552.0
+                        ]
+                    }
+                },
+                "28ecf880-a068-4f78-bb4e-73c9e4ec58e9": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 62.20000076293945,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line9"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 90.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2095.0,
+                            612.0
+                        ]
+                    }
+                },
+                "2e32921a-ddfd-4758-9dd9-b6a9720d21f5": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 69.5999984741211,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line3"
                     },
                     "TransformComponent": {
                         "Origin": [
@@ -261,8 +335,180 @@
                             1.0
                         ],
                         "Translate": [
-                            2045.0,
-                            671.0
+                            1077.0,
+                            614.0
+                        ]
+                    }
+                },
+                "396f13ab-edf3-4825-9ce5-a5e63d0b05f3": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 140.0,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": true,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line12"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 0.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2138.0,
+                            314.0
+                        ]
+                    }
+                },
+                "7bf0388d-8c30-4cc9-b3a6-0c8765e55691": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 140.0,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": true,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line13"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 0.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2138.0,
+                            255.0
+                        ]
+                    }
+                },
+                "98020cb2-4b6f-429a-a479-87b7a3233d81": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 770.0,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": true,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line5"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 0.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            472.0,
+                            344.0
+                        ]
+                    }
+                },
+                "9ca8b70d-88d8-40a0-9ce1-94fc7216f6a5": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 695.5999755859375,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line10"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 0.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2094.0,
+                            675.0
                         ]
                     }
                 },
@@ -290,8 +536,8 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Line"
+                        "Active": false,
+                        "Tag": "Line1"
                     },
                     "TransformComponent": {
                         "Origin": [
@@ -304,7 +550,7 @@
                             1.0
                         ],
                         "Translate": [
-                            -501.0,
+                            0.0,
                             675.0
                         ]
                     }
@@ -349,7 +595,7 @@
                     }
                 },
                 "TagComponent": {
-                    "Active": true,
+                    "Active": false,
                     "Tag": "Amherst"
                 },
                 "TransformComponent": {
@@ -367,20 +613,21 @@
                         0.0
                     ]
                 },
-                "ba66e537-6cc2-417e-af86-6bb4911958b4": {
-                    "BoxCollider2DComponent": {
+                "ab18fc05-8191-40d3-92e2-9603485dcd78": {
+                    "EdgeCollider2DComponent": {
                         "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
-                            "X": 0.0,
+                        "EndPos": {
+                            "X": 140.0,
                             "Y": 0.0
                         },
+                        "Friction": 0.5,
+                        "IsOneSides": true,
+                        "IsTrigger": false,
                         "Restitution": 0.0,
                         "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 62.70000076293945,
-                            "Y": 29.0
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
                         }
                     },
                     "HasChild": false,
@@ -390,8 +637,8 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block3"
+                        "Active": false,
+                        "Tag": "Line11"
                     },
                     "TransformComponent": {
                         "Origin": [
@@ -404,25 +651,26 @@
                             1.0
                         ],
                         "Translate": [
-                            1129.0,
-                            643.0
+                            2047.0,
+                            494.0
                         ]
                     }
                 },
-                "e422aeff-c570-4e81-98ae-e5149219d976": {
-                    "BoxCollider2DComponent": {
+                "b54acafa-1424-4502-b3ca-914b07a50f2b": {
+                    "EdgeCollider2DComponent": {
                         "Density": 1.0,
-                        "Friction": 0.5,
-                        "IsTrigger": false,
-                        "Offset": {
-                            "X": 0.0,
+                        "EndPos": {
+                            "X": 204.0,
                             "Y": 0.0
                         },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
                         "Restitution": 0.0,
                         "RestitutionThreshold": 0.5,
-                        "Size": {
-                            "X": 0.5,
-                            "Y": 0.5
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
                         }
                     },
                     "HasChild": false,
@@ -432,22 +680,151 @@
                     },
                     "RootEntity": false,
                     "TagComponent": {
-                        "Active": true,
-                        "Tag": "Block7"
+                        "Active": false,
+                        "Tag": "Line2"
                     },
                     "TransformComponent": {
                         "Origin": [
                             0.0,
                             0.0
                         ],
-                        "Rotation": 0.0,
+                        "Rotation": 322.0,
                         "Scale": [
                             1.0,
                             1.0
                         ],
                         "Translate": [
-                            874.0,
-                            349.0
+                            917.0,
+                            739.0
+                        ]
+                    }
+                },
+                "cfabddad-7769-49ca-b11e-6efeaecaef04": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 1098.9000244140625,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Block1"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 90.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            1.0,
+                            -230.0
+                        ]
+                    }
+                },
+                "d479208c-2b50-4749-adf2-5bedecfc04df": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 127.0999984741211,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Line4"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 90.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            1144.0,
+                            552.0
+                        ]
+                    }
+                },
+                "e5a99763-9ffa-4ba5-bfbd-16ba546a1815": {
+                    "EdgeCollider2DComponent": {
+                        "Density": 1.0,
+                        "EndPos": {
+                            "X": 1029.5,
+                            "Y": 0.0
+                        },
+                        "Friction": 0.5,
+                        "IsOneSides": false,
+                        "IsTrigger": false,
+                        "Restitution": 0.0,
+                        "RestitutionThreshold": 0.5,
+                        "StartPos": {
+                            "X": 0.0,
+                            "Y": 0.0
+                        }
+                    },
+                    "HasChild": false,
+                    "RigidbodyComponent": {
+                        "FixedRotation": false,
+                        "RigidType": "Static"
+                    },
+                    "RootEntity": false,
+                    "TagComponent": {
+                        "Active": false,
+                        "Tag": "Block2"
+                    },
+                    "TransformComponent": {
+                        "Origin": [
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": 90.0,
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Translate": [
+                            2790.0,
+                            -230.0
                         ]
                     }
                 }
@@ -463,8 +840,8 @@
                 "Primary": true,
                 "Rotation": 0.0,
                 "Size": [
-                    1032.39599609375,
-                    582.2550048828125
+                    4094.716064453125,
+                    1955.52392578125
                 ],
                 "Viewport": {
                     "Height": 1.0,
@@ -472,7 +849,7 @@
                     "Top": 0.0,
                     "Width": 1.0
                 },
-                "Zoom": 0.6809999942779541
+                "Zoom": 2.7009999752044678
             },
             "HasChild": false,
             "RootEntity": true,
