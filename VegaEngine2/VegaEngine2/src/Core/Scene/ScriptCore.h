@@ -1,5 +1,6 @@
 #pragma once
 
+
 class BindScriptBase
 {
 public:
@@ -12,19 +13,16 @@ public:
 	}
 };
 
-#define BIND_SCRIPT(tag, scene, entity, script)											\
+#define BIND_SCRIPT(tag, entity, script)												\
 namespace fz {																			\
 	class bindClass##tag : public BindScriptBase										\
 	{																					\
 	public:																				\
 		void Bind(const std::string& path, fz::Shared<fz::Scene>& currScene) override	\
 		{																				\
-			if (scene == path)															\
-			{																			\
 				auto Entity = currScene->GetEntityFromTag(entity);						\
 				if (Entity && !Entity.HasComponent<NativeScriptComponent>())			\
 					Entity.AddComponent<NativeScriptComponent>().Bind<##script>();		\
-			}																			\
 		}																				\
 	};																					\
 class bindClassBind##tag																\

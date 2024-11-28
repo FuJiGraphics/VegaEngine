@@ -3,12 +3,14 @@
 
 namespace fz {
 
+	enum class EditorState;
+
 	class HierarchyPanel
 	{
 	public:
-		HierarchyPanel(const Shared<Scene>& scene);
+		HierarchyPanel(const Shared<Scene>& scene, EditorState* state);
 
-		void SetContext(const Shared<Scene>& scene);
+		void SetContext(const Shared<Scene>& scene, EditorState* state);
 
 		void OnImGuiRender();
 
@@ -22,8 +24,9 @@ namespace fz {
 
 	private:
 		Shared<Scene> m_Context;
-		Entity m_SelectionContext;
+		fz::Entity m_SelectionContext;
 		bool m_OnEntityRemove;
+		EditorState* m_EditState;
 	};
 }
 

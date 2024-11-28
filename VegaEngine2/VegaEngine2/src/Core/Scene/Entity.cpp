@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Entity.h"
+#include "EntitySerializer.h"
 
 namespace fz {
 	Entity::Entity()
@@ -42,6 +43,52 @@ namespace fz {
 		other.m_Handle = entt::null;
 		other.m_Scene = nullptr;
 		other.m_UUID = "";
+	}
+
+	void Entity::SetColorWithChilds(const sf::Color& color)
+	{
+		if (this->HasComponent<SpriteComponent>())
+		{
+			sf::Sprite& sprite = this->GetComponent<SpriteComponent>();
+			sprite.setColor(color);
+		}
+		if (this->HasComponent<ChildEntityComponent>())
+		{
+			auto& childComp = this->GetComponent<ChildEntityComponent>();
+			for (auto& child : childComp.CurrentChildEntities)
+			{
+				child.SetColorWithChilds(color);
+			}
+		}
+	}
+
+	sf::Vector2f Entity::GetWorldPosition()
+	{
+		if (this->HasComponent<RootEntityComponent>())
+		{
+			fz::Transform& transform = GetComponent<TransformComponent>().Transform;
+			return transform.GetTranslate();
+		}
+
+		const auto& parent = GetComponent<ParentEntityComponent>().ParentEntity;
+		const sf::Transform realWorldTransform = GetRealWorldTransform(parent);
+		const auto& localPos = GetComponent<TransformComponent>().Transform.GetTranslate();
+
+		return realWorldTransform * localPos;
+	}
+
+	sf::Transform Entity::GetWorldTransform()
+	{
+		if (this->HasComponent<RootEntityComponent>())
+		{
+			return GetComponent<TransformComponent>().Transform;
+		}
+
+		const auto& parent = GetComponent<ParentEntityComponent>().ParentEntity;
+		const sf::Transform realWorldTransform = GetRealWorldTransform(parent);
+		const sf::Transform& localTransform = GetComponent<TransformComponent>().Transform;
+
+		return realWorldTransform * localTransform;
 	}
 
 	Entity& Entity::operator=(const Entity& other)
@@ -93,5 +140,44 @@ namespace fz {
 		}
 		return childEntity;
 	}
+
+	void Entity::SavePrefab(const std::string& path)
+	{
+		Database::LoadFromJson(path);
+		auto& json = Database::GetJsonObject(path);
+		json.clear();
+		EntitySerializer serializer(*this);
+		serializer.Serialize(json);
+		Database::Unload(path);
+	}
+
+	void Entity::SetActiveWithChild(bool enabled)
+	{
+		if (this->HasComponent<TagComponent>())
+		{
+			auto& tagComp = this->GetComponent<TagComponent>();
+			tagComp.Active = enabled;
+		}
+		if (this->HasComponent<ChildEntityComponent>())
+		{
+			auto& childComp = this->GetComponent<ChildEntityComponent>();
+			for (auto& child : childComp.CurrentChildEntities)
+			{
+				child.SetActiveWithChild(enabled);
+			}
+		}
+	}
+
+	sf::Transform Entity::GetRealWorldTransform(fz::Entity parent) const
+	{
+		if (parent.HasComponent<RootEntityComponent>())
+		{
+			return parent.GetComponent<TransformComponent>().Transform;
+		}
+		sf::Transform transform = parent.GetComponent<TransformComponent>().Transform;
+		auto& parentComp = parent.GetComponent<ParentEntityComponent>();
+		return GetRealWorldTransform(parentComp.ParentEntity) * transform;
+	}
+
 
 } // namespace fz

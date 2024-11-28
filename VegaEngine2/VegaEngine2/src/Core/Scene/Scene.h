@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer/FrameBuffer.h"
 #include "SceneSerializer.h"
+#include "CollisionHandler.h"
 
 class b2WorldId;
 
@@ -77,9 +78,14 @@ namespace fz {
 		void OnUpdateScript(float dt);
 		void OnPostUpdateScript();
 
+		// Prefab
+		void LoadPrefab(const std::string& path);
+
 		void OnUpdateChildEntity();
+		void UpdateTransformChilds(const sf::Transform& parentTransform, fz::Entity child);
+
 		void OnUpdatePhysicsSystem(float dt);
-		void OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform** dstTransform);
+		void OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform& dstTransform);
 		void OnRenderEditorSprite(OrthoCamera* mainCamera);
 		void OnRenderRuntimeSprite(OrthoCamera* mainCamera, sf::Transform& transform);
 		void OnDrawDebugShape();
@@ -104,6 +110,7 @@ namespace fz {
 		std::string				m_prefabTempPath;
 		int						m_prefabInstanceCount;
 		EntityPool				m_PrefabInstancePool;
+		CollisionHandler		m_CollistionHandler;
 	};
 
 #define FZ_CURRENT_SCENE fz::Scene::s_CurrentScene

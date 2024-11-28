@@ -63,6 +63,10 @@ namespace fz {
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 
+		void SetColorWithChilds(const sf::Color& color);
+		sf::Vector2f GetWorldPosition();
+		sf::Transform GetWorldTransform();
+
 		inline bool operator ==(const fz::Entity& other) const	{ return m_Handle == other.m_Handle && m_Scene == other.m_Scene; }
 		inline bool operator !=(const fz::Entity& other) const	{ return !((*this) == other); }
 		inline operator bool() const							{ return m_Handle != entt::null; }
@@ -73,6 +77,9 @@ namespace fz {
 
 	protected:
 		fz::Entity CreateChildEntity(const std::string& uuid, const std::string& tagName);
+		void SavePrefab(const std::string& path);
+		void SetActiveWithChild(bool enabled);
+		sf::Transform GetRealWorldTransform(fz::Entity parent) const;
 
 	private:
 		entt::entity	m_Handle;

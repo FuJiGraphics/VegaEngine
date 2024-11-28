@@ -4,6 +4,7 @@
 #include "VegaScript.h"
 #include "EditorCamera.h"
 #include "EntitySerializer.h"
+#include "CollisionHandler.h"
 
 namespace fz {
 
@@ -217,6 +218,9 @@ namespace fz {
 
 		s_World = new b2World({ 0.0f, 9.8f });
 
+		m_CollistionHandler.SetContext(shared_from_this());
+		s_World->SetContactListener(&m_CollistionHandler);
+
 		auto view = m_Registry.view<RigidbodyComponent>();
 		for (auto& handle : view)
 		{
@@ -240,7 +244,7 @@ namespace fz {
 		auto& rigidBodyComp = entity.GetComponent<RigidbodyComponent>();
 		auto& transform = transformComp.Transform;
 
-		const b2Vec2& meterPos = Utils::PixelToMeter(transform.GetTranslate());
+		const b2Vec2& meterPos = Utils::PixelToMeter(entity.GetWorldPosition());
 
 		b2BodyDef bodyDef;
 		bodyDef.type = ToBox2dBodyType(rigidBodyComp.RigidType);
@@ -275,6 +279,7 @@ namespace fz {
 			fixtureDef.friction = collider.Friction;
 			fixtureDef.restitution = collider.Restitution;
 			fixtureDef.restitutionThreshold = collider.RestitutionThreshold;
+			fixtureDef.userData.pointer = static_cast<uintptr_t>(entity.m_Handle);
 			collider.RuntimeFixture = body->CreateFixture(&fixtureDef);
 		}
 		else if (entity.HasComponent<EdgeCollider2DComponent>())
@@ -310,6 +315,7 @@ namespace fz {
 			fixtureDef.friction = collider.Friction;
 			fixtureDef.restitution = collider.Restitution;
 			fixtureDef.restitutionThreshold = collider.RestitutionThreshold;
+			fixtureDef.userData.pointer = static_cast<uintptr_t>(entity.m_Handle);
 			collider.RuntimeFixture = body->CreateFixture(&fixtureDef);
 		}
 	}
@@ -331,12 +337,12 @@ namespace fz {
 	void Scene::OnUpdate(float dt)
 	{
 		OrthoCamera* camera = nullptr;
-		sf::Transform* transform = nullptr;
+		sf::Transform transform = sf::Transform::Identity;
 		this->OnUpdateScript(dt);
 		this->OnUpdateChildEntity();
-		this->OnUpdateCamera(&camera, &transform);
+		this->OnUpdateCamera(&camera, transform);
 		this->OnUpdatePhysicsSystem(dt);
-		this->OnRenderRuntimeSprite(camera, *transform);
+		this->OnRenderRuntimeSprite(camera, transform);
 	}
 
 	void Scene::OnPostUpdate()
@@ -479,23 +485,59 @@ namespace fz {
 						});
 	}
 
+	void Scene::LoadPrefab(const std::string& path)
+	{
+		Database::LoadFromJson(path);
+		auto& json = Database::GetJsonObject(path);
+		for (json::iterator itEntityUUID = json.begin(); itEntityUUID != json.end(); ++itEntityUUID)
+		{
+			const std::string& entityUUID = itEntityUUID.key();
+			fz::Entity entity = this->CreateEntityWithUUID("New Entity...", entityUUID);
+			entity.m_UUID = entityUUID;
+			EntitySerializer serialize(entity);
+			serialize.Deserialize(json);
+		}
+		Database::Unload(path);
+	}
+
 	void Scene::OnUpdateChildEntity()
 	{
 		// 차일드 엔티티 트랜스폼 업데이트
-		auto chileView = m_Registry.view<ChildEntityComponent>();
-		for (auto childEntity : chileView)
+		auto rootEntityView = m_Registry.view<RootEntityComponent>();
+		for (auto& rootEntity : rootEntityView)
 		{
-			auto& childComp = chileView.get<ChildEntityComponent>(childEntity);
-			auto& parentTransform = childComp.ParentEntity.GetComponent<TransformComponent>();
+			auto& rootComp = m_Registry.get<RootEntityComponent>(rootEntity);
+			if (rootComp.RootEntity.HasComponent<ChildEntityComponent>())
+			{
+				sf::Transform rootTransform = rootComp.RootEntity.GetComponent<TransformComponent>().Transform;
+				auto& childComp = rootComp.RootEntity.GetComponent<ChildEntityComponent>();
+				for (auto& child : childComp.CurrentChildEntities)
+				{
+					auto& tagComp = child.GetComponent<TagComponent>();
+					if (tagComp.Active == false)
+						continue; // ** 비활성화시 로직 생략
+					UpdateTransformChilds(rootTransform, child);
+				}
+			}
+		}
+	}
+
+	void Scene::UpdateTransformChilds(const sf::Transform& parentTransform, fz::Entity child)
+	{
+		// 차일드 엔티티 트랜스폼 업데이트
+		TransformComponent& childTransform = child.GetComponent<TransformComponent>();
+		childTransform.IsChildRenderMode = true;
+		childTransform.RenderTransform = parentTransform * childTransform.Transform.GetRawTransform();
+
+		if (child.HasComponent<ChildEntityComponent>())
+		{
+			auto childComp = child.GetComponent<ChildEntityComponent>();
 			for (auto& childs : childComp.CurrentChildEntities)
 			{
 				auto& tagComp = childs.GetComponent<TagComponent>();
 				if (tagComp.Active == false)
 					continue; // ** 비활성화시 로직 생략
-
-				TransformComponent& childTransform = childs.GetComponent<TransformComponent>();
-				childTransform.IsChildRenderMode = true;
-				childTransform.RenderTransform = parentTransform.Transform * childTransform.Transform;
+				UpdateTransformChilds(childTransform.RenderTransform, childs);
 			}
 		}
 	}
@@ -533,7 +575,7 @@ namespace fz {
 		}
 	}
 
-	void Scene::OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform** dstTransform)
+	void Scene::OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform& dstTransform)
 	{
 		auto view = m_Registry.view<TagComponent, TransformComponent, CameraComponent>();
 		for (auto entity : view)
@@ -545,9 +587,9 @@ namespace fz {
 			if (camera.Primary)
 			{
 				if (transform.IsChildRenderMode)
-					*dstTransform = &transform.RenderTransform;
+					dstTransform = transform.RenderTransform;
 				else
-					*dstTransform = &transform.Transform.GetRawTransform();
+					dstTransform = transform.Transform.GetRawTransform();
 				*dstCamera = &camera.Camera;
 				break;
 			}
@@ -590,10 +632,10 @@ namespace fz {
 		if (mainCamera)
 		{
 			Renderer2D::BeginScene(*mainCamera, transform, m_FrameBuffer);
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent, TagComponent>);
-			for (auto entity : group)
+			auto entities = GetEntities< TransformComponent, SpriteComponent, TagComponent>();
+			for (auto entity : entities)
 			{
-				const auto& [transform, sprite, tag] = group.get<TransformComponent, SpriteComponent, TagComponent>(entity);
+				const auto& [transform, sprite, tag] = entities.get<TransformComponent, SpriteComponent, TagComponent>(entity);
 				if (tag.Active == false)
 					continue; // ** 비활성화시 로직 생략
 
@@ -630,7 +672,8 @@ namespace fz {
 			rect->setFillColor(sf::Color::Transparent);
 			rect->setSize({ boxComp.Size.x * 2.0f, boxComp.Size.y * 2.0f });
 			rect->setPosition({ boxComp.Size.x * -1.0f, boxComp.Size.y * -1.0f });
-			Renderer2D::Draw(rect, transformComp.Transform);
+			fz::Entity entity = { handle, this->shared_from_this() };
+			Renderer2D::Draw(rect, entity.GetWorldTransform());
 		}
 		auto edgeView = GetEntities<TagComponent, TransformComponent, EdgeCollider2DComponent>();
 		for (auto& handle : edgeView)
@@ -647,7 +690,8 @@ namespace fz {
 			line->setFillColor(sf::Color::Green);
 			line->setSize(size);
 			line->setPosition(pos);
-			Renderer2D::Draw(line, transformComp.Transform);
+			fz::Entity entity = { handle, this->shared_from_this() };
+			Renderer2D::Draw(line, entity.GetWorldTransform());
 		}
 		// auto circleView = GetEntities<TransformComponent, CircleCollider2DComponent>();
 	}
