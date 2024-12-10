@@ -1,38 +1,28 @@
 #pragma once
 
+namespace fz {			
 
-class BindScriptBase
-{
-public:
-	virtual void Bind(const std::string& path, fz::Shared<fz::Scene>& currScene) = 0;
+	template <typename T>
+	class BindScript									
+	{																				
+	public:			
+		static void Bind(const std::string& tag, Shared<Scene>& scene)
+		{
+			if (scene)
+			{
+				auto Entity = scene->GetEntityFromTag(tag);
+				if (Entity)
+				{
+					if (Entity.HasComponent<NativeScriptComponent>())
+					{
+						Entity.RemoveComponent<NativeScriptComponent>();
+					}
+					Entity.AddComponent<NativeScriptComponent>().Bind<T>();
+				}
+			}
+		}
+	};					
 
-	static std::vector<BindScriptBase*>& GetInstance()
-	{
-		static std::vector<BindScriptBase*> s_BindScriptBase;
-		return s_BindScriptBase;
-	}
-};
+} // namespace fz
 
-#define BIND_SCRIPT(tag, entity, script)												\
-namespace fz {																			\
-	class bindClass##tag : public BindScriptBase										\
-	{																					\
-	public:																				\
-		void Bind(const std::string& path, fz::Shared<fz::Scene>& currScene) override	\
-		{																				\
-				auto Entity = currScene->GetEntityFromTag(entity);						\
-				if (Entity && !Entity.HasComponent<NativeScriptComponent>())			\
-					Entity.AddComponent<NativeScriptComponent>().Bind<##script>();		\
-		}																				\
-	};																					\
-class bindClassBind##tag																\
-{																						\
-public:																					\
-	bindClassBind##tag()																\
-	{																					\
-		auto& base = BindScriptBase::GetInstance();										\
-		base.push_back(new bindClass##tag);												\
-	}																					\
-};																						\
-inline bindClassBind##tag bindClassBindObj##tag;										\
-}
+#define BIND_SCRIPT(tag, className)	BindScript<className>::Bind(tag, scene);	     

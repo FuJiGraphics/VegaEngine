@@ -3,11 +3,13 @@
 #include "Core/Core.h"
 #include "entt/entt.hpp"
 #include "Scene.h"
+#include "Components.h"
 
 namespace fz {
 
 	class EntitySerializer;
 	class HierarchyPanel;
+	struct RigidbodyComponent;
 
 	class Entity 
 	{
@@ -63,9 +65,14 @@ namespace fz {
 			return m_Scene->m_Registry.all_of<T>(m_Handle);
 		}
 
+		GameObject GetRootParent();
+		bool GetActive();
+
+		void SetActive(bool enabled);
 		void SetColorWithChilds(const sf::Color& color);
 		sf::Vector2f GetWorldPosition();
 		sf::Transform GetWorldTransform();
+		Weak<Scene>& GetCurrentScene() { return m_Scene; }
 
 		inline bool operator ==(const fz::Entity& other) const	{ return m_Handle == other.m_Handle && m_Scene == other.m_Scene; }
 		inline bool operator !=(const fz::Entity& other) const	{ return !((*this) == other); }
@@ -80,6 +87,10 @@ namespace fz {
 		void SavePrefab(const std::string& path);
 		void SetActiveWithChild(bool enabled);
 		sf::Transform GetRealWorldTransform(fz::Entity parent) const;
+		void DeleteRigidbodyWithChilds();
+
+	protected:
+		inline static std::uint32_t s_EntityCount = 1;
 
 	private:
 		entt::entity	m_Handle;

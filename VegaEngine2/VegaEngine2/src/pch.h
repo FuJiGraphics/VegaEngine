@@ -13,6 +13,8 @@
 #include <cassert>
 #include <queue>
 #include <map>
+#include <mutex>
+#include <thread>
 
 // Box2D
 #include <box2d/box2d.h>
@@ -43,6 +45,14 @@
 #include "Core/Layer/LayerStack.h"
 #include "Core/Layer/LayerPool.h"
 #include "Core/System.h"
+#include "Core/Scene/EditorCamera.h"
+#include "Core/Scene/Entity.h"
+#include "Core/Scene/EntitySerializer.h"
+#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/VegaScript.h"
+#include "Core/Scene/CollisionHandler.h"
+#include "Core/Scene/Components.h"
 
 // Renderer
 #include "Renderer/Camera.h"
@@ -51,3 +61,7 @@
 // Animation
 #include "Animation/AnimationClip.h"
 #include "Animation/Animator.h"
+
+// Script
+#include "AttachScripts.h"
+

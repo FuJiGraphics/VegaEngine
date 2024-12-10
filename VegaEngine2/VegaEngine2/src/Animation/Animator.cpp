@@ -15,8 +15,8 @@ namespace fz {
 	}
 
 	void Animator::Update(float dt)
-	{
-		if (!isPlaying)
+ 	{
+		if (!isPlaying || totalFrame <= 0)
 			return;
 
 		accumTime += dt * std::fabs(speed);
@@ -83,9 +83,9 @@ namespace fz {
 
 	void Animator::Play(AnimationClip* clip, bool clearQueue)
 	{
-		if (currentClip == clip)
+		if (isPlaying && currentClip == clip)
 			return;
-		else
+		else if (isPlaying)
 			this->Stop();
 
 		if (clearQueue)
@@ -99,7 +99,11 @@ namespace fz {
 		isPlaying = true;
 
 		currentClip = clip;
+		SetSpeed(currentClip->Speed);
 		totalFrame = clip->frames.size();
+		if (totalFrame <= 0)
+			return;
+
 		checkFrame = this->speed > 0.f ? totalFrame : -1;
 		currentFrame = speed > 0.f ? 0 : totalFrame - 1;
 
@@ -122,11 +126,13 @@ namespace fz {
 
 	void Animator::SetFrame(const AnimationFrame& frame)
 	{
-		if (sprite == nullptr || transformComp == nullptr)
+		if (!Entity)
 			return;
 
-		*sprite = frame.sprite;
-		transformComp->AnimTransform = currentClip->transform;
+		sf::Sprite& sprite = Entity.GetComponent<SpriteComponent>();
+		auto& transformComp = Entity.GetComponent<TransformComponent>();
+		sprite = frame.sprite;
+		transformComp.AnimTransform = currentClip->transform;
 	}
 
 } // namespace fz

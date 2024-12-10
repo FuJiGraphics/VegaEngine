@@ -14,16 +14,22 @@ namespace fz {
 
 		fz::Entity entityA = { handleA, m_Context->shared_from_this() };
 		fz::Entity entityB = { handleB, m_Context->shared_from_this() };
+		if (!entityA || !entityB)
+			return;
 
-		std::string tagA = entityA.GetComponent<TagComponent>().Tag;
-		std::string tagB = entityB.GetComponent<TagComponent>().Tag;
+		auto& tagAcomp = entityA.GetComponent<TagComponent>();
+		auto& tagBcomp = entityB.GetComponent<TagComponent>();
+		if (!tagAcomp.Active || !tagBcomp.Active)
+			return;
+		const std::string& tagA = tagAcomp.Tag;
+		const std::string& tagB = tagBcomp.Tag;
 
 		if (entityA.HasComponent<NativeScriptComponent>())
 		{
 			auto& scriptComp = entityA.GetComponent<NativeScriptComponent>();
 			if (fixtureA->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerEnter({ tagB });
+				scriptComp.Instance->OnTriggerEnter({ entityB, tagB });
 			}
 			else
 			{
@@ -35,7 +41,7 @@ namespace fz {
 			auto& scriptComp = entityB.GetComponent<NativeScriptComponent>();
 			if (fixtureB->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerEnter({ tagA });
+				scriptComp.Instance->OnTriggerEnter({ entityA, tagA });
 			}
 			else
 			{
@@ -54,20 +60,26 @@ namespace fz {
 
 		fz::Entity entityA = { handleA, m_Context->shared_from_this() };
 		fz::Entity entityB = { handleB, m_Context->shared_from_this() };
+		if (!entityA || !entityB)
+			return;
 
-		std::string tagA = entityA.GetComponent<TagComponent>().Tag;
-		std::string tagB = entityB.GetComponent<TagComponent>().Tag;
+		auto& tagAcomp = entityA.GetComponent<TagComponent>();
+		auto& tagBcomp = entityB.GetComponent<TagComponent>();
+		if (!tagAcomp.Active || !tagBcomp.Active)
+			return;
+		const std::string& tagA = tagAcomp.Tag;
+		const std::string& tagB = tagBcomp.Tag;
 
 		if (entityA.HasComponent<NativeScriptComponent>())
 		{
 			auto& scriptComp = entityA.GetComponent<NativeScriptComponent>();
 			if (fixtureA->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerEnter({ tagB });
+				scriptComp.Instance->OnTriggerExit({ entityB, tagB });
 			}
 			else
 			{
-				scriptComp.Instance->OnCollisionEnter({ entityB, tagB, 0 });
+				scriptComp.Instance->OnCollisionExit({ entityB, tagB, 0 });
 			}
 		}
 		if (entityB.HasComponent<NativeScriptComponent>())
@@ -75,7 +87,7 @@ namespace fz {
 			auto& scriptComp = entityB.GetComponent<NativeScriptComponent>();
 			if (fixtureB->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerExit({ tagA });
+				scriptComp.Instance->OnTriggerExit({ entityA, tagA });
 			}
 			else
 			{
@@ -94,9 +106,15 @@ namespace fz {
 
 		fz::Entity entityA = { handleA, m_Context->shared_from_this() };
 		fz::Entity entityB = { handleB, m_Context->shared_from_this() };
+		if (!entityA || !entityB)
+			return;
 
-		std::string tagA = entityA.GetComponent<TagComponent>().Tag;
-		std::string tagB = entityB.GetComponent<TagComponent>().Tag;
+		auto& tagAcomp = entityA.GetComponent<TagComponent>();
+		auto& tagBcomp = entityB.GetComponent<TagComponent>();
+		if (!tagAcomp.Active || !tagBcomp.Active)
+			return;
+		const std::string& tagA = tagAcomp.Tag;
+		const std::string& tagB = tagBcomp.Tag;
 
 		unsigned int count = static_cast<unsigned int>(impulse->count);
 		b2Vec2 totalImpulse = { 0.0f, 0.0f };
@@ -117,7 +135,7 @@ namespace fz {
 			auto& scriptComp = entityA.GetComponent<NativeScriptComponent>();
 			if (fixtureA->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerStay({ tagB });
+				scriptComp.Instance->OnTriggerStay({ entityB, tagB });
 			}
 			else
 			{
@@ -129,7 +147,7 @@ namespace fz {
 			auto& scriptComp = entityB.GetComponent<NativeScriptComponent>();
 			if (fixtureB->IsSensor())
 			{
-				scriptComp.Instance->OnTriggerStay({ tagA });
+				scriptComp.Instance->OnTriggerStay({ entityA, tagA });
 			}
 			else
 			{

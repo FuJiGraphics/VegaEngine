@@ -1,5 +1,65 @@
 {
-    "65f6c357-5714-46a9-a5bb-789b31bf752b": {
+    "5e98730e-0861-47f6-91cb-9d9e8f486a9d": {
+        "8a2a0deb-2c63-4d93-8488-2d1a0f6d6727": {
+            "HasChild": false,
+            "RootEntity": false,
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 0,
+                    "G": 0,
+                    "R": 0
+                },
+                "MaskMode": false,
+                "Origin": [
+                    29.0,
+                    36.5
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "SortingOrder": 4,
+                "TexPath": "game\\graphics\\player\\Hero\\default\\idle.png",
+                "TexRect": {
+                    "Height": 73,
+                    "Left": 1,
+                    "Top": 1,
+                    "Width": 58
+                }
+            },
+            "TagComponent": {
+                "Active": true,
+                "Tag": "PlayerDefault"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            }
+        },
         "BoxCollider2DComponent": {
             "Density": 1.0,
             "Friction": 0.5,
@@ -12,52 +72,16 @@
             "RestitutionThreshold": 0.5,
             "Size": {
                 "X": 18.75,
-                "Y": 31.200000762939453
+                "Y": 31.5
             }
         },
-        "HasChild": false,
+        "HasChild": true,
         "RigidbodyComponent": {
             "FixedRotation": true,
+            "GroupIndex": -1,
             "RigidType": "Dynamic"
         },
         "RootEntity": true,
-        "SpriteComponent": {
-            "Color": {
-                "A": 255,
-                "B": 255,
-                "G": 255,
-                "R": 255
-            },
-            "MaskColor": {
-                "A": 255,
-                "B": 0,
-                "G": 0,
-                "R": 0
-            },
-            "MaskMode": false,
-            "Origin": [
-                31.5,
-                41.5
-            ],
-            "Origins": "MC",
-            "Position": [
-                0.0,
-                0.0
-            ],
-            "Rotation": 0.0,
-            "Scale": [
-                1.0,
-                1.0
-            ],
-            "SortingOrder": 3,
-            "TexPath": "game\\graphics\\player\\player_Idle.png",
-            "TexRect": {
-                "Height": 83,
-                "Left": 126,
-                "Top": 0,
-                "Width": 63
-            }
-        },
         "TagComponent": {
             "Active": true,
             "Tag": "Player"
@@ -69,12 +93,12 @@
             ],
             "Rotation": 0.0,
             "Scale": [
-                1.0,
+                -1.0,
                 1.0
             ],
             "Translate": [
-                779.0639038085938,
-                654.7503051757813
+                2074.089111328125,
+                437.29998779296875
             ]
         }
     }

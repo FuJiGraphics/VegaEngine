@@ -5,11 +5,11 @@ using namespace std;
 
 namespace fz {
 
-
 	HierarchyPanel::HierarchyPanel(const Shared<Scene>& scene, EditorState* state)
 		: m_Context(nullptr)
 		, m_OnEntityRemove(false)
 		, m_EditState(nullptr)
+		, m_Active(true)
 	{
 		SetContext(scene, state);
 	}
@@ -21,8 +21,16 @@ namespace fz {
 		m_EditState = state;
 	}
 
+	void HierarchyPanel::SetActive(bool enabled)
+	{
+		m_Active = enabled;
+	}
+
 	void HierarchyPanel::OnImGuiRender()
 	{
+		if (!m_Active)
+			return;
+
 		if (ImGui::Begin("Hierarchy"))
 		{
 			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered(0))
@@ -37,7 +45,8 @@ namespace fz {
 					if (!m_Context)
 						m_Context = CreateShared<Scene>(FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 					fz::Entity entity = m_Context->CreateEntity("NewEntity");
-					entity.AddComponent<RootEntityComponent>();
+					auto& rootComp = entity.AddComponent<RootEntityComponent>();
+					rootComp.RootEntity = entity;
 				}
 				if (*m_EditState == EditorState::Edit && ImGui::MenuItem("Load Prefab"))
 				{
@@ -92,7 +101,7 @@ namespace fz {
 			if (m_OnEntityRemove)
 			{
 				m_OnEntityRemove = false;
-				DeleteChildEntities(m_SelectionContext);
+				m_Context->DeleteEntity(m_SelectionContext);
 				m_SelectionContext = {};
 			}
 		}
@@ -101,6 +110,13 @@ namespace fz {
 
 	bool HierarchyPanel::DrawTreeNode(fz::Entity& entity, const char* tag)
 	{
+		if (entity.HasComponent<PrefabInstance>())
+			return false;
+		if (!m_Active)
+			return false;
+
+		auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
+		HWND handle = (HWND)nativeWindow->getSystemHandle();
 		ImGuiTreeNodeFlags flag = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 
 		bool result = false;
@@ -139,8 +155,6 @@ namespace fz {
 			}
 			if (*m_EditState == EditorState::Edit && ImGui::MenuItem("Save Prefab"))
 			{
-				auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
-				HWND handle = (HWND)nativeWindow->getSystemHandle();
 				std::string prefabSavePath = VegaUI::SaveFile(handle, "Prefab File (*.prefab)\0*.prefab\0");
 				if (!prefabSavePath.empty())
 				{
@@ -163,6 +177,12 @@ namespace fz {
 
 	void HierarchyPanel::DrawSceneComponents(fz::Entity& entity)
 	{
+		if (!m_Active)
+			return;
+
+		auto nativeWindow = (sf::RenderWindow*)System::GetSystem().GetWindow().GetNativeWindow();
+		HWND handle = (HWND)nativeWindow->getSystemHandle();
+
 		ImGuiTreeNodeFlags treeFlag = ImGuiTreeNodeFlags_DefaultOpen |
 			ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_Framed;
 		if (entity.HasComponent<TagComponent>())
@@ -172,7 +192,7 @@ namespace fz {
 			{
 				entity.SetActiveWithChild(tagComp.Active);
 			}
-			VegaUI::InputText(tagComp.Tag, "Tag");
+			VegaUI::InputText("Tag", tagComp.Tag);
 		}
 
 		{
@@ -187,6 +207,7 @@ namespace fz {
 			{
 				DisplayAddComponentEntry<CameraComponent>("Camera");
 				DisplayAddComponentEntry<SpriteComponent>("Sprite");
+				DisplayAddComponentEntry<TextComponent>("Text");
 				DisplayAddComponentEntry<RigidbodyComponent>("Rigidbody");
 				if (!m_SelectionContext.HasComponent<EdgeCollider2DComponent>())
 					DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider2D");
@@ -235,18 +256,17 @@ namespace fz {
 					ImGui::Checkbox("Main", &cameraComp.Primary);
 					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComp.FixedAspectRatio);
 
+					sf::Vector2f center = cameraComp.Camera.GetCenter();
+					if (VegaUI::DrawControl2("Center Position", center))
+					{
+						cameraComp.Camera.SetCenter(center);
+					}
 					float zoom = cameraComp.Camera.GetZoom();
 					if (VegaUI::DrawControl1("Zoom", "Reset", zoom, 0.01f, 0.001f, 10.f, 1.0f))
 					{
 						cameraComp.Camera.Zoom(zoom);
 					}
 
-					sf::FloatRect viewport = cameraComp.Camera.GetViewport();
-					if (VegaUI::DragFloat4(viewport, "Viewport", true, 0.01))
-					{
-						if (viewport.width > viewport.left && viewport.height > viewport.top)
-							cameraComp.Camera.SetViewport(viewport);
-					}
 				}
 				ImGui::TreePop();
 			}
@@ -313,6 +333,96 @@ namespace fz {
 			}
 		}
 
+		if (entity.HasComponent<TextComponent>())
+		{
+			if (ImGui::TreeNodeEx("TextComponent", treeFlag, "Text"))
+			{
+				bool isRemove = false;
+				if (*m_EditState == EditorState::Edit)
+				{
+					isRemove = VegaUI::PopupContextItem("Remove TextComponent", [&entity]() {
+						entity.RemoveComponent<TextComponent>(); });
+				}
+
+				if (!isRemove)
+				{
+					TextComponent& textComp = entity.GetComponent<TextComponent>();
+					int sortingOrder = textComp.SortingOrder;
+					if (VegaUI::DrawControl1("Sorting Order", "Reset", sortingOrder, 1))
+					{
+						textComp.SortingOrder = sortingOrder;
+					}
+					if (VegaUI::OpenFontFile(FRAMEWORK.GetWindow().GetHandle(), textComp.FontPath))
+					{
+						FONT_MGR.Load(textComp.FontPath);
+						textComp.Text.setFont(FONT_MGR.Get(textComp.FontPath));
+					}
+					std::string str = textComp.Text.getString();
+					if (VegaUI::InputText("Input Text", str))
+					{
+						textComp.Text.setString(str);
+					}
+					int size = textComp.Text.getCharacterSize();
+					if (VegaUI::DrawControl1("Character Size", "Reset", size, 1, 1, 0, 1))
+					{
+						size = Utils::Clamp(size, 1, size);
+						textComp.Text.setCharacterSize(size);
+					}
+					sf::Color color = textComp.Text.getColor();
+					if (VegaUI::ColorEdit4(color, "Font Color"))
+					{
+						textComp.Text.setColor(color);
+					}
+					sf::Color outlineColor = textComp.Text.getOutlineColor();
+					if (VegaUI::ColorEdit4(outlineColor, "Outline Color"))
+					{
+						textComp.Text.setOutlineColor(outlineColor);
+					}
+					float outlineThickness = textComp.Text.getOutlineThickness();
+					if (VegaUI::DrawControl1("Outline Thickness", "Reset", outlineThickness))
+					{
+						textComp.Text.setOutlineThickness(outlineThickness);
+					}
+					sf::Color fillColor = textComp.Text.getFillColor();
+					if (VegaUI::ColorEdit4(fillColor, "Fill Color"))
+					{
+						textComp.Text.setFillColor(fillColor);
+					}
+					float letterSpacing = textComp.Text.getLetterSpacing();
+					if (VegaUI::DrawControl1("letter Spacing", "Reset", letterSpacing))
+					{
+						textComp.Text.setLetterSpacing(letterSpacing);
+					}
+					float lineSpacing = textComp.Text.getLineSpacing();
+					if (VegaUI::DrawControl1("Line Spacing", "Reset", lineSpacing))
+					{
+						textComp.Text.setLineSpacing(lineSpacing);
+					}
+					sf::Vector2f origin = textComp.Text.getOrigin();
+					if (VegaUI::DrawControl2("Origin", origin))
+					{
+						textComp.Text.setOrigin(origin);
+					}
+					sf::Vector2f position = textComp.Text.getPosition();
+					if (VegaUI::DrawControl2("Position", position))
+					{
+						textComp.Text.setPosition(position);
+					}
+					sf::Vector2f scale = textComp.Text.getScale();
+					if (VegaUI::DrawControl2("Scale", scale))
+					{
+						textComp.Text.setScale(scale);
+					}
+					float rotation = textComp.Text.getRotation();
+					if (VegaUI::DrawControl1("Rotation", "Reset", rotation))
+					{
+						textComp.Text.setRotation(rotation);
+					}
+				}
+				ImGui::TreePop();
+			}
+		}
+
 		if (entity.HasComponent<RigidbodyComponent>())
 		{
 			if (ImGui::TreeNodeEx("RigidbodyComponent", treeFlag, "Rigidbody"))
@@ -345,6 +455,11 @@ namespace fz {
 						ImGui::EndCombo();
 					}
 					ImGui::Checkbox("Fixed Rotation", &rigidComp.FixedRotation);
+					int index = rigidComp.GroupIndex;
+					if (VegaUI::DrawControl1("Group Index", "Reset", index, 1, 0, 0, 0))
+					{
+						rigidComp.GroupIndex = index;
+					}
 				}
 				ImGui::TreePop();
 			}
@@ -404,51 +519,6 @@ namespace fz {
 				ImGui::TreePop();
 			}
 		}
-	}
-
-	void HierarchyPanel::DeleteChildEntities(fz::Entity& entity)
-	{
-		if (entity && entity.HasComponent<ChildEntityComponent>())
-		{
-			ChildEntityComponent& childComp = entity.GetComponent<ChildEntityComponent>();
-			for (auto& child : childComp.CurrentChildEntities)
-			{
-				DeleteChildEntities(child);
-			}
-			childComp.CurrentChildEntities.clear();
-			if (childComp.ParentEntity.HasComponent<ChildEntityComponent>())
-			{
-				childComp.ParentEntity.RemoveComponent<ChildEntityComponent>();
-			}
-		}
-		if (entity.HasComponent<RootEntityComponent>())
-		{
-			entity.RemoveComponent<RootEntityComponent>();
-		}
-		else
-		{
-			auto view = m_Context->m_Registry.view<ChildEntityComponent>();
-			for (auto& entity : view)
-			{
-				fz::Entity baseEntity = { entity, m_Context };
-				fz::Entity delEntity = m_SelectionContext;
-				auto& childComp = view.get<ChildEntityComponent>(entity);
-				auto it = std::find_if(childComp.CurrentChildEntities.begin(), childComp.CurrentChildEntities.end(),
-										[&delEntity](const fz::Entity& target)
-										{
-											return target == delEntity;
-										});
-				if (it != childComp.CurrentChildEntities.end())
-				{
-					childComp.CurrentChildEntities.erase(it);
-				}
-				if (childComp.CurrentChildEntities.empty())
-				{
-					childComp.ParentEntity.RemoveComponent<ChildEntityComponent>();
-				}
-			}
-		}
-		m_Context->DeleteEntity(entity);
 	}
 
 } // namespace fz

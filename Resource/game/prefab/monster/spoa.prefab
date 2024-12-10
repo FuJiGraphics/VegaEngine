@@ -1,5 +1,5 @@
 {
-    "3740e81b-ff4b-4f46-9cfa-d7fbf4d3fc05": {
+    "e9bd8559-dc33-4aed-ba2f-943581374676": {
         "BoxCollider2DComponent": {
             "Density": 1.0,
             "Friction": 0.5,
@@ -11,13 +11,14 @@
             "Restitution": 0.0,
             "RestitutionThreshold": 0.5,
             "Size": {
-                "X": 42.599998474121094,
-                "Y": 39.20000076293945
+                "X": 15.5,
+                "Y": 17.5
             }
         },
         "HasChild": false,
         "RigidbodyComponent": {
             "FixedRotation": true,
+            "GroupIndex": -1,
             "RigidType": "Dynamic"
         },
         "RootEntity": true,
@@ -36,8 +37,8 @@
             },
             "MaskMode": false,
             "Origin": [
-                115.0,
-                79.0
+                18.5,
+                20.0
             ],
             "Origins": "MC",
             "Position": [
@@ -49,17 +50,17 @@
                 1.0,
                 1.0
             ],
-            "SortingOrder": 0,
+            "SortingOrder": 3,
             "TexPath": "game\\graphics\\monster\\spoa.png",
             "TexRect": {
-                "Height": 158,
+                "Height": 40,
                 "Left": 0,
                 "Top": 0,
-                "Width": 230
+                "Width": 37
             }
         },
         "TagComponent": {
-            "Active": true,
+            "Active": false,
             "Tag": "Spoa"
         },
         "TransformComponent": {
@@ -73,8 +74,8 @@
                 1.0
             ],
             "Translate": [
-                -129.26788330078125,
-                -0.4165811538696289
+                -10000.0,
+                -10000.0
             ]
         }
     }

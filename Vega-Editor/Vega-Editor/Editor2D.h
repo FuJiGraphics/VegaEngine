@@ -24,17 +24,14 @@ namespace fz {
 		void OnUpdate(float dt) override;
 		void OnEvent(fz::Event& ev) override;
 		void OnUI() override;
+		void SetActive(bool enabled);
+
+		void ChangeSceneEvent(Shared<Scene> scene);
 
 	protected:
-		Shared<Scene> CreateScene(unsigned int width, unsigned int height);
-		void SaveScene(const Shared<Scene>& scene, const std::string& path);
-		Shared<Scene> LoadScene(const std::string& path);
-
 		void OnScenePlay();
 		void OnSceneStop();
 		void UiToolbar(const char* title = "##Toolbar");
-
-		void BindScript();
 
 	private:
 		std::string	m_ActiveSceneFilePath;
@@ -43,6 +40,8 @@ namespace fz {
 		HierarchyPanel m_HierarchyPanel;
 		EditorState m_SceneState;
 		EditorCamera m_EditorCamera;
+		sf::Vector2f m_ViewportBounds[2];
+		bool m_Active;
 	};
 
 } // namespace fz

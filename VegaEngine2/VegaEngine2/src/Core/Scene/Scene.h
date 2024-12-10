@@ -3,8 +3,6 @@
 #include "SceneSerializer.h"
 #include "CollisionHandler.h"
 
-class b2WorldId;
-
 namespace fz {
 	
 	// Forwards
@@ -15,6 +13,7 @@ namespace fz {
 	class EntitySerializer;
 	class EditorCamera;
 	class Editor2D;
+	class SceneManager;
 
 	using GameObject = fz::Entity;
 
@@ -28,28 +27,56 @@ namespace fz {
 		friend fz::SceneSerializer;
 		friend fz::EntitySerializer;
 		friend fz::Editor2D;
+		friend fz::SceneManager;
 		FZ_DELETE_COPY(Scene)
 
 	public:
 		Scene(unsigned int width, unsigned int height, unsigned int mulltisampleLevel = 1, const std::string& uuid = "");
 		~Scene();
 
-		Entity CreateEntity(const std::string& tagName = "");
-		void DeleteEntity(fz::Entity& entity);
+		void DestroyInstance(GameObject& prefabInstance);
 
 		Entity GetEntityFromUUID(const std::string& uuid);
 		Entity GetEntityFromTag(const std::string& tag);
 		inline sf::Vector2u GetViewportSize() const { return { m_FrameBuffer->GetWidth(), m_FrameBuffer->GetHeight() }; }
-		inline Shared<Framebuffer>& GetFrameBuffer() { return m_FrameBuffer; }
 		void* GetPhysicsWorld() const { return s_World; }
 
 		bool IsDebugDisplayMode() const { return m_IsDebugMode; }
 		void SetDebugDisplayMode(bool enabled) { m_IsDebugMode = enabled; }
 
-		GameObject Instantiate(GameObject entity, const sf::Vector2f& position, float rotation);
+		sf::Vector2f GetWorldMousePos() const;
+
+		sf::Vector2f PixelToCoords(const sf::Vector2i& pixelPos) const;
+		sf::Vector2f PixelToCoords(const sf::Vector2i& pixelPos, const fz::OrthoCamera& camera) const;
+
+		GameObject Instantiate(const std::string& tag, const sf::Vector2f& position);
+		GameObject Instantiate(const std::string& tag, const sf::Vector2f& position, const sf::Vector2f& scale);
 		GameObject Instantiate(GameObject entity, const sf::Vector2f& position);
+		GameObject Instantiate(GameObject entity, const sf::Vector2f& position, float rotation);
 		GameObject Instantiate(GameObject entity, const fz::Transform& transform);
 		GameObject Instantiate(GameObject entity, const std::string& tag, const fz::Transform& transform);
+		
+		template <typename Component>
+		std::vector<Entity> GetEntitiesFromComponent()
+		{
+			std::vector<Entity> entities;
+			auto view = m_Registry.view<Component>();
+			for (auto& entity : view)
+			{
+				entities.push_back({ entity, shared_from_this() });
+			}
+			return entities;
+		}
+
+		template <typename Component>
+		void GetEntitiesFromComponent(std::vector<Entity>& dst)
+		{
+			auto view = m_Registry.view<Component>();
+			for (auto& entity : view)
+			{
+				dst.push_back({ entity, shared_from_this() });
+			}
+		}
 
 		template <typename... Components>
 		auto GetEntities()
@@ -57,9 +84,20 @@ namespace fz {
 			return m_Registry.view<Components...>();
 		}
 
+		template <typename... Components>
+		auto GetEntities() const
+		{
+			return m_Registry.view<Components...>();
+		}
+
 	protected:
+		Entity CreateEntity(const std::string& tagName = "");
+		void DeleteEntity(fz::Entity& entity);
+
 		Entity CreateEntityWithUUID(const std::string& tagName, const std::string& uuid);
 		void CopyEntityForPrefab(fz::Entity dst, fz::Entity src, bool isRootTransform = false);
+
+		inline Shared<Framebuffer>& GetFrameBuffer() { return m_FrameBuffer; }
 
 		void ReleaseNativeComponent();
 
@@ -81,24 +119,22 @@ namespace fz {
 		// Prefab
 		void LoadPrefab(const std::string& path);
 
-		void OnUpdateChildEntity();
-		void UpdateTransformChilds(const sf::Transform& parentTransform, fz::Entity child);
-
+		void OnCreateRuntimeInstance();
+		void OnDestroyRuntimeInstance();
 		void OnUpdatePhysicsSystem(float dt);
 		void OnUpdateCamera(OrthoCamera** dstCamera, sf::Transform& dstTransform);
 		void OnRenderEditorSprite(OrthoCamera* mainCamera);
-		void OnRenderRuntimeSprite(OrthoCamera* mainCamera, sf::Transform& transform);
+		void OnRuntimeRenderDrawable(OrthoCamera* mainCamera, sf::Transform& transform);
 		void OnDrawDebugShape();
 		void OnViewportResize(unsigned int width, unsigned int height);
 
 		void ReleasePrefabInstancies();
+		void ReleasePostRemoveInstancies();
 
 		inline const Shared<Framebuffer>& GetFrameBuffer() const { return m_FrameBuffer; }
 
 		std::string GetUUID() const { return m_UUID; }
 	public:
-		// TODO: юс╫ц
-		inline static Shared<Scene>	s_CurrentScene;
 		inline static b2World*	s_World = nullptr;
 
 	private:
@@ -111,8 +147,10 @@ namespace fz {
 		int						m_prefabInstanceCount;
 		EntityPool				m_PrefabInstancePool;
 		CollisionHandler		m_CollistionHandler;
+		std::list<fz::Entity>	m_RemoveInstanceList;
+		std::list<fz::Entity>	m_PostRemoveInstanceList;
+		std::list<fz::Entity>	m_LoadPrefabInstanceList;
+		bool					m_SceneChanged;
 	};
-
-#define FZ_CURRENT_SCENE fz::Scene::s_CurrentScene
 
 } // namespace fz

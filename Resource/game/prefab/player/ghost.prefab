@@ -1,0 +1,82 @@
+{
+    "95afee07-8f9d-468d-8647-d93b539d6337": {
+        "BoxCollider2DComponent": {
+            "Density": 1.0,
+            "Friction": 0.5,
+            "IsTrigger": true,
+            "Offset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "Restitution": 0.0,
+            "RestitutionThreshold": 0.5,
+            "Size": {
+                "X": 15.5,
+                "Y": 26.200000762939453
+            }
+        },
+        "HasChild": false,
+        "RigidbodyComponent": {
+            "FixedRotation": true,
+            "GroupIndex": 0,
+            "RigidType": "Dynamic"
+        },
+        "RootEntity": true,
+        "SpriteComponent": {
+            "Color": {
+                "A": 255,
+                "B": 255,
+                "G": 255,
+                "R": 255
+            },
+            "MaskColor": {
+                "A": 255,
+                "B": 0,
+                "G": 0,
+                "R": 0
+            },
+            "MaskMode": false,
+            "Origin": [
+                32.0,
+                36.0
+            ],
+            "Origins": "MC",
+            "Position": [
+                0.0,
+                0.0
+            ],
+            "Rotation": 0.0,
+            "Scale": [
+                1.0,
+                1.0
+            ],
+            "SortingOrder": 5,
+            "TexPath": "game\\graphics\\player\\Hero\\ghost\\Dead.png",
+            "TexRect": {
+                "Height": 72,
+                "Left": 0,
+                "Top": 0,
+                "Width": 64
+            }
+        },
+        "TagComponent": {
+            "Active": false,
+            "Tag": "Ghost"
+        },
+        "TransformComponent": {
+            "Origin": [
+                0.0,
+                0.0
+            ],
+            "Rotation": 0.0,
+            "Scale": [
+                1.0,
+                1.0
+            ],
+            "Translate": [
+                0.0,
+                0.0
+            ]
+        }
+    }
+}

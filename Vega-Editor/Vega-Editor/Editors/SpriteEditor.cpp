@@ -18,6 +18,7 @@ namespace fz {
 		static sf::Vector2f s_Translate = { 0.0f, 0.0f };
 		static sf::Vector2f s_Scale = { 1.0f, 1.0f };
 		static float s_Rotation = 0.0f;
+		static float s_Speed = 1.0f;
 		static std::string ToString(AnimationLoopTypes type)
 		{
 			switch(type)
@@ -112,14 +113,14 @@ namespace fz {
 					std::string openPath = VegaUI::OpenFile(handle, "Animation Clip (*.anim)\0*.anim\0");
 					if (!openPath.empty())
 					{
-						SpriteEditor::OpenAniamtionClip(openPath);
+						SpriteEditor::OpenAnimationClip(openPath);
 					}
 				}
 				if (s_IsOpenedFile && ImGui::MenuItem("Save..."))
 				{
-					if (!s_CurrentPath.empty()) 
+					if (!s_OpenFilePath.empty())
 					{
-						SpriteEditor::SaveAnimationClip(s_CurrentPath);
+						SpriteEditor::SaveAnimationClip(s_OpenFilePath);
 					}
 					else
 					{
@@ -191,7 +192,7 @@ namespace fz {
 		{
 			if (s_IsOpenedFile)
 			{
-				VegaUI::InputText(s_ClipName, "Clip Name");
+				VegaUI::InputText("Clip Name", s_ClipName);
 				std::string path = s_CurrentPath;
 				if (VegaUI::OpenTextureFile(FRAMEWORK.GetWindow().GetHandle(), path))
 				{
@@ -199,7 +200,7 @@ namespace fz {
 					{
 						s_CurrentPath = path;
 						SpriteEditor::SaveAnimationClip(s_OpenFilePath);
-						SpriteEditor::OpenAniamtionClip(s_OpenFilePath);
+						SpriteEditor::OpenAnimationClip(s_OpenFilePath);
 						SpriteEditor::SetTarget(path);
 					}
 				}
@@ -225,6 +226,12 @@ namespace fz {
 				if (s_IsClickedFrame >= 0 && s_IsClickedFrame < s_Frames.size() && !s_Frames.empty())
 				{
 					sf::IntRect texRect = s_Frames[s_IsClickedFrame].getTextureRect();
+
+					float speed = s_Speed;
+					if (VegaUI::DrawControl1("Animation Speed", "Reset", speed, 0.1f, 0.0f, 0.0f, 1.0f))
+					{
+						s_Speed = speed;
+					}
 					if (VegaUI::DrawControl4("Texture Rect", texRect))
 					{
 						s_Frames[s_IsClickedFrame].setTextureRect(texRect);
@@ -274,6 +281,7 @@ namespace fz {
 		auto& json = Database::GetJsonObject(path);
 		json.clear();
 
+		json["AnimationClip"]["Speed"] = s_Speed;
 		json["AnimationClip"]["FrameCount"] = s_Frames.size();
 		json["AnimationClip"]["TexturePath"] = s_CurrentPath;
 		json["AnimationClip"]["ClipName"] = s_ClipName;
@@ -298,7 +306,7 @@ namespace fz {
 		Database::Unload(path);
 	}
 
-	void SpriteEditor::OpenAniamtionClip(const std::string& path)
+	void SpriteEditor::OpenAnimationClip(const std::string& path)
 	{
 		std::string newPath = path;
 		SpriteEditor::Clear();
@@ -308,7 +316,8 @@ namespace fz {
 
 		Database::LoadFromJson(s_OpenFilePath);
 		auto& json = Database::GetJsonObject(s_OpenFilePath);
-
+		if (!json["AnimationClip"]["Speed"].is_null())
+			s_Speed = json["AnimationClip"]["Speed"];
 		unsigned int frameCount = json["AnimationClip"]["FrameCount"];
 		s_CurrentPath = json["AnimationClip"]["TexturePath"];
 		s_ClipName = json["AnimationClip"]["ClipName"];
@@ -380,6 +389,7 @@ namespace fz {
 		if (!enabled)
 		{
 			s_CurrentPath = "";
+			s_OpenFilePath = "";
 			s_ClipName = "None";
 			s_LoopType = AnimationLoopTypes::Loop;
 			s_Frames.clear();
@@ -397,10 +407,10 @@ namespace fz {
 	{
 		if (!s_IsActive)
 			return;
-
 		s_FrameBuffer->Clear();
 		s_FrameBuffer->GetBuffer().setView(s_EditorCamera.GetOrthoCamera());
-		if (ImGui::Begin("Viewport", 0))
+		bool isOpen = true;
+		if (ImGui::Begin("Viewport", &isOpen))
 		{
 			if (ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) && ImGui::IsWindowFocused())
 				s_EditorCamera.SetActivated(true);
@@ -418,6 +428,8 @@ namespace fz {
 		SpriteEditor::UpdateFrames();
 		SpriteEditor::RenderFrameViewport();
 		ImGui::End();
+		if (!isOpen)
+			SpriteEditor::SetActive(false);
 	}
 
 	void SpriteEditor::OnEvent(fz::Event& ev)
@@ -450,6 +462,7 @@ namespace fz {
 		s_Scale = { 1.0f, 1.0f };
 		s_Rotation = 0.0f;
 		s_OpenFilePath = "";
+		s_Speed = 1.0f;
 	}
 
 	void SpriteEditor::RenderSprite(const sf::Sprite& sprite, Shared<fz::Framebuffer>& buffer)
@@ -518,7 +531,6 @@ namespace fz {
 			float sw = texSize.x / (s_CurrentDrawSize.x);
 			float ew = texSize.y / (s_CurrentDrawSize.y);
 
-			FZLOG_DEBUG("sw = {0}, ew = {1}", sw, ew);
 			sf::Vector2f adjustedStart = start;
 			adjustedStart.x -= 7.f;
 			adjustedStart.y -= 55.f;
@@ -544,8 +556,6 @@ namespace fz {
 			shape.setFillColor(sf::Color::Transparent);
 
 			s_DrawRect = shape;
-			FZLOG_DEBUG("Rect Pos {0}, {1}", s_DrawRect.getPosition().x, s_DrawRect.getPosition().y);
-			FZLOG_DEBUG("Rect Size {0}, {1}", s_DrawRect.getSize().x, s_DrawRect.getSize().y);
 		}
 		else
 		{

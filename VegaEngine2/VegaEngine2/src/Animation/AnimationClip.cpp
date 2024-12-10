@@ -27,6 +27,8 @@ namespace fz {
 		auto& target = json["AnimationClip"];
 
 		std::string loopStr;
+		if (!target["Speed"].is_null())
+			Speed = target["Speed"];
 		id = target["ClipName"];
 		loopStr = target["LoopType"];
 		path = target["TexturePath"];
@@ -37,9 +39,6 @@ namespace fz {
 		transform.SetTranslate({ translate[0], translate[1] });
 		transform.SetRotation(Rotation);
 		transform.SetScale({ Scale[0], Scale[1] });
-
-		FZLOG_DEBUG("Clip Name = {0}", id);
-		FZLOG_DEBUG("Frames = {0}", size);
 
 		loopType = ToLoopType(loopStr);
 		fps = size;
@@ -60,14 +59,7 @@ namespace fz {
 			newSprite.setColor({ color[0], color[1], color[2], color[3] });
 			Utils::SetOrigin(newSprite, Origins::MC);
 			frames.push_back(newSprite);
-
-			FZLOG_DEBUG("Origin = {0}, {1}", newSprite.getOrigin().x, newSprite.getOrigin().y);
-			FZLOG_DEBUG("border = {0}, {1}", border[0], border[1]);
-			FZLOG_DEBUG("Color = {0}, {1}, {2}, {3}", color[0], color[1], color[2], color[3]);
-			FZLOG_DEBUG("Rect = {0}, {1}, {2}, {3}", rect[0], rect[1], rect[2], rect[3]);
 		}
-		std::cout << std::endl;
-
 		Database::Unload(filePath);
 		return true;
 	}

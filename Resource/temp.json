@@ -1,7 +1,7 @@
 {
-    "ed63015c-19f7-423e-be31-21eb6181116a": {
-        "1df0e0f8-377f-4f48-8ad3-f0f882b1f6a1": {
-            "0142046f-f199-4fac-b2f6-22892db2fd01": {
+    "cf66f06c-f9c2-4055-aa3a-e786ee26eac5": {
+        "35d858ec-445b-4ca5-ad0b-f42f9a8f9875": {
+            "1a8541c0-4448-42db-b7d4-f465ecd0deb1": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -19,68 +19,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        1.0,
-                        0.0
-                    ],
-                    "Origins": "TR",
-                    "Position": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "SortingOrder": 102,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatusGradation.png",
-                    "TexRect": {
-                        "Height": 16,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 1
-                    }
-                },
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "HPGradation"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        -431.5,
-                        382.0
-                    ]
-                }
-            },
-            "01cea258-5aff-40e7-a323-0a8e6bc2c512": {
-                "HasChild": false,
-                "RootEntity": false,
-                "SpriteComponent": {
-                    "Color": {
-                        "A": 255,
-                        "B": 255,
-                        "G": 255,
-                        "R": 255
-                    },
-                    "MaskColor": {
-                        "A": 255,
-                        "B": 0,
-                        "G": 0,
-                        "R": 0
-                    },
-                    "MaskMode": false,
-                    "Origin": [
-                        170.0,
-                        15.5
+                        50.5,
+                        21.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -92,18 +32,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 101,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatusBar.png",
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\CharSelectButton\\Delete\\DeleteDisalbe.png",
                     "TexRect": {
-                        "Height": 31,
+                        "Height": 43,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 340
+                        "Width": 101
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "StatusBar"
+                    "Tag": "DeleteCharButton"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -116,12 +56,12 @@
                         1.0
                     ],
                     "Translate": [
-                        -369.0,
-                        383.0
+                        252.0,
+                        -48.0
                     ]
                 }
             },
-            "1e59ff0d-b773-4838-858f-3e8ef733a958": {
+            "3507fc93-c156-4a37-9c24-ceff82513044": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -139,7 +79,7 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        285.0,
+                        25.5,
                         35.5
                     ],
                     "Origins": "MC",
@@ -152,18 +92,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\LevelBar.png",
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\EmptyChar.png",
                     "TexRect": {
                         "Height": 71,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 570
+                        "Width": 51
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "LevelBar"
+                    "Tag": "Char2"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -176,72 +116,12 @@
                         1.0
                     ],
                     "Translate": [
-                        -469.0,
-                        368.0
-                    ]
-                }
-            },
-            "2a4e57a4-152f-400c-bbaf-ebf038c99233": {
-                "HasChild": false,
-                "RootEntity": false,
-                "SpriteComponent": {
-                    "Color": {
-                        "A": 255,
-                        "B": 255,
-                        "G": 255,
-                        "R": 255
-                    },
-                    "MaskColor": {
-                        "A": 255,
-                        "B": 0,
-                        "G": 0,
-                        "R": 0
-                    },
-                    "MaskMode": false,
-                    "Origin": [
-                        400.0,
-                        35.5
-                    ],
-                    "Origins": "MC",
-                    "Position": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "SortingOrder": 98,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\BottomBackground.png",
-                    "TexRect": {
-                        "Height": 71,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 800
-                    }
-                },
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "BottomBackground"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
                         2.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        42.0,
-                        368.0
+                        26.0
                     ]
                 }
             },
-            "3415ef93-6404-4440-98c9-7ca688163ab1": {
+            "51a22ec3-f92b-4c39-b7e7-ec4056b70d12": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -259,8 +139,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        36.5,
-                        17.0
+                        31.0,
+                        4.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -272,18 +152,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\Menu.png",
+                    "SortingOrder": 5,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\EmptyCharAni\\char_area.png",
                     "TexRect": {
-                        "Height": 34,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 73
+                        "Height": 9,
+                        "Left": 1,
+                        "Top": 1,
+                        "Width": 62
                     }
                 },
                 "TagComponent": {
-                    "Active": true,
-                    "Tag": "Menu"
+                    "Active": false,
+                    "Tag": "SelectChar1"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -296,12 +176,12 @@
                         1.0
                     ],
                     "Translate": [
-                        638.0,
-                        385.0
+                        -126.0,
+                        61.0
                     ]
                 }
             },
-            "6ea0b68b-9620-453a-986f-cac3050541be": {
+            "875ac35f-c083-453f-8495-7af9bf38499d": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -319,8 +199,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        36.5,
-                        17.0
+                        50.5,
+                        17.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -332,18 +212,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\ShortCut.png",
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\CharSelectButton\\Create\\CreateDisable.png",
                     "TexRect": {
-                        "Height": 34,
+                        "Height": 35,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 73
+                        "Width": 101
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Shortcut"
+                    "Tag": "CreateCharButton"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -356,73 +236,16 @@
                         1.0
                     ],
                     "Translate": [
-                        712.0,
-                        385.0
+                        252.0,
+                        -104.0
                     ]
                 }
-            },
-            "CameraComponent": {
-                "Center": [
-                    0.0,
-                    0.0
-                ],
-                "FixedAspectRatio": false,
-                "Primary": true,
-                "Rotation": 0.0,
-                "Size": [
-                    1516.0,
-                    807.0
-                ],
-                "Viewport": {
-                    "Height": 1.0,
-                    "Left": 0.0,
-                    "Top": 0.0,
-                    "Width": 1.0
-                },
-                "Zoom": 1.0
             },
             "HasChild": true,
             "RootEntity": true,
-            "SpriteComponent": {
-                "Color": {
-                    "A": 255,
-                    "B": 255,
-                    "G": 255,
-                    "R": 255
-                },
-                "MaskColor": {
-                    "A": 255,
-                    "B": 0,
-                    "G": 0,
-                    "R": 0
-                },
-                "MaskMode": false,
-                "Origin": [
-                    0.0,
-                    0.0
-                ],
-                "Origins": "MC",
-                "Position": [
-                    0.0,
-                    0.0
-                ],
-                "Rotation": 0.0,
-                "Scale": [
-                    1.0,
-                    1.0
-                ],
-                "SortingOrder": 100,
-                "TexPath": "",
-                "TexRect": {
-                    "Height": 0,
-                    "Left": 0,
-                    "Top": 0,
-                    "Width": 0
-                }
-            },
             "TagComponent": {
                 "Active": true,
-                "Tag": "UI"
+                "Tag": "SelectCharacter"
             },
             "TransformComponent": {
                 "Origin": [
@@ -435,11 +258,54 @@
                     1.0
                 ],
                 "Translate": [
-                    1120.0,
-                    497.0
+                    0.0,
+                    -300.0
                 ]
             },
-            "a24e57f7-d210-4540-9ef3-53d98782a075": {
+            "a52fd864-bad0-4b78-8135-bccbfeb974b5": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "IsTrigger": false,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 322.3999938964844,
+                        "Y": 0.5
+                    }
+                },
+                "HasChild": false,
+                "RigidbodyComponent": {
+                    "FixedRotation": true,
+                    "GroupIndex": 0,
+                    "RigidType": "Static"
+                },
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "Ground"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        29.0,
+                        62.0
+                    ]
+                }
+            },
+            "a83025eb-1e19-49e6-a02b-7c16ab13d3f1": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -457,8 +323,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        14.0,
-                        10.0
+                        25.5,
+                        35.5
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -470,18 +336,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatKey.png",
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\EmptyChar.png",
                     "TexRect": {
-                        "Height": 20,
+                        "Height": 71,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 28
+                        "Width": 51
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Stat"
+                    "Tag": "Char3"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -494,192 +360,12 @@
                         1.0
                     ],
                     "Translate": [
-                        617.0,
-                        352.0
+                        125.0,
+                        26.0
                     ]
                 }
             },
-            "a9a3dd7d-432a-432c-9caf-28983652dd86": {
-                "HasChild": false,
-                "RootEntity": false,
-                "SpriteComponent": {
-                    "Color": {
-                        "A": 255,
-                        "B": 255,
-                        "G": 255,
-                        "R": 255
-                    },
-                    "MaskColor": {
-                        "A": 255,
-                        "B": 0,
-                        "G": 0,
-                        "R": 0
-                    },
-                    "MaskMode": false,
-                    "Origin": [
-                        1.0,
-                        0.0
-                    ],
-                    "Origins": "TR",
-                    "Position": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "SortingOrder": 102,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatusGradation.png",
-                    "TexRect": {
-                        "Height": 16,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 1
-                    }
-                },
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "EXPGradation"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        -201.0,
-                        382.0
-                    ]
-                }
-            },
-            "bea523eb-bd14-474b-a86d-746513ee747c": {
-                "HasChild": false,
-                "RootEntity": false,
-                "SpriteComponent": {
-                    "Color": {
-                        "A": 255,
-                        "B": 255,
-                        "G": 255,
-                        "R": 255
-                    },
-                    "MaskColor": {
-                        "A": 255,
-                        "B": 0,
-                        "G": 0,
-                        "R": 0
-                    },
-                    "MaskMode": false,
-                    "Origin": [
-                        1.0,
-                        0.0
-                    ],
-                    "Origins": "TR",
-                    "Position": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "SortingOrder": 102,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatusGradation.png",
-                    "TexRect": {
-                        "Height": 16,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 1
-                    }
-                },
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "MPGradation"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        -324.5,
-                        382.0
-                    ]
-                }
-            },
-            "cfa5cf49-3f9f-4340-a174-f1b24be7fc06": {
-                "HasChild": false,
-                "RootEntity": false,
-                "SpriteComponent": {
-                    "Color": {
-                        "A": 255,
-                        "B": 255,
-                        "G": 255,
-                        "R": 255
-                    },
-                    "MaskColor": {
-                        "A": 255,
-                        "B": 0,
-                        "G": 0,
-                        "R": 0
-                    },
-                    "MaskMode": false,
-                    "Origin": [
-                        170.0,
-                        15.5
-                    ],
-                    "Origins": "MC",
-                    "Position": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "SortingOrder": 103,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\StatusBarLayer.png",
-                    "TexRect": {
-                        "Height": 31,
-                        "Left": 0,
-                        "Top": 0,
-                        "Width": 340
-                    }
-                },
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "StatusBarBackground"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        -369.0,
-                        383.0
-                    ]
-                }
-            },
-            "f3b99247-3b87-4bd9-9354-9ee6aaa49c4d": {
+            "bdc4c236-b30e-4aeb-b407-bd3850f3540c": {
                 "BoxCollider2DComponent": {
                     "Density": 1.0,
                     "Friction": 0.5,
@@ -691,15 +377,11 @@
                     "Restitution": 0.0,
                     "RestitutionThreshold": 0.5,
                     "Size": {
-                        "X": 21.0,
-                        "Y": 15.0
+                        "X": 61.150001525878906,
+                        "Y": 18.5
                     }
                 },
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "SpriteComponent": {
                     "Color": {
@@ -716,8 +398,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        14.0,
-                        10.0
+                        50.5,
+                        15.0
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -729,18 +411,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\InvenKey.png",
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\CharSelectButton\\Select\\SelectHover.png",
                     "TexRect": {
-                        "Height": 20,
+                        "Height": 30,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 28
+                        "Width": 101
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Inventory"
+                    "Tag": "GameStartButton"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -753,12 +435,50 @@
                         1.0
                     ],
                     "Translate": [
-                        588.0,
-                        352.0
+                        252.0,
+                        -142.0
                     ]
                 }
             },
-            "f3e68fce-d4a8-403d-b957-171d987f9143": {
+            "c6aa9949-47af-43f6-a3b8-0e2fe6843773": {
+                "BoxCollider2DComponent": {
+                    "Density": 1.0,
+                    "Friction": 0.5,
+                    "IsTrigger": true,
+                    "Offset": {
+                        "X": 0.0,
+                        "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 27.600000381469727,
+                        "Y": 38.70000076293945
+                    }
+                },
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "Char1"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -126.0,
+                        25.0
+                    ]
+                }
+            },
+            "da440192-f25e-4be3-b365-9dcb0fb6a1f8": {
                 "HasChild": false,
                 "RootEntity": false,
                 "SpriteComponent": {
@@ -776,8 +496,8 @@
                     },
                     "MaskMode": false,
                     "Origin": [
-                        36.5,
-                        17.0
+                        66.5,
+                        119.0
                     ],
                     "Origins": "MC",
                     "Position": [
@@ -789,18 +509,18 @@
                         1.0,
                         1.0
                     ],
-                    "SortingOrder": 100,
-                    "TexPath": "game\\graphics\\ui\\BottomBar\\Basic\\CashShop.png",
+                    "SortingOrder": 1,
+                    "TexPath": "game\\graphics\\title\\CharSelect\\CharSelectBox.png",
                     "TexRect": {
-                        "Height": 34,
+                        "Height": 238,
                         "Left": 0,
                         "Top": 0,
-                        "Width": 73
+                        "Width": 133
                     }
                 },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "CashShop"
+                    "Tag": "CharSelectBox"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -813,33 +533,34 @@
                         1.0
                     ],
                     "Translate": [
-                        564.0,
-                        385.0
+                        251.0,
+                        -56.0
                     ]
                 }
             }
         },
-        "65f6c357-5714-46a9-a5bb-789b31bf752b": {
-            "BoxCollider2DComponent": {
-                "Density": 1.0,
-                "Friction": 0.5,
-                "IsTrigger": false,
-                "Offset": {
-                    "X": 0.0,
-                    "Y": 0.0
+        "366fdc64-3419-48b4-a0b8-60f008a966ee": {
+            "CameraComponent": {
+                "Center": [
+                    0.0,
+                    0.0
+                ],
+                "FixedAspectRatio": false,
+                "Primary": true,
+                "Rotation": 0.0,
+                "Size": [
+                    686.0800170898438,
+                    475.70001220703125
+                ],
+                "Viewport": {
+                    "Height": 1.0,
+                    "Left": 0.0,
+                    "Top": 0.0,
+                    "Width": 1.0
                 },
-                "Restitution": 0.0,
-                "RestitutionThreshold": 0.5,
-                "Size": {
-                    "X": 18.75,
-                    "Y": 31.200000762939453
-                }
+                "Zoom": 0.6700000166893005
             },
             "HasChild": false,
-            "RigidbodyComponent": {
-                "FixedRotation": true,
-                "RigidType": "Dynamic"
-            },
             "RootEntity": true,
             "SpriteComponent": {
                 "Color": {
@@ -856,8 +577,8 @@
                 },
                 "MaskMode": false,
                 "Origin": [
-                    31.5,
-                    41.5
+                    400.5,
+                    300.0
                 ],
                 "Origins": "MC",
                 "Position": [
@@ -869,15 +590,178 @@
                     1.0,
                     1.0
                 ],
-                "SortingOrder": 3,
-                "TexPath": "game\\graphics\\player\\player_Idle.png",
+                "SortingOrder": 333,
+                "TexPath": "game\\graphics\\title\\Frame.png",
                 "TexRect": {
-                    "Height": 83,
-                    "Left": 63,
+                    "Height": 600,
+                    "Left": 0,
                     "Top": 0,
-                    "Width": 63
+                    "Width": 801
                 }
             },
+            "TagComponent": {
+                "Active": true,
+                "Tag": "TitleFrame"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    899.0
+                ]
+            }
+        },
+        "4200a345-86f3-41e1-a3dd-f0e3cc06f506": {
+            "HasChild": false,
+            "RootEntity": true,
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 0,
+                    "G": 0,
+                    "R": 0
+                },
+                "MaskMode": false,
+                "Origin": [
+                    400.0,
+                    1198.0
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "SortingOrder": 0,
+                "TexPath": "game\\graphics\\title\\FullBackGround.png",
+                "TexRect": {
+                    "Height": 2396,
+                    "Left": 0,
+                    "Top": 0,
+                    "Width": 800
+                }
+            },
+            "TagComponent": {
+                "Active": true,
+                "Tag": "TitleBackground"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        "5e98730e-0861-47f6-91cb-9d9e8f486a9d": {
+            "8a2a0deb-2c63-4d93-8488-2d1a0f6d6727": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        29.0,
+                        36.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 4,
+                    "TexPath": "game\\graphics\\player\\Hero\\default\\idle.png",
+                    "TexRect": {
+                        "Height": 73,
+                        "Left": 1,
+                        "Top": 1,
+                        "Width": 58
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "PlayerDefault"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        0.0,
+                        0.0
+                    ]
+                }
+            },
+            "BoxCollider2DComponent": {
+                "Density": 1.0,
+                "Friction": 0.5,
+                "IsTrigger": false,
+                "Offset": {
+                    "X": 0.0,
+                    "Y": 0.0
+                },
+                "Restitution": 0.0,
+                "RestitutionThreshold": 0.5,
+                "Size": {
+                    "X": 18.75,
+                    "Y": 31.5
+                }
+            },
+            "HasChild": true,
+            "RigidbodyComponent": {
+                "FixedRotation": true,
+                "GroupIndex": -1,
+                "RigidType": "Dynamic"
+            },
+            "RootEntity": true,
             "TagComponent": {
                 "Active": true,
                 "Tag": "Player"
@@ -893,38 +777,58 @@
                     1.0
                 ],
                 "Translate": [
-                    1095.3468017578125,
-                    580.7052001953125
+                    -128.0,
+                    -272.0
                 ]
             }
         },
-        "e2b2bcc3-6d11-4061-ab70-fc37e5e41b5d": {
-            "082ce458-6fce-4dcb-a26e-3bc5c64dba95": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 860.7000122070313,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
+        "767e35bb-e0c8-478a-ae9c-198f4d9beea7": {
+            "0629d322-e701-4436-a95c-cda959a2f9db": {
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line6"
+                    "Active": false,
+                    "Tag": "LoginInfoClass"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -937,37 +841,57 @@
                         1.0
                     ],
                     "Translate": [
-                        1142.9998779296875,
-                        553.0
+                        -53.0,
+                        -45.0
                     ]
                 }
             },
-            "163e0842-1b0c-4388-856e-6fa9fe1a6100": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 91.9000015258789,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
+            "241400ec-9b62-4bf4-85af-44f97258700e": {
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line8"
+                    "Active": false,
+                    "Tag": "LoginInfoLevel"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -980,123 +904,57 @@
                         1.0
                     ],
                     "Translate": [
-                        2003.9998779296875,
-                        612.0
+                        -53.0,
+                        -25.0
                     ]
                 }
             },
-            "1cc81534-2b61-4a91-bf33-f46c3fdf48ab": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 93.0999984741211,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
+            "49f384cf-510d-4e04-bdea-015d206e1776": {
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line7"
+                    "Active": false,
+                    "Tag": "LoginInfoSTR"
                 },
-                "TransformComponent": {
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
                     "Origin": [
                         0.0,
                         0.0
                     ],
-                    "Rotation": 90.0,
-                    "Scale": [
-                        1.0,
-                        1.0
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
                     ],
-                    "Translate": [
-                        2002.9998779296875,
-                        552.0
-                    ]
-                }
-            },
-            "28ecf880-a068-4f78-bb4e-73c9e4ec58e9": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 62.20000076293945,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line9"
-                },
-                "TransformComponent": {
-                    "Origin": [
+                    "OutlineThickness": 0.0,
+                    "Position": [
                         0.0,
                         0.0
                     ],
-                    "Rotation": 90.0,
+                    "Rotation": 0.0,
                     "Scale": [
                         1.0,
                         1.0
                     ],
-                    "Translate": [
-                        2095.0,
-                        612.0
-                    ]
-                }
-            },
-            "2e32921a-ddfd-4758-9dd9-b6a9720d21f5": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 69.5999984741211,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line3"
+                    "SortingOrder": 5,
+                    "String": "TEST"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -1109,37 +967,57 @@
                         1.0
                     ],
                     "Translate": [
-                        1077.0,
-                        614.0
+                        -53.0,
+                        -5.5
                     ]
                 }
             },
-            "396f13ab-edf3-4825-9ce5-a5e63d0b05f3": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 140.0,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": true,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
+            "99854b9c-1936-4338-982e-ffd6316a72d5": {
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line12"
+                    "Active": false,
+                    "Tag": "LoginInfoPOP"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -1152,180 +1030,8 @@
                         1.0
                     ],
                     "Translate": [
-                        2138.0,
-                        314.0
-                    ]
-                }
-            },
-            "7bf0388d-8c30-4cc9-b3a6-0c8765e55691": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 140.0,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": true,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line13"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        2138.0,
-                        255.0
-                    ]
-                }
-            },
-            "98020cb2-4b6f-429a-a479-87b7a3233d81": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 770.0,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": true,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line5"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        471.9999694824219,
-                        343.9999694824219
-                    ]
-                }
-            },
-            "9ca8b70d-88d8-40a0-9ce1-94fc7216f6a5": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 695.5999755859375,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line10"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        2093.999755859375,
-                        675.0
-                    ]
-                }
-            },
-            "9eeb7a10-55f1-4b31-a74b-896be9a5ff9b": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 1000.0,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Line1"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 0.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        0.0,
-                        675.0
+                        44.0,
+                        -25.0
                     ]
                 }
             },
@@ -1346,10 +1052,10 @@
                 },
                 "MaskMode": false,
                 "Origin": [
-                    0.0,
-                    0.0
+                    121.0,
+                    84.5
                 ],
-                "Origins": "TL",
+                "Origins": "MC",
                 "Position": [
                     0.0,
                     0.0
@@ -1359,18 +1065,716 @@
                     1.0,
                     1.0
                 ],
-                "SortingOrder": 0,
-                "TexPath": "game\\graphics\\town\\Stage1\\Amhust.png",
+                "SortingOrder": 4,
+                "TexPath": "game\\graphics\\title\\CharSelect\\OpenCharInfo.png",
                 "TexRect": {
-                    "Height": 903,
-                    "Left": 0,
-                    "Top": 0,
-                    "Width": 2799
+                    "Height": 169,
+                    "Left": 1,
+                    "Top": 1,
+                    "Width": 242
                 }
             },
             "TagComponent": {
+                "Active": false,
+                "Tag": "CharInfoWindow"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "Translate": [
+                    -120.0,
+                    -418.0
+                ]
+            },
+            "a9c2b9a7-126d-43a6-ac1c-d5013b186a0e": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": false,
+                    "Tag": "LoginInfoDEX"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -53.0,
+                        14.0
+                    ]
+                }
+            },
+            "b7ae4461-81e2-4fd8-9219-1ff4f22a94a5": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": false,
+                    "Tag": "LoginInfoINT"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        44.0,
+                        -5.5
+                    ]
+                }
+            },
+            "b9b6ed91-63b7-4d91-aecf-460b21aecc9d": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": false,
+                    "Tag": "LoginInfoRanking"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "Ranking not available"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        -56.0,
+                        59.0
+                    ]
+                }
+            },
+            "d9a1a486-472b-4a3e-87aa-b443e49131de": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": false,
+                    "Tag": "LoginInfoLUK"
+                },
+                "TextComponent": {
+                    "CharacterSize": 12,
+                    "Color": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FillColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 5,
+                    "String": "TEST"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        44.0,
+                        14.0
+                    ]
+                }
+            }
+        },
+        "a615d119-dd78-4d46-8874-4c337af4ba4d": {
+            "1657cb1f-4eda-4a00-9d18-fef7d2865549": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        29.0,
+                        11.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\password\\FindPassDisable.png",
+                    "TexRect": {
+                        "Height": 23,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 58
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "PasswordFindButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        262.0,
+                        21.5
+                    ]
+                }
+            },
+            "202a3c90-ca58-478c-a77b-ca6bcaf4def9": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        42.5,
+                        11.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\emailsave\\SaveEmailDisable.png",
+                    "TexRect": {
+                        "Height": 23,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 85
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "EmailSaveButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        78.0,
+                        22.0
+                    ]
+                }
+            },
+            "3a0a265e-a646-4295-a665-30d028289fc6": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        35.0,
+                        11.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\emailfind\\FindEmailDisable.png",
+                    "TexRect": {
+                        "Height": 23,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 70
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "EmailFindButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        188.0,
+                        21.0
+                    ]
+                }
+            },
+            "420a1d5d-f735-485f-8c62-bee1648c7f4b": {
+                "HasChild": false,
+                "RootEntity": false,
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "IdBox"
+                },
+                "TextComponent": {
+                    "CharacterSize": 13,
+                    "Color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "FillColor": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "String": "chlcjfwls1"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        56.0,
+                        -54.0
+                    ]
+                }
+            },
+            "53dac4a1-f21f-4912-af79-741e0b0890ce": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        42.0,
+                        21.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\exit\\ExitDisable.png",
+                    "TexRect": {
+                        "Height": 43,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 84
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "LoginExitButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        246.0,
+                        79.0
+                    ]
+                }
+            },
+            "78a709d2-2a36-4249-8c80-b651f8328df2": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        46.5,
+                        21.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\homepage\\HomePageRelease.png",
+                    "TexRect": {
+                        "Height": 43,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 93
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "HomepageButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        152.0,
+                        81.5
+                    ]
+                }
+            },
+            "9e37766f-1ceb-4480-9a8f-1001de2dd528": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        46.0,
+                        21.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\regist\\SignUpDesable.png",
+                    "TexRect": {
+                        "Height": 43,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 92
+                    }
+                },
+                "TagComponent": {
+                    "Active": true,
+                    "Tag": "RegistButton"
+                },
+                "TransformComponent": {
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "Translate": [
+                        52.0,
+                        81.0
+                    ]
+                }
+            },
+            "HasChild": true,
+            "RootEntity": true,
+            "TagComponent": {
                 "Active": true,
-                "Tag": "Amherst"
+                "Tag": "Login"
             },
             "TransformComponent": {
                 "Origin": [
@@ -1384,35 +1788,67 @@
                 ],
                 "Translate": [
                     0.0,
-                    0.0
+                    900.0
                 ]
             },
-            "ab18fc05-8191-40d3-92e2-9603485dcd78": {
-                "EdgeCollider2DComponent": {
+            "a0b237d5-c983-47cc-8d46-fbf524ce105f": {
+                "BoxCollider2DComponent": {
                     "Density": 1.0,
-                    "EndPos": {
-                        "X": 140.0,
-                        "Y": 0.0
-                    },
                     "Friction": 0.5,
-                    "IsOneSides": true,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
+                    "IsTrigger": true,
+                    "Offset": {
                         "X": 0.0,
                         "Y": 0.0
+                    },
+                    "Restitution": 0.0,
+                    "RestitutionThreshold": 0.5,
+                    "Size": {
+                        "X": 43.849998474121094,
+                        "Y": 21.399999618530273
                     }
                 },
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
+                    },
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        47.5,
+                        24.0
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\button\\login\\LoginHover.png",
+                    "TexRect": {
+                        "Height": 48,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 95
+                    }
+                },
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Line11"
+                    "Tag": "LoginButton"
                 },
                 "TransformComponent": {
                     "Origin": [
@@ -1425,182 +1861,253 @@
                         1.0
                     ],
                     "Translate": [
-                        2046.999755859375,
-                        494.0
+                        247.5,
+                        -32.0
                     ]
                 }
             },
-            "b54acafa-1424-4502-b3ca-914b07a50f2b": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 204.0,
-                        "Y": 0.0
+            "bd92830a-247b-4ae3-8c66-5070f22381b1": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
                     },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        184.0,
+                        118.0
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 1,
+                    "TexPath": "game\\graphics\\title\\Login\\loginObject\\LoginBox.png",
+                    "TexRect": {
+                        "Height": 236,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 368
                     }
                 },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Line2"
+                    "Tag": "LoginBox"
                 },
                 "TransformComponent": {
                     "Origin": [
                         0.0,
                         0.0
                     ],
-                    "Rotation": 322.0,
+                    "Rotation": 0.0,
                     "Scale": [
                         1.0,
                         1.0
                     ],
                     "Translate": [
-                        917.0,
-                        739.0
+                        119.0,
+                        38.0
                     ]
                 }
             },
-            "cfabddad-7769-49ca-b11e-6efeaecaef04": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 1098.9000244140625,
-                        "Y": 0.0
+            "c0b60a66-9506-4915-a2bf-ddc3e471e930": {
+                "HasChild": false,
+                "RootEntity": false,
+                "SpriteComponent": {
+                    "Color": {
+                        "A": 255,
+                        "B": 255,
+                        "G": 255,
+                        "R": 255
                     },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
+                    "MaskColor": {
+                        "A": 255,
+                        "B": 0,
+                        "G": 0,
+                        "R": 0
+                    },
+                    "MaskMode": false,
+                    "Origin": [
+                        198.5,
+                        109.5
+                    ],
+                    "Origins": "MC",
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 1,
+                    "TexPath": "game\\graphics\\title\\TitleLogo.png",
+                    "TexRect": {
+                        "Height": 219,
+                        "Left": 0,
+                        "Top": 0,
+                        "Width": 397
                     }
                 },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Block1"
+                    "Tag": "LoginLogo"
                 },
                 "TransformComponent": {
                     "Origin": [
                         0.0,
                         0.0
                     ],
-                    "Rotation": 90.0,
+                    "Rotation": 0.0,
                     "Scale": [
                         1.0,
                         1.0
                     ],
                     "Translate": [
-                        1.0,
-                        -230.0
+                        0.0,
+                        -171.0
                     ]
                 }
             },
-            "d479208c-2b50-4749-adf2-5bedecfc04df": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 127.0999984741211,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
+            "ffbdfbf0-9a62-42d5-8593-7a6344680ecb": {
                 "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
                 "RootEntity": false,
                 "TagComponent": {
                     "Active": true,
-                    "Tag": "Line4"
+                    "Tag": "PsBox"
+                },
+                "TextComponent": {
+                    "CharacterSize": 13,
+                    "Color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "FillColor": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "FontPath": "fonts\\opensans\\OpenSans-Regular.ttf",
+                    "LetterSpacing": 1.0,
+                    "LineSpacing": 1.0,
+                    "Origin": [
+                        0.0,
+                        0.0
+                    ],
+                    "OutlineColor": [
+                        0,
+                        0,
+                        0,
+                        255
+                    ],
+                    "OutlineThickness": 0.0,
+                    "Position": [
+                        0.0,
+                        0.0
+                    ],
+                    "Rotation": 0.0,
+                    "Scale": [
+                        1.0,
+                        1.0
+                    ],
+                    "SortingOrder": 2,
+                    "String": "********"
                 },
                 "TransformComponent": {
                     "Origin": [
                         0.0,
                         0.0
                     ],
-                    "Rotation": 90.0,
+                    "Rotation": 0.0,
                     "Scale": [
                         1.0,
                         1.0
                     ],
                     "Translate": [
-                        1144.0,
-                        552.0
+                        57.0,
+                        -21.0
                     ]
+                }
+            }
+        },
+        "c05debb5-11a1-4e68-b2fd-4f28c88ae6ad": {
+            "HasChild": false,
+            "RootEntity": true,
+            "SpriteComponent": {
+                "Color": {
+                    "A": 255,
+                    "B": 255,
+                    "G": 255,
+                    "R": 255
+                },
+                "MaskColor": {
+                    "A": 255,
+                    "B": 0,
+                    "G": 0,
+                    "R": 0
+                },
+                "MaskMode": false,
+                "Origin": [
+                    70.5,
+                    20.0
+                ],
+                "Origins": "MC",
+                "Position": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    1.0,
+                    1.0
+                ],
+                "SortingOrder": 999,
+                "TexPath": "game\\graphics\\ui\\Fade.png",
+                "TexRect": {
+                    "Height": 40,
+                    "Left": 0,
+                    "Top": 0,
+                    "Width": 141
                 }
             },
-            "e5a99763-9ffa-4ba5-bfbd-16ba546a1815": {
-                "EdgeCollider2DComponent": {
-                    "Density": 1.0,
-                    "EndPos": {
-                        "X": 1029.5,
-                        "Y": 0.0
-                    },
-                    "Friction": 0.5,
-                    "IsOneSides": false,
-                    "IsTrigger": false,
-                    "Restitution": 0.0,
-                    "RestitutionThreshold": 0.5,
-                    "StartPos": {
-                        "X": 0.0,
-                        "Y": 0.0
-                    }
-                },
-                "HasChild": false,
-                "RigidbodyComponent": {
-                    "FixedRotation": false,
-                    "RigidType": "Static"
-                },
-                "RootEntity": false,
-                "TagComponent": {
-                    "Active": true,
-                    "Tag": "Block2"
-                },
-                "TransformComponent": {
-                    "Origin": [
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": 90.0,
-                    "Scale": [
-                        1.0,
-                        1.0
-                    ],
-                    "Translate": [
-                        2790.0,
-                        -230.0
-                    ]
-                }
+            "TagComponent": {
+                "Active": false,
+                "Tag": "Fade"
+            },
+            "TransformComponent": {
+                "Origin": [
+                    0.0,
+                    0.0
+                ],
+                "Rotation": 0.0,
+                "Scale": [
+                    100.0,
+                    100.0
+                ],
+                "Translate": [
+                    0.0,
+                    0.0
+                ]
             }
         }
     }

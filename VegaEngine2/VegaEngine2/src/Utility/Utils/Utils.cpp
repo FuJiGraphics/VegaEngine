@@ -98,8 +98,8 @@ namespace fz {
     sf::Vector2f Utils::GetNormal(const sf::Vector2f& vec)
     {
         float mag = Magnitude(vec);
-        if (mag != 0)
-            return vec;
+        if (mag == 0)
+            return { 0.f, 0.f };
         return vec / mag;
     }
 
@@ -220,6 +220,29 @@ namespace fz {
 	{
 		return std::fabs(a - b) <= std::numeric_limits<float>::epsilon();
 	}
+
+    void Utils::SetChildTagsToMap(std::unordered_map<std::string, fz::Entity>& map, ChildEntityComponent& childComp)
+    {
+        auto& entities = childComp.CurrentChildEntities;
+        for (fz::Entity entity : entities)
+        {
+            Utils::AddTagToMap(map, entity);
+        }
+    }
+
+    void Utils::AddTagToMap(std::unordered_map<std::string, fz::Entity>& map, fz::Entity entity)
+    {
+        FZLOG_ASSERT(entity, "빈 Entity는 등록할 수 없습니다.");
+        FZLOG_ASSERT(entity.HasComponent<TagComponent>(), "TagComponent를 찾을 수 없습니다.");
+        const std::string& targetTag = entity.GetComponent<TagComponent>().Tag;
+        auto it = map.find(targetTag);
+        if (it != map.end())
+        {
+            FZLOG_WARN("등록 실패/ 이미 동일한 이름의 Entity가 존재합니다. Tag = {0}", targetTag);
+            return;
+        }
+        map.insert({ targetTag, entity });
+    }
 
 } // namespace fz
 

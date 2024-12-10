@@ -1,0 +1,77 @@
+{
+    "3758090c-926e-465d-b289-4e6a0a9d9cc4": {
+        "BoxCollider2DComponent": {
+            "Density": 1.0,
+            "Friction": 0.5,
+            "IsTrigger": true,
+            "Offset": {
+                "X": 0.0,
+                "Y": 0.0
+            },
+            "Restitution": 0.0,
+            "RestitutionThreshold": 0.5,
+            "Size": {
+                "X": 16.0,
+                "Y": 16.0
+            }
+        },
+        "HasChild": false,
+        "RootEntity": true,
+        "SpriteComponent": {
+            "Color": {
+                "A": 255,
+                "B": 255,
+                "G": 255,
+                "R": 255
+            },
+            "MaskColor": {
+                "A": 255,
+                "B": 0,
+                "G": 0,
+                "R": 0
+            },
+            "MaskMode": false,
+            "Origin": [
+                16.0,
+                16.0
+            ],
+            "Origins": "MC",
+            "Position": [
+                0.0,
+                0.0
+            ],
+            "Rotation": 0.0,
+            "Scale": [
+                1.0,
+                1.0
+            ],
+            "SortingOrder": 115,
+            "TexPath": "game\\graphics\\ui\\Skills\\BasicSwingIcon.png",
+            "TexRect": {
+                "Height": 32,
+                "Left": 0,
+                "Top": 0,
+                "Width": 32
+            }
+        },
+        "TagComponent": {
+            "Active": false,
+            "Tag": "SkillButton"
+        },
+        "TransformComponent": {
+            "Origin": [
+                0.0,
+                0.0
+            ],
+            "Rotation": 0.0,
+            "Scale": [
+                1.0,
+                1.0
+            ],
+            "Translate": [
+                0.0,
+                0.0
+            ]
+        }
+    }
+}

@@ -4,63 +4,101 @@ namespace fz {
 
 	void RigidbodyComponent::AddForce(const sf::Vector2f& force)
 	{
+		if (!RuntimeBody)
+			return;
 		((b2Body*)RuntimeBody)->ApplyForceToCenter(Utils::PixelToMeter(force), true);
 	}
 
 	void RigidbodyComponent::SetGravityScale(float scale)
 	{
+		if (!RuntimeBody)
+			return;
 		((b2Body*)RuntimeBody)->SetGravityScale(scale);
 	}
 
 	void RigidbodyComponent::SetLinearVelocity(const sf::Vector2f& velocity)
 	{
+		if (!RuntimeBody)
+			return;
 		((b2Body*)RuntimeBody)->SetLinearVelocity(Utils::PixelToMeter(velocity));
 	}
 
 	void RigidbodyComponent::AddPosition(const sf::Vector2f& pos)
 	{
 		sf::Vector2f velocity = this->GetLinearVelocity();
-		float nextPosX = velocity.x;
-		float nextPosY = velocity.y;
-		// TODO: float 연산 정확도 수정
-		if (pos.x != 0.0f)
-			nextPosX = pos.x;
-		if (pos.y != 0.0f)
-			nextPosY = pos.y;
+		if (std::isinf(velocity.x) || std::isinf(velocity.y))
+			velocity = { 0.0f, 0.0f };
+		if (std::isnan(velocity.x) || std::isnan(velocity.y))
+			velocity = { 0.0f, 0.0f };
+		float nextPosX = Utils::IsEqual(pos.x, 0.0f) ? velocity.x : pos.x;
+		float nextPosY = Utils::IsEqual(pos.y, 0.0f) ? velocity.y : pos.y;
 		this->SetLinearVelocity({ nextPosX, nextPosY });
+	}
+
+	void RigidbodyComponent::AddPositionNoGravity(const sf::Vector2f& pos)
+	{
+		sf::Vector2f velocity = this->GetLinearVelocity();
+		if (std::isinf(velocity.x) || std::isinf(velocity.y))
+			velocity = { 0.0f, 0.0f };
+		if (std::isnan(velocity.x) || std::isnan(velocity.y))
+			velocity = { 0.0f, 0.0f };
+		float nextPosX = Utils::IsEqual(pos.x, 0.0f) ? 0.0f : pos.x;
+		float nextPosY = Utils::IsEqual(pos.y, 0.0f) ? 0.0f : pos.y;
+		this->SetLinearVelocity({ nextPosX, nextPosY });
+	}
+
+	void RigidbodyComponent::SetPosition(const sf::Vector2f& pos)
+	{
+		if (!RuntimeBody)
+			return;
+		b2Body* body = static_cast<b2Body*>(RuntimeBody);
+		if (body) {
+			body->SetTransform(Utils::PixelToMeter(pos), 0.0f);
+		}
+	}
+
+	void RigidbodyComponent::SetPosition(const sf::Vector2f& pos, float angle)
+	{
+		if (!RuntimeBody)
+			return;
+		b2Body* body = static_cast<b2Body*>(RuntimeBody);
+		if (body) {
+			body->SetTransform(Utils::PixelToMeter(pos), angle);
+		}
 	}
 
 	sf::Vector2f RigidbodyComponent::GetLinearVelocity() const
 	{
+		if (RuntimeBody == nullptr)
+			return { 0.0f, 0.0f };
 		return Utils::MeterToPixel(((b2Body*)RuntimeBody)->GetLinearVelocity());
 	}
 
-	bool RigidbodyComponent::IsOnGround(const sf::Vector2f& rayDir)
+	bool RigidbodyComponent::IsOnGround(float rayLen)
 	{
 		sf::Vector2f empty;
 		float fempty;
-		return IsOnGround(rayDir, empty, empty, fempty);
+		return IsOnGround(rayLen, empty, empty, fempty);
 	}
 
-	bool RigidbodyComponent::IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal)
+	bool RigidbodyComponent::IsOnGround(float rayLen, sf::Vector2f& normal)
 	{
 		sf::Vector2f empty;
 		float fempty;
-		return IsOnGround(rayDir, normal, empty, fempty);
+		return IsOnGround(rayLen, normal, empty, fempty);
 	}
 
-	bool RigidbodyComponent::IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal, sf::Vector2f& pos)
+	bool RigidbodyComponent::IsOnGround(float rayLen, sf::Vector2f& normal, sf::Vector2f& pos)
 	{
 		float fempty;
-		return IsOnGround(rayDir, normal, pos, fempty);
+		return IsOnGround(rayLen, normal, pos, fempty);
 	}
 
-	bool RigidbodyComponent::IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal, sf::Vector2f& pos, float& fraction)
+	bool RigidbodyComponent::IsOnGround(float rayLen, sf::Vector2f& normal, sf::Vector2f& pos, float& fraction)
 	{
-		if (!FZ_CURRENT_SCENE)
+		if (Scene::s_World == nullptr)
 			return false;
-		void* rawWorld = FZ_CURRENT_SCENE->GetPhysicsWorld();
-		if (rawWorld == nullptr)
+		if (RuntimeBody == nullptr)
 			return false;
 
 		class RayCastCallback : public b2RayCastCallback
@@ -71,48 +109,51 @@ namespace fz {
 
 			float Fraction = 0.0f;
 			bool HitGround = false;
-			sf::Vector2f Normal = { 0.0f, 0.0f };
-			sf::Vector2f Position = { 0.0f, 0.0f };
+			b2Vec2 Normal = { 0.0f, 0.0f };
+			b2Vec2 Position = { 0.0f, 0.0f };
 			float ReportFixture(b2Fixture* f, const b2Vec2& p, const b2Vec2& n, float fraction) override
 			{
-				if (f->GetBody()->GetType() == b2_staticBody)
+				if (!f->IsSensor() && f->GetBody()->GetType() == b2_staticBody)
 				{
   					HitGround = true;
    					Normal = { n.x, n.y };
-					Position = Utils::MeterToPixel(p);
+					Position = p;
 					Fraction = fraction;
-					return 0.0f;  // 충돌 후 추가 검사 방지
+					return 0.0f;
 				}
 				return 1.0f;  // 계속 진행
 			}
 		};
 		RayCastCallback callback;
 
-		// 객체의 현재 위치
 		b2Vec2 start = ((b2Body*)RuntimeBody)->GetPosition();
-		// 바닥으로 1미터 떨어진 위치
-		b2Vec2 end = start - b2Vec2(rayDir.x, rayDir.y * -1.0f);
-
-		bool hitGround = false;
-		((b2World*)rawWorld)->RayCast(&callback, start, end);
-		normal = callback.Normal;
-		pos = callback.Position;
-		hitGround = callback.HitGround;
+		b2Vec2 end = start + b2Vec2(0.0f, 5.0f);
+		Scene::s_World->RayCast(&callback, start, end);
+		b2Vec2 norm = { callback.Normal.x * -1.0f, callback.Normal.y * -1.0f };
+		callback.HitGround = false;
+		
+		end = start + b2Vec2(norm.x * rayLen, norm.y * rayLen);
+		bool hitGround = false; 
+		if (!Utils::IsEqual(end.y, start.y) || !Utils::IsEqual(end.x, start.x))
+		{
+			Scene::s_World->RayCast(&callback, start, end);
+			normal = { callback.Normal.x, callback.Normal.y };
+			pos = Utils::MeterToPixel(callback.Position);
+			hitGround = callback.HitGround;
+		}
  		return hitGround;
 	}
 
 	void BoxCollider2DComponent::SetTrigger(bool enabled)
 	{
 		IsTrigger = enabled;
-		b2FixtureDef* fixture = (b2FixtureDef*)RuntimeFixture;
-		fixture->isSensor = IsTrigger;
+		((b2Fixture*)RuntimeFixture)->SetSensor(IsTrigger);
 	}
 
 	void EdgeCollider2DComponent::SetTrigger(bool enabled)
 	{
 		IsTrigger = enabled;
-		b2FixtureDef* fixture = (b2FixtureDef*)RuntimeFixture;
-		fixture->isSensor = IsTrigger;
+		((b2Fixture*)RuntimeFixture)->SetSensor(IsTrigger);
 	}
 
 } // namespace fz

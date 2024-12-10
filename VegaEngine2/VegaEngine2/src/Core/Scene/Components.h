@@ -17,6 +17,19 @@ namespace fz {
 		{/*Empty*/}
 	};
 
+	struct TextComponent
+	{
+		int SortingOrder = 0;
+		std::string FontPath;
+		sf::Text Text;
+
+		TextComponent() = default;
+		TextComponent(const TextComponent&) = default;
+		TextComponent(const sf::Text& other)
+			: Text(other)
+		{/*Empty*/}
+	};
+
 	struct RootEntityComponent
 	{
 		fz::Entity RootEntity;
@@ -102,6 +115,7 @@ namespace fz {
 		OrthoCamera Camera;
 		bool Primary = true;
 		bool FixedAspectRatio = false; //고정 종횡비(Fixed Aspect Ratio)
+		sf::Vector2f Center = { 0.0f, 0.0f };
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
@@ -120,6 +134,7 @@ namespace fz {
 	{
 	protected:
 		friend fz::Scene;
+		friend fz::Entity;
 		void* RuntimeBody = nullptr;
 
 	public:
@@ -128,17 +143,21 @@ namespace fz {
 		};
 		BodyType RigidType = BodyType::Static;
 		bool FixedRotation = false;
+		int GroupIndex = 0; // 0 초과일 때 같은 그룹끼리 충돌 x
 
 		void AddForce(const sf::Vector2f& force);
 		void AddPosition(const sf::Vector2f& pos);
+		void AddPositionNoGravity(const sf::Vector2f& pos);
+		void SetPosition(const sf::Vector2f& pos);
+		void SetPosition(const sf::Vector2f& pos, float angle);
 		void SetGravityScale(float scale);
 		void SetLinearVelocity(const sf::Vector2f& velocity);
 		sf::Vector2f GetLinearVelocity() const;
 
-		bool IsOnGround(const sf::Vector2f& rayDir = {0.0f, 0.3f});
-		bool IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal);
-		bool IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal, sf::Vector2f& pos);
-		bool IsOnGround(const sf::Vector2f& rayDir, sf::Vector2f& normal, sf::Vector2f& pos, float& fraction);
+		bool IsOnGround(float rayLen = 0.45f);
+		bool IsOnGround(float rayLen, sf::Vector2f& normal);
+		bool IsOnGround(float rayLen, sf::Vector2f& normal, sf::Vector2f& pos);
+		bool IsOnGround(float rayLen, sf::Vector2f& normal, sf::Vector2f& pos, float& fraction);
 
 		RigidbodyComponent() = default;
 		RigidbodyComponent(const RigidbodyComponent& other) = default;
@@ -164,6 +183,8 @@ namespace fz {
 
 	public:
 		void SetTrigger(bool enabled);
+		sf::Vector2f GetSize() const { return Size * 2.0f; }
+		sf::Vector2f GetHalfSize() const { return Size; }
 
 		BoxCollider2DComponent() = default;
 		BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
@@ -190,6 +211,8 @@ namespace fz {
 
 	public:
 		void SetTrigger(bool enabled);
+		sf::Vector2f GetStartPos() const { return StartPos; }
+		sf::Vector2f GetEndPos() const { return EndPos; }
 
 		EdgeCollider2DComponent() = default;
 		EdgeCollider2DComponent(const EdgeCollider2DComponent& other) = default;
@@ -198,26 +221,21 @@ namespace fz {
 	struct NativeScriptComponent
 	{
 	public:
-		VegaScript* Instance = nullptr;
+		Shared<VegaScript> Instance = nullptr;
 
-		VegaScript* (*CreateInstanceFunc)();
-		void (*DeleteInstanceFunc)(VegaScript* instance);
+		std::function<Shared<VegaScript>()> CreateInstanceFunc;
 
-		void(*OnCreateFunction)(VegaScript*);
-		void(*OnDestroyFunction)(VegaScript*);
-		void(*OnUpdateFunction)(VegaScript*, float);
+		std::function<void(Weak<VegaScript>)> OnCreateFunction;
+		std::function<void(Weak<VegaScript>)> OnDestroyFunction;
+		std::function<void(Weak<VegaScript>, float)> OnUpdateFunction;
 
 		template <typename T>
-		void Bind()
-		{
-			CreateInstanceFunc = []() { return static_cast<VegaScript*>(new T()); };
-			DeleteInstanceFunc = [](VegaScript* instance) { delete instance; instance = nullptr; };
+		void Bind() {
+			CreateInstanceFunc = []() { return static_cast<Shared<VegaScript>>(CreateShared<T>()); };
 
-			OnCreateFunction = [](VegaScript* instance) { (instance)->Start(); };
-			OnDestroyFunction = [](VegaScript* instance) { (instance)->OnDestroy(); };
-			OnUpdateFunction = [](VegaScript* instance, float dt) { (instance)->OnUpdate(dt); };
+			OnCreateFunction = [](Weak<VegaScript> instance) { instance->Start(); };
+			OnDestroyFunction = [](Weak<VegaScript> instance) { instance->OnDestroy(); };
+			OnUpdateFunction = [](Weak<VegaScript> instance, float dt) { instance->OnUpdate(dt); };
 		}
 	};
-
-
 } // namespace fz

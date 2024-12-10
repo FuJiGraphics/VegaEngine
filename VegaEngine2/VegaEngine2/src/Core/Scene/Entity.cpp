@@ -45,6 +45,35 @@ namespace fz {
 		other.m_UUID = "";
 	}
 
+	GameObject Entity::GetRootParent()
+	{
+		if (!HasComponent<RootEntityComponent>())
+		{
+			auto& parent = GetComponent<ParentEntityComponent>().ParentEntity;
+			return parent.GetRootParent();
+		}
+		return { m_Handle, m_Scene->shared_from_this() };
+	}
+
+	bool Entity::GetActive()
+	{
+		return this->GetComponent<TagComponent>().Active;
+	}
+
+	void Entity::SetActive(bool enabled)
+	{
+		auto& tagComp = this->GetComponent<TagComponent>();
+		tagComp.Active = enabled;
+		if (HasComponent<ChildEntityComponent>())
+		{
+			auto& childComp = GetComponent<ChildEntityComponent>();
+			for (auto& child : childComp.CurrentChildEntities)
+			{
+				child.SetActive(enabled);
+			}
+		}
+	}
+
 	void Entity::SetColorWithChilds(const sf::Color& color)
 	{
 		if (this->HasComponent<SpriteComponent>())
@@ -66,8 +95,8 @@ namespace fz {
 	{
 		if (this->HasComponent<RootEntityComponent>())
 		{
-			fz::Transform& transform = GetComponent<TransformComponent>().Transform;
-			return transform.GetTranslate();
+			auto& transformComp = this->GetComponent<TransformComponent>();
+			return transformComp.Transform.GetTranslate();
 		}
 
 		const auto& parent = GetComponent<ParentEntityComponent>().ParentEntity;
@@ -177,6 +206,31 @@ namespace fz {
 		sf::Transform transform = parent.GetComponent<TransformComponent>().Transform;
 		auto& parentComp = parent.GetComponent<ParentEntityComponent>();
 		return GetRealWorldTransform(parentComp.ParentEntity) * transform;
+	}
+
+	void Entity::DeleteRigidbodyWithChilds()
+	{
+		if (HasComponent<ChildEntityComponent>())
+		{
+			auto& comp = GetComponent<ChildEntityComponent>();
+			for (auto& child : comp.CurrentChildEntities)
+			{
+				child.DeleteRigidbodyWithChilds();
+			}
+		}
+		if (HasComponent<RigidbodyComponent>())
+		{
+			auto& rigidComp = GetComponent<RigidbodyComponent>();
+			b2World* currWorld = GetCurrentScene()->s_World;
+			if (rigidComp.RuntimeBody) 
+			{
+				if (currWorld && !currWorld->IsLocked())
+				{
+					currWorld->DestroyBody((b2Body*)rigidComp.RuntimeBody);
+					rigidComp.RuntimeBody = nullptr;
+				}
+			}
+		}
 	}
 
 
