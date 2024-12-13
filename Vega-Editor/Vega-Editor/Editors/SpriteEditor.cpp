@@ -377,8 +377,8 @@ namespace fz {
 		
 		s_WorkSprite = sf::Sprite();
 		s_WorkSprite.setTexture(texture);
-		s_FrameBuffer->Resize((float)size.x, (float)size.y);
-		s_EditorCamera.SetViewport(0.0f, 0.0f, size.x * 2.0f, size.y * 2.0f);
+		s_FrameBuffer->Resize((float)1920.f, (float)1080.f);
+		s_EditorCamera.SetSize((float)size.x, (float)size.y);
 
 		return result;
 	}
@@ -407,6 +407,7 @@ namespace fz {
 	{
 		if (!s_IsActive)
 			return;
+
 		s_FrameBuffer->Clear();
 		s_FrameBuffer->GetBuffer().setView(s_EditorCamera.GetOrthoCamera());
 		bool isOpen = true;
@@ -525,11 +526,10 @@ namespace fz {
 		float titleBarH = ImGui::GetFrameHeight();
 		ImVec2 currPos = ImGui::GetMousePos();
 		ImVec2 windowSize = ImGui::GetWindowSize();
-		const auto& texSize = s_WorkSprite.getTexture()->getSize();
 		if (enabled)
 		{
-			float sw = texSize.x / (s_CurrentDrawSize.x);
-			float ew = texSize.y / (s_CurrentDrawSize.y);
+			float sw = s_FrameBuffer->GetWidth() / (s_CurrentDrawSize.x);
+			float ew = s_FrameBuffer->GetHeight() / (s_CurrentDrawSize.y);
 
 			sf::Vector2f adjustedStart = start;
 			adjustedStart.x -= 7.f;
