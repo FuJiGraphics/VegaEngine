@@ -8,6 +8,7 @@ namespace fz {
 	public:
 		TransformComponent* transform;
 		GameObject target;
+		sf::Vector2f size;
 
 		void Start() override
 		{
@@ -16,6 +17,8 @@ namespace fz {
 			const sf::Vector2f& pos = target.GetComponent<TransformComponent>().Transform.GetTranslate();
 			transform->Transform.SetTranslate(pos);
 			const auto& viewport = GetCurrentScene()->GetViewportSize();
+			const auto& ui = GetCurrentScene()->GetEntityFromTag("BottomBackground").GetComponent<SpriteComponent>();
+			size = { (float)ui.Sprite.GetSize().x, (float)ui.Sprite.GetSize().y };
 		}
 
 		void OnDestroy() override
@@ -28,9 +31,10 @@ namespace fz {
 			const auto& viewport = GetCurrentScene()->GetViewportSize();
 			const sf::Vector2f& pos = target.GetComponent<TransformComponent>().Transform.GetTranslate();
 			float zoom = target.GetComponent<CameraComponent>().Camera.GetZoom();
-			float dw = (viewport.x * zoom) / 800.f;
-			float dh = (viewport.y * zoom) * 0.125f / 71.f;
-			transform->Transform.SetTranslate({ pos.x, (pos.y + ((viewport.y * 0.125f) * 3.5f) * zoom) });
+			float dw = (viewport.x / size.x) * zoom;
+			float dh = ((viewport.y * 0.125f) / size.y) * zoom;
+			float posY = pos.y + (viewport.y * 0.5f) - size.y * 2.1f;
+ 			transform->Transform.SetTranslate({ pos.x, posY });
 			transform->Transform.SetScale(dw, dh);
 		}
 

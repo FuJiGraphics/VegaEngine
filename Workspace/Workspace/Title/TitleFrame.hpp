@@ -20,10 +20,11 @@ namespace fz {
 			Frame->status = FrameStatus::Login;
 			Fade = GetCurrentScene()->GetEntityFromTag("Fade");
 
-			sf::Vector2u targetResolution = { 800, 600 };
+			auto frameSize = GetComponent<SpriteComponent>().Sprite.GetSize();
+			sf::Vector2u targetResolution = { frameSize.x, frameSize.y };
 
 			sf::Vector2u windowSize = GetCurrentScene()->GetViewportSize();
-			GetComponent<CameraComponent>().Camera.SetSize(static_cast<float>(targetResolution.x), static_cast<float>(targetResolution.y));
+			GetComponent<CameraComponent>().Camera.SetSize(static_cast<float>(windowSize.x), static_cast<float>(windowSize.y));
 
 			float viewportX = static_cast<float>(targetResolution.x) / static_cast<float>(windowSize.x);
 			float viewportY = static_cast<float>(targetResolution.y) / static_cast<float>(windowSize.y);

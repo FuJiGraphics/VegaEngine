@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "System.h"
 
-namespace fz { 
+namespace fz {
 
 	System::System(int width, int height, const std::string& title)
 		: IsInit(false)
@@ -53,7 +53,7 @@ namespace fz {
 			this->ReleaseLayerStack();
 		}
 		// Window
-		{ 
+		{
 			if (m_Window->IsOpen())
 				m_Window->Release();
 		}
@@ -98,8 +98,8 @@ namespace fz {
 
 			if (fpsClock.getElapsedTime().asSeconds() >= 1.0f) {
 				const std::string& title = m_Window->GetTitle();
-				m_Window->SetTitle(title + " - [Debug]" + 
-								   std::to_string(static_cast<int>(fps)) + "FPS, " + 
+				m_Window->SetTitle(title + " - [Debug]" +
+								   std::to_string(static_cast<int>(fps)) + "FPS, " +
 								   std::to_string(static_cast<int>(frameTimeMs)) + "ms");
 				fpsClock.restart(); // 1초 간격으로 제목 업데이트
 			}
@@ -168,7 +168,9 @@ namespace fz {
 	}
 
 	bool System::OnWindowResize(WindowResizeEvent e)
-	{ 
+	{
+		Width = e.GetWidth();
+		Height = e.GetHeight();
 		return true;
 	}
 
@@ -214,7 +216,7 @@ namespace fz {
 			FZLOG_WARN("Layer 스택이 이미 생성 되어 있습니다.");
 			result = false;
 		}
-		else 
+		else
 		{
 			FZLOG_INFO("Layer Pool 생성");
 			LayerGenerator = CreateShared<LayerPool>();

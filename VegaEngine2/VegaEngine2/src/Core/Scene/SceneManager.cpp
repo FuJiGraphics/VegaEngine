@@ -96,6 +96,8 @@ namespace fz {
 		}
 		SceneManager::LoadScene(path);
 		SceneManager::StartScene();
+		SceneManager::GetCurrentScene().OnViewportResize(
+			FRAMEWORK.GetWidth(), FRAMEWORK.GetHeight());
 	}
 
 	void SceneManager::StartScene()

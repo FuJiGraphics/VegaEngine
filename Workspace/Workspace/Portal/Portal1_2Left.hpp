@@ -23,8 +23,6 @@ namespace fz {
 			comp.NextPlayerPos = { 2508.f, 551.f };
 			comp.NextScenePath = "game/scene/Stage1_town.vega";
 			SoundMgr::Instance().PlayBgm("game/sound/Town_bgm.mp3", true);
-		
-	
 		}
 
 		void OnUpdate(float dt) override

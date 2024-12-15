@@ -330,7 +330,7 @@ namespace fz {
 		bodyDef.angle = Utils::DegreeToRadian(transformComp.Transform.GetRotation());
 		body = s_World->CreateBody(&bodyDef);
 		if (body)
-		{ 
+		{
 			body->SetFixedRotation(rigidBodyComp.FixedRotation);
 			rigidBodyComp.RuntimeBody = body;
 		}
@@ -374,7 +374,7 @@ namespace fz {
 			{
 				b2Vec2 direction = newEnd - newStart;
 				b2Vec2 normal(direction.y, -direction.x);
-				float length = normal.Length(); 
+				float length = normal.Length();
 				if (length != 0) {
 					normal.x /= length;
 					normal.y /= length;
@@ -447,7 +447,7 @@ namespace fz {
 			auto& cameraComponent = view.get<CameraComponent>(entity);
 			if (!cameraComponent.FixedAspectRatio)
 			{
- 				cameraComponent.Camera.SetSize(width, height);
+				cameraComponent.Camera.SetSize(width, height);
 			}
 		}
 	}
@@ -509,7 +509,7 @@ namespace fz {
 		{
 			itUUID = it->first;
 			itHandle = it->second;
-			
+
 		}
 		return fz::Entity(itUUID, itHandle, shared_from_this());
 	}
@@ -636,7 +636,7 @@ namespace fz {
 		auto nativeView = m_Registry.view<TagComponent, NativeScriptComponent>();
 		nativeView.each([&](auto entity, TagComponent& tag, NativeScriptComponent& nsc)
 						{
-							if (tag.Active) 
+							if (tag.Active)
 							{
 								nsc.OnDestroyFunction(nsc.Instance);
 							}
@@ -796,7 +796,7 @@ namespace fz {
 
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(*mainCamera, transform, m_FrameBuffer); 
+			Renderer2D::BeginScene(*mainCamera, transform, m_FrameBuffer);
 
 			// 스프라이트 렌더링
 			{
