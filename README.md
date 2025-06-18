@@ -19,7 +19,7 @@ Vega Engine은 간단한 2D 게임 개발을 목표로 제작된 경량 C++ 기�
 - 게임에서 사용할 2D 이미지를 쉽게 추가하고 조정할 수 있습니다.
 
 ### **2D Physics System**
-![2D Physics System](./assets/sprite_editor.png)
+![2D Physics System](./assets/image1.gif)
 - 엔진의 물리 시스템입니다.
 - Box2D가 적용되어 있으며, 에디터 상에서 컴포넌트 단위로 조합 가능합니다.
   
